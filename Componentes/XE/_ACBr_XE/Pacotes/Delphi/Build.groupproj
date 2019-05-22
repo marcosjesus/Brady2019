@@ -1,0 +1,72 @@
+﻿	<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+		<PropertyGroup>
+			<ProjectGuid>{324CA766-289E-481B-8F0B-125F4E5E0BE1}</ProjectGuid>
+		</PropertyGroup>
+		<ItemGroup>
+			<Projects Include="ACBrComum.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="ACBrDiversos.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="ACBrCapicom.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="ACBrOpenSSL.dproj">
+				<Dependencies/>
+			</Projects>
+		</ItemGroup>
+		<ProjectExtensions>
+			<Borland.Personality>Default.Personality.12</Borland.Personality>
+			<Borland.ProjectType/>
+			<BorlandProject>
+				<Default.Personality/>
+			</BorlandProject>
+		</ProjectExtensions>
+		<Target Name="ACBrComum">
+			<MSBuild Projects="ACBrComum.dproj"/>
+		</Target>
+		<Target Name="ACBrComum:Clean">
+			<MSBuild Projects="ACBrComum.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="ACBrComum:Make">
+			<MSBuild Projects="ACBrComum.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="ACBrDiversos">
+			<MSBuild Projects="ACBrDiversos.dproj"/>
+		</Target>
+		<Target Name="ACBrDiversos:Clean">
+			<MSBuild Projects="ACBrDiversos.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="ACBrDiversos:Make">
+			<MSBuild Projects="ACBrDiversos.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="ACBrCapicom">
+			<MSBuild Projects="ACBrCapicom.dproj"/>
+		</Target>
+		<Target Name="ACBrCapicom:Clean">
+			<MSBuild Projects="ACBrCapicom.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="ACBrCapicom:Make">
+			<MSBuild Projects="ACBrCapicom.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="ACBrOpenSSL">
+			<MSBuild Projects="ACBrOpenSSL.dproj"/>
+		</Target>
+		<Target Name="ACBrOpenSSL:Clean">
+			<MSBuild Projects="ACBrOpenSSL.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="ACBrOpenSSL:Make">
+			<MSBuild Projects="ACBrOpenSSL.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="Build">
+			<CallTarget Targets="ACBrComum;ACBrDiversos;ACBrCapicom;ACBrOpenSSL"/>
+		</Target>
+		<Target Name="Clean">
+			<CallTarget Targets="ACBrComum:Clean;ACBrDiversos:Clean;ACBrCapicom:Clean;ACBrOpenSSL:Clean"/>
+		</Target>
+		<Target Name="Make">
+			<CallTarget Targets="ACBrComum:Make;ACBrDiversos:Make;ACBrCapicom:Make;ACBrOpenSSL:Make"/>
+		</Target>
+		<Import Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')" Project="$(BDS)\Bin\CodeGear.Group.Targets"/>
+	</Project>

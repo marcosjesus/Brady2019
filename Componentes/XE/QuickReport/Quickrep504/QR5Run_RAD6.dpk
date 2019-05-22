@@ -1,0 +1,94 @@
+package QR5Run_RAD6;
+
+{$R *.res}
+{$ALIGN 8}
+{$ASSERTIONS OFF}
+{$BOOLEVAL OFF}
+{ DEBUGINFO ON}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{ LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION ON}
+{$OVERFLOWCHECKS ON}
+{$RANGECHECKS ON}
+{$REFERENCEINFO OFF}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES OFF}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST ON}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $10000}
+{$DESCRIPTION 'QuickReport 5.04 Runtime Package'}
+{$RUNONLY}
+{$IMPLICITBUILD OFF}
+
+requires
+  rtl,
+  vcl,
+  Vcldb,
+  vclx,
+  bdertl,
+  dbrtl,
+  vclimg;
+
+contains
+  qrextra in 'qrextra.pas',
+  qrcomped in 'qrcomped.pas',
+  qrabout in 'qrabout.pas',
+  quickrpt in 'quickrpt.pas',
+  qrctrls in 'qrctrls.pas',
+  qrprgres in 'qrprgres.pas',
+  qrexpbld in 'qrexpbld.pas',
+  qrprntr in 'qrprntr.pas',
+  qrprev in 'qrprev.pas',
+  qrwizard in 'qrwizard.pas',
+  qrdatawz in 'qrdatawz.pas',
+  qrlablwz in 'qrlablwz.pas',
+  qrexpred in 'qrexpred.pas' {QRExprEditorForm},
+  qrexpr in 'qrexpr.pas',
+  qrenved in 'qrenved.pas',
+  qrexport in 'qrexport.pas',
+  qrmdsu in 'qrmdsu.pas' {QRSubdetailSetup},
+  Qrlabled in 'Qrlabled.pas' {QRLabelEditorForm},
+  qrdatasu in 'qrdatasu.pas',
+  QREditor in 'QREditor.pas' {QReportEditor},
+  QRSearchDlg in 'QRSearchDlg.pas' {SearchDlg},
+  qrpdffilt in 'qrpdffilt.pas',
+  pdfconst in 'pdfconst.pas',
+  pdfobjs in 'pdfobjs.pas',
+  grimgctrl in 'grimgctrl.pas',
+  QRXMLSFilt in 'QRXMLSFilt.pas',
+  QRWebFilt in 'QRWebFilt.pas',
+  qrabsdatas in 'qrabsdatas.pas',
+  qr5const in 'qr5const.pas',
+  qrFramelines in 'qrFramelines.pas',
+  QRXDocument in 'QRXDocument.pas',
+  QRXSearchFrm in 'QRXSearchFrm.pas' {QRXSearchDlg},
+  QRXBrowser in 'QRXBrowser.pas' {QRXStandardViewer},
+  qrpctrls in 'qrpctrls.pas',
+  qrpBaseCtrls in 'qrpBaseCtrls.pas',
+  csProp in 'csProp.pas',
+  qrpexpr in 'qrpexpr.pas',
+  SupComps in 'SupComps.pas',
+  MSXML_TLB in 'MSXML_TLB.pas',
+  QRAnsiList in 'QRAnsiList.pas',
+  qrprnsu2 in 'qrprnsu2.pas',
+  lzw in 'lzw.pas',
+  QRPRSelect in 'QRPRSelect.pas' {PRSelect};
+
+end.
+
+
+
+
+
+
+
+
+
+
+

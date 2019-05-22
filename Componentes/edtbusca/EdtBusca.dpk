@@ -1,0 +1,112 @@
+package EdtBusca;
+
+{$R *.res}
+{$R 'EdtBusca.dcr'}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO ON}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION OFF}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES ON}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
+{$IMPLICITBUILD OFF}
+
+requires
+  rtl,
+  vcl,
+  dbrtl,
+  vcldb,
+  adortl,
+  bdertl,
+  dsnap,
+  dbexpress,
+  vclimg,
+  DBXMSSQLDriver,
+  dxCoreRS19,
+  cxLibraryRS19,
+  dxGDIPlusRS19,
+  dxThemeRS19,
+  cxPageControlRS19,
+  cxDataRS19,
+  cxEditorsRS19,
+  dxLayoutControlRS19,
+  cxGridRS19,
+  FireDACCommonDriver,
+  FireDACCommon,
+  FireDACODBCDriver,
+  FireDACMSSQLDriver,
+  vclFireDAC,
+  FireDAC,
+  dxSkinsCoreRS19,
+  dxSkinBlackRS19,
+  dxSkinBlueprintRS19,
+  dxSkinBlueRS19,
+  dxSkinCaramelRS19,
+  dxSkinCoffeeRS19,
+  dxSkinDarkRoomRS19,
+  dxSkinDarkSideRS19,
+  dxSkinDevExpressDarkStyleRS19,
+  dxSkinDevExpressStyleRS19,
+  dxSkinFoggyRS19,
+  dxSkinGlassOceansRS19,
+  dxSkinHighContrastRS19,
+  dxSkiniMaginaryRS19,
+  dxSkinLilianRS19,
+  dxSkinLiquidSkyRS19,
+  dxSkinLondonLiquidSkyRS19,
+  dxSkinMcSkinRS19,
+  dxSkinMetropolisDarkRS19,
+  dxSkinMetropolisRS19,
+  dxSkinMoneyTwinsRS19,
+  dxSkinOffice2007BlackRS19,
+  dxSkinOffice2007BlueRS19,
+  dxSkinOffice2007GreenRS19,
+  dxSkinOffice2007PinkRS19,
+  dxSkinOffice2007SilverRS19,
+  dxSkinOffice2010BlackRS19,
+  dxSkinOffice2010BlueRS19,
+  dxSkinOffice2010SilverRS19,
+  dxSkinOffice2013DarkGrayRS19,
+  dxSkinOffice2013LightGrayRS19,
+  dxSkinOffice2013WhiteRS19,
+  dxSkinPumpkinRS19,
+  dxSkinSevenClassicRS19,
+  dxSkinSevenRS19,
+  dxSkinSharpPlusRS19,
+  dxSkinSharpRS19,
+  dxSkinSilverRS19,
+  dxSkinSpringTimeRS19,
+  dxSkinStardustRS19,
+  dxSkinSummer2008RS19,
+  dxSkinTheAsphaltWorldRS19,
+  dxSkinValentineRS19,
+  dxSkinVS2010RS19,
+  dxSkinWhiteprintRS19,
+  dxSkinXmas2008BlueRS19,
+  dxSkinscxPCPainterRS19;
+
+contains
+  EditBusca in 'EditBusca.pas',
+  FEditBusca in 'FEditBusca.pas' {FrmEditBusca},
+  EditBuscaAux in 'EditBuscaAux.pas',
+  Aguardando in 'Aguardando.pas' {FrmAguardando},
+  Funcoes in 'Funcoes.pas';
+
+end.

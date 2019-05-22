@@ -1,0 +1,1125 @@
+{********************************}
+{ RealSoft Public Domain Library }
+{ misc procedures and functions  }
+{        ---------------         }
+{   from: www.realsoftdev.com    }
+{********************************}
+
+unit Realproc;
+
+interface
+
+uses
+  System.SysUtils,  WinTypes, WinProcs, Messages, Classes, Graphics, Controls,
+  Forms, Dialogs, StdCtrls, ExtCtrls, FileCtrl;
+
+  {* System Routines *}
+  function  DelphiRunning : boolean;
+  procedure MSDelay(ms: longint);
+  procedure SecDelay(sec: longint);
+  procedure PutLines(Lines: TStrings; var Dest; MaxSize: integer);
+  procedure GetLines(Lines: TStrings; const Src; Size: integer);
+  function  CaseStr(value: string; choices: array of string): integer;
+  function  CaseObj(value: TObject; choices: array of TObject): integer;
+  procedure Msg(text: string);
+  procedure MsgI(num: longint);
+  procedure MsgF(num: double);
+  procedure Beep;
+
+  {* Graphics Routines *}
+  procedure DrawTrans(DestCanvas: TCanvas; X,Y: smallint; SrcBitmap: TBitmap; AColor: TColor);
+  procedure DrawDisabledImage(Src, Dest: TBitmap);
+  procedure ClearBitmap(Bmp: TBitmap);
+
+  {* String Routines *}
+  function  Pad(S: string; I: smallint): string;
+  function  Clip(S: string; I: smallint): string;
+  function  CPad(S: string; I: smallint): string;
+  function  CPadR(S: string; I: smallint): string;
+  function  PadZ(S: string; I: smallint): string;
+  function  ReplaceAll( old, new, S : String; caseSen : boolean) : string;
+  function  CasePos(Sub, S : string): smallint;
+  function  CasePosFromPos(Sub, S : string; Index : smallint): smallint;
+  function  PosFromPos(Sub, S : string; Index : smallint): smallint;
+  function  MakeUniqueString: String;
+  function  GetField(const S: string; delimeter: char; fieldnum: integer): string;
+  procedure GetFields(Dest: TStrings; const S: string; delimeter: char);
+
+  {* Numeric Routines *}
+  function  HextoInt(Hex : String) : Longint;
+  function  base36toint(str36: String): smallint;
+  function  inttobase( number : longint; base : byte) : string;
+  function  inttostrZ(value, zeroes: integer): string;
+  function  Pow( base, expon : double ) : double;
+  function  Pow10(n: Double): Double;
+  function  Floor(E: Extended):  Longint;
+  function  Ceiling(E: Extended):  Longint;
+  function  TrueRound(number : extended; decimals : smallint) : extended;
+  function  TrueRoundAuto(number : extended) : longint;
+  function  round_digits(number : double; digits : smallint) : double;
+  function  round_cents(value : double) : double;
+  function  round_dollars(value : double) : double;
+  function  round_dollars_down(value : double) : double;
+
+  {* File Routines *}
+  procedure LoadDFM( filename : String; Dest : TStrings );
+  procedure SaveDFM( filename : String; Src : TStrings );
+  procedure MkTree( Path : String );
+  procedure GetAllFiles(Path, Filter: String; Dest: TStrings);
+  function  FirstFile(WildPath: String): string;
+  procedure CopyFile(Src, Dest: String);
+  procedure CopyFiles(Source, Dest: String; prompt: boolean);
+  function  SearchFile(Sub: String; FS: TFileStream): longint;
+  procedure SaveFile(Path: String; const Data; Size: Longint);
+  function  LoadFile(Path: String; var Data; MaxSize: Longint): longint;
+  function  UniqueFile(Path, filename: String): string;
+  function  LowerDir(dir: string): string;
+  function  ChangeExt(filename,ext: string): string;
+
+  {* Date Routines *}
+  function StrToDateDef(const S: string; const D: TDateTime): TDateTime;
+  function StrToTimeDef(const S: string; const D: TDateTime): TDateTime;
+  function StrToFloatDef(const S: string; const D: Extended): Extended;
+
+
+
+
+implementation
+
+{* System Routines *}
+function DelphiRunning : boolean;
+begin
+ if((FindWindow('TApplication','Delphi') = 0) and (FindWindow('TApplication','Delphi 2.0') = 0) and
+    (FindWindow('TApplication','Delphi 3') = 0) and (FindWindow('TApplication','Delphi 4') = 0)) or
+    (FindWindow('TPropertyInspector',nil) = 0) or (FindWindow('TAppBuilder',nil) = 0) then result:= false
+ else result:= true;
+end;
+
+procedure MSDelay(ms: longint);
+var start, curr: Longint;
+begin
+  start := GetTickCount;
+  repeat
+    Application.processmessages;
+    curr := GetTickCount;
+    if curr <> start then Dec(ms);
+  until (ms < 1);
+end;
+
+procedure SecDelay(sec: longint);
+begin
+  repeat
+    MSDelay(10000);
+    dec(sec);
+  until sec < 1;
+end;
+
+procedure Beep;
+begin
+  messagebeep(0);
+end;
+
+procedure Msg(text: string);
+begin
+  messagedlg(text, mtInformation,[mbOk],0);
+end;
+
+procedure MsgI(num: longint);
+begin
+  messagedlg(inttostr(num), mtInformation,[mbOk],0);
+end;
+
+procedure MsgF(num: double);
+begin
+  messagedlg(floattostr(num), mtInformation,[mbOk],0);
+end;
+
+procedure PutLines(Lines: TStrings; var Dest; MaxSize: integer);
+var M: TMemoryStream;
+begin
+  fillchar(Dest, MaxSize, 0);
+  M:= nil;
+  try
+    M:= TMemoryStream.Create;
+    Lines.SaveToStream(M);
+    M.Seek(0,0);
+    if M.size < MaxSize then Maxsize:= M.size;
+    M.Read(Dest, MaxSize);
+  finally
+    M.free;
+  end;
+end;
+
+procedure GetLines(Lines: TStrings; const Src; Size: integer);
+var M: TMemoryStream;
+begin
+  Lines.Clear;
+  M:= nil;
+  try
+    M:= TMemoryStream.Create;
+    M.Write(Src, Size);
+    M.Seek(0,0);
+    Lines.LoadFromStream(M);
+  finally
+    M.free;
+  end;
+end;
+
+function CaseStr(value: string; choices: array of string): integer;
+var
+  x: integer;
+begin
+  result:= -1;
+  for x:= low(choices) to high(choices) do
+  begin
+    if comparetext(value, choices[x])=0 then
+    begin
+      result:= x;
+      break;
+    end;
+  end;
+end;
+
+function CaseObj(value: TObject; choices: array of TObject): integer;
+var
+  x: integer;
+begin
+  result:= -1;
+  for x:= low(choices) to high(choices) do
+  begin
+    if Value = choices[x] then
+    begin
+      result:= x;
+      break;
+    end;
+  end;
+end;
+
+{* Graphic Routines *}
+procedure DrawTrans(DestCanvas: TCanvas; X,Y: smallint; SrcBitmap: TBitmap; AColor: TColor);
+var ANDBitmap, ORBitmap: TBitmap;
+    CM: TCopyMode;
+    Src: TRect;
+begin
+  ANDBitmap:= NIL;
+  ORBitmap:=  NIL;
+  try
+  ANDBitmap:= TBitmap.Create;
+  ORBitmap:= TBitmap.Create;
+  Src  := Bounds(0,0, SrcBitmap.Width, SrcBitmap.Height);
+  with ORBitmap do begin
+    Width:= SrcBitmap.Width;
+    Height:= SrcBitmap.Height;
+    Canvas.Brush.Color := clBlack;
+    Canvas.CopyMode := cmSrcCopy;
+    Canvas.BrushCopy(Src, SrcBitmap, Src, AColor);
+    end;
+  with ANDBitmap do begin
+    Width:= SrcBitmap.Width;
+    Height:= SrcBitmap.Height;
+    Canvas.Brush.Color := clWhite;
+    Canvas.CopyMode := cmSrcInvert;
+    Canvas.BrushCopy(Src, SrcBitmap, Src, AColor);
+    end;
+  with DestCanvas do begin
+    CM := CopyMode;
+    CopyMode := cmSrcAnd;
+    Draw(X,Y, ANDBitmap);
+    CopyMode := cmSrcPaint;
+    Draw(X,Y, ORBitmap);
+    CopyMode := CM;
+    end;
+  finally
+  ANDBitmap.Free;
+  ORBitmap.Free;
+  end;
+end;
+
+procedure DrawDisabledImage(Src, Dest: TBitmap);
+var
+  MonoBmp: TBitmap;
+  R: TRect;
+begin
+  MonoBmp:= TBitmap.Create;
+  try
+    MonoBmp.Assign(Src);
+    MonoBmp.Canvas.Brush.Color := clBlack;
+    MonoBmp.Monochrome := True;
+    R:= Rect(0,0, Src.Width, Src.Height);
+    Dest.Width:= Src.Width;
+    Dest.Height:= Src.Height;
+    Dest.Canvas.Brush.Color := clBtnFace;
+    Dest.Canvas.FillRect(R);
+    Dest.Canvas.Brush.Color := clBtnHighlight;
+    SetTextColor(Dest.Canvas.Handle, clBlack);
+    SetBkColor(Dest.Canvas.Handle, clWhite);
+    BitBlt(Dest.Canvas.Handle, R.Left+1, R.Top+1, Src.Width, Src.Height,
+            MonoBmp.Canvas.Handle, 0, 0, $00E20746);
+    Dest.Canvas.Brush.Color := clBtnShadow;
+    SetTextColor(Dest.Canvas.Handle, clBlack);
+    SetBkColor(Dest.Canvas.Handle, clWhite);
+    BitBlt(Dest.Canvas.Handle, R.Left, R.Top, Src.Width, Src.Height,
+            MonoBmp.Canvas.Handle, 0, 0, $00E20746);
+  finally
+    SetBkMode(Dest.Canvas.Handle, TRANSPARENT);
+    MonoBmp.Free;
+  end
+end;
+
+procedure ClearBitmap(Bmp: TBitmap);
+var B: TBitmap;
+begin
+  B:= TBitmap.create;
+  Bmp.Assign(B);
+  B.Free;
+end;
+
+{* String Routines *}
+function Pad(S: string; I: smallint): string;
+begin
+  while(Length(S) < I) do S:= ' '+S;
+  result:= S;
+end;
+
+function Clip(S: string; I: smallint): string;
+begin
+  {$IFDEF WIN32}
+  if length(S) > I then SetLength(S, I);
+  {$ELSE}
+  if length(S) > I then S[0]:= char(I);
+  {$ENDIF}
+  result:= S;
+end;
+
+function CPad(S: string; I: smallint): string;
+begin
+  while(Length(S) < I) do S:= ' '+S;
+  result:= Clip(S,I);
+end;
+
+function CPadR(S: string; I: smallint): string;
+begin
+  while(Length(S) < I) do S:= S+' ';
+  result:= Clip(S,I);
+end;
+
+function PadZ(S: string; I: smallint): string;
+begin
+  while(Length(S) < I) do S:= '0'+S;
+  result:= S;
+end;
+
+function ReplaceAll( Old, New, S : String; caseSen : boolean ) : string;
+var
+  P,x : smallint;
+  tmpstr : String;
+begin
+  P:= 1;
+  if not caseSen then Old:= AnsiLowerCase(Old);
+  while P <= length(S) do begin
+    tmpstr:= Copy(S, P, length(S)-P+1);
+    if not caseSen then tmpstr:= AnsiLowerCase(tmpstr);
+    x:= Pos(Old, tmpstr);
+    if x > 0 then begin
+      Delete(S, P+x-1, length(Old));
+      Insert(New, S, P+x-1);
+      P:= P + x - 1 + length(new);
+      end
+    else inc(P);
+    end;
+  Result:= S;
+end;
+
+function CasePos(Sub, S : string): smallint;
+begin
+  Sub:= Lowercase(Sub);
+  S:= Lowercase(S);
+  Result:= Pos(Sub,S);
+end;
+
+function PosFromPos(Sub, S : string; Index : smallint): smallint;
+var
+  x      : smallint;
+  tmpstr : string;
+begin
+  if index < length(S) - length(sub) + 1 then begin
+    tmpstr:= copy(S, Index, (length(s) - Index) + 1);
+    if length(Sub) < length(tmpstr) then begin
+      x:= Pos(Sub, tmpstr);
+      if x > 0 then result:= (Index + x) - 1
+      else result:= -1;
+      end
+    else result:= -1;
+    end
+  else result:= -1;
+end;
+
+function CasePosFromPos(Sub, S : string; Index : smallint): smallint;
+var
+  x      : smallint;
+  tmpstr : string;
+begin
+  Sub:= Lowercase(Sub);
+  S:= Lowercase(S);
+  if index < length(S) - length(sub) + 1 then begin
+    tmpstr:= copy(S, Index, (length(s) - Index) + 1);
+    if length(Sub) < length(tmpstr) then begin
+      x:= CasePos(Sub, tmpstr);
+      if x > 0 then result:= (Index + x) - 1
+      else result:= 0;
+      end
+    else result:= 0;
+    end
+  else result:= 0;
+end;
+
+function MakeUniqueString: String;
+var
+  datestr: string[5];
+  timestr: string[10];
+  ti_hour,ti_min,ti_sec,ti_hund: word;
+  l_hour,l_min,l_sec,l_hund: longint;
+  da_year,da_mon,da_day: word;
+  time_code: longint;
+begin
+  Result:= '';
+  DecodeTime(Time,ti_hour,ti_min,ti_sec,ti_hund);
+  DecodeDate(Date,da_year,da_mon,da_day);
+
+  l_hour := ti_hour;
+  l_min  := ti_min;
+  l_sec  := ti_sec;
+  l_hund := ti_hund;
+
+  time_code := (l_hour * 360000) +
+               (l_min  * 6000) +
+               (l_sec  * 100) +
+                l_hund;
+  datestr:= inttobase(da_year-1980,36);
+  datestr:= datestr + inttobase(da_mon,36);
+  datestr:= datestr + inttobase(da_day,36);
+  timestr:= padZ(inttobase(time_code,36), 5);
+  Result:= Uppercase(datestr + timestr);
+end;
+
+function GetField(const S: string; delimeter: char; fieldnum: integer): string;
+var
+  x: integer;
+  infield, copymode: boolean;
+begin
+  result:= '';
+  infield:= false;
+  copymode:= false;
+  for x:= 1 to length(S) do
+  begin
+    if (S[x] = '"') then infield:= not infield;
+    if (S[x] = delimeter) and (not infield) then
+      dec(fieldnum);
+    if fieldnum = 0 then
+      copymode:= true;
+    if fieldnum < 0 then
+      break;
+    if copymode then
+    begin
+      if (S[x] <> '"') and ((S[x] <> delimeter) or ((S[x] = delimeter) and infield)) then
+        result:= result + S[x];
+    end;
+  end;
+end;
+
+procedure GetFields(Dest: TStrings; const S: string; delimeter: char);
+var
+  x: integer;
+  infield: boolean;
+  tmpstr: string;
+begin
+  Dest.clear;
+  tmpstr:= '';
+  infield:= false;
+  for x:= 1 to length(S) do
+  begin
+    if (S[x] = '"') then infield:= not infield;
+    if (S[x] = delimeter) and (not infield) or ( x = length(S)) then
+    begin
+      if x = length(S) then
+        if (S[x] <> '"') and ((S[x] <> delimeter) or ((S[x] = delimeter) and infield)) then
+          tmpstr:= tmpstr + S[x];
+      Dest.Add(tmpstr);
+      tmpstr:= '';
+    end;
+    if (S[x] <> '"') and ((S[x] <> delimeter) or ((S[x] = delimeter) and infield)) then
+      tmpstr:= tmpstr + S[x];
+  end;
+end;
+
+{* Numeric Routines *}
+function HextoInt(Hex : String) : Longint;
+var
+  i : byte;
+  e : longint;
+  function ZeroToF(c : char) : byte;
+  begin
+    case c of
+      '0' : result:= 0;
+      '1' : result:= 1;
+      '2' : result:= 2;
+      '3' : result:= 3;
+      '4' : result:= 4;
+      '5' : result:= 5;
+      '6' : result:= 6;
+      '7' : result:= 7;
+      '8' : result:= 8;
+      '9' : result:= 9;
+      'a','A' : result:= 10;
+      'b','B' : result:= 11;
+      'c','C' : result:= 12;
+      'd','D' : result:= 13;
+      'e','E' : result:= 14;
+      'f','F' : result:= 15;
+      else result:= 0;
+      end;
+  end;
+begin
+  result:= 0; e:= 1;
+  for i:= length(Hex) downto 1 do begin
+    result:= result + ZeroToF(Hex[i])*e;
+    e:= e * 16;
+    end;
+end;
+
+function base36toint(str36: String): smallint;
+begin
+  Result:= 0;
+  if length(str36) > 2 then Exit;
+  {first digit}
+  if (str36[1] >= 'A') and (str36[1] <= 'Z') then
+    Result:= Result + (byte(str36[1]) - byte('A') + 10) * 36
+  else Result:= Result + (byte(str36[1]) - byte('0')) * 36;
+  {second digit}
+  if (str36[2] >= 'A') and (str36[2] <= 'Z') then
+    Result:= Result + (byte(str36[2]) - byte('A') + 10)
+  else Result:= Result + (byte(str36[2]) - byte('0'));
+end;
+
+function inttobase( number : longint; base : byte) : string; {base = 2-36}
+var division : longint;
+    modulus  : byte;
+  function ZeroToZ(b : byte) : char;
+  begin
+    case b of
+      0: result:= '0';
+      1: result:= '1';
+      2: result:= '2';
+      3: result:= '3';
+      4: result:= '4';
+      5: result:= '5';
+      6: result:= '6';
+      7: result:= '7';
+      8: result:= '8';
+      9: result:= '9';
+      10: result:= 'A';
+      11: result:= 'B';
+      12: result:= 'C';
+      13: result:= 'D';
+      14: result:= 'E';
+      15: result:= 'F';
+      16: result:= 'G';
+      17: result:= 'H';
+      18: result:= 'I';
+      19: result:= 'J';
+      20: result:= 'K';
+      21: result:= 'L';
+      22: result:= 'M';
+      23: result:= 'N';
+      24: result:= 'O';
+      25: result:= 'P';
+      26: result:= 'Q';
+      27: result:= 'R';
+      28: result:= 'S';
+      29: result:= 'T';
+      30: result:= 'U';
+      31: result:= 'V';
+      32: result:= 'W';
+      33: result:= 'X';
+      34: result:= 'Y';
+      35: result:= 'Z';
+      else result:= #0;
+      end;
+  end;
+begin
+  result:= '';
+  if number <= 0 then begin
+    result:= '0';
+    Exit;
+    end;
+  if (base > 36) or (base < 2) then Exit;
+  division:= number div base;
+  modulus:= number mod base;
+  while (modulus > 0) or (division >= 1) do begin
+    result:= zerotoz(modulus) + result;
+    number:= division;
+    division:= number div base;
+    modulus:= number mod base;
+    end;
+end;
+
+function inttostrZ(value, zeroes: integer): string;
+begin
+  result:= inttostr(value);
+  while length(result) < zeroes do result:= '0' + result;
+end;
+
+function Pow( base, expon : double ) : double;
+begin
+  Result:= Exp(expon*(ln(base)));
+end;
+
+function Pow10(n: Double): Double;
+begin
+  Result:=Exp(n * Ln(10));
+end;
+
+function Floor(E: Extended): Longint;
+begin
+  if E > 0 then Result:= trunc(E) else Result:= round(E);
+end;
+
+function Ceiling(E: Extended): Longint;
+begin
+  if E > 0 then Result:= round(E) else Result:= trunc(E);
+end;
+
+function TrueRound(number : extended; decimals : smallint) : extended;
+begin
+  number := number * pow10(decimals);
+  number := floor(number);
+  number := number / pow10(decimals);
+  result:= number;
+end;
+
+function TrueRoundAuto(number : extended) : longint;
+begin
+  Result:= Trunc(Number) + Trunc( Frac(Number) * 2)
+end;
+
+function round_digits(number : double; digits : smallint) : double;
+begin
+  number := number * pow10(digits);
+  number := TrueRoundAuto(number);
+  number := number / pow10(digits);
+  result:= number;
+end;
+
+function round_cents(value : double) : double;
+begin
+  result:= round_digits(value+0.005,2);
+end;
+
+function round_dollars(value : double) : double;
+begin
+  result:= Floor(value+0.5);
+end;
+
+function round_dollars_down(value : double) : double;
+begin
+  result:= Floor(value-0.5);
+end;
+
+{* File Routines *}
+procedure LoadDFM( filename : String; Dest : TStrings );
+var
+  InStream  : TFileStream;
+  OutStream : TMemoryStream;
+begin
+  InStream  := nil;
+  OutStream := nil;
+  try
+  InStream  := TFileStream.Create( filename, fmOpenReadWrite );
+  OutStream := TMemoryStream.Create;
+  ObjectResourceToText( InStream, OutStream );
+  OutStream.Seek(0,0);
+  Dest.LoadFromStream( OutStream );
+  finally
+  InStream.Free;
+  OutStream.Free;
+  end;
+end;
+
+procedure SaveDFM( filename : String; Src : TStrings );
+var
+  OutStream  : TFileStream;
+  InStream   : TMemoryStream;
+begin
+  InStream  := nil;
+  OutStream := nil;
+  try
+  InStream := TMemoryStream.Create;
+  OutStream  := TFileStream.Create( filename, fmCreate );
+  Src.SavetoStream(InStream);
+  InStream.Seek(0,0);
+  ObjectTextToResource( InStream, OutStream );
+  finally
+  InStream.Free;
+  OutStream.Free;
+  end;
+end;
+
+procedure MkTree( Path : String );
+var
+  tmpstr : String;
+  x,s    : smallint;
+begin
+  {check for drive letter at beginning}
+  if Path[1] = '\' then s:= 2
+  else s:= 4;
+  {create dir + subdirs}
+  for x:= s to Length(Path) do begin
+    if Path[x] = '\' then begin
+      tmpstr:= Copy( Path, 1, x-1 );
+      {$I-}
+      MkDir(tmpstr);
+      {$I+}
+      end;
+    end;
+end;
+
+procedure GetAllFiles(Path, Filter: String; Dest: TStrings);
+var
+  Rec: TSearchRec;
+begin
+  Dest.clear;
+  if length(Path) > 0 then
+    if Path[length(Path)] <> '\' then Path:= Path + '\';
+  if FindFirst(Path+Filter, faAnyFile, Rec) <> 0 then Exit;
+  repeat
+    if fileexists(Path+Rec.Name) then
+      Dest.Add(Rec.Name);
+  until FindNext(Rec) <> 0;
+end;
+
+function FirstFile(WildPath: String): string;
+var
+  Rec: TSearchRec;
+begin
+  result:= '';
+  if length(WildPath) > 0 then
+  begin
+    if FindFirst(WildPath, faAnyFile, Rec) = 0 then
+      result:= extractfilepath(Wildpath)+Rec.Name;
+  end;
+end;
+
+procedure CopyFile(Src, Dest: String);
+var FS1, FS2: TFileStream;
+    bytes: word;
+    buffer: array[0..4096] of byte;
+begin
+  FS1:= NIL;
+  FS2:= NIL;
+  try
+  FS1:= TFileStream.Create( Src, fmOpenRead );
+  FS2:= TFileStream.Create( Dest, (fmCreate or fmOpenWrite) );
+  repeat
+    bytes:= FS1.Read(buffer, 4096);
+    FS2.Write(buffer, bytes);
+  until bytes < 4096;
+  finally
+  FS1.Free;
+  FS2.Free;
+  end;
+end;
+
+procedure CopyFiles(Source, Dest: String; prompt: boolean);
+var tmprec: TSearchRec;
+    FS, FD: TFileStream;
+    buffer: array[0..4095] of byte;
+    bytes : word;
+    D     : string[80];
+begin
+  FS:= NIL; FD:= NIL;
+  if FindFirst(Source,0,tmprec) <> 0 then Exit;
+  if Dest[Length(Dest)] <> '\' then Dest:= Dest + '\';
+  repeat
+    if prompt then
+      if FileExists(Dest+ExtractFileName(tmprec.name)) then
+        if MessageDlg('Overwrite '+Dest+ExtractFileName(tmprec.name)+'?',mtConfirmation,[mbYes,mbNo],0) = mrNo then continue;
+    try
+    D:= ExtractFilePath(Source)+ tmprec.name;
+    FS:= TFileStream.Create(D, fmOpenRead);
+    FD:= TFileStream.Create(Dest+ExtractFileName(tmprec.name), fmOpenWrite or fmCreate );
+
+    repeat
+      bytes:= FS.Read(Buffer, 4096);
+      if bytes > 0 then FD.Write(Buffer, bytes);
+    until bytes < 4096;
+
+    finally
+    FS.Free;
+    FD.Free;
+    end;
+  until FindNext(tmprec) <> 0;
+end;
+
+function SearchFile(Sub: String; FS: TFileStream): longint;
+const BUFSIZE = 8192;
+var x,y,bytes: smallint;
+    start: longint;
+    buffer: PByteArray;
+begin
+  buffer:= NIL;
+  result:= -1;
+  try Getmem(buffer, BUFSIZE);
+  repeat
+    bytes:= FS.Read(buffer^, BUFSIZE);
+    x:= 0;
+    while x < bytes do begin
+      y:= 1;
+      start:= -1;
+      while char(buffer^[x]) = sub[y] do begin
+        if start = -1 then start:= FS.Position - bytes + x;
+        if y = Length(sub) then begin result:= start; Exit; end;
+        inc(y);
+        inc(x);
+        if x = bytes then begin
+          bytes:= FS.Read(buffer^, BUFSIZE);
+          x:= 0;
+          end;
+        end;
+      inc(x);
+      end;
+  until (bytes < BUFSIZE);
+  finally
+  FreeMem(buffer, BUFSIZE);
+  end;
+end;
+
+procedure SaveFile(Path: String; const Data; Size: Longint);
+var
+  FS: TFileStream;
+  mode: word;
+begin
+  if fileexists(Path) then
+    System.Sysutils.DeleteFile(Path);
+  FS:= NIL;
+  mode:= fmCreate or fmOpenWrite;
+  try
+    FS:= TFileStream.Create( Path, mode );
+    FS.Write(Data, Size);
+  finally
+    FS.Free;
+  end;
+end;
+
+function LoadFile(Path: String; var Data; MaxSize: Longint): longint;
+var
+  FS: TFileStream;
+  mode: word;
+begin
+  FS:= NIL;
+  mode:= fmOpenRead or fmShareDenyNone;
+  try
+    FS:= TFileStream.Create( Path, mode );
+    if FS.Size < Maxsize then Maxsize:= FS.Size;
+    FS.Read(Data, MaxSize);
+    result:= FS.size;
+  finally
+    FS.Free;
+  end;
+end;
+
+function UniqueFile(Path, filename: String): string;
+var
+  x: smallint;
+  tmpstr: string;
+begin
+  if filename = '' then filename:= 'untitled';
+  if length(Path) > 0 then
+    if Path[length(Path)] <> '\' then Path:= Path + '\';
+  x:= pos('.', filename);
+  if x > 0 then
+    delete(filename, x, (length(filename)-x)+1);
+  x:= 0;
+  repeat
+    inc(x);
+    tmpstr:= filename+'.'+inttostrz(x,3);
+  until not fileexists(Path+tmpstr);
+  result:= tmpstr;
+end;
+
+function LowerDir(dir: string): string;
+var
+  i,j: integer;
+begin
+  result:= dir;
+  j:= -1;
+  for i:= length(dir) downto 1 do
+    if (dir[i] = '\') and (i < length(dir)) then
+    begin
+      j:= i;
+      break;
+    end;
+  if j > -1 then
+  begin
+    result:= copy(dir, 1, j);
+  end;
+end;
+
+function ChangeExt(filename, ext: string): string;
+var x: integer;
+
+begin
+  result:= filename;
+  x:= pos('.', filename);
+  if x > 0 then
+    result:= copy(filename,1,x)+ext
+  else
+    result:= filename+'.'+ext;
+end;
+
+{* Date Routines *}
+type
+  TDateOrder = (doMDY, doDMY, doYMD);
+  PDayTable = ^TDayTable;
+  TDayTable = array[1..12] of Word;
+
+function LongMul(I, J: Word): Longint; assembler;
+asm
+  MOV AX,I
+  MUL J
+end;
+
+function IsLeapYear(Year: Word): Boolean;
+begin
+  Result := (Year mod 4 = 0) and ((Year mod 100 <> 0) or (Year mod 400 = 0));
+end;
+
+function GetDayTable(Year: Word): PDayTable;
+const
+  DayTable1: TDayTable = (31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
+  DayTable2: TDayTable = (31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
+  DayTables: array[Boolean] of PDayTable = (@DayTable1, @DayTable2);
+begin
+  Result := DayTables[IsLeapYear(Year)];
+end;
+
+function DoEncodeTime(Hour, Min, Sec, MSec: Word; var Time: TDateTime): Boolean;
+begin
+  Result := False;
+  if (Hour < 24) and (Min < 60) and (Sec < 60) and (MSec < 1000) then
+  begin
+    Time := (LongMul(Hour * 60 + Min, 60000) + Sec * 1000 + MSec) / MSecsPerDay;
+    Result := True;
+  end;
+end;
+
+function DoEncodeDate(Year, Month, Day: Word; var Date: TDateTime): Boolean;
+var
+  I: Word;
+  DayTable: PDayTable;
+begin
+  Result := False;
+  DayTable := GetDayTable(Year);
+  if (Year >= 1) and (Year <= 9999) and (Month >= 1) and (Month <= 12) and
+    (Day >= 1) and (Day <= DayTable^[Month]) then
+  begin
+    for I := 1 to Month - 1 do Inc(Day, DayTable^[I]);
+    I := Year - 1;
+    Date := LongMul(I, 365) + (Day + I div 4 - I div 100 + I div 400);
+    Result := True;
+  end;
+end;
+
+function CurrentYear: Word;
+var Year, Month, Day: Word;
+begin
+  DecodeDate(Now, Year, Month, Day);
+  Result:= Year;
+end;
+
+procedure ScanBlanks(const S: string; var Pos: Integer);
+var
+  I: Integer;
+begin
+  I := Pos;
+  while (I <= Length(S)) and (S[I] = ' ') do Inc(I);
+  Pos := I;
+end;
+
+function ScanNumber(const S: string; var Pos: Integer;
+  var Number: Word): Boolean;
+var
+  I: Integer;
+  N: Word;
+begin
+  Result := False;
+  ScanBlanks(S, Pos);
+  I := Pos;
+  N := 0;
+  while (I <= Length(S)) and (S[I] in ['0'..'9']) and (N < 1000) do
+  begin
+    N := N * 10 + (Ord(S[I]) - Ord('0'));
+    Inc(I);
+  end;
+  if I > Pos then
+  begin
+    Pos := I;
+    Number := N;
+    Result := True;
+  end;
+end;
+
+function ScanString(const S: string; var Pos: Integer;
+  const Symbol: string): Boolean;
+begin
+  Result := False;
+  if Symbol <> '' then
+  begin
+    ScanBlanks(S, Pos);
+    if AnsiCompareText(Symbol, Copy(S, Pos, Length(Symbol))) = 0 then
+    begin
+      Inc(Pos, Length(Symbol));
+      Result := True;
+    end;
+  end;
+end;
+
+function ScanChar(const S: string; var Pos: Integer; Ch: Char): Boolean;
+begin
+  Result := False;
+  ScanBlanks(S, Pos);
+  if (Pos <= Length(S)) and (S[Pos] = Ch) then
+  begin
+    Inc(Pos);
+    Result := True;
+  end;
+end;
+
+function GetDateOrder(const DateFormat: string): TDateOrder;
+var
+  I: Integer;
+begin
+  Result := doMDY;
+  I := 1;
+  while I <= Length(DateFormat) do
+  begin
+    case Chr(Ord(DateFormat[I]) and $DF) of
+      'Y': Result := doYMD;
+      'M': Result := doMDY;
+      'D': Result := doDMY;
+    else
+      Inc(I);
+      Continue;
+    end;
+    Exit;
+  end;
+  Result := doMDY;
+end;
+
+function rsScanDate(const S: string; var Pos: Integer;
+  var Date: TDateTime): Boolean;
+ var
+      FFormatoBR: TFormatSettings;
+var
+  DateOrder: TDateOrder;
+  N1, N2, N3, Y, M, D: Word;
+begin
+  Result := False;
+  Y:= 0;
+  M:= 0;
+  D:= 0;
+  FFormatoBR := TFormatSettings.Create;
+  DateOrder := GetDateOrder(FFormatoBR.ShortDateFormat);
+  if not (ScanNumber(S, Pos, N1) and ScanChar(S, Pos, FFormatoBR.DateSeparator) and
+    ScanNumber(S, Pos, N2)) then Exit;
+  if ScanChar(S, Pos, FFormatoBR.DateSeparator) then
+  begin
+    if not ScanNumber(S, Pos, N3) then Exit;
+    case DateOrder of
+      doMDY: begin Y := N3; M := N1; D := N2; end;
+      doDMY: begin Y := N3; M := N2; D := N1; end;
+      doYMD: begin Y := N1; M := N2; D := N3; end;
+    end;
+    if Y <= 99 then Inc(Y, 1900);
+  end else
+  begin
+    Y := CurrentYear;
+    if DateOrder = doDMY then
+    begin
+      D := N1; M := N2;
+    end else
+    begin
+      M := N1; D := N2;
+    end;
+  end;
+  ScanBlanks(S, Pos);
+  FreeAndNil(FFormatoBR);
+  Result := DoEncodeDate(Y, M, D, Date);
+end;
+
+function rsScanTime(const S: string; var Pos: Integer;
+  var Time: TDateTime): Boolean;
+ var
+      FFormatoBR: TFormatSettings;
+var
+  BaseHour: Integer;
+  Hour, Min, Sec: Word;
+begin
+  Result := False;
+  FFormatoBR := TFormatSettings.Create;
+  if not (ScanNumber(S, Pos, Hour) and ScanChar(S, Pos, FFormatoBR.TimeSeparator) and
+    ScanNumber(S, Pos, Min)) then Exit;
+  Sec := 0;
+  if ScanChar(S, Pos, FFormatoBR.TimeSeparator) then
+    if not ScanNumber(S, Pos, Sec) then Exit;
+  BaseHour := -1;
+  if ScanString(S, Pos, FFormatoBR.TimeAMString) or ScanString(S, Pos, 'AM') then
+    BaseHour := 0
+  else
+    if ScanString(S, Pos, FFormatoBR.TimePMString) or ScanString(S, Pos, 'PM') then
+      BaseHour := 12;
+  if BaseHour >= 0 then
+  begin
+    if (Hour = 0) or (Hour > 12) then Exit;
+    if Hour = 12 then Hour := 0;
+    Inc(Hour, BaseHour);
+  end;
+  ScanBlanks(S, Pos);
+  Result := DoEncodeTime(Hour, Min, Sec, 0, Time);
+end;
+
+function StrToDateDef(const S: string; const D: TDateTime): TDateTime;
+var APos: Integer;
+begin
+  {see if date decodes..}
+  APos := 1;
+  if not rsScanDate(S, APos, Result) or (APos <= Length(S)) then Result:= D;
+  {ok to call}
+  if result <> D then result:= StrToDate(S)
+  else Result:= D;
+end;
+
+function StrToTimeDef(const S: string; const D: TDateTime): TDateTime;
+var APos: Integer;
+begin
+  APos := 1;
+  {see if time decodes..}
+  if not rsScanTime(S, APos, Result) or (APos <= Length(S)) then Result:= D;
+  {ok to call}
+  if result <> D then result:= StrToTime(S);
+end;
+
+function StrToFloatDef(const S: string; const D: Extended): Extended;
+{$IFNDEF WIN32}
+var tmp: array[0..255] of char;
+{$ENDIF}
+begin
+{$IFDEF WIN32}
+  if not TextToFloat(PChar(S), Result, fvExtended) then Result:= D;
+{$ELSE}
+  strpcopy(tmp,s);
+  if not TextToFloat(tmp, Result) then Result:= D;
+{$ENDIF}
+end;
+
+
+end.

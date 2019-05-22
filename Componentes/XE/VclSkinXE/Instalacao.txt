@@ -1,0 +1,8 @@
+Instalacao
+
+1 / Load DELPHI XE
+2 / Load the file WinSkinD2011.dproj
+3 / Right mouse button. Click on “MAKE” (Warning: Not BUILD)
+4 / Right mouse button. Click “Install”
+
+

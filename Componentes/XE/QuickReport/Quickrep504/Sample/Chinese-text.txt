@@ -1,0 +1,17 @@
+結論
+
+在 SQL Server 中處理 Unicode 字串常數時，您必需在所有的 Unicode 字串前加上大寫字母 N 做為前置
+詞，如《SQL Server 線上叢書》主題＜使用 Unicode 資料＞所述。「N」前置詞代表的是 SQL-92 標準
+中的國家語言，且必須為大寫。如果您沒有在 Unicode 字串常數前面加上 N 做為前置詞，則 SQL Server
+會在使用字串前，先將其轉換成目前資料庫的非 Unicode 字碼頁。
+其他相關資訊
+
+這個標記法是為現有應用程式提供回溯相容性的必要項目。例如，"SELECT 'Hello'" 必須繼續傳回非 Unicode 字串，因為許多應用程式會預期
+這是 SQL Server 6.5 的行為，而 SQL Server 6.5 不支援 Unicode 資料；而加入新語法 "SELECT N'Hello'" 可以在 SQL Server 7.0 之間來
+回傳送 Unicode 字串
+
+每當您傳送 Unicode 資料至 SQL Server 的時候，都必須在 Unicode 字串前面加上 N 做為前置詞。如果應用程式有啟用 Unicode，並且沒有
+為 Unicode 字串常數加上 N 做為前置詞就將資料傳送至 SQL Server 7.0，則可能會遇到字元資料遺失的情況。如果 SQL Server 將沒有加上
+N 做為前置詞的 Unicode 字串，從 Unicode 轉換成 SQL Server 資料庫字碼頁，則 Unicode 字串中任何不存在於 SQL Server 字碼頁中的字
+元將會遺失。請注意，此轉譯與 Autotranslation、OemToAnsi 或 AutoAnsiToOem 轉換無關，這些轉換都是發生在用戶端的 ODBC
+OLEDB 或資料程式庫層

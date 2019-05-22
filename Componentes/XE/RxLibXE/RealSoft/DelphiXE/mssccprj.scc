@@ -1,0 +1,5 @@
+SCC = This is a Source Code Control file
+
+[Rsedit.pas]
+SCC_Aux_Path = "\\NTIBM\VSS\"
+SCC_Project_Name = "$/RealCtrls", WNAAAAAA

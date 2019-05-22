@@ -1,0 +1,1371 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="QXDStylesheet.xsl"?>
+<!DOCTYPE QXDocument [
+<!ELEMENT QXDocument (Header, Page*)>
+<!ELEMENT Header (Title*, DocType*, Creator*, Author*, Date*, Copyright*, Orientation*)>
+<!ELEMENT DocType (#PCDATA)>
+<!ELEMENT Title (#PCDATA)>
+<!ELEMENT Creator (#PCDATA)>
+<!ELEMENT Author (#PCDATA)>
+<!ELEMENT Date (#PCDATA)>
+<!ELEMENT Copyright (#PCDATA)>
+<!ELEMENT Orientation (#PCDATA)>
+<!ELEMENT Page (Item*)>
+<!ELEMENT Item (#PCDATA)>
+<!ELEMENT Contents (#PCDATA)>
+<!ATTLIST Header Units CDATA "mm">
+<!ATTLIST Header Pagewidth CDATA "210">
+<!ATTLIST Header Pageheight CDATA "297">
+<!ATTLIST Header PaperName CDATA "A4">
+<!ATTLIST Header Layers CDATA "3">
+<!ATTLIST Item Type CDATA "Text">
+<!ATTLIST Item X CDATA "0">
+<!ATTLIST Item Y CDATA "0">
+<!ATTLIST Item Font CDATA "Arial">
+<!ATTLIST Item Height CDATA "12">
+<!ATTLIST Item Color CDATA "Black">
+<!ATTLIST Item BC CDATA "White">
+<!ATTLIST Item FW CDATA "Normal">
+<!ATTLIST Item Dec CDATA "None">
+<!ATTLIST Item Width CDATA "1">
+<!ATTLIST Item Height CDATA "1">
+<!ATTLIST Item SP CDATA "0">
+<!ATTLIST Item CID CDATA "000000">
+<!ATTLIST Item DBR CDATA "0">
+<!-- 0=rect, 1=ellipse, 2=hline,3=vline,4=roundrect,5=rightdiag,6=leftdiag-->
+<!ATTLIST Item LW CDATA "1">
+<!ATTLIST Item FT CDATA "0">
+<!ATTLIST Item LY CDATA "0">
+<!ATTLIST Item Op CDATA "1">
+<!ATTLIST Item ImageFile CDATA "">
+<!ATTLIST Item Cmp CDATA "None">
+<!ATTLIST Item XS CDATA "1.0">
+<!ATTLIST Item YS CDATA "1.0">
+<!ATTLIST Item Extra CDATA "">
+<!ATTLIST Page Number CDATA "1">
+]>
+<QXDocument>
+<Header Pagewidth="210.00" Pageheight="297.00" PaperName="A4" Units="mm">
+   <Title></Title>
+   <DocType></DocType>
+   <Creator>QRXDocumentFilter</Creator>
+   <Author></Author>
+   <Date>01/12/2008</Date>
+   <Copyright></Copyright>
+   <Orientation>Portrait</Orientation>
+</Header>
+
+<Page Number="1">
+<Item Type="Graphic" LY="2" X="12.70" Y="12.70" LW="0.26" SP="0" Width="184.68" Height="27.78" Color="#000000" BC="#FFFFFF" FT="Fill" CID="" DBR="0">
+</Item>
+<Item Type="Text" LY="0" Font="Arial" X="21.17" Y="16.40" Height="12" Color="#800000" FW="Bold" Dec="none" CID="QRLabel2" DBR="0">
+QR5 in CodeGear RAD-6
+</Item>
+<Item Type="Text" LY="0" Font="Arial" X="21.17" Y="29.63" Height="10" Color="#008000" FW="Bold" Dec="none" CID="QRSysData1" DBR="0">
+Page : 1
+</Item>
+<Item Type="Band" X="127.00" Y="127.00" Width="698" Height="105" LY="1" XS=" 1.000" YS=" 1.000" Cmp="none" CID="PageHeaderBand1" DBR="0"></Item>
+
+<Item Type="Graphic" LY="2" X="12.70" Y="40.48" LW="0.26" SP="0" Width="184.68" Height="33.87" Color="#000000" BC="#FFFFFF" FT="Fill" CID="" DBR="0">
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="17.20" Y="44.73" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRLabel1" DBR="0">
+Record number : 0  ?
+</Item>
+<Item Type="Graphic" LY="2" X="48.95" Y="55.30" LW="0.26" SP="0" Width="27.52" Height="8.73" Color="#000000" BC="#0000FF" FT="Fill" CID="QRShape1" DBR="0">
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="42.62" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="0">
+?????????? Unicode ????? SQL 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="46.06" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="0">
+Server,????? ANSI ???? SQL Server 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="49.50" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="0">
+??????,????????????? N 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="52.94" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="0">
+?????,??????????????????????,SQL
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="56.38" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="0">
+Server 7.0 ??????????????????? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="59.81" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="0">
+??;??????,??????? N 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="63.25" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="0">
+????????????,?????????????????
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="66.69" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="0">
+SQL Server 7.0 ?,???????????? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="70.13" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="0">
+(?????????? Unicode ???),????? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="73.57" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="0">
+?? Unicode ?? (Unicode ??????? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="77.01" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="0">
+??)?????? Unicode ?? (&quot;ABC&quot; = &quot;abc&quot;) 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="80.45" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="0">
+??????? False,?????????????,???? A 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="83.89" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="0">
+???????? a????,??? (N&apos;ABC&apos; = N&apos;abc&apos;) ??? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="87.33" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="0">
+True?????????? N ?????,???????? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="90.77" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="0">
+Unicode,??? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="94.21" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="0">
+????????????????????????,?? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="97.65" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="0">
+Unicode ?????????,????????????
+</Item>
+<Item Type="Text" LY="0" Font="PMingLiU" X="17.20" Y="57.43" Height="12" Color="#080000" FW="Bold" Dec="none" CID="QRLabel3" DBR="0">
+?? ??
+</Item>
+<Item Type="Graphic" LY="1" X="12.70" Y="40.48" LW="0.26" SP="2" Width="184.68" Height="0.50" Color="#0000FF" BC="#FFFFFF" FT="Out" CID="" DBR="0">
+</Item>
+<Item Type="Band" X="127.00" Y="-1.00" Width="698" Height="438" LY="1" XS=" 1.000" YS=" 1.000" Cmp="none" CID="DetailBand1" DBR="0"></Item>
+
+<Item Type="Graphic" LY="2" X="12.70" Y="105.30" LW="0.26" SP="0" Width="184.68" Height="33.87" Color="#000000" BC="#FFFFFF" FT="Fill" CID="" DBR="1">
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="17.20" Y="109.53" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRLabel1" DBR="1">
+Record number : 1  ?
+</Item>
+<Item Type="Graphic" LY="2" X="48.95" Y="120.12" LW="0.26" SP="0" Width="27.52" Height="8.73" Color="#000000" BC="#0000FF" FT="Fill" CID="QRShape1" DBR="1">
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="107.42" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="1">
+?????????? Unicode ????? SQL 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="110.86" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="1">
+Server,????? ANSI ???? SQL Server 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="114.30" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="1">
+??????,????????????? N 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="117.74" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="1">
+?????,??????????????????????,SQL
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="121.17" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="1">
+Server 7.0 ??????????????????? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="124.61" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="1">
+??;??????,??????? N 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="128.05" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="1">
+????????????,?????????????????
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="131.49" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="1">
+SQL Server 7.0 ?,???????????? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="134.93" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="1">
+(?????????? Unicode ???),????? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="138.37" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="1">
+?? Unicode ?? (Unicode ??????? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="141.81" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="1">
+??)?????? Unicode ?? (&quot;ABC&quot; = &quot;abc&quot;) 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="145.25" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="1">
+??????? False,?????????????,???? A 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="148.69" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="1">
+???????? a????,??? (N&apos;ABC&apos; = N&apos;abc&apos;) ??? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="152.13" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="1">
+True?????????? N ?????,???????? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="155.57" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="1">
+Unicode,??? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="159.01" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="1">
+????????????????????????,?? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="162.45" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="1">
+Unicode ?????????,????????????
+</Item>
+<Item Type="Text" LY="0" Font="PMingLiU" X="17.20" Y="122.23" Height="12" Color="#080000" FW="Bold" Dec="none" CID="QRLabel3" DBR="1">
+?? ??
+</Item>
+<Item Type="Graphic" LY="1" X="12.70" Y="105.30" LW="0.26" SP="2" Width="184.68" Height="0.50" Color="#0000FF" BC="#FFFFFF" FT="Out" CID="" DBR="1">
+</Item>
+<Item Type="Band" X="127.00" Y="1053.00" Width="698" Height="438" LY="1" XS=" 1.000" YS=" 1.000" Cmp="none" CID="DetailBand1" DBR="1"></Item>
+
+<Item Type="Graphic" LY="2" X="12.70" Y="170.13" LW="0.26" SP="0" Width="184.68" Height="33.87" Color="#000000" BC="#FFFFFF" FT="Fill" CID="" DBR="2">
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="17.20" Y="174.33" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRLabel1" DBR="2">
+Record number : 2  ?
+</Item>
+<Item Type="Graphic" LY="2" X="48.95" Y="184.94" LW="0.26" SP="0" Width="27.52" Height="8.73" Color="#000000" BC="#0000FF" FT="Fill" CID="QRShape1" DBR="2">
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="172.22" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="2">
+?????????? Unicode ????? SQL 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="175.66" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="2">
+Server,????? ANSI ???? SQL Server 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="179.10" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="2">
+??????,????????????? N 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="182.54" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="2">
+?????,??????????????????????,SQL
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="185.97" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="2">
+Server 7.0 ??????????????????? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="189.41" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="2">
+??;??????,??????? N 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="192.85" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="2">
+????????????,?????????????????
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="196.29" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="2">
+SQL Server 7.0 ?,???????????? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="199.73" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="2">
+(?????????? Unicode ???),????? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="203.17" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="2">
+?? Unicode ?? (Unicode ??????? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="206.61" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="2">
+??)?????? Unicode ?? (&quot;ABC&quot; = &quot;abc&quot;) 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="210.05" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="2">
+??????? False,?????????????,???? A 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="213.49" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="2">
+???????? a????,??? (N&apos;ABC&apos; = N&apos;abc&apos;) ??? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="216.93" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="2">
+True?????????? N ?????,???????? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="220.37" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="2">
+Unicode,??? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="223.81" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="2">
+????????????????????????,?? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="227.25" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="2">
+Unicode ?????????,????????????
+</Item>
+<Item Type="Text" LY="0" Font="PMingLiU" X="17.20" Y="187.03" Height="12" Color="#080000" FW="Bold" Dec="none" CID="QRLabel3" DBR="2">
+?? ??
+</Item>
+<Item Type="Graphic" LY="1" X="12.70" Y="170.13" LW="0.26" SP="2" Width="184.68" Height="0.50" Color="#0000FF" BC="#FFFFFF" FT="Out" CID="" DBR="2">
+</Item>
+<Item Type="Band" X="127.00" Y="1701.00" Width="698" Height="438" LY="1" XS=" 1.000" YS=" 1.000" Cmp="none" CID="DetailBand1" DBR="2"></Item>
+
+<Item Type="Graphic" LY="2" X="12.70" Y="234.95" LW="0.26" SP="0" Width="184.68" Height="33.87" Color="#000000" BC="#FFFFFF" FT="Fill" CID="" DBR="3">
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="17.20" Y="239.13" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRLabel1" DBR="3">
+Record number : 3  ?
+</Item>
+<Item Type="Graphic" LY="2" X="48.95" Y="249.77" LW="0.26" SP="0" Width="27.52" Height="8.73" Color="#000000" BC="#0000FF" FT="Fill" CID="QRShape1" DBR="3">
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="237.02" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="3">
+?????????? Unicode ????? SQL 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="240.46" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="3">
+Server,????? ANSI ???? SQL Server 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="243.90" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="3">
+??????,????????????? N 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="247.34" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="3">
+?????,??????????????????????,SQL
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="250.78" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="3">
+Server 7.0 ??????????????????? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="254.21" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="3">
+??;??????,??????? N 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="257.65" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="3">
+????????????,?????????????????
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="261.09" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="3">
+SQL Server 7.0 ?,???????????? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="264.53" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="3">
+(?????????? Unicode ???),????? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="267.97" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="3">
+?? Unicode ?? (Unicode ??????? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="271.41" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="3">
+??)?????? Unicode ?? (&quot;ABC&quot; = &quot;abc&quot;) 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="274.85" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="3">
+??????? False,?????????????,???? A 
+</Item>
+<Item Type="Text" LY="0" Font="PMingLiU" X="17.20" Y="251.83" Height="12" Color="#080000" FW="Bold" Dec="none" CID="QRLabel3" DBR="3">
+?? ??
+</Item>
+<Item Type="Graphic" LY="1" X="12.70" Y="234.95" LW="0.26" SP="2" Width="184.68" Height="0.50" Color="#0000FF" BC="#FFFFFF" FT="Out" CID="" DBR="3">
+</Item>
+</Page>
+<Page Number="2">
+<Item Type="Graphic" LY="2" X="12.70" Y="12.70" LW="0.26" SP="0" Width="184.68" Height="27.78" Color="#000000" BC="#FFFFFF" FT="Fill" CID="" DBR="3">
+</Item>
+<Item Type="Text" LY="0" Font="Arial" X="21.17" Y="16.40" Height="12" Color="#800000" FW="Bold" Dec="none" CID="QRLabel2" DBR="3">
+QR5 in CodeGear RAD-6
+</Item>
+<Item Type="Text" LY="0" Font="Arial" X="21.17" Y="29.63" Height="10" Color="#008000" FW="Bold" Dec="none" CID="QRSysData1" DBR="3">
+Page : 2
+</Item>
+<Item Type="Band" X="127.00" Y="127.00" Width="698" Height="105" LY="1" XS=" 1.000" YS=" 1.000" Cmp="none" CID="PageHeaderBand1" DBR="3"></Item>
+
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="42.62" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="3">
+???????? a????,??? (N&apos;ABC&apos; = N&apos;abc&apos;) ??? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="46.06" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="3">
+True?????????? N ?????,???????? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="49.50" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="3">
+Unicode,??? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="52.94" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="3">
+????????????????????????,?? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="56.38" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="3">
+Unicode ?????????,????????????
+</Item>
+<Item Type="Graphic" LY="1" X="12.70" Y="40.48" LW="0.26" SP="2" Width="184.68" Height="0.50" Color="#0000FF" BC="#FFFFFF" FT="Out" CID="" DBR="3">
+</Item>
+<Item Type="Band" X="127.00" Y="2349.00" Width="698" Height="128" LY="1" XS=" 1.000" YS=" 1.000" Cmp="none" CID="DetailBand1" DBR="3"></Item>
+
+<Item Type="Graphic" LY="2" X="12.70" Y="74.35" LW="0.26" SP="0" Width="184.68" Height="33.87" Color="#000000" BC="#FFFFFF" FT="Fill" CID="" DBR="4">
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="17.20" Y="78.63" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRLabel1" DBR="4">
+Record number : 4  ?
+</Item>
+<Item Type="Graphic" LY="2" X="48.95" Y="89.16" LW="0.26" SP="0" Width="27.52" Height="8.73" Color="#000000" BC="#0000FF" FT="Fill" CID="QRShape1" DBR="4">
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="76.52" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="4">
+?????????? Unicode ????? SQL 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="79.96" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="4">
+Server,????? ANSI ???? SQL Server 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="83.40" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="4">
+??????,????????????? N 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="86.84" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="4">
+?????,??????????????????????,SQL
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="90.28" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="4">
+Server 7.0 ??????????????????? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="93.71" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="4">
+??;??????,??????? N 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="97.15" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="4">
+????????????,?????????????????
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="100.59" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="4">
+SQL Server 7.0 ?,???????????? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="104.03" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="4">
+(?????????? Unicode ???),????? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="107.47" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="4">
+?? Unicode ?? (Unicode ??????? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="110.91" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="4">
+??)?????? Unicode ?? (&quot;ABC&quot; = &quot;abc&quot;) 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="114.35" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="4">
+??????? False,?????????????,???? A 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="117.79" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="4">
+???????? a????,??? (N&apos;ABC&apos; = N&apos;abc&apos;) ??? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="121.23" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="4">
+True?????????? N ?????,???????? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="124.67" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="4">
+Unicode,??? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="128.11" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="4">
+????????????????????????,?? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="131.55" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="4">
+Unicode ?????????,????????????
+</Item>
+<Item Type="Text" LY="0" Font="PMingLiU" X="17.20" Y="91.33" Height="12" Color="#080000" FW="Bold" Dec="none" CID="QRLabel3" DBR="4">
+?? ??
+</Item>
+<Item Type="Graphic" LY="1" X="12.70" Y="74.35" LW="0.26" SP="2" Width="184.68" Height="0.50" Color="#0000FF" BC="#FFFFFF" FT="Out" CID="" DBR="4">
+</Item>
+<Item Type="Band" X="127.00" Y="744.00" Width="698" Height="438" LY="1" XS=" 1.000" YS=" 1.000" Cmp="none" CID="DetailBand1" DBR="4"></Item>
+
+<Item Type="Graphic" LY="2" X="12.70" Y="139.17" LW="0.26" SP="0" Width="184.68" Height="33.87" Color="#000000" BC="#FFFFFF" FT="Fill" CID="" DBR="5">
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="17.20" Y="143.43" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRLabel1" DBR="5">
+Record number : 5  ?
+</Item>
+<Item Type="Graphic" LY="2" X="48.95" Y="153.99" LW="0.26" SP="0" Width="27.52" Height="8.73" Color="#000000" BC="#0000FF" FT="Fill" CID="QRShape1" DBR="5">
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="141.32" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="5">
+?????????? Unicode ????? SQL 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="144.76" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="5">
+Server,????? ANSI ???? SQL Server 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="148.20" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="5">
+??????,????????????? N 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="151.64" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="5">
+?????,??????????????????????,SQL
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="155.07" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="5">
+Server 7.0 ??????????????????? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="158.51" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="5">
+??;??????,??????? N 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="161.95" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="5">
+????????????,?????????????????
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="165.39" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="5">
+SQL Server 7.0 ?,???????????? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="168.83" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="5">
+(?????????? Unicode ???),????? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="172.27" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="5">
+?? Unicode ?? (Unicode ??????? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="175.71" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="5">
+??)?????? Unicode ?? (&quot;ABC&quot; = &quot;abc&quot;) 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="179.15" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="5">
+??????? False,?????????????,???? A 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="182.59" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="5">
+???????? a????,??? (N&apos;ABC&apos; = N&apos;abc&apos;) ??? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="186.03" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="5">
+True?????????? N ?????,???????? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="189.47" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="5">
+Unicode,??? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="192.91" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="5">
+????????????????????????,?? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="196.35" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="5">
+Unicode ?????????,????????????
+</Item>
+<Item Type="Text" LY="0" Font="PMingLiU" X="17.20" Y="156.13" Height="12" Color="#080000" FW="Bold" Dec="none" CID="QRLabel3" DBR="5">
+?? ??
+</Item>
+<Item Type="Graphic" LY="1" X="12.70" Y="139.17" LW="0.26" SP="2" Width="184.68" Height="0.50" Color="#0000FF" BC="#FFFFFF" FT="Out" CID="" DBR="5">
+</Item>
+<Item Type="Band" X="127.00" Y="1392.00" Width="698" Height="438" LY="1" XS=" 1.000" YS=" 1.000" Cmp="none" CID="DetailBand1" DBR="5"></Item>
+
+<Item Type="Graphic" LY="2" X="12.70" Y="203.99" LW="0.26" SP="0" Width="184.68" Height="33.87" Color="#000000" BC="#FFFFFF" FT="Fill" CID="" DBR="6">
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="17.20" Y="208.23" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRLabel1" DBR="6">
+Record number : 6  ?
+</Item>
+<Item Type="Graphic" LY="2" X="48.95" Y="218.81" LW="0.26" SP="0" Width="27.52" Height="8.73" Color="#000000" BC="#0000FF" FT="Fill" CID="QRShape1" DBR="6">
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="206.12" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="6">
+?????????? Unicode ????? SQL 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="209.56" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="6">
+Server,????? ANSI ???? SQL Server 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="213.00" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="6">
+??????,????????????? N 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="216.44" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="6">
+?????,??????????????????????,SQL
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="219.88" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="6">
+Server 7.0 ??????????????????? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="223.31" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="6">
+??;??????,??????? N 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="226.75" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="6">
+????????????,?????????????????
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="230.19" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="6">
+SQL Server 7.0 ?,???????????? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="233.63" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="6">
+(?????????? Unicode ???),????? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="237.07" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="6">
+?? Unicode ?? (Unicode ??????? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="240.51" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="6">
+??)?????? Unicode ?? (&quot;ABC&quot; = &quot;abc&quot;) 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="243.95" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="6">
+??????? False,?????????????,???? A 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="247.39" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="6">
+???????? a????,??? (N&apos;ABC&apos; = N&apos;abc&apos;) ??? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="250.83" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="6">
+True?????????? N ?????,???????? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="254.27" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="6">
+Unicode,??? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="257.71" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="6">
+????????????????????????,?? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="261.15" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="6">
+Unicode ?????????,????????????
+</Item>
+<Item Type="Text" LY="0" Font="PMingLiU" X="17.20" Y="220.93" Height="12" Color="#080000" FW="Bold" Dec="none" CID="QRLabel3" DBR="6">
+?? ??
+</Item>
+<Item Type="Graphic" LY="1" X="12.70" Y="203.99" LW="0.26" SP="2" Width="184.68" Height="0.50" Color="#0000FF" BC="#FFFFFF" FT="Out" CID="" DBR="6">
+</Item>
+<Item Type="Band" X="127.00" Y="2040.00" Width="698" Height="438" LY="1" XS=" 1.000" YS=" 1.000" Cmp="none" CID="DetailBand1" DBR="6"></Item>
+
+</Page>
+<Page Number="3">
+<Item Type="Graphic" LY="2" X="12.70" Y="12.70" LW="0.26" SP="0" Width="184.68" Height="27.78" Color="#000000" BC="#FFFFFF" FT="Fill" CID="" DBR="7">
+</Item>
+<Item Type="Text" LY="0" Font="Arial" X="21.17" Y="16.40" Height="12" Color="#800000" FW="Bold" Dec="none" CID="QRLabel2" DBR="7">
+QR5 in CodeGear RAD-6
+</Item>
+<Item Type="Text" LY="0" Font="Arial" X="21.17" Y="29.63" Height="10" Color="#008000" FW="Bold" Dec="none" CID="QRSysData1" DBR="7">
+Page : 3
+</Item>
+<Item Type="Band" X="127.00" Y="127.00" Width="698" Height="105" LY="1" XS=" 1.000" YS=" 1.000" Cmp="none" CID="PageHeaderBand1" DBR="7"></Item>
+
+<Item Type="Graphic" LY="2" X="12.70" Y="40.48" LW="0.26" SP="0" Width="184.68" Height="33.87" Color="#000000" BC="#FFFFFF" FT="Fill" CID="" DBR="7">
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="17.20" Y="44.73" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRLabel1" DBR="7">
+Record number : 7  ?
+</Item>
+<Item Type="Graphic" LY="2" X="48.95" Y="55.30" LW="0.26" SP="0" Width="27.52" Height="8.73" Color="#000000" BC="#0000FF" FT="Fill" CID="QRShape1" DBR="7">
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="42.62" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="7">
+?????????? Unicode ????? SQL 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="46.06" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="7">
+Server,????? ANSI ???? SQL Server 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="49.50" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="7">
+??????,????????????? N 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="52.94" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="7">
+?????,??????????????????????,SQL
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="56.38" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="7">
+Server 7.0 ??????????????????? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="59.81" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="7">
+??;??????,??????? N 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="63.25" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="7">
+????????????,?????????????????
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="66.69" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="7">
+SQL Server 7.0 ?,???????????? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="70.13" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="7">
+(?????????? Unicode ???),????? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="73.57" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="7">
+?? Unicode ?? (Unicode ??????? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="77.01" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="7">
+??)?????? Unicode ?? (&quot;ABC&quot; = &quot;abc&quot;) 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="80.45" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="7">
+??????? False,?????????????,???? A 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="83.89" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="7">
+???????? a????,??? (N&apos;ABC&apos; = N&apos;abc&apos;) ??? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="87.33" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="7">
+True?????????? N ?????,???????? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="90.77" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="7">
+Unicode,??? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="94.21" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="7">
+????????????????????????,?? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="97.65" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="7">
+Unicode ?????????,????????????
+</Item>
+<Item Type="Text" LY="0" Font="PMingLiU" X="17.20" Y="57.43" Height="12" Color="#080000" FW="Bold" Dec="none" CID="QRLabel3" DBR="7">
+?? ??
+</Item>
+<Item Type="Graphic" LY="1" X="12.70" Y="40.48" LW="0.26" SP="2" Width="184.68" Height="0.50" Color="#0000FF" BC="#FFFFFF" FT="Out" CID="" DBR="7">
+</Item>
+<Item Type="Band" X="127.00" Y="2688.00" Width="698" Height="438" LY="1" XS=" 1.000" YS=" 1.000" Cmp="none" CID="DetailBand1" DBR="7"></Item>
+
+<Item Type="Graphic" LY="2" X="12.70" Y="105.30" LW="0.26" SP="0" Width="184.68" Height="33.87" Color="#000000" BC="#FFFFFF" FT="Fill" CID="" DBR="8">
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="17.20" Y="109.53" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRLabel1" DBR="8">
+Record number : 8  ?
+</Item>
+<Item Type="Graphic" LY="2" X="48.95" Y="120.12" LW="0.26" SP="0" Width="27.52" Height="8.73" Color="#000000" BC="#0000FF" FT="Fill" CID="QRShape1" DBR="8">
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="107.42" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="8">
+?????????? Unicode ????? SQL 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="110.86" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="8">
+Server,????? ANSI ???? SQL Server 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="114.30" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="8">
+??????,????????????? N 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="117.74" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="8">
+?????,??????????????????????,SQL
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="121.17" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="8">
+Server 7.0 ??????????????????? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="124.61" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="8">
+??;??????,??????? N 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="128.05" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="8">
+????????????,?????????????????
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="131.49" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="8">
+SQL Server 7.0 ?,???????????? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="134.93" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="8">
+(?????????? Unicode ???),????? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="138.37" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="8">
+?? Unicode ?? (Unicode ??????? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="141.81" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="8">
+??)?????? Unicode ?? (&quot;ABC&quot; = &quot;abc&quot;) 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="145.25" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="8">
+??????? False,?????????????,???? A 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="148.69" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="8">
+???????? a????,??? (N&apos;ABC&apos; = N&apos;abc&apos;) ??? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="152.13" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="8">
+True?????????? N ?????,???????? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="155.57" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="8">
+Unicode,??? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="159.01" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="8">
+????????????????????????,?? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="162.45" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="8">
+Unicode ?????????,????????????
+</Item>
+<Item Type="Text" LY="0" Font="PMingLiU" X="17.20" Y="122.23" Height="12" Color="#080000" FW="Bold" Dec="none" CID="QRLabel3" DBR="8">
+?? ??
+</Item>
+<Item Type="Graphic" LY="1" X="12.70" Y="105.30" LW="0.26" SP="2" Width="184.68" Height="0.50" Color="#0000FF" BC="#FFFFFF" FT="Out" CID="" DBR="8">
+</Item>
+<Item Type="Band" X="127.00" Y="1053.00" Width="698" Height="438" LY="1" XS=" 1.000" YS=" 1.000" Cmp="none" CID="DetailBand1" DBR="8"></Item>
+
+<Item Type="Graphic" LY="2" X="12.70" Y="170.13" LW="0.26" SP="0" Width="184.68" Height="33.87" Color="#000000" BC="#FFFFFF" FT="Fill" CID="" DBR="9">
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="17.20" Y="174.33" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRLabel1" DBR="9">
+Record number : 9  ?
+</Item>
+<Item Type="Graphic" LY="2" X="48.95" Y="184.94" LW="0.26" SP="0" Width="27.52" Height="8.73" Color="#000000" BC="#0000FF" FT="Fill" CID="QRShape1" DBR="9">
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="172.22" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="9">
+?????????? Unicode ????? SQL 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="175.66" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="9">
+Server,????? ANSI ???? SQL Server 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="179.10" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="9">
+??????,????????????? N 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="182.54" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="9">
+?????,??????????????????????,SQL
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="185.97" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="9">
+Server 7.0 ??????????????????? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="189.41" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="9">
+??;??????,??????? N 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="192.85" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="9">
+????????????,?????????????????
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="196.29" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="9">
+SQL Server 7.0 ?,???????????? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="199.73" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="9">
+(?????????? Unicode ???),????? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="203.17" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="9">
+?? Unicode ?? (Unicode ??????? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="206.61" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="9">
+??)?????? Unicode ?? (&quot;ABC&quot; = &quot;abc&quot;) 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="210.05" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="9">
+??????? False,?????????????,???? A 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="213.49" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="9">
+???????? a????,??? (N&apos;ABC&apos; = N&apos;abc&apos;) ??? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="216.93" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="9">
+True?????????? N ?????,???????? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="220.37" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="9">
+Unicode,??? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="223.81" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="9">
+????????????????????????,?? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="227.25" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="9">
+Unicode ?????????,????????????
+</Item>
+<Item Type="Text" LY="0" Font="PMingLiU" X="17.20" Y="187.03" Height="12" Color="#080000" FW="Bold" Dec="none" CID="QRLabel3" DBR="9">
+?? ??
+</Item>
+<Item Type="Graphic" LY="1" X="12.70" Y="170.13" LW="0.26" SP="2" Width="184.68" Height="0.50" Color="#0000FF" BC="#FFFFFF" FT="Out" CID="" DBR="9">
+</Item>
+<Item Type="Band" X="127.00" Y="1701.00" Width="698" Height="438" LY="1" XS=" 1.000" YS=" 1.000" Cmp="none" CID="DetailBand1" DBR="9"></Item>
+
+<Item Type="Graphic" LY="2" X="12.70" Y="234.95" LW="0.26" SP="0" Width="184.68" Height="33.87" Color="#000000" BC="#FFFFFF" FT="Fill" CID="" DBR="10">
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="17.20" Y="239.13" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRLabel1" DBR="10">
+Record number : 10  ?
+</Item>
+<Item Type="Graphic" LY="2" X="48.95" Y="249.77" LW="0.26" SP="0" Width="27.52" Height="8.73" Color="#000000" BC="#0000FF" FT="Fill" CID="QRShape1" DBR="10">
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="237.02" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="10">
+?????????? Unicode ????? SQL 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="240.46" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="10">
+Server,????? ANSI ???? SQL Server 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="243.90" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="10">
+??????,????????????? N 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="247.34" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="10">
+?????,??????????????????????,SQL
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="250.78" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="10">
+Server 7.0 ??????????????????? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="254.21" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="10">
+??;??????,??????? N 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="257.65" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="10">
+????????????,?????????????????
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="261.09" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="10">
+SQL Server 7.0 ?,???????????? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="264.53" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="10">
+(?????????? Unicode ???),????? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="267.97" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="10">
+?? Unicode ?? (Unicode ??????? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="271.41" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="10">
+??)?????? Unicode ?? (&quot;ABC&quot; = &quot;abc&quot;) 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="274.85" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="10">
+??????? False,?????????????,???? A 
+</Item>
+<Item Type="Text" LY="0" Font="PMingLiU" X="17.20" Y="251.83" Height="12" Color="#080000" FW="Bold" Dec="none" CID="QRLabel3" DBR="10">
+?? ??
+</Item>
+<Item Type="Graphic" LY="1" X="12.70" Y="234.95" LW="0.26" SP="2" Width="184.68" Height="0.50" Color="#0000FF" BC="#FFFFFF" FT="Out" CID="" DBR="10">
+</Item>
+</Page>
+<Page Number="4">
+<Item Type="Graphic" LY="2" X="12.70" Y="12.70" LW="0.26" SP="0" Width="184.68" Height="27.78" Color="#000000" BC="#FFFFFF" FT="Fill" CID="" DBR="10">
+</Item>
+<Item Type="Text" LY="0" Font="Arial" X="21.17" Y="16.40" Height="12" Color="#800000" FW="Bold" Dec="none" CID="QRLabel2" DBR="10">
+QR5 in CodeGear RAD-6
+</Item>
+<Item Type="Text" LY="0" Font="Arial" X="21.17" Y="29.63" Height="10" Color="#008000" FW="Bold" Dec="none" CID="QRSysData1" DBR="10">
+Page : 4
+</Item>
+<Item Type="Band" X="127.00" Y="127.00" Width="698" Height="105" LY="1" XS=" 1.000" YS=" 1.000" Cmp="none" CID="PageHeaderBand1" DBR="10"></Item>
+
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="42.62" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="10">
+???????? a????,??? (N&apos;ABC&apos; = N&apos;abc&apos;) ??? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="46.06" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="10">
+True?????????? N ?????,???????? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="49.50" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="10">
+Unicode,??? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="52.94" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="10">
+????????????????????????,?? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="56.38" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="10">
+Unicode ?????????,????????????
+</Item>
+<Item Type="Graphic" LY="1" X="12.70" Y="40.48" LW="0.26" SP="2" Width="184.68" Height="0.50" Color="#0000FF" BC="#FFFFFF" FT="Out" CID="" DBR="10">
+</Item>
+<Item Type="Band" X="127.00" Y="2349.00" Width="698" Height="128" LY="1" XS=" 1.000" YS=" 1.000" Cmp="none" CID="DetailBand1" DBR="10"></Item>
+
+<Item Type="Graphic" LY="2" X="12.70" Y="74.35" LW="0.26" SP="0" Width="184.68" Height="33.87" Color="#000000" BC="#FFFFFF" FT="Fill" CID="" DBR="11">
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="17.20" Y="78.63" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRLabel1" DBR="11">
+Record number : 11  ?
+</Item>
+<Item Type="Graphic" LY="2" X="48.95" Y="89.16" LW="0.26" SP="0" Width="27.52" Height="8.73" Color="#000000" BC="#0000FF" FT="Fill" CID="QRShape1" DBR="11">
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="76.52" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="11">
+?????????? Unicode ????? SQL 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="79.96" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="11">
+Server,????? ANSI ???? SQL Server 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="83.40" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="11">
+??????,????????????? N 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="86.84" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="11">
+?????,??????????????????????,SQL
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="90.28" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="11">
+Server 7.0 ??????????????????? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="93.71" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="11">
+??;??????,??????? N 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="97.15" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="11">
+????????????,?????????????????
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="100.59" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="11">
+SQL Server 7.0 ?,???????????? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="104.03" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="11">
+(?????????? Unicode ???),????? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="107.47" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="11">
+?? Unicode ?? (Unicode ??????? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="110.91" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="11">
+??)?????? Unicode ?? (&quot;ABC&quot; = &quot;abc&quot;) 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="114.35" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="11">
+??????? False,?????????????,???? A 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="117.79" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="11">
+???????? a????,??? (N&apos;ABC&apos; = N&apos;abc&apos;) ??? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="121.23" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="11">
+True?????????? N ?????,???????? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="124.67" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="11">
+Unicode,??? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="128.11" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="11">
+????????????????????????,?? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="131.55" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="11">
+Unicode ?????????,????????????
+</Item>
+<Item Type="Text" LY="0" Font="PMingLiU" X="17.20" Y="91.33" Height="12" Color="#080000" FW="Bold" Dec="none" CID="QRLabel3" DBR="11">
+?? ??
+</Item>
+<Item Type="Graphic" LY="1" X="12.70" Y="74.35" LW="0.26" SP="2" Width="184.68" Height="0.50" Color="#0000FF" BC="#FFFFFF" FT="Out" CID="" DBR="11">
+</Item>
+<Item Type="Band" X="127.00" Y="744.00" Width="698" Height="438" LY="1" XS=" 1.000" YS=" 1.000" Cmp="none" CID="DetailBand1" DBR="11"></Item>
+
+<Item Type="Graphic" LY="2" X="12.70" Y="139.17" LW="0.26" SP="0" Width="184.68" Height="33.87" Color="#000000" BC="#FFFFFF" FT="Fill" CID="" DBR="12">
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="17.20" Y="143.43" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRLabel1" DBR="12">
+Record number : 12  ?
+</Item>
+<Item Type="Graphic" LY="2" X="48.95" Y="153.99" LW="0.26" SP="0" Width="27.52" Height="8.73" Color="#000000" BC="#0000FF" FT="Fill" CID="QRShape1" DBR="12">
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="141.32" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="12">
+?????????? Unicode ????? SQL 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="144.76" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="12">
+Server,????? ANSI ???? SQL Server 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="148.20" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="12">
+??????,????????????? N 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="151.64" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="12">
+?????,??????????????????????,SQL
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="155.07" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="12">
+Server 7.0 ??????????????????? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="158.51" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="12">
+??;??????,??????? N 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="161.95" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="12">
+????????????,?????????????????
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="165.39" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="12">
+SQL Server 7.0 ?,???????????? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="168.83" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="12">
+(?????????? Unicode ???),????? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="172.27" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="12">
+?? Unicode ?? (Unicode ??????? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="175.71" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="12">
+??)?????? Unicode ?? (&quot;ABC&quot; = &quot;abc&quot;) 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="179.15" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="12">
+??????? False,?????????????,???? A 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="182.59" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="12">
+???????? a????,??? (N&apos;ABC&apos; = N&apos;abc&apos;) ??? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="186.03" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="12">
+True?????????? N ?????,???????? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="189.47" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="12">
+Unicode,??? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="192.91" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="12">
+????????????????????????,?? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="196.35" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="12">
+Unicode ?????????,????????????
+</Item>
+<Item Type="Text" LY="0" Font="PMingLiU" X="17.20" Y="156.13" Height="12" Color="#080000" FW="Bold" Dec="none" CID="QRLabel3" DBR="12">
+?? ??
+</Item>
+<Item Type="Graphic" LY="1" X="12.70" Y="139.17" LW="0.26" SP="2" Width="184.68" Height="0.50" Color="#0000FF" BC="#FFFFFF" FT="Out" CID="" DBR="12">
+</Item>
+<Item Type="Band" X="127.00" Y="1392.00" Width="698" Height="438" LY="1" XS=" 1.000" YS=" 1.000" Cmp="none" CID="DetailBand1" DBR="12"></Item>
+
+<Item Type="Graphic" LY="2" X="12.70" Y="203.99" LW="0.26" SP="0" Width="184.68" Height="33.87" Color="#000000" BC="#FFFFFF" FT="Fill" CID="" DBR="13">
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="17.20" Y="208.23" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRLabel1" DBR="13">
+Record number : 13  ?
+</Item>
+<Item Type="Graphic" LY="2" X="48.95" Y="218.81" LW="0.26" SP="0" Width="27.52" Height="8.73" Color="#000000" BC="#0000FF" FT="Fill" CID="QRShape1" DBR="13">
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="206.12" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="13">
+?????????? Unicode ????? SQL 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="209.56" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="13">
+Server,????? ANSI ???? SQL Server 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="213.00" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="13">
+??????,????????????? N 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="216.44" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="13">
+?????,??????????????????????,SQL
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="219.88" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="13">
+Server 7.0 ??????????????????? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="223.31" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="13">
+??;??????,??????? N 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="226.75" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="13">
+????????????,?????????????????
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="230.19" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="13">
+SQL Server 7.0 ?,???????????? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="233.63" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="13">
+(?????????? Unicode ???),????? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="237.07" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="13">
+?? Unicode ?? (Unicode ??????? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="240.51" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="13">
+??)?????? Unicode ?? (&quot;ABC&quot; = &quot;abc&quot;) 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="243.95" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="13">
+??????? False,?????????????,???? A 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="247.39" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="13">
+???????? a????,??? (N&apos;ABC&apos; = N&apos;abc&apos;) ??? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="250.83" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="13">
+True?????????? N ?????,???????? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="254.27" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="13">
+Unicode,??? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="257.71" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="13">
+????????????????????????,?? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="261.15" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="13">
+Unicode ?????????,????????????
+</Item>
+<Item Type="Text" LY="0" Font="PMingLiU" X="17.20" Y="220.93" Height="12" Color="#080000" FW="Bold" Dec="none" CID="QRLabel3" DBR="13">
+?? ??
+</Item>
+<Item Type="Graphic" LY="1" X="12.70" Y="203.99" LW="0.26" SP="2" Width="184.68" Height="0.50" Color="#0000FF" BC="#FFFFFF" FT="Out" CID="" DBR="13">
+</Item>
+<Item Type="Band" X="127.00" Y="2040.00" Width="698" Height="438" LY="1" XS=" 1.000" YS=" 1.000" Cmp="none" CID="DetailBand1" DBR="13"></Item>
+
+</Page>
+<Page Number="5">
+<Item Type="Graphic" LY="2" X="12.70" Y="12.70" LW="0.26" SP="0" Width="184.68" Height="27.78" Color="#000000" BC="#FFFFFF" FT="Fill" CID="" DBR="14">
+</Item>
+<Item Type="Text" LY="0" Font="Arial" X="21.17" Y="16.40" Height="12" Color="#800000" FW="Bold" Dec="none" CID="QRLabel2" DBR="14">
+QR5 in CodeGear RAD-6
+</Item>
+<Item Type="Text" LY="0" Font="Arial" X="21.17" Y="29.63" Height="10" Color="#008000" FW="Bold" Dec="none" CID="QRSysData1" DBR="14">
+Page : 5
+</Item>
+<Item Type="Band" X="127.00" Y="127.00" Width="698" Height="105" LY="1" XS=" 1.000" YS=" 1.000" Cmp="none" CID="PageHeaderBand1" DBR="14"></Item>
+
+<Item Type="Graphic" LY="2" X="12.70" Y="40.48" LW="0.26" SP="0" Width="184.68" Height="33.87" Color="#000000" BC="#FFFFFF" FT="Fill" CID="" DBR="14">
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="17.20" Y="44.73" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRLabel1" DBR="14">
+Record number : 14  ?
+</Item>
+<Item Type="Graphic" LY="2" X="48.95" Y="55.30" LW="0.26" SP="0" Width="27.52" Height="8.73" Color="#000000" BC="#0000FF" FT="Fill" CID="QRShape1" DBR="14">
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="42.62" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="14">
+?????????? Unicode ????? SQL 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="46.06" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="14">
+Server,????? ANSI ???? SQL Server 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="49.50" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="14">
+??????,????????????? N 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="52.94" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="14">
+?????,??????????????????????,SQL
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="56.38" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="14">
+Server 7.0 ??????????????????? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="59.81" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="14">
+??;??????,??????? N 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="63.25" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="14">
+????????????,?????????????????
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="66.69" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="14">
+SQL Server 7.0 ?,???????????? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="70.13" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="14">
+(?????????? Unicode ???),????? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="73.57" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="14">
+?? Unicode ?? (Unicode ??????? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="77.01" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="14">
+??)?????? Unicode ?? (&quot;ABC&quot; = &quot;abc&quot;) 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="80.45" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="14">
+??????? False,?????????????,???? A 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="83.89" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="14">
+???????? a????,??? (N&apos;ABC&apos; = N&apos;abc&apos;) ??? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="87.33" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="14">
+True?????????? N ?????,???????? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="90.77" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="14">
+Unicode,??? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="94.21" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="14">
+????????????????????????,?? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="97.65" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="14">
+Unicode ?????????,????????????
+</Item>
+<Item Type="Text" LY="0" Font="PMingLiU" X="17.20" Y="57.43" Height="12" Color="#080000" FW="Bold" Dec="none" CID="QRLabel3" DBR="14">
+?? ??
+</Item>
+<Item Type="Graphic" LY="1" X="12.70" Y="40.48" LW="0.26" SP="2" Width="184.68" Height="0.50" Color="#0000FF" BC="#FFFFFF" FT="Out" CID="" DBR="14">
+</Item>
+<Item Type="Band" X="127.00" Y="2688.00" Width="698" Height="438" LY="1" XS=" 1.000" YS=" 1.000" Cmp="none" CID="DetailBand1" DBR="14"></Item>
+
+<Item Type="Graphic" LY="2" X="12.70" Y="105.30" LW="0.26" SP="0" Width="184.68" Height="33.87" Color="#000000" BC="#FFFFFF" FT="Fill" CID="" DBR="15">
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="17.20" Y="109.53" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRLabel1" DBR="15">
+Record number : 15  ?
+</Item>
+<Item Type="Graphic" LY="2" X="48.95" Y="120.12" LW="0.26" SP="0" Width="27.52" Height="8.73" Color="#000000" BC="#0000FF" FT="Fill" CID="QRShape1" DBR="15">
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="107.42" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="15">
+?????????? Unicode ????? SQL 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="110.86" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="15">
+Server,????? ANSI ???? SQL Server 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="114.30" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="15">
+??????,????????????? N 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="117.74" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="15">
+?????,??????????????????????,SQL
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="121.17" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="15">
+Server 7.0 ??????????????????? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="124.61" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="15">
+??;??????,??????? N 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="128.05" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="15">
+????????????,?????????????????
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="131.49" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="15">
+SQL Server 7.0 ?,???????????? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="134.93" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="15">
+(?????????? Unicode ???),????? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="138.37" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="15">
+?? Unicode ?? (Unicode ??????? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="141.81" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="15">
+??)?????? Unicode ?? (&quot;ABC&quot; = &quot;abc&quot;) 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="145.25" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="15">
+??????? False,?????????????,???? A 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="148.69" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="15">
+???????? a????,??? (N&apos;ABC&apos; = N&apos;abc&apos;) ??? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="152.13" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="15">
+True?????????? N ?????,???????? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="155.57" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="15">
+Unicode,??? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="159.01" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="15">
+????????????????????????,?? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="162.45" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="15">
+Unicode ?????????,????????????
+</Item>
+<Item Type="Text" LY="0" Font="PMingLiU" X="17.20" Y="122.23" Height="12" Color="#080000" FW="Bold" Dec="none" CID="QRLabel3" DBR="15">
+?? ??
+</Item>
+<Item Type="Graphic" LY="1" X="12.70" Y="105.30" LW="0.26" SP="2" Width="184.68" Height="0.50" Color="#0000FF" BC="#FFFFFF" FT="Out" CID="" DBR="15">
+</Item>
+<Item Type="Band" X="127.00" Y="1053.00" Width="698" Height="438" LY="1" XS=" 1.000" YS=" 1.000" Cmp="none" CID="DetailBand1" DBR="15"></Item>
+
+<Item Type="Graphic" LY="2" X="12.70" Y="170.13" LW="0.26" SP="0" Width="184.68" Height="33.87" Color="#000000" BC="#FFFFFF" FT="Fill" CID="" DBR="16">
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="17.20" Y="174.33" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRLabel1" DBR="16">
+Record number : 16  ?
+</Item>
+<Item Type="Graphic" LY="2" X="48.95" Y="184.94" LW="0.26" SP="0" Width="27.52" Height="8.73" Color="#000000" BC="#0000FF" FT="Fill" CID="QRShape1" DBR="16">
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="172.22" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="16">
+?????????? Unicode ????? SQL 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="175.66" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="16">
+Server,????? ANSI ???? SQL Server 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="179.10" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="16">
+??????,????????????? N 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="182.54" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="16">
+?????,??????????????????????,SQL
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="185.97" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="16">
+Server 7.0 ??????????????????? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="189.41" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="16">
+??;??????,??????? N 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="192.85" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="16">
+????????????,?????????????????
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="196.29" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="16">
+SQL Server 7.0 ?,???????????? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="199.73" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="16">
+(?????????? Unicode ???),????? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="203.17" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="16">
+?? Unicode ?? (Unicode ??????? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="206.61" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="16">
+??)?????? Unicode ?? (&quot;ABC&quot; = &quot;abc&quot;) 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="210.05" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="16">
+??????? False,?????????????,???? A 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="213.49" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="16">
+???????? a????,??? (N&apos;ABC&apos; = N&apos;abc&apos;) ??? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="216.93" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="16">
+True?????????? N ?????,???????? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="220.37" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="16">
+Unicode,??? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="223.81" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="16">
+????????????????????????,?? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="227.25" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="16">
+Unicode ?????????,????????????
+</Item>
+<Item Type="Text" LY="0" Font="PMingLiU" X="17.20" Y="187.03" Height="12" Color="#080000" FW="Bold" Dec="none" CID="QRLabel3" DBR="16">
+?? ??
+</Item>
+<Item Type="Graphic" LY="1" X="12.70" Y="170.13" LW="0.26" SP="2" Width="184.68" Height="0.50" Color="#0000FF" BC="#FFFFFF" FT="Out" CID="" DBR="16">
+</Item>
+<Item Type="Band" X="127.00" Y="1701.00" Width="698" Height="438" LY="1" XS=" 1.000" YS=" 1.000" Cmp="none" CID="DetailBand1" DBR="16"></Item>
+
+<Item Type="Graphic" LY="2" X="12.70" Y="234.95" LW="0.26" SP="0" Width="184.68" Height="33.87" Color="#000000" BC="#FFFFFF" FT="Fill" CID="" DBR="17">
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="17.20" Y="239.13" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRLabel1" DBR="17">
+Record number : 17  ?
+</Item>
+<Item Type="Graphic" LY="2" X="48.95" Y="249.77" LW="0.26" SP="0" Width="27.52" Height="8.73" Color="#000000" BC="#0000FF" FT="Fill" CID="QRShape1" DBR="17">
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="237.02" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="17">
+?????????? Unicode ????? SQL 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="240.46" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="17">
+Server,????? ANSI ???? SQL Server 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="243.90" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="17">
+??????,????????????? N 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="247.34" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="17">
+?????,??????????????????????,SQL
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="250.78" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="17">
+Server 7.0 ??????????????????? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="254.21" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="17">
+??;??????,??????? N 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="257.65" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="17">
+????????????,?????????????????
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="261.09" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="17">
+SQL Server 7.0 ?,???????????? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="264.53" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="17">
+(?????????? Unicode ???),????? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="267.97" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="17">
+?? Unicode ?? (Unicode ??????? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="271.41" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="17">
+??)?????? Unicode ?? (&quot;ABC&quot; = &quot;abc&quot;) 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="274.85" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="17">
+??????? False,?????????????,???? A 
+</Item>
+<Item Type="Text" LY="0" Font="PMingLiU" X="17.20" Y="251.83" Height="12" Color="#080000" FW="Bold" Dec="none" CID="QRLabel3" DBR="17">
+?? ??
+</Item>
+<Item Type="Graphic" LY="1" X="12.70" Y="234.95" LW="0.26" SP="2" Width="184.68" Height="0.50" Color="#0000FF" BC="#FFFFFF" FT="Out" CID="" DBR="17">
+</Item>
+</Page>
+<Page Number="6">
+<Item Type="Graphic" LY="2" X="12.70" Y="12.70" LW="0.26" SP="0" Width="184.68" Height="27.78" Color="#000000" BC="#FFFFFF" FT="Fill" CID="" DBR="17">
+</Item>
+<Item Type="Text" LY="0" Font="Arial" X="21.17" Y="16.40" Height="12" Color="#800000" FW="Bold" Dec="none" CID="QRLabel2" DBR="17">
+QR5 in CodeGear RAD-6
+</Item>
+<Item Type="Text" LY="0" Font="Arial" X="21.17" Y="29.63" Height="10" Color="#008000" FW="Bold" Dec="none" CID="QRSysData1" DBR="17">
+Page : 6
+</Item>
+<Item Type="Band" X="127.00" Y="127.00" Width="698" Height="105" LY="1" XS=" 1.000" YS=" 1.000" Cmp="none" CID="PageHeaderBand1" DBR="17"></Item>
+
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="42.62" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="17">
+???????? a????,??? (N&apos;ABC&apos; = N&apos;abc&apos;) ??? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="46.06" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="17">
+True?????????? N ?????,???????? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="49.50" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="17">
+Unicode,??? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="52.94" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="17">
+????????????????????????,?? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="56.38" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="17">
+Unicode ?????????,????????????
+</Item>
+<Item Type="Graphic" LY="1" X="12.70" Y="40.48" LW="0.26" SP="2" Width="184.68" Height="0.50" Color="#0000FF" BC="#FFFFFF" FT="Out" CID="" DBR="17">
+</Item>
+<Item Type="Band" X="127.00" Y="2349.00" Width="698" Height="128" LY="1" XS=" 1.000" YS=" 1.000" Cmp="none" CID="DetailBand1" DBR="17"></Item>
+
+<Item Type="Graphic" LY="2" X="12.70" Y="74.35" LW="0.26" SP="0" Width="184.68" Height="33.87" Color="#000000" BC="#FFFFFF" FT="Fill" CID="" DBR="18">
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="17.20" Y="78.63" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRLabel1" DBR="18">
+Record number : 18  ?
+</Item>
+<Item Type="Graphic" LY="2" X="48.95" Y="89.16" LW="0.26" SP="0" Width="27.52" Height="8.73" Color="#000000" BC="#0000FF" FT="Fill" CID="QRShape1" DBR="18">
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="76.52" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="18">
+?????????? Unicode ????? SQL 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="79.96" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="18">
+Server,????? ANSI ???? SQL Server 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="83.40" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="18">
+??????,????????????? N 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="86.84" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="18">
+?????,??????????????????????,SQL
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="90.28" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="18">
+Server 7.0 ??????????????????? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="93.71" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="18">
+??;??????,??????? N 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="97.15" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="18">
+????????????,?????????????????
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="100.59" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="18">
+SQL Server 7.0 ?,???????????? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="104.03" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="18">
+(?????????? Unicode ???),????? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="107.47" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="18">
+?? Unicode ?? (Unicode ??????? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="110.91" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="18">
+??)?????? Unicode ?? (&quot;ABC&quot; = &quot;abc&quot;) 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="114.35" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="18">
+??????? False,?????????????,???? A 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="117.79" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="18">
+???????? a????,??? (N&apos;ABC&apos; = N&apos;abc&apos;) ??? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="121.23" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="18">
+True?????????? N ?????,???????? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="124.67" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="18">
+Unicode,??? Unicode 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="128.11" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="18">
+????????????????????????,?? 
+</Item>
+<Item Type="Text" LY="0" Font="MingLiU" X="82.55" Y="131.55" Height="10" Color="#080000" FW="normal" Dec="none" CID="QRMemo1" DBR="18">
+Unicode ?????????,????????????
+</Item>
+<Item Type="Text" LY="0" Font="PMingLiU" X="17.20" Y="91.33" Height="12" Color="#080000" FW="Bold" Dec="none" CID="QRLabel3" DBR="18">
+?? ??
+</Item>
+<Item Type="Graphic" LY="1" X="12.70" Y="74.35" LW="0.26" SP="2" Width="184.68" Height="0.50" Color="#0000FF" BC="#FFFFFF" FT="Out" CID="" DBR="18">
+</Item>
+<Item Type="Band" X="127.00" Y="744.00" Width="698" Height="438" LY="1" XS=" 1.000" YS=" 1.000" Cmp="none" CID="DetailBand1" DBR="18"></Item>
+
+</Page>
+</QXDocument>

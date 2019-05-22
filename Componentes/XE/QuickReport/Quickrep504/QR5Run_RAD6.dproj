@@ -1,0 +1,196 @@
+﻿	<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+		<PropertyGroup>
+			<ProjectGuid>{720B938B-A714-46C9-A9A6-32B8BED89459}</ProjectGuid>
+			<MainSource>QR5Run_RAD6.dpk</MainSource>
+			<Config Condition="'$(Config)'==''">Debug</Config>
+			<DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
+			<ProjectVersion>12.3</ProjectVersion>
+			<Base>True</Base>
+			<Platform>Win32</Platform>
+			<AppType>Package</AppType>
+			<FrameworkType>VCL</FrameworkType>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
+			<Base>true</Base>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Config)'=='Release' or '$(Cfg_1)'!=''">
+			<Cfg_1>true</Cfg_1>
+			<CfgParent>Base</CfgParent>
+			<Base>true</Base>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Config)'=='Debug' or '$(Cfg_2)'!=''">
+			<Cfg_2>true</Cfg_2>
+			<CfgParent>Base</CfgParent>
+			<Base>true</Base>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Base)'!=''">
+			<ImageDebugInfo>true</ImageDebugInfo>
+			<DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
+			<DCC_DebugInfoInExe>true</DCC_DebugInfoInExe>
+			<DesignOnlyPackage>false</DesignOnlyPackage>
+			<DCC_DependencyCheckOutputName>bpl\QR5Run_RAD6.bpl</DCC_DependencyCheckOutputName>
+			<RuntimeOnlyPackage>true</RuntimeOnlyPackage>
+			<DCC_ImageBase>00010000</DCC_ImageBase>
+			<DCC_WriteableConstants>true</DCC_WriteableConstants>
+			<DCC_Description>QuickReport 5.04 Runtime Package</DCC_Description>
+			<DCC_UnitAlias>WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;$(DCC_UnitAlias)</DCC_UnitAlias>
+			<DCC_BplOutput>.\bpl</DCC_BplOutput>
+			<DCC_RangeChecking>true</DCC_RangeChecking>
+			<DCC_Hints>false</DCC_Hints>
+			<DCC_Platform>x86</DCC_Platform>
+			<DCC_S>false</DCC_S>
+			<DCC_N>true</DCC_N>
+			<DCC_DcpOutput>.\bpl</DCC_DcpOutput>
+			<GenDll>true</GenDll>
+			<DCC_OutputNeverBuildDcps>true</DCC_OutputNeverBuildDcps>
+			<DCC_K>false</DCC_K>
+			<DCC_AssertionsAtRuntime>false</DCC_AssertionsAtRuntime>
+			<GenPackage>true</GenPackage>
+			<DCC_IntegerOverflowCheck>true</DCC_IntegerOverflowCheck>
+			<DCC_F>false</DCC_F>
+			<DCC_E>false</DCC_E>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Cfg_1)'!=''">
+			<DCC_Define>RELEASE;$(DCC_Define)</DCC_Define>
+			<DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
+			<DCC_DebugInformation>false</DCC_DebugInformation>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Cfg_2)'!=''">
+			<DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>
+		</PropertyGroup>
+		<ItemGroup>
+			<DelphiCompile Include="QR5Run_RAD6.dpk">
+				<MainSource>MainSource</MainSource>
+			</DelphiCompile>
+			<DCCReference Include="rtl.dcp"/>
+			<DCCReference Include="vcl.dcp"/>
+			<DCCReference Include="Vcldb.dcp"/>
+			<DCCReference Include="vclx.dcp"/>
+			<DCCReference Include="bdertl.dcp"/>
+			<DCCReference Include="dbrtl.dcp"/>
+			<DCCReference Include="vclimg.dcp"/>
+			<DCCReference Include="qrextra.pas"/>
+			<DCCReference Include="qrcomped.pas"/>
+			<DCCReference Include="qrabout.pas"/>
+			<DCCReference Include="quickrpt.pas"/>
+			<DCCReference Include="qrctrls.pas"/>
+			<DCCReference Include="qrprgres.pas"/>
+			<DCCReference Include="qrexpbld.pas"/>
+			<DCCReference Include="qrprntr.pas"/>
+			<DCCReference Include="qrprev.pas"/>
+			<DCCReference Include="qrwizard.pas"/>
+			<DCCReference Include="qrdatawz.pas"/>
+			<DCCReference Include="qrlablwz.pas"/>
+			<DCCReference Include="qrexpred.pas">
+				<Form>QRExprEditorForm</Form>
+			</DCCReference>
+			<DCCReference Include="qrexpr.pas"/>
+			<DCCReference Include="qrenved.pas"/>
+			<DCCReference Include="qrexport.pas"/>
+			<DCCReference Include="qrmdsu.pas">
+				<Form>QRSubdetailSetup</Form>
+			</DCCReference>
+			<DCCReference Include="Qrlabled.pas">
+				<Form>QRLabelEditorForm</Form>
+			</DCCReference>
+			<DCCReference Include="qrdatasu.pas"/>
+			<DCCReference Include="QREditor.pas">
+				<Form>QReportEditor</Form>
+			</DCCReference>
+			<DCCReference Include="QRSearchDlg.pas">
+				<Form>SearchDlg</Form>
+			</DCCReference>
+			<DCCReference Include="qrpdffilt.pas"/>
+			<DCCReference Include="pdfconst.pas"/>
+			<DCCReference Include="pdfobjs.pas"/>
+			<DCCReference Include="grimgctrl.pas"/>
+			<DCCReference Include="QRXMLSFilt.pas"/>
+			<DCCReference Include="QRWebFilt.pas"/>
+			<DCCReference Include="qrabsdatas.pas"/>
+			<DCCReference Include="qr5const.pas"/>
+			<DCCReference Include="qrFramelines.pas"/>
+			<DCCReference Include="QRXDocument.pas"/>
+			<DCCReference Include="QRXSearchFrm.pas">
+				<Form>QRXSearchDlg</Form>
+			</DCCReference>
+			<DCCReference Include="QRXBrowser.pas">
+				<Form>QRXStandardViewer</Form>
+			</DCCReference>
+			<DCCReference Include="qrpctrls.pas"/>
+			<DCCReference Include="qrpBaseCtrls.pas"/>
+			<DCCReference Include="csProp.pas"/>
+			<DCCReference Include="qrpexpr.pas"/>
+			<DCCReference Include="SupComps.pas"/>
+			<DCCReference Include="MSXML_TLB.pas"/>
+			<DCCReference Include="QRAnsiList.pas"/>
+			<DCCReference Include="qrprnsu2.pas"/>
+			<DCCReference Include="lzw.pas"/>
+			<DCCReference Include="QRPRSelect.pas">
+				<Form>PRSelect</Form>
+			</DCCReference>
+			<BuildConfiguration Include="Debug">
+				<Key>Cfg_2</Key>
+				<CfgParent>Base</CfgParent>
+			</BuildConfiguration>
+			<BuildConfiguration Include="Base">
+				<Key>Base</Key>
+			</BuildConfiguration>
+			<BuildConfiguration Include="Release">
+				<Key>Cfg_1</Key>
+				<CfgParent>Base</CfgParent>
+			</BuildConfiguration>
+		</ItemGroup>
+		<Import Condition="Exists('$(BDS)\Bin\CodeGear.Delphi.Targets')" Project="$(BDS)\Bin\CodeGear.Delphi.Targets"/>
+		<Import Condition="Exists('$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj')" Project="$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj"/>
+		<ProjectExtensions>
+			<Borland.Personality>Delphi.Personality.12</Borland.Personality>
+			<Borland.ProjectType>Package</Borland.ProjectType>
+			<BorlandProject>
+				<Delphi.Personality>
+					<Source>
+						<Source Name="MainSource">QR5Run_RAD6.dpk</Source>
+					</Source>
+					<Parameters/>
+					<VersionInfo>
+						<VersionInfo Name="IncludeVerInfo">True</VersionInfo>
+						<VersionInfo Name="AutoIncBuild">False</VersionInfo>
+						<VersionInfo Name="MajorVer">5</VersionInfo>
+						<VersionInfo Name="MinorVer">0</VersionInfo>
+						<VersionInfo Name="Release">4</VersionInfo>
+						<VersionInfo Name="Build">0</VersionInfo>
+						<VersionInfo Name="Debug">False</VersionInfo>
+						<VersionInfo Name="PreRelease">False</VersionInfo>
+						<VersionInfo Name="Special">False</VersionInfo>
+						<VersionInfo Name="Private">False</VersionInfo>
+						<VersionInfo Name="DLL">False</VersionInfo>
+						<VersionInfo Name="Locale">2057</VersionInfo>
+						<VersionInfo Name="CodePage">1252</VersionInfo>
+					</VersionInfo>
+					<VersionInfoKeys>
+						<VersionInfoKeys Name="CompanyName">QBS Software</VersionInfoKeys>
+						<VersionInfoKeys Name="FileDescription">Quickreport 5.04 run-time library</VersionInfoKeys>
+						<VersionInfoKeys Name="FileVersion">5.0.4.0</VersionInfoKeys>
+						<VersionInfoKeys Name="InternalName"/>
+						<VersionInfoKeys Name="LegalCopyright">QBS Software</VersionInfoKeys>
+						<VersionInfoKeys Name="LegalTrademarks">QuickReport</VersionInfoKeys>
+						<VersionInfoKeys Name="OriginalFilename"/>
+						<VersionInfoKeys Name="ProductName">Quickreport 5.04</VersionInfoKeys>
+						<VersionInfoKeys Name="ProductVersion">5.0.4.0</VersionInfoKeys>
+						<VersionInfoKeys Name="Comments"/>
+					</VersionInfoKeys>
+					<Excluded_Packages>
+						<Excluded_Packages Name="C:\WINNT\system32\vclimg120.bpl">CodeGear Delphi image support library</Excluded_Packages>
+						<Excluded_Packages Name="$(BDSBIN)\dclnet120.bpl">CodeGear Internet Components</Excluded_Packages>
+						<Excluded_Packages Name="$(BDSBIN)\dclwebsnap120.bpl">CodeGear WebSnap Components</Excluded_Packages>
+						<Excluded_Packages Name="$(BDSBIN)\dclwbm120.bpl">CodeGear InternetExpress Components</Excluded_Packages>
+						<Excluded_Packages Name="$(BDSBIN)\dcloffice2k120.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
+						<Excluded_Packages Name="$(BDSBIN)\dclofficexp120.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
+					</Excluded_Packages>
+				</Delphi.Personality>
+				<Platforms>
+					<Platform value="Win32">True</Platform>
+				</Platforms>
+			</BorlandProject>
+			<ProjectFileVersion>12</ProjectFileVersion>
+		</ProjectExtensions>
+	</Project>

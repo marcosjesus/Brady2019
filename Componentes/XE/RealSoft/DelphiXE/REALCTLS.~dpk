@@ -1,0 +1,52 @@
+package realctls;
+
+{$R *.RES}
+{$ALIGN OFF}
+{$ASSERTIONS OFF}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA OFF}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS OFF}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION ON}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO OFF}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES OFF}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST ON}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $00400000}
+{$DESCRIPTION 'Real Controls'}
+{$IMPLICITBUILD ON}
+
+requires
+  vcl40,
+  VCLX40,
+  VCLDB40,
+  Realcomm,
+  GlobalNet;
+
+contains
+  Rscheck in 'Rscheck.pas',
+  Rscombo in 'Rscombo.pas',
+  Rscomchk in 'Rscomchk.pas',
+  Rsedit in 'Rsedit.pas',
+  Rseditdb in 'Rseditdb.pas',
+  Rsflyovr in 'Rsflyovr.pas',
+  Rsformg in 'Rsformg.pas',
+  Rslistbx in 'Rslistbx.pas',
+  Rsmemo in 'Rsmemo.pas',
+  Rspage in 'Rspage.pas',
+  Rsshware in 'Rsshware.pas',
+  Rstabset in 'Rstabset.pas',
+  RsImgLst in 'RsImgLst.pas',
+  realreg in 'realreg.pas',
+  rsShort in 'rsShort.pas';
+
+end.

@@ -1,0 +1,573 @@
+unit EditBusca;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
+  StdCtrls, ADODB, FEditBusca, menus, EditBuscaAux,  DBXMSSQL,     FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf, FireDAC.Stan.Def,
+  FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Stan.Param,
+  FireDAC.DatS, FireDAC.DApt.Intf, FireDAC.DApt, FireDAC.Comp.DataSet,
+  FireDAC.Comp.Client,System.IOUtils;
+
+
+
+type
+TEditBusca = class(TEdit)
+
+private
+ //FCanvas: TCanvas; //commented out - see below!
+ //do you want to 'click' when the up or down arrow key pressed as well?
+ FClickOnArrow: boolean;
+ //do you want to 'click' when the Return key pressed as well?
+ FClickOnReturn: boolean;
+ //flag - is the button pressed or not
+ FPressed     : boolean;
+ FConexao     : TFDConnection;
+ FKeyValues   : TStringList;
+ FFields      : TStringList;
+ FKeyField    : ShortString;
+ FKeyField2   : ShortString;
+ FKeyValue    : Variant;
+ FKeyValue2   : Variant;
+ FTable       : String;
+ FJoin        : String;
+ FFilter      : String;
+ FCaption     : String;
+ FTextResult  : String;
+ FDefaultBusca: String;
+ FNullValueKey: TShortCut;
+ FHeightForm  : integer;
+ FWidthForm   : integer;
+    FSetPlaca: Boolean;
+    FSetCNPJ: Boolean;
+    FSetCPF: Boolean;
+    FLoadConsulta: Boolean;
+    FOrderBY: WideString;
+    FSelect: WideString;
+    FDistinct: Boolean;
+    FSetColor : Boolean;
+    FSetNomeCor : TColor;
+    FSetIndiceCampo : Integer;
+    FSetValorCor : String;
+    FSetImagem: Boolean;
+    FHideTop  : Boolean;
+    FTop100: Boolean;
+ procedure Click; override;
+ procedure Clear; override;
+ procedure CreateWnd; override;
+ procedure WMPAINT(var Message: TMessage); message WM_PAINT;
+ procedure WMLBUTTONDOWN(var Message: TWMMouse); message WM_LBUTTONDOWN;
+ procedure WMLBUTTONUP(var Message: TWMMouse); message WM_LBUTTONUP;
+ procedure WMMOUSEMOVE(var Message: TWMMouse); message WM_MOUSEMOVE;
+ procedure SetKeyValues(Value: TStringList);
+ procedure SetFields(Value: TStringList);
+ Function  GetStateK (Key: integer): boolean;
+
+ //procedure WMSETFOCUS(var Message: TMessage); message WM_SETFOCUS;
+protected
+ procedure KeyDown(var Key: Word; Shift: TShiftState); override;
+ procedure KeyPress(var Key: Char); override;
+
+public
+  Bs_IndexSearch : String;
+  Bs_IndexItem   : Integer;
+  Function Execute:Boolean;
+  Function IsEmpyt:Boolean;
+  procedure SetValue(Cond:String);
+  function GetValue(sFieldName: String):String;
+  procedure ClickButton;
+  constructor Create(AOwner: TComponent); override;
+published
+  property ClickOnArrow: boolean read FClickOnArrow write FClickOnArrow;
+  property ClickOnReturn: boolean read FClickOnReturn write FClickOnReturn;
+
+  property bs_Conexao        : TFDConnection read FConexao write FConexao;
+  property bs_KeyValues      : TStringList read FKeyValues write SetKeyValues;
+  property bs_TextResult     : String read FTextResult write FTextResult;
+  property bs_Fields         : TStringList read FFields write SetFields;
+  property bs_Table          : String read FTable write FTable;
+  property bs_Join           : String read FJoin write FJoin;
+  property bs_Filter         : String read FFilter write FFilter;
+  property bs_DefaultBusca   : String read FDefaultBusca write FDefaultBusca;
+  property bs_Caption        : String read FCaption write FCaption;
+  property bs_KeyField       : ShortString read FKeyField write FKeyField;
+  property bs_KeyField2      : ShortString read FKeyField2 write FKeyField2;
+  property bs_KeyValue       : Variant read FKeyValue write FKeyValue;
+  property bs_KeyValue2      : Variant read FKeyValue2 write FKeyValue2;
+  property NullValueKey      : TShortCut read FNullValueKey write FNullValueKey default 0;
+  property bs_HeightForm     : integer read FHeightForm write FHeightForm default 328;
+  property bs_WidthForm      : integer read FWidthForm write FWidthForm default 660;
+  property bs_SetCPF         : Boolean read FSetCPF write FSetCPF;
+  property bs_SetCNPJ        : Boolean read FSetCNPJ write FSetCNPJ;
+  property bs_OrderBy        : WideString read FOrderBY write FOrderBy;
+  property bs_SetPlaca       : Boolean read FSetPlaca write FSetPlaca;
+  property bs_Select         : WideString read FSelect write FSelect;
+  property bs_LoadConsulta   : Boolean read FLoadConsulta write FLoadConsulta;
+  property bs_Distinct       : Boolean read FDistinct write FDistinct;
+  property bs_SetColor       : Boolean read FSetColor write FSetColor;
+  property bs_NomeCor        : TColor read FSetNomeCor write FSetNomeCor;
+  property bs_IndiceCampo    : Integer read FSetIndiceCampo write FSetIndiceCampo;
+  property bs_ValorCor       : String read FSetValorCor write FSetValorCor;
+  property bs_Imagem         : Boolean read FSetImagem write FSetImagem;
+  property bs_HideTop        : Boolean read FHideTop write FHideTop;
+  property bs_Top100         : Boolean read FTop100 write FTop100;
+
+end;
+
+Var
+ PegaKey : String;
+ SQLScript : String;
+
+procedure Register;
+
+implementation
+
+uses DB, Funcoes;
+
+const
+ BUTTONWIDTH = 30;
+
+
+procedure Register;
+begin
+ RegisterComponents('MLDesenv', [TEditBusca]);
+end;
+
+procedure TEditBusca.SetKeyValues(Value: TStringList);
+begin
+  FKeyValues.Assign(Value);
+end;
+
+procedure TEditBusca.SetFields(Value: TStringList);
+begin
+  FFields.Assign(Value);
+end;
+
+
+constructor TEditBusca.Create(AOwner: TComponent);
+begin
+ inherited Create(AOwner);
+ FPressed       := false;
+ FClickOnArrow  := true;
+ FClickOnReturn := false;
+ FKeyValues     := TStringList.Create;
+ FFields        := TStringList.Create;
+ FHeightForm    := 0;
+ FWidthForm     := 0;
+end;
+
+procedure TEditBusca.CreateWnd;
+begin
+ inherited CreateWnd;
+ //this is crucial to stop text disappearing under the button...
+ perform(EM_SETMARGINS,EC_RIGHTMARGIN,(BUTTONWIDTH+2) shl 16);
+end;
+
+
+procedure TEditBusca.WMLBUTTONDOWN(var Message: TWMMouse);
+begin
+inherited;
+ //draw button in pressed state...
+ if message.xpos >= clientwidth-BUTTONWIDTH+1 then begin
+    FPressed := true;
+    Refresh;
+    end;
+end;
+
+procedure TEditBusca.WMLBUTTONUP(var Message: TWMMouse);
+begin
+ inherited;
+ //draw button in non-pressed state...
+ if FPressed then
+    begin
+    FPressed := false;
+    Refresh;
+    end;
+end;
+
+procedure TEditBusca.WMMOUSEMOVE(var Message: TWMMouse);
+begin
+inherited;
+//change cursor when over the button to an arrow (not the default I-beam)...
+ if message.xpos >= clientwidth-BUTTONWIDTH+1 then
+    cursor := crArrow
+ else
+    cursor := crDefault;
+end;
+
+procedure TEditBusca.Clear;
+begin
+  FKeyValues.Clear;
+  inherited Clear;
+
+end;
+
+procedure TEditBusca.ClickButton;
+begin
+  FPressed := True;
+  Click;
+end;
+
+procedure TEditBusca.Click;
+var
+pt: TPoint;
+i : Integer;
+begin
+ //fix a minor cosmetic problem...
+
+  if FPressed then
+  begin
+    FPressed := false;
+
+    Try
+      If PegaKey = '' Then
+        Application.CreateForm(TFrmEditBusca, FrmEditBusca);
+      PegaKey := '';
+
+      if bs_HeightForm > 200 then
+        FrmEditBusca.Height:= bs_HeightForm;
+
+      if bs_WidthForm > 660 then
+        FrmEditBusca.Width := bs_WidthForm;
+
+     // FrmEditBusca.sqlConsulta.Connection:= bs_Conexao;
+      if bs_LoadConsulta then
+        FrmEditBusca.FPesquisa := Self.Text;
+
+      FrmEditBusca.bSair            := False;
+      FrmEditBusca.FDefaultBusca    := FDefaultBusca;
+      FrmEditBusca.FFields          := FFields;
+      FrmEditBusca.FTable           := FTable;
+      FrmEditBusca.FJoin            := FJoin;
+      FrmEditBusca.FFilter          := FFilter;
+      FrmEditBusca.Caption          := bs_Caption;
+      FrmEditBusca.FSetCPF          := bs_SetCPF;
+      FrmEditBusca.FSetCNPJ         := bs_SetCNPJ;
+      FrmEditBusca.FOrderBy         := bs_OrderBy;
+      FrmEditBusca.FSetPlaca        := bs_SetPlaca;
+      FrmEditBusca.FSelect          := bs_Select;
+      FrmEditBusca.FDistinct        := bs_Distinct;
+     // FrmEditBusca.FConexao         := bs_Conexao;
+      FrmEditBusca.FColor           := bs_SetColor;
+      FrmEditBusca.FNomeCor         := bs_NomeCor;
+      FrmEditBusca.FIndiceCampo     := bs_IndiceCampo;
+      FrmEditBusca.FValorCor        := bs_ValorCor;
+      FrmEditBusca.FImagem          := bs_Imagem;
+      FrmEditBusca.FLoadConsulta    := bs_LoadConsulta;
+      FrmEditBusca.FHideTop         := bs_HideTop;
+      FrmEditBusca.FTop100          := bs_Top100;
+
+
+      FrmEditBusca.ShowModal;
+      if FrmEditBusca.bSair = True Then
+      begin
+        FrmEditBusca.bSair := False;
+        FKeyValues.Clear;
+
+          For I := 0 To FrmEditBusca.sqlConsulta.FieldCount - 1 do
+        begin
+          if Trim(Pal(FFields[I],6,';')) = 'S' Then
+           if  FrmEditBusca.sqlConsulta.FieldList.Fields[i].DisplayText  = '' Then
+           begin
+              raise Exception.Create('Campo ' +  FrmEditBusca.sqlConsulta.FieldList.Fields[i].FieldName + ' é Obrigatório');
+
+          //    raise Exception.Create('Campo ' +   Trim(Pal(FFields[i],1,';')) + ' é Obrigatório');
+           end;
+        end;
+
+
+        For I := 0 To FrmEditBusca.sqlConsulta.FieldCount - 1 do
+            FKeyValues.Add(FrmEditBusca.sqlConsulta.FieldList.Fields[i].DisplayText);
+
+        Text := FrmEditBusca.sqlConsulta.FieldByName(FTextResult).DisplayText;
+        Bs_IndexSearch := Trim(Pal(FFields[FrmEditBusca.cbCampos.ItemIndex],1,';'));
+        Bs_IndexItem   := FrmEditBusca.cbCampos.ItemIndex;
+
+        if FKeyField <> '' then
+          if pos('.',FKeyField) > 0 then
+            FKeyValue  := FrmEditBusca.sqlConsulta.FieldByName(Pal(FKeyField,2,'.')).DisplayText
+          else FKeyValue  := FrmEditBusca.sqlConsulta.FieldByName(FKeyField).DisplayText;
+        if FKeyField2 <> '' then
+          if pos('.',FKeyField2) > 0 then
+            FKeyValue2 := FrmEditBusca.sqlConsulta.FieldByName(Pal(FKeyField2,2,'.')).DisplayText
+          else FKeyValue2  := FrmEditBusca.sqlConsulta.FieldByName(FKeyField2).DisplayText;
+
+      end
+      else if length(text) = 1 then Text := '';
+
+    Finally
+      FrmEditBusca := Nil;
+      FrmEditBusca.Free;
+    End;
+
+
+    Repaint;
+  end;
+  //Only process an OnClick method if the button is clicked,
+  //NOT if the text is clicked!
+  GetCursorPos(pt);
+  //if PtInRect(Rect(clientwidth-BUTTONWIDTH+1,0,clientwidth,clientheight),ScreenToClient(pt)) then
+
+  inherited Click;
+
+end;
+
+procedure TEditBusca.KeyDown(var Key: Word; Shift: TShiftState);
+begin
+//respond to up or down arrow keys or Return key with OnClick event if
+//"ClickOnArrow" or "ClickOnReturn" property set...
+
+  if (Key = vk_return) then
+    Abort;
+
+  if FNullValueKey = ShortCut(Key,Shift) then
+  begin
+    Clear;
+    abort;
+  end;
+
+  inherited KeyDown(Key, Shift);
+  If (GetStateK (VK_LMENU) And (Key = VK_Down)) And  FClickOnArrow Then
+  begin
+     FPressed:=True;
+     Click;
+  end
+  else if (Key = vk_return) and FClickOnReturn then
+         begin
+           Key := 0;
+           Click;
+         end;
+
+
+end;
+
+
+
+//Old WMPAINT Method (not using TCanvas)...
+
+procedure TEditBusca.WMPAINT(var Message: TMessage);
+var
+  dc: HDC;
+  SilverBrush, ArrowBrush, Oldbrush: HBrush;
+  WhitePen, GrayPen, SilverPen, OldPen: HPen;
+  CntrPt: TPoint;
+ // pic: array [0..3] of TPoint; // for arrow 'picture'.
+begin
+  inherited;
+  //NOW DRAW BUTTON ...
+  //find the centre of the button...
+  CntrPt := point(clientwidth - BUTTONWIDTH div 2, clientheight div 2);
+  //offset by 1 if pressed...
+  if FPressed then CntrPt := point(CntrPt.x+1,CntrPt.y+1);
+  //get button arrow coordinates...
+ // pic[0] := point( CntrPt.x-5,CntrPt.y);
+//  pic[1] := point( CntrPt.x,CntrPt.y-5);
+//  pic[2] := point( CntrPt.x+5, CntrPt.y);
+//  pic[3] := point( CntrPt.x, CntrPt.y+5);
+  //create handles ...
+  dc := getDC(handle);
+  SilverBrush := CreateSolidBrush(GetSysColor(COLOR_BTNFACE));
+  ArrowBrush := CreateSolidBrush(clGreen);
+  WhitePen := CreatePen(PS_SOLID,1,clWhite);
+  GrayPen := CreatePen(PS_SOLID,1,clGray);
+  SilverPen := CreatePen(PS_SOLID,1,GetSysColor(COLOR_BTNTEXT));
+  //draw button surface and outline...
+  OldBrush := SelectObject(dc, ArrowBrush);
+  FillRect(dc,rect(clientwidth-BUTTONWIDTH+1,0,clientwidth,clientheight),SilverBrush);
+  if FPressed then
+     OldPen := SelectObject(dc,GrayPen)
+  else OldPen := SelectObject(dc,WhitePen);
+     MovetoEx(dc,clientwidth-BUTTONWIDTH+2,clientheight-1,nil);
+  Lineto(dc,clientwidth-BUTTONWIDTH+2,1);
+  Lineto(dc,clientwidth-1,1);
+  if FPressed then
+     SelectObject(dc,WhitePen)
+  else SelectObject(dc,GrayPen);
+     Lineto(dc,clientwidth-1,clientheight-1);
+  Lineto(dc,clientwidth-BUTTONWIDTH+2,clientheight-1);
+ //draw up&down arrows...
+ SelectObject(dc,OldPen);
+ //polygon(dc,pic,4);
+ SelectObject(dc,SilverPen);
+
+ MovetoEx(dc,CntrPt.x-5,CntrPt.y,nil);
+ Lineto(dc,CntrPt.x-6,CntrPt.y);
+
+ MovetoEx(dc,CntrPt.x,CntrPt.y,nil);
+ Lineto(dc,CntrPt.x+1,CntrPt.y);
+
+ MovetoEx(dc,CntrPt.x+6,CntrPt.y,nil);
+ Lineto(dc,CntrPt.x+7,CntrPt.y);
+
+ //clean up ...
+ SelectObject(dc,OldPen);
+ SelectObject(dc, OldBrush);
+ DeleteObject(WhitePen);
+ DeleteObject(SilverPen);
+ DeleteObject(GrayPen);
+ DeleteObject(SilverBrush);
+ DeleteObject(ArrowBrush);
+ ReleaseDC(handle,dc);
+end;
+
+Function TEditBusca.GetStateK (Key: integer): boolean;
+begin
+  Result := Odd (GetKeyState (Key));
+end;
+
+Function TEditBusca.Execute:Boolean;
+begin
+  FPressed:=True;
+  Click;
+  Result:= not IsEmpyt;
+end;
+
+Function TEditBusca.IsEmpyt:Boolean;
+begin
+  if (Trim(Text) <> '') and (FFields.Count > 0) then
+    Result:= false
+  else Result:= true;
+end;
+
+
+procedure TEditBusca.KeyPress(var Key: Char);
+begin
+ inherited KeyPress(Key);
+
+
+  if Ord(KEY) = 13 then
+  begin
+//    Key:= #0;
+//    Perform(Wm_NextDlgCtl,0,0);
+    Exit;
+  end;
+
+    Case bs_SetCNPJ or bs_SetCPF of
+     False: begin
+              If Key in['A'..'Z','a'..'z','0'..'9'] Then
+              begin
+                 FPressed:=True;
+                 Application.CreateForm(TFrmEditBusca, FrmEditBusca);
+                 FrmEditBusca.EdtPesquisa.Text := Key;
+                 PegaKey := Key;
+                 Key:= #0;
+                 Click;
+              end Else Clear;
+            end;
+     True : begin
+              If Key in['0'..'9'] Then
+              begin
+                 FPressed:=True;
+                 Application.CreateForm(TFrmEditBusca, FrmEditBusca);
+                 FrmEditBusca.EdtPesquisa.Text := Key;
+                 PegaKey := Key;
+                 Key:= #0;
+                 Click;
+              end Else Clear;
+            end;
+   end;
+
+{
+
+If Key in['A'..'Z','a'..'z','0'..'9'] Then
+   begin
+     FPressed:=True;
+     Application.CreateForm(TFrmEditBusca, FrmEditBusca);
+     FrmEditBusca.EdtPesquisa.Text := Key;
+     PegaKey := Key;
+     Key:= #0;
+     Click;
+   end;}
+end;
+
+procedure TEditBusca.SetValue(Cond: String);
+var QrSet: TFDQuery;
+        i: Integer;
+    Nome, Apelido, Virgula : ShortString;
+    NumeroCPF : Int64;
+begin
+
+  FKeyValues.Clear;
+
+  If TryStrToInt64(Trim(Pal(Cond,2,'=')),NumeroCPF) Then
+    If (FSetCPF) and (Length (Trim(Pal(Cond,2,'='))) = 14) Then
+     Cond := Pal(Cond,1,'=') + ' = ' + QuotedStr(FormataCPF(Trim(Pal(Cond,2,'='))))
+    else If (FSetCNPJ) and (Length (Trim(Pal(Cond,2,'='))) = 18) Then
+     Cond := Pal(Cond,1,'=') + ' = ' + QuotedStr(FormataCNPJ(Trim(Pal(Cond,2,'='))))
+    else If (FSetPlaca) and (Length (Trim(Pal(Cond,2,'='))) = 7) Then
+     Cond := Pal(Cond,1,'=') + ' = ' + Copy(Trim(Pal(Cond,2,'=')),1,3) + '-' + Copy(Trim(Pal(Cond,2,'=')),4,4);
+
+  bs_Conexao := TFDConnection.Create(Nil);
+  bs_Conexao.Params.Clear;
+
+  if TFile.Exists( ExtractFilePath(Application.ExeName) + 'DB-Treinamento.ini' ) then
+    bs_Conexao.Params.LoadFromFile( ExtractFilePath(Application.ExeName) + '\' +  'DB-Treinamento.ini' )
+  else if TFile.Exists( ExtractFilePath(Application.ExeName) + 'DB-CECS2002.ini' ) then
+    bs_Conexao.Params.LoadFromFile( ExtractFilePath(Application.ExeName) + '\' +  'DB-CECS2002.ini' );
+
+  bs_Conexao.Open;
+
+  QrSet:= TFDQuery.Create(self);
+  try
+     QrSet.Connection:= bs_Conexao;
+     QrSet.sql.clear;
+     QrSet.sql.Add('Select ');
+     for i := 0 to FFields.Count -1 do
+     begin
+       Nome    := Trim(Pal(FFields[i],1,';'));
+       Apelido := Trim(Pal(FFields[i],2,';'));
+       if i = 0 then
+         Virgula := ''
+       else Virgula := ',';
+
+       QrSet.sql.Add(Virgula+Nome);
+     end;
+     QrSet.sql.Add('From '+FTable);
+     QrSet.sql.Add(FJoin);
+     if Trim(FFilter) <> '' then
+       QrSet.sql.Add('Where '+FFilter+ ' and ' + Cond)
+     else  QrSet.sql.Add('Where '+ Cond);
+
+     If Trim(FOrderBY) <> EmptyStr Then
+       QrSet.sql.Add(' Order by ' + FOrderBY);
+
+
+     QrSet.Open;
+
+     For i := 0 To FFields.Count - 1 do
+       FKeyValues.Add(QrSet.FieldList.Fields[i].DisplayText);
+     Text:= QrSet.FieldList.FieldByName(FTextResult).DisplayText;
+
+
+        if FKeyField <> '' then
+          if pos('.',FKeyField) > 0 then
+            FKeyValue  := QrSet.FieldByName(Pal(FKeyField,2,'.')).DisplayText
+          else FKeyValue  := QrSet.FieldByName(FKeyField).DisplayText;
+        if FKeyField2 <> '' then
+          if pos('.',FKeyField2) > 0 then
+            FKeyValue2 := QrSet.FieldByName(Pal(FKeyField2,2,'.')).DisplayText
+          else FKeyValue2  :=  QrSet.FieldByName(FKeyField2).DisplayText;
+
+  finally
+         QrSet.close;
+         QrSet.Free;
+         bs_Conexao.Free;
+  end;
+
+
+end;
+
+
+
+function TEditBusca.GetValue(sFieldName: String):String;
+var i:Integer;
+begin
+  Result:= '';
+  for  i:=0  to FFields.Count-1 do
+    if Pos(AnsiUpperCase(sFieldName),AnsiUpperCase(FFields[i])) > 0 then
+      Result := bs_KeyValues[i];
+
+end;
+
+end.

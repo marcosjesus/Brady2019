@@ -1,0 +1,33 @@
+unit realreg;
+
+interface
+
+{$I REALSOFT.INC}
+
+procedure Register;
+
+implementation
+
+{$IFDEF WIN32}
+{$R realreg.r32}
+{$ELSE}
+{$R realreg.r16}
+{$ENDIF}
+
+uses
+  rsFlyovr,
+  rsEdit,
+  rsEditDB,
+  rsMemo,
+  rsimglst;
+
+procedure Register;
+begin
+  rsFlyovr.	register;
+  rsEdit.	register;
+  rsEditDB.	register;
+  rsMemo.	register;
+  rsImgLst.     register;
+end;
+
+end.

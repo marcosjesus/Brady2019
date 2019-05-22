@@ -1,0 +1,2181 @@
+{******************************************************}
+{               rsDynarray Class V3.0                  }
+{        Copyright 1997 RealSoft Development           }
+{           support:  www.realsoftdev.com              }
+{******************************************************}
+
+unit Dynarray;
+
+interface
+
+uses
+  SysUtils, WinTypes, WinProcs, Messages, Classes, Dialogs;
+
+type
+{//////////////////////////////////////////////////////}
+{                  Classic Dynarray                    }
+{//////////////////////////////////////////////////////}
+  EDynArrayException    = class(Exception);
+  EDynArrayCreateError  = class(EDynArrayException);
+  EDynArrayIndexBounds  = class(EDynArrayException);
+  EDynArrayResources    = class(EDynArrayException);
+  EDynArrayFileError    = class(EDynArrayException);
+  EDynArrayAddError     = class(EDynArrayException);
+  EDynArrayDelError     = class(EDynArrayException);
+  EDynArrayInsError     = class(EDynArrayException);
+  EDynArrayShiftError   = class(EDynArrayException);
+  EDynArraySwapError    = class(EDynArrayException);
+  EDynArraySortError    = class(EDynArrayException);
+  EDynArrayAssignError  = class(EDynArrayException);
+  EDynArrayIndexError   = class(EDynArrayException);
+
+  TSortType = ( stString, stPchar, stByte, stChar, stShortint, stWord,
+                stSmallint, stLongint, stSingle, stDouble, stReal, stExtended,
+                stBoolean, stPointer );
+
+  TrsDynArray = class
+    private
+      FPointer     : Pointer;
+      FItemSize    : Longint;
+      FItemCount   : Longint;
+      FArraySize   : LongInt;
+      FCurrIndex   : Longint;
+      function  GetItems (Index : Longint) : pointer;
+      function  GetItem: pointer;
+    public
+      constructor Create ( ItemSize : Longint );
+      destructor  Destroy; override;
+      function    Clear  : Pointer;
+      function    Add    ( const Item ) : Pointer;
+      function    Delete ( Index : Longint  ) : Pointer;
+      function    Insert ( Index: Longint; const Item ) : Pointer;
+      function    Shift  ( Index1, Index2: Longint) : Pointer;
+      function    Swap   ( Index1, Index2: Longint) : Pointer;
+      function    Sort   ( offset : Integer; dattype : TSortType ) : Pointer;
+      function    Assign ( FromDyn : TrsDynarray ) : Pointer;
+      function    SaveToFile   ( filename : String ) : Pointer;
+      function    LoadFromFile ( filename : String ) : Pointer;
+      procedure SaveToStream(Stream : TStream);
+      procedure LoadFromStream(Stream : TStream);
+
+      property Count       : Longint   read FItemCount;
+      property Size        : Longint   read FArraySize;
+      property ItemSize    : Longint   read FItemSize;
+      property DataPtr     : Pointer   read FPointer;
+      property CurrItem    : Pointer   read GetItem;
+      property CurrIndex   : Longint   read FCurrIndex  write FCurrIndex;
+      property Items[Index: longint]: Pointer read GetItems; default;
+    end;
+
+{//////////////////////////////////////////////////////}
+{               2 Dimensional Dynarray                 }
+{//////////////////////////////////////////////////////}
+  TrsDynArray2 = class
+    private
+      FColumns:   longint;
+      FItemSize:  longint;
+      FList:      TList;
+      function  GetItems (Col, Index: Longint) : pointer;
+      function  GetDyn (Col: Longint) : TrsDynarray;
+      procedure SetColumns(AValue: longint);
+    public
+      constructor Create ( Cols, ItemSize : Longint );
+      destructor  Destroy; 				override;
+      procedure   Clear;
+      procedure   Add ( Col: longint; const Item );
+      procedure   Delete ( Col, Index : longint  );
+      property Columns : Longint   			read FColumns	write SetColumns;
+      property Dynarray[Col: longint]: TrsDynarray 	read GetDyn;
+      property Items[Col, Index: longint]: Pointer 	read GetItems;	default;
+    end;
+
+{//////////////////////////////////////////////////////}
+{                     Huge Dynarray                    }
+{//////////////////////////////////////////////////////}
+  EDynHugeException    = class(Exception);
+  EDynHugeCreateError  = class(EDynHugeException);
+  EDynHugeMemError     = class(EDynHugeException);
+  EDynHugeIndexError   = class(EDynHugeException);
+  EDynHugeFileError    = class(EDynHugeException);
+  EDynHugeStreamError  = class(EDynHugeException);
+  EDynHugeAssignError  = class(EDynHugeException);
+  EDynHugeSortError    = class(EDynHugeException);
+
+  TrsDynHuge = class
+    private
+      FItemSize    : Longint;
+      FItemCount   : Longint;
+      FCurrIndex   : Longint;
+      function GetItems (Index : Longint) : pointer;
+      function GetItem: pointer;
+      function GetSize: Longint;
+      function GetMemory: Pointer;
+      function GetPosition: Longint;
+    public
+      M            : TMemoryStream;
+      constructor Create ( ItemSize : Longint );
+      destructor  Destroy; override;
+      procedure   Clear ;
+      procedure   Add    ( const Item );
+      procedure   Delete ( Index : Longint  );
+      procedure   Insert ( Index: Longint; const Item );
+      procedure   Shift  ( Index1, Index2: Longint);
+      procedure   Swap   ( Index1, Index2: Longint);
+      procedure   Sort   ( offset : Longint; dattype : TSortType );
+      procedure   Assign ( FromDyn : TrsDynHuge );
+      procedure   SaveToFile   ( filename : String );
+      procedure   LoadFromFile ( filename : String );
+      procedure   SaveToStream  ( Stream : TStream );
+      procedure   LoadFromStream( Stream : TStream );
+      function    CheckFileSize ( filename : String ): boolean;
+
+      property Count       : Longint   read FItemCount;
+      property ItemSize    : Longint   read FItemSize;
+      property Size        : Longint   read GetSize;
+      property Memory      : Pointer   read GetMemory;
+      property Position    : Longint   read GetPosition;
+      property CurrItem    : Pointer   read GetItem;
+      property CurrIndex   : Longint   read FCurrIndex  write FCurrIndex;
+      property Items[Index: longint]: Pointer read GetItems; default;
+    end;
+
+{//////////////////////////////////////////////////////}
+{                  Dyntypes Classes                    }
+{//////////////////////////////////////////////////////}
+  EDynArrayTypeException    = class(Exception);
+  EDynArrayTypeAccessError  = class(EDynArrayTypeException);
+
+  {$IFDEF WIN32}
+  TSizeByte     = array[0..2147483646] of byte;       {1  Byte }
+  TSizeChar     = array[0..2147483648] of char;       {1  Byte }
+  TSizeShortint = array[0..2147483646] of shortint;   {1  Byte }
+  TSizeWord     = array[0..1073741822] of word;       {2  Bytes}
+  TSizeSmallint = array[0..1073741822] of smallint;   {2  Bytes}
+
+  TSizeLongint  = array[0..536870910] of longint;     {4  Bytes}
+  TSizeSingle   = array[0..536870910] of single;      {4  Bytes}
+  TSizeDouble   = array[0..268435454] of double;      {8  Bytes}
+  TSizeReal     = array[0..214748363] of real;        {6  Bytes}
+  TSizeExtended = array[0..214748363] of extended;    {10 Bytes}
+
+  TSizeBoolean  = array[0..2147483646] of boolean;    {1  Byte }
+  TSizePointer  = array[0..536870910] of pointer;     {4  Bytes}
+  {$ELSE}
+  TSizeByte     = array[0..65520] of byte;        {1  Bytes}
+  TSizeChar     = array[0..65520] of char;        {1  Bytes}
+  TSizeShortint = array[0..65520] of shortint;    {1  Bytes}
+  TSizeWord     = array[0..32760] of word;        {2  Bytes}
+  TSizeSmallint = array[0..32760] of smallint;    {2  Bytes}
+
+  TSizeLongint  = array[0..16380] of longint;     {4  Bytes}
+  TSizeSingle   = array[0..16380] of single;      {4  Bytes}
+  TSizeDouble   = array[0..8190 ] of double;      {8  Bytes}
+  TSizeReal     = array[0..10920] of real;        {6  Bytes}
+  TSizeExtended = array[0..6552 ] of extended;    {10 Bytes}
+
+  TSizeBoolean  = array[0..65520] of boolean;     {1  Bytes}
+  TSizePointer  = array[0..16380] of pointer;     {4  Bytes}
+  {$ENDIF}
+
+
+  TrsCustomDynarray = class
+  protected
+    function GetCount    : Longint;
+    function GetSize     : Longint;
+    function GetItemsize : Longint;
+    function GetDataPtr  : Pointer;
+  public
+    Dynarray             : TrsDynArray;
+    DynPointer           : Pointer;
+    procedure Clear;
+    procedure Delete ( Index : Longint  );
+    procedure Shift  ( Index1, Index2: Longint );
+    procedure Swap   ( Index1, Index2: Longint );
+    procedure SaveToFile   ( filename : String );
+    procedure LoadFromFile ( filename : String );
+    procedure SaveToStream  ( Stream : TStream );
+    procedure LoadFromStream( Stream : TStream );
+    property  Count    : Longint read GetCount;
+    property  Size     : Longint read GetSize;
+    property  ItemSize : Longint read GetItemsize;
+    property  DataPtr  : Pointer read GetDataPtr;  {Is read-only in Base Dynarray}
+  end;
+
+  {**  TrsDynByte Declaration  **}
+  TrsDynByte = class(TrsCustomDynarray)
+  private
+     function  GetArrayData(Index: longint): Byte;  {For Quick Access Array Property}
+     procedure SetArrayData(Index: longint; MyByte : Byte);
+  public
+     constructor Create;
+     destructor  Destroy; override;
+     procedure   Add    ( Item : Byte );
+     procedure   Insert ( Index: Longint; Item: Byte );
+     procedure   Sort;
+     procedure   Assign ( FromDyn : TrsDynByte );
+     property    Items[Index: longint]: Byte read GetArrayData write SetArrayData; default;
+  end;
+
+  {**  TrsDynChar Declaration  **}
+  TrsDynChar = class(TrsCustomDynarray)
+  private
+     function  GetArrayData(Index: longint): Char;
+     procedure SetArrayData(Index: longint; MyChar : Char);
+  public
+     constructor Create;
+     destructor  Destroy; override;
+     procedure   Add    ( Item : Char );
+     procedure   Insert ( Index: Longint; Item: Char );
+     procedure   Sort;
+     procedure   Assign ( FromDyn : TrsDynChar );
+     property    Items[Index: longint]: Char read GetArrayData write SetArrayData; default;
+  end;
+
+  {**  TrsDynShortint Declaration  **}
+  TrsDynShortint = class(TrsCustomDynarray)
+  private
+     function  GetArrayData(Index: longint): Shortint;
+     procedure SetArrayData(Index: longint; MyShortint : Shortint);
+  public
+     constructor Create;
+     destructor  Destroy; override;
+     procedure   Add    ( Item : Shortint );
+     procedure   Insert ( Index: Longint; Item: Shortint );
+     procedure   Sort;
+     procedure   Assign ( FromDyn : TrsDynShortint );
+     property    Items[Index: longint]: Shortint read GetArrayData write SetArrayData; default;
+  end;
+
+  {**  TrsDynWord Declaration  **}
+  TrsDynWord = class(TrsCustomDynarray)
+  private
+     function  GetArrayData(Index : longint): Word;
+     procedure SetArrayData(Index : longint; MyWord : Word);
+  public
+     constructor Create;
+     destructor  Destroy; override;
+     procedure   Add    ( Item : Word );
+     procedure   Insert ( Index: Longint; Item: Word );
+     procedure   Sort;
+     procedure   Assign ( FromDyn : TrsDynWord );
+     property    Items[Index : longint]: Word read GetArrayData write SetArrayData; default;
+  end;
+
+  {**  TrsDynSmallint Declaration  **}
+  TrsDynSmallint = class(TrsCustomDynarray)
+  private
+     function  GetArrayData(Index : longint): Smallint;
+     procedure SetArrayData(Index : longint; MySmallint : Smallint);
+  public
+     constructor Create;
+     destructor  Destroy; override;
+     procedure   Add    ( Item : Smallint );
+     procedure   Insert ( Index: Longint; Item: Smallint );
+     procedure   Sort;
+     procedure   Assign ( FromDyn : TrsDynSmallint );
+     property    Items[Index : longint]: Smallint read GetArrayData write SetArrayData; default;
+  end;
+
+  {**  TrsDynLongint Declaration  **}
+  TrsDynLongint = class(TrsCustomDynarray)
+  private
+     function  GetArrayData(Index : longint): Longint;
+     procedure SetArrayData(Index : longint; MyLongint : Longint);
+  public
+     constructor Create;
+     destructor  Destroy; override;
+     procedure   Add    ( Item : Longint );
+     procedure   Insert ( Index: Longint; Item: Longint );
+     procedure   Sort;
+     procedure   Assign ( FromDyn : TrsDynLongint );
+     property    Items[Index : longint]: Longint read GetArrayData write SetArrayData; default;
+  end;
+
+  {**  TrsDynSingle Declaration  **}
+  TrsDynSingle = class(TrsCustomDynarray)
+  private
+     function  GetArrayData(Index : longint): Single;
+     procedure SetArrayData(Index : longint; MySingle : Single);
+  public
+     constructor Create;
+     destructor  Destroy; override;
+     procedure   Add    ( Item : Single );
+     procedure   Insert ( Index: Longint; Item: Single );
+     procedure   Sort;
+     procedure   Assign ( FromDyn : TrsDynSingle );
+     property    Items[Index : longint]: Single read GetArrayData write SetArrayData; default;
+  end;
+
+  {**  TrsDynDouble Declaration  **}
+  TrsDynDouble = class(TrsCustomDynarray)
+  private
+     function  GetArrayData(Index : longint): Double;
+     procedure SetArrayData(Index : longint; MyDouble : Double);
+  public
+     constructor Create;
+     destructor  Destroy; override;
+     procedure   Add    ( Item : Double );
+     procedure   Insert ( Index: Longint; Item: Double );
+     procedure   Sort;
+     procedure   Assign ( FromDyn : TrsDynDouble );
+     property    Items[Index : longint]: Double read GetArrayData write SetArrayData; default;
+  end;
+
+  {**  TrsDynReal Declaration  **}
+  TrsDynReal = class(TrsCustomDynarray)
+  private
+     function  GetArrayData(Index : longint): Real;
+     procedure SetArrayData(Index : longint; MyReal : Real);
+  public
+     constructor Create;
+     destructor  Destroy; override;
+     procedure   Add    ( Item : Real );
+     procedure   Insert ( Index: Longint; Item: Real );
+     procedure   Sort;
+     procedure   Assign ( FromDyn : TrsDynReal );
+     property    Items[Index : longint]: Real read GetArrayData write SetArrayData; default;
+  end;
+
+  {**  TrsDynExtended Declaration  **}
+  TrsDynExtended = class(TrsCustomDynarray)
+  private
+     function  GetArrayData(Index : longint): Extended;
+     procedure SetArrayData(Index : longint; MyExtended : Extended);
+  public
+     constructor Create;
+     destructor  Destroy; override;
+     procedure   Add    ( Item : Extended );
+     procedure   Insert ( Index: Longint; Item: Extended );
+     procedure   Sort;
+     procedure   Assign ( FromDyn : TrsDynExtended );
+     property    Items[Index : longint]: Extended read GetArrayData write SetArrayData; default;
+  end;
+
+  {**  TrsDynBoolean Declaration  **}
+  TrsDynBoolean = class(TrsCustomDynarray)
+  private
+     function  GetArrayData(Index : longint): Boolean;
+     procedure SetArrayData(Index : longint; MyBoolean : Boolean);
+  public
+     constructor Create;
+     destructor  Destroy; override;
+     procedure   Add    ( Item : Boolean );
+     procedure   Insert ( Index: Longint; Item: Boolean );
+     procedure   Sort;
+     procedure   Assign ( FromDyn : TrsDynBoolean );
+     property    Items[Index : longint]: Boolean read GetArrayData write SetArrayData; default;
+  end;
+
+  {**  TrsDynTypePointer Declaration  **}
+  TrsDynTypePointer = class(TrsCustomDynarray)
+  private
+     function  GetArrayData(Index : longint): Pointer;
+     procedure SetArrayData(Index : longint; MyPointer : Pointer);
+  public
+     constructor Create;
+     destructor  Destroy; override;
+     procedure   Add    ( Item : Pointer );
+     procedure   Insert ( Index: Longint; Item: Pointer );
+     procedure   Sort;
+     procedure   Assign ( FromDyn : TrsDynTypePointer );
+     property    Items[Index : longint]: Pointer read GetArrayData write SetArrayData; default;
+  end;
+
+
+implementation
+
+{//////////////////////////////////////////////////////}
+{                  Classic Dynarray                    }
+{//////////////////////////////////////////////////////}
+
+{***********************}
+{  Create & Initialize  }
+{***********************}
+constructor TrsDynArray.Create( ItemSize : Longint );
+begin
+  inherited create;
+  if (ItemSize > 0) and (ItemSize < 65520) then begin
+    FItemCount:= 0;
+    FArraySize:= 0;
+    FCurrIndex:= 0;
+    FItemSize:= ItemSize;
+    FPointer:= nil;
+    end
+  else raise EDynArrayCreateError.Create('Dynamic Array: Invalid Item Size');
+end;
+
+{***********************}
+{    Destroy & Free     }
+{***********************}
+destructor TrsDynArray.Destroy;
+begin
+  Clear;
+  FItemSize:= 0;
+  inherited destroy;
+end;
+
+{***********************}
+{      Clear Array      }
+{***********************}
+function TrsDynArray.Clear : pointer;
+begin
+  if FItemCount > 0 then begin
+    FreeMem(FPointer, FArraySize);
+    FItemCount:= 0;
+    FArraySize:= 0;
+    FCurrIndex:= 0;
+    end;
+  result:= NIL;
+end;
+
+{***********************}
+{ Add an Array Element  }
+{***********************}
+function TrsDynArray.Add ( const Item ) : Pointer;
+var P : Pointer;
+begin
+  if FItemSize > 0 then begin
+    {Allocate next memory element}
+    if FItemCount = 0 then GetMem( FPointer, FItemSize )
+    else
+    {$IFDEF Win32}
+      ReAllocMem( FPointer, FArraySize + FItemSize );
+    {$ELSE}
+      FPointer:= ReAllocMem( FPointer, FArraySize, FArraySize + FItemSize );
+    {$ENDIF}
+
+    if FPointer <> nil then begin {check for valid pointer}
+      {advance counters}
+      inc(FItemCount);
+      inc(FArraySize, FItemSize);
+      {move data into array memory}
+      P:= FPointer;
+      inc( longint(P), (FItemSize * (FItemCount - 1)) );
+      move( Item, P^, FItemSize );
+      end
+    else raise EDynArrayResources.Create('Dynamic Array: Out of resources during Add.');
+    end
+  else begin
+    raise EDynArrayAddError.Create('Dynamic Array: Unable to add element.');
+    FPointer:= nil;
+    end;
+  {return pointer}
+  Result:= FPointer;
+end;
+
+{*********************}
+{ Del an Array Element}
+{*********************}
+function TrsDynArray.Delete( Index: Longint ) : Pointer;
+var
+  x        : smallint;
+  P1 : Pointer;
+  P2 : Pointer;
+begin
+  if FItemCount > 0 then begin
+    if (Index < FItemCount - 1) then begin
+      {move items to fill gap}
+      P1:= FPointer;
+      inc( longint(P1), FItemSize * Index );
+      P2:= FPointer;
+      inc( longint(P2), FItemSize * (Index + 1) );
+      for x:= Index to FItemCount - 2 do begin
+        move( P2^, P1^, FItemSize );
+        inc( longint(P1), FItemSize );
+        inc( longint(P2), FItemSize );
+        end;
+      end;
+    {resize array to clip last item}
+
+    {$IFDEF Win32}
+      ReAllocMem( FPointer, FArraySize - FItemSize );
+    {$ELSE}
+      Fpointer:= ReAllocMem( FPointer, FArraySize, FArraySize - FItemSize );
+    {$ENDIF}
+
+    Dec(FArraySize, FItemSize);
+    Dec(FItemCount);
+    end
+  else begin
+    raise EDynArrayDelError.Create('Dynamic Array: Unable to delete element.');
+    FPointer:= nil;
+    end;
+  {return pointer}
+  Result:= FPointer;
+end;
+
+
+{***********************}
+{ Ins an Array Element  }
+{***********************}
+function TrsDynArray.Insert( Index: Longint; const Item ) : Pointer;
+var
+  x        : smallint;
+  P1 : Pointer;
+  P2 : Pointer;
+begin
+  if FItemCount > 0 then begin
+    {resize array to open space for last item}
+
+    {$IFDEF Win32}
+      ReAllocMem( FPointer, FArraySize + FItemSize );
+    {$ELSE}
+      Fpointer:= ReAllocMem( FPointer, FArraySize, FArraySize + FItemSize );
+    {$ENDIF}
+
+    Inc(FArraySize, FItemSize);
+    Inc(FItemCount);
+    if (Index < FItemCount - 1) then begin
+      {move items to open gap}
+      P1:= FPointer;
+      inc( longint(P1), FItemSize * (FItemCount - 2) );
+      P2:= FPointer;
+      inc( longint(P2), FItemSize * (FItemCount - 1) );
+      for x:= FItemCount - 2 downto Index do begin
+        move( P1^, P2^, FItemSize );
+        dec( longint(P1), FItemSize );
+        dec( longint(P2), FItemSize );
+        end;
+      {last, move index item to Index slot}
+      P1:= FPointer;
+      inc( longint(P1), FItemSize * (Index) );
+      move( Item, P1^, FItemSize );
+      end
+      else if (Index = FItemCount - 1) then begin
+      {They are inserting at the end}
+      P1:= FPointer;
+      inc( longint(P1), FItemSize * (Index) );
+      move( Item, P1^, FItemSize );
+      end
+    else raise EDynArrayIndexBounds.Create('Dynamic Array: Index out of Bounds.');
+  end
+  else begin
+    {raise EDynArrayInsError.Create('Dynamic Array: Unable to insert element.');
+    FPointer:= nil;}
+    FPointer:= Add(Item);
+    end;
+  {return pointer}
+  Result:= FPointer;
+end;
+
+{************************}
+{ Shift an Array Element }
+{************************}
+function TrsDynArray.Shift ( Index1, Index2: Longint ) : Pointer;
+var
+  tmpptr   : Pointer;
+  P1 : Pointer;
+begin
+  if FItemCount > 0 then begin
+    if (Index1 > - 1) and (Index1 < FItemCount) and
+       (Index2 > - 1) and (Index2 < FItemCount) and
+       (Index1 <> Index2) then begin
+      {first, store item}
+      GetMem( tmpptr, FItemSize );
+
+      P1:= FPointer;
+      inc( longint(P1), FItemSize * Index1 );
+      move( P1^, tmpptr^, FItemSize );
+      {Delete it}
+      Delete(Index1);
+      {Insert it}
+      Insert(Index2, tmpptr^);
+      {clean up}
+      FreeMem( tmpptr, FItemSize );
+      end
+    else raise EDynArrayIndexBounds.Create('Dynamic Array: Index out of Bounds.');
+    end
+  else begin
+    raise EDynArrayShiftError.Create('Dynamic Array: Unable to move element.');
+    FPointer:= nil;
+    end;
+  {return pointer}
+  Result:= FPointer;
+end;
+
+{***********************}
+{ Swap 2 Array Elements }
+{***********************}
+function TrsDynArray.Swap( Index1, Index2: Longint ) : Pointer;
+var
+  tmpptr   : Pointer;
+  P1 : Pointer;
+  P2 : Pointer;
+begin
+  if FItemCount > 0 then begin
+    if (Index1 > - 1) and (Index1 < FItemCount) and
+       (Index2 > - 1) and (Index2 < FItemCount) and
+       (Index1 <> Index2) then begin
+      {Grab pointer to each item}
+      P1:= FPointer;
+      inc( longint(P1), FItemSize * Index1 );
+      P2:= FPointer;
+      inc( longint(P2), FItemSize * Index2 );
+      {first, store item #2}
+      GetMem( tmpptr, FItemSize );
+      move( P2^, tmpptr^, FItemSize );
+      {copy item #1 to Item #2}
+      move( P1^, P2^, FItemSize );
+      {copy TMP item#2 back to item #1}
+      move( tmpptr^, P1^, FItemSize );
+      {clean up}
+      FreeMem( tmpptr, FItemSize );
+      end
+    else raise EDynArrayIndexBounds.Create('Dynamic Array: Index out of Bounds.');
+    end
+  else begin
+    raise EDynArraySwapError.Create('Dynamic Array: Unable to swap elements.');
+    FPointer:= nil;
+    end;
+  {return pointer}
+  Result:= FPointer;
+end;
+
+{***********************}
+{  Sort Array Elements  }
+{***********************}
+
+function TrsDynArray.Sort( offset : integer; dattype : TSortType ) : Pointer;
+{$IFDEF WIN32}
+{$H-}
+{$ENDIF}
+var
+  i, j                        : smallint;
+  found                       : boolean;
+  Ptr1, Ptr2                  : Pointer;
+  PTrstring1, PTrstring2      : ^String;
+  PtrPchar1, PtrPchar2        : ^PChar;
+  PtrByte1, PtrByte2          : ^Byte;
+  PtrChar1, PtrChar2          : ^Char;
+  PTrshortint1, PTrshortint2  : ^ShortInt;
+  PtrWord1, PtrWord2          : ^Word;
+  PTrsmallint1, PTrsmallint2  : ^Smallint;
+  PtrLongint1, PtrLongint2    : ^LongInt;
+  PTrsingle1, PTrsingle2      : ^Single;
+  PtrDouble1, PtrDouble2      : ^Double;
+  PtrReal1, PtrReal2          : ^Real;
+  PtrExtended1, PtrExtended2  : ^Extended;
+  PtrBoolean1, PtrBoolean2    : ^Boolean;
+  PtrPointer1, PtrPointer2    : ^Pointer;
+  {internal function}
+  function ComparePtr : boolean;
+  begin
+      PTrstring1   := Ptr1;
+      PtrPChar1    := Ptr1;
+      PtrByte1     := Ptr1;
+      PtrChar1     := Ptr1;
+      PTrshortint1 := Ptr1;
+      PtrWord1     := Ptr1;
+      PTrsmallint1 := Ptr1;
+      PtrLongint1  := Ptr1;
+      PTrsingle1   := Ptr1;
+      PtrDouble1   := Ptr1;
+      PtrReal1     := Ptr1;
+      PtrExtended1 := Ptr1;
+      PtrBoolean1  := Ptr1;
+      PtrPointer1  := Ptr1;
+      PTrstring2   := Ptr2;
+      PtrPChar2    := Ptr2;
+      PtrByte2     := Ptr2;
+      PtrChar2     := Ptr2;
+      PTrshortint2 := Ptr2;
+      PtrWord2     := Ptr2;
+      PTrsmallint2 := Ptr2;
+      PtrLongint2  := Ptr2;
+      PTrsingle2   := Ptr2;
+      PtrDouble2   := Ptr2;
+      PtrReal2     := Ptr2;
+      PtrExtended2 := Ptr2;
+      PtrBoolean2  := Ptr2;
+      PtrPointer2  := Ptr2;
+      result := false;
+      found  := false;
+
+      case dattype of
+
+      stString   : begin   {String}
+                   if CompareText(PTrstring1^, PTrstring2^)  > 0 then result:= true;
+                   found:= true;
+                    end;
+      stPChar    : begin   {Null-String}
+                   if StrIComp(PtrPChar1^, PtrPChar2^) > 0 then result:= true;
+                   found:= true;
+                   end;
+      stByte     : begin   {byte}
+                   if PtrByte2^ < PtrByte1^ then result:= true;
+                   found:= true;
+                   end;
+      stChar     : begin   {char}
+                   if PtrChar2^ < PtrChar1^ then result:= true;
+                   found:= true;
+                   end;
+      stShortint : begin   {shortint}
+                   if PTrshortint2^ < PTrshortint1^ then result:= true;
+                   found:= true;
+                   end;
+      stWord     : begin   {word}
+                   if PtrWord2^ < PtrWord1^ then result:= true;
+                   found:= true;
+                   end;
+      stSmallint : begin   {smallint}
+                   if PTrsmallint2^  < PTrsmallint1^  then result:= true;
+                   found:= true;
+                   end;
+      stLongint  : begin   {longint}
+                   if PtrLongint2^ < PtrLongint1^ then result:= true;
+                   found:= true;
+                   end;
+      stSingle   : begin   {single}
+                   if PTrsingle2^  < PTrsingle1^  then result:= true;
+                   found:= true;
+                   end;
+      stDouble   : begin   {double}
+                   if PtrDouble2^  < PtrDouble1^  then result:= true;
+                   found:= true;
+                   end;
+      stReal     : begin   {Real}
+                   if PtrReal2^  < PtrReal1^  then result:= true;
+                   found:= true;
+                   end;
+      stExtended : begin   {Extended}
+                   if PtrExtended2^  < PtrExtended1^  then result:= true;
+                   found:= true;
+                   end;
+      stBoolean  : begin   {Boolean}
+                   if PtrBoolean2^  < PtrBoolean1^  then result:= true;
+                   found:= true;
+                   end;
+      stPointer  : begin   {Pointer}
+                   if longint(PtrPointer2^)  < longint(PtrPointer1^)  then result:= true;
+                   found:= true;
+                   end;
+                 end; {Case}
+end;
+
+begin
+  if (offset < FItemSize) then begin
+    for j:= 0 to FItemcount - 1 do begin
+      for i:= 0 to FItemcount - 2 do begin
+        Ptr1:= FPointer;
+        Inc( longint(Ptr1), (i * FItemSize) + offset );
+        Ptr2:= FPointer;
+        Inc( longint(Ptr2), ((i+1) * FItemSize) + offset );
+        if ComparePtr then FPointer:= Swap( i, i+1 );
+        if not found then begin
+          raise EDynArraySortError.Create('Dynamic Array: Invalid sort type');
+          break;
+          end;
+        end; {for i}
+      end; {for j}
+    end
+  else raise EDynArraySortError.Create('Dynamic Array: Error sorting array.');
+  Result:= FPointer;
+{$IFDEF WIN32}
+{$H+}
+{$ENDIF}
+end;
+
+
+{***********************}
+{ Save Array to Stream  }
+{***********************}
+procedure TrsDynArray.SaveToStream( Stream : TStream );
+var
+  x         : smallint;
+  P   : Pointer;
+begin
+  if FItemCount > 0 then begin
+    P := FPointer;
+    for x:= 0 to FItemCount - 1 do begin
+      Stream.WriteBuffer( P^, FItemSize );
+      inc( longint(P), FItemSize );
+      end;
+    end;
+end;
+
+{***********************}
+{Load Array from Stream }
+{***********************}
+procedure TrsDynArray.LoadFromStream( Stream : TStream );
+var
+  x         : smallint;
+  Size      : longint;
+  tmpptr    : Pointer;
+begin
+  if FItemSize > 0 then begin
+    if FItemCount > 0 then begin
+      FreeMem(FPointer, FArraySize);
+      FItemCount:= 0;
+      FArraySize:= 0;
+      FPointer:= nil;
+      end;
+
+    if Stream.Size mod FItemSize > 0 then begin
+      raise EDynArrayFileError.Create('Dynamic Array: Invalid Element Size.'+#13+
+                                      'Diff: '+inttostr(Stream.Size mod FItemSize));
+      FPointer:= nil;
+      Exit;
+      end;
+
+    Size:= Stream.Size div FItemSize;
+    GetMem( tmpptr, FItemSize );
+
+    for x:= 0 to Size-1 do begin
+      Stream.ReadBuffer(tmpptr^, FItemSize);
+      FPointer:= Add(tmpptr^);
+      end;
+    {clean up}
+    FreeMem( tmpptr, FItemSize );
+    end
+  else begin
+    raise EDynArrayFileError.Create('Dynamic Array: Element size unknown.');
+    FPointer:= nil;
+    end;
+end;
+
+
+{*********************}
+{ Save Array to File  }
+{*********************}
+function TrsDynArray.SaveToFile ( filename : String ) : Pointer;
+var
+  handle, x   : smallint;
+  P     : Pointer;
+begin
+  if FItemCount > 0 then begin
+    if fileexists( FileName ) then
+
+      {$IFDEF Win32}
+        DeleteFile( PChar(FileName) );
+      {$ELSE}
+        DeleteFile( FileName );
+      {$ENDIF}
+
+    handle:= FileCreate( FileName );
+    if handle > - 1 then begin
+      P := FPointer;
+      for x:= 0 to FItemCount - 1 do begin
+        FileWrite( handle, P^, FItemSize );
+        inc( longint(P), FItemSize );
+        end;
+      FileClose(handle);
+      end
+    else raise EDynArrayFileError.Create('Dynamic Array: Unable to create file.');
+    end
+  else begin
+    raise EDynArrayFileError.Create('Dynamic Array: No elements to save.');
+    FPointer:= nil;
+    end;
+  {return pointer}
+  Result:= FPointer;
+end;
+
+{*********************}
+{Load Array from File }
+{*********************}
+function TrsDynArray.LoadFromFile ( filename : String ) : Pointer;
+var
+  handle      : smallint;
+  tmpptr      : Pointer;
+begin
+  if FItemSize > 0 then begin
+    if fileexists( FileName ) then begin
+      if FItemCount > 0 then begin
+        FreeMem(FPointer, FArraySize);
+        FItemCount:= 0;
+        FArraySize:= 0;
+        FPointer:= nil;
+        end;
+      handle:= FileOpen( FileName, fmOpenRead or fmShareDenyWrite );
+
+      GetMem( tmpptr, FItemSize );
+
+      while ( FileRead( handle, tmpptr^, FItemSize ) = FItemSize ) do
+        FPointer:= Add(tmpptr^);
+      FileClose(handle);
+      {clean up}
+      FreeMem( tmpptr, FItemSize );
+      end
+    else raise EDynArrayFileError.Create('Dynamic Array: File does not exist.');
+  end
+  else begin
+    raise EDynArrayFileError.Create('Dynamic Array: Element size unknown.');
+    FPointer:= nil;
+    end;
+  {return pointer}
+  Result:= FPointer;
+end;
+
+function  TrsDynArray.Assign ( FromDyn : TrsDynarray ) : Pointer;
+begin
+  if FromDyn.ItemSize = FItemSize then begin
+    {Free the old array, if any}
+    if FItemCount > 0 then begin
+      FreeMem(FPointer, FArraySize);
+      FItemCount:= 0;
+      FArraySize:= 0;
+      FPointer:= nil;
+      end;
+    {Create & Assign the array}
+    FItemCount:= FromDyn.Count;
+    FArraySize:= FromDyn.Size;
+    GetMem( FPointer, FArraySize );
+    move( FromDyn.DataPtr^, FPointer^, FArraySize );
+    end
+  else raise EDynArrayAssignError.Create('Dynamic Array: Arrays not compatible for Assign.');
+  Result:= FPointer;
+end;
+
+{*********************}
+{  Item Array Access  }
+{*********************}
+function TrsDynArray.GetItems(Index : Longint) : pointer;
+var P : pointer;
+begin
+  if Index > FItemCount-1 then begin
+    raise EDynArrayIndexBounds.Create('Dynamic Array: Index out of bounds.');
+    Exit;
+    end;
+  P:= FPointer;
+  inc(longint(P), longint(Index * FItemSize));
+  Result:= P;
+end;
+
+function TrsDynArray.GetItem: pointer;
+begin
+  if (FCurrIndex < FItemCount-1) and (FCurrIndex > -1) then
+    result:= Items[FCurrIndex]
+  else raise EDynArrayIndexBounds.Create('Dynamic Array: CurrIndex out of bounds.');
+end;
+
+{//////////////////////////////////////////////////////}
+{               2 Dimensional Dynarray                 }
+{//////////////////////////////////////////////////////}
+constructor TrsDynArray2.Create (Cols, ItemSize : Longint);
+var x: smallint;
+begin
+  inherited create;
+  FList:= TList.Create;
+  FItemsize:= Itemsize;
+  FColumns:= Cols;
+  for x:= 0 to FColumns-1 do begin
+    FList.Add(TrsDynarray.Create(Itemsize));
+    end;
+end;
+
+destructor TrsDynArray2.Destroy;
+var x: smallint;
+begin
+  for x:= 0 to FColumns-1 do
+    TrsDynarray(FList[x]).Free;
+  inherited Destroy;
+end;
+
+procedure TrsDynArray2.Clear;
+var x: smallint;
+begin
+  for x:= 0 to FColumns-1 do
+    TrsDynarray(FList[x]).Clear;
+end;
+
+procedure TrsDynArray2.Add (Col: longint; const Item);
+begin
+  TrsDynarray(FList[Col]).Add(Item);
+end;
+
+procedure TrsDynArray2.Delete (Col, Index : Longint);
+begin
+  TrsDynarray(FList[Col]).Delete(Index);
+end;
+
+procedure TrsDynArray2.SetColumns(AValue: longint);
+var x: smallint;
+begin
+  if AValue < FColumns then begin
+    for x:= (FColumns-1) downto (AValue-1) do begin
+      TrsDynarray(FList[x]).Free;
+      FList.Delete(x);
+      end;
+    end
+  else if AValue > FColumns then begin
+    for x:= (FColumns-1) to (AValue-1) do
+      FList.Add(TrsDynarray.Create(FItemsize));
+    end;
+  FColumns:= AValue;
+end;
+
+function TrsDynArray2.GetItems (Col, Index : Longint) : pointer;
+var tempdyn: TrsDynarray;
+begin
+  tempdyn:= TrsDynarray(FList[Col]);
+  result:= tempdyn[index];
+end;
+
+function TrsDynArray2.GetDyn (Col: Longint) : TrsDynarray;
+begin
+  result:= TrsDynarray(FList[Col]);
+end;
+
+
+{//////////////////////////////////////////////////////}
+{                     Huge Dynarray                    }
+{//////////////////////////////////////////////////////}
+
+{$IFDEF WIN32}
+function OffsetPointer(P: Pointer; Ofs: Longint): Pointer;
+begin
+  Inc( longint(P), ofs );
+  result:= P;
+end;
+{$ELSE}
+procedure __AHSHIFT; far; external 'KERNEL' index 113;
+function OffsetPointer(P: Pointer; Ofs: Longint): Pointer; assembler;
+asm
+        MOV     AX,Ofs.Word[0]
+        MOV     DX,Ofs.Word[2]
+        ADD     AX,P.Word[0]
+        ADC     DX,0
+        MOV     CX,OFFSET __AHSHIFT
+        SHL     DX,CL
+        ADD     DX,P.Word[2]
+end;
+{$ENDIF}
+
+{***********************}
+{  Create & Initialize  }
+{***********************}
+constructor TrsDynHuge.Create( ItemSize : Longint );
+begin
+  inherited create;
+  if (ItemSize > 0) and (ItemSize < 65520) then begin
+    FItemCount:= 0;
+    FCurrIndex:= 0;
+    FItemSize:= ItemSize;
+    M:= TMemoryStream.Create;
+    end
+  else raise EDynHugeCreateError.Create('Dynamic Array: Invalid Item Size');
+end;
+
+{***********************}
+{    Destroy & Free     }
+{***********************}
+destructor TrsDynHuge.Destroy;
+begin
+  M.Free;
+  M:= TMemoryStream.Create;
+  FItemSize:= 0;
+  inherited destroy;
+end;
+
+{***********************}
+{      Clear Array      }
+{***********************}
+procedure TrsDynHuge.Clear;
+begin
+  if FItemCount > 0 then begin
+    M.Free;
+    M:= TMemoryStream.Create;
+    FItemCount:= 0;
+    FCurrIndex:= 0;
+    end;
+end;
+
+function TrsDynHuge.GetSize: Longint;
+begin
+  Result:= M.Size;
+end;
+
+function TrsDynHuge.GetMemory: Pointer;
+begin
+  Result:= M.Memory;
+end;
+
+function TrsDynHuge.GetPosition: Longint;
+begin
+  Result:= M.Position;
+end;
+
+{***********************}
+{ Add an Array Element  }
+{***********************}
+procedure TrsDynHuge.Add ( const Item );
+begin
+  M.Seek(M.Size,0);
+  if M.Write(Item, FItemSize) <> FItemSize then begin
+    raise EDynHugeMemError.Create('Dynamic Array: Out of resources during Add.');
+    Exit;
+    end;
+  {advance counters}
+  inc(FItemCount);
+end;
+
+{*********************}
+{ Del an Array Element}
+{*********************}
+procedure TrsDynHuge.Delete( Index: Longint );
+var P1,P2: pointer;
+{$IFNDEF WIN32}
+    M2: TmemoryStream;
+{$ENDIF}
+begin
+  if M.Seek( (Index * FItemSize), 0 ) <> (Index * FItemSize) then begin
+    raise EDynHugeIndexError.Create('Dynamic Array: Index out of bounds in Delete.');
+    Exit;
+    end;
+  if Index < FItemCount-1 then begin
+    P1:= M.Memory;
+    P1:= OffsetPointer(P1, M.Position);
+    {inc(Longint(P1), M.Position);}
+    P2:= P1;
+    P2:= OffsetPointer(P2, FItemSize);
+    {inc(Longint(P2), FItemSize);}
+    move( P2^, P1^, M.Size - (M.Position + FItemSize) );
+    end;
+
+  {clip last item}
+  Dec(FItemCount);
+  {$IFDEF WIN32}
+  M.Setsize( FItemCount * FItemSize );
+  {$ELSE}
+  M2:= TMemoryStream.Create; {create a second stream of correct size}
+  M2.Write(M.Memory^, FItemCount * FItemSize);
+  M.Free; {free main stream}
+  M:= M2;                    {make new one main stream}
+  {$ENDIF}
+end;
+
+
+{***********************}
+{ Ins an Array Element  }
+{***********************}
+procedure TrsDynHuge.Insert( Index: Longint; const Item );
+var P1,P2: pointer;
+begin
+  if M.Seek( (Index * FItemSize), 0 ) <> (Index * FItemSize) then begin
+    raise EDynHugeIndexError.Create('Dynamic Array: Index out of bounds in Insert.');
+    Exit;
+    end;
+  {Resize for new item}
+  inc(FItemCount);
+  {$IFDEF WIN32}
+  M.Setsize( FItemCount * FItemSize );
+  {$ELSE}
+  M.seek(0,2); {go to end}
+  M.Write(Item, FItemSize); {hokey way to resize}
+  {$ENDIF}
+
+  {move things down}
+  P1:= M.Memory;
+  P1:= OffsetPointer(P1, M.Position);
+  {inc(Longint(P1), M.Position);}
+  P2:= P1;
+  P2:= OffsetPointer(P2, FItemSize);
+  {inc(Longint(P2), FItemSize);}
+  move( P1^, P2^, (M.Size - FItemSize) - M.Position );
+  {add new item}
+  M.Write(Item, FItemSize);
+end;
+
+{***********************}
+{ Save Array to Stream  }
+{***********************}
+procedure TrsDynHuge.SaveToStream( Stream : TStream );
+begin
+  M.Savetostream(Stream);
+end;
+
+{***********************}
+{Load Array from Stream }
+{***********************}
+procedure TrsDynHuge.LoadFromStream( Stream : TStream );
+begin
+  M.Loadfromstream(Stream);
+  if M.Size = 0 then Exit;
+  if M.Size mod FItemSize > 0 then begin
+    raise EDynHugeStreamError.Create('Dynamic Array: Element size or stream invalid.');
+    Exit;
+    end;
+  FItemCount:= M.Size div FItemSize;
+  FCurrIndex:= 0;
+end;
+
+
+{*********************}
+{ Save Array to File  }
+{*********************}
+procedure TrsDynHuge.SaveToFile ( filename : String );
+begin
+  M.Savetofile(filename);
+end;
+
+{*********************}
+{Load Array from File }
+{*********************}
+procedure TrsDynHuge.LoadFromFile ( filename : String );
+begin
+  M.Loadfromfile(filename);
+  if M.Size = 0 then Exit;
+  if M.Size mod FItemSize > 0 then begin
+    raise EDynHugeFileError.Create('Dynamic Array: Element size or file invalid.');
+    Exit;
+    end;
+  FItemCount:= M.Size div FItemSize;
+  FCurrIndex:= 0;
+end;
+
+{*********************}
+{  Check Array size   }
+{*********************}
+function  TrsDynHuge.CheckFileSize ( filename : String ) : boolean;
+begin
+  M.Loadfromfile(filename);
+  Result:= M.Size mod FItemSize = 0;
+  Clear;
+end;
+
+procedure TrsDynHuge.Assign ( FromDyn : TrsDynHuge );
+begin
+  M.Loadfromstream(FromDyn.M);
+  if M.Size = 0 then Exit;
+  if M.Size mod FItemSize > 0 then begin
+    raise EDynHugeStreamError.Create('Dynamic Array: Element size or dynarray invalid.');
+    Exit;
+    end;
+  FItemCount:= M.Size div FItemSize;
+  FCurrIndex:= 0;
+end;
+
+{*********************}
+{  Item Array Access  }
+{*********************}
+function TrsDynHuge.GetItems(Index : Longint) : pointer;
+var P: pointer;
+begin
+  if M.Seek( (Index * FItemSize), 0 ) <> (Index * FItemSize) then begin
+    raise EDynHugeIndexError.Create('Dynamic Array: Index out of bounds in Insert.');
+    Exit;
+    end;
+  P:= M.Memory;
+  P:= OffsetPointer(P, Index * FItemSize);
+  {inc(longint(P), Index * FItemSize);}
+  Result:= P;
+end;
+
+function TrsDynHuge.GetItem: pointer;
+var P: pointer;
+begin
+  if M.Seek( (FCurrIndex * FItemSize), 0 ) <> (FCurrIndex * FItemSize) then begin
+    raise EDynHugeIndexError.Create('Dynamic Array: CurrIndex out of bounds in Insert.');
+    Exit;
+    end;
+  P:= M.Memory;
+  P:= OffsetPointer(P, FCurrIndex * FItemSize);
+  {inc(longint(P), FCurrIndex * FItemSize);}
+  Result:= P;
+end;
+
+{************************}
+{ Shift an Array Element }
+{************************}
+procedure TrsDynHuge.Shift ( Index1, Index2: Longint );
+var P1, tmpptr : Pointer;
+begin
+  if FItemCount = 0 then begin
+    raise EDynHugeIndexError.Create('Dynamic Array: Count must be > 1');
+    Exit;
+    end;
+  if (Index1 < 0) or (Index1 > FItemCount - 1) or
+     (Index2 < 0) or (Index2 > FItemCount - 1) or (Index1 = Index2) then begin
+    raise EDynHugeIndexError.Create('Dynamic Array: Index out of Bounds.');
+    Exit;
+    end;
+
+  {first, store item}
+  tmpptr:= NIL;
+  try GetMem( tmpptr, FItemSize );
+  P1:= M.Memory;
+  P1:= OffsetPointer(P1, FItemSize * Index1);
+  {inc( longint(P1), FItemSize * Index1 );}
+  move( P1^, tmpptr^, FItemSize );
+  {Delete it}
+  Delete(Index1);
+  {Insert it}
+  Insert(Index2, tmpptr^);
+  {clean up}
+  finally FreeMem( tmpptr, FItemSize ); end;
+end;
+
+{***********************}
+{ Swap 2 Array Elements }
+{***********************}
+procedure TrsDynHuge.Swap( Index1, Index2: Longint );
+var P1, P2, tmpptr : Pointer;
+begin
+  if FItemCount = 0 then begin
+    raise EDynHugeIndexError.Create('Dynamic Array: Count must be > 1');
+    Exit;
+    end;
+  if (Index1 < 0) or (Index1 > FItemCount - 1) or
+     (Index2 < 0) or (Index2 > FItemCount - 1) or (Index1 = Index2) then begin
+    raise EDynHugeIndexError.Create('Dynamic Array: Index out of Bounds.');
+    Exit;
+    end;
+
+  {Grab pointer to each item}
+  P1:= M.Memory;
+  P2:= P1;
+  P1:= OffsetPointer(P1, FItemSize * Index1);
+  P2:= OffsetPointer(P2, FItemSize * Index2);
+{  inc( longint(P1), FItemSize * Index1 );
+  inc( longint(P2), FItemSize * Index2 );}
+  {first, store item #2}
+  tmpptr:= NIL;
+  try GetMem( tmpptr, FItemSize );
+  move( P2^, tmpptr^, FItemSize );
+  {copy item #1 to Item #2}
+  move( P1^, P2^, FItemSize );
+  {copy TMP item#2 back to item #1}
+  move( tmpptr^, P1^, FItemSize );
+  {clean up}
+  finally FreeMem( tmpptr, FItemSize ); end;
+end;
+
+{***********************}
+{  Sort Array Elements  }
+{***********************}
+
+procedure TrsDynHuge.Sort( offset : longint; dattype : TSortType );
+{$IFDEF WIN32}
+{$H-}
+{$ENDIF}
+var
+  P1, P2                      : Pointer;
+  i, j                        : smallint;
+  found                       : boolean;
+  PTrstring1, PTrstring2      : ^String;
+  PtrPchar1, PtrPchar2        : ^PChar;
+  PtrByte1, PtrByte2          : ^Byte;
+  PtrChar1, PtrChar2          : ^Char;
+  PTrshortint1, PTrshortint2  : ^ShortInt;
+  PtrWord1, PtrWord2          : ^Word;
+  PTrsmallint1, PTrsmallint2  : ^Smallint;
+  PtrLongint1, PtrLongint2    : ^LongInt;
+  PTrsingle1, PTrsingle2      : ^Single;
+  PtrDouble1, PtrDouble2      : ^Double;
+  PtrReal1, PtrReal2          : ^Real;
+  PtrExtended1, PtrExtended2  : ^Extended;
+  PtrBoolean1, PtrBoolean2    : ^Boolean;
+  PtrPointer1, PtrPointer2    : ^Pointer;
+  {internal function}
+  function ComparePtr : boolean;
+  begin
+      PTrstring1   := P1;
+      PtrPChar1    := P1;
+      PtrByte1     := P1;
+      PtrChar1     := P1;
+      PTrshortint1 := P1;
+      PtrWord1     := P1;
+      PTrsmallint1 := P1;
+      PtrLongint1  := P1;
+      PTrsingle1   := P1;
+      PtrDouble1   := P1;
+      PtrReal1     := P1;
+      PtrExtended1 := P1;
+      PtrBoolean1  := P1;
+      PtrPointer1  := P1;
+      PTrstring2   := P2;
+      PtrPChar2    := P2;
+      PtrByte2     := P2;
+      PtrChar2     := P2;
+      PTrshortint2 := P2;
+      PtrWord2     := P2;
+      PTrsmallint2 := P2;
+      PtrLongint2  := P2;
+      PTrsingle2   := P2;
+      PtrDouble2   := P2;
+      PtrReal2     := P2;
+      PtrExtended2 := P2;
+      PtrBoolean2  := P2;
+      PtrPointer2  := P2;
+      result := false;
+      found  := false;
+
+      case dattype of
+
+      stString   : begin   {String}
+                   if CompareText(PTrstring1^, PTrstring2^)  > 0 then result:= true;
+                   found:= true;
+                    end;
+      stPChar    : begin   {Null-String}
+                   if StrIComp(PtrPChar1^, PtrPChar2^) > 0 then result:= true;
+                   found:= true;
+                   end;
+      stByte     : begin   {byte}
+                   if PtrByte2^ < PtrByte1^ then result:= true;
+                   found:= true;
+                   end;
+      stChar     : begin   {char}
+                   if PtrChar2^ < PtrChar1^ then result:= true;
+                   found:= true;
+                   end;
+      stShortint : begin   {shortint}
+                   if PTrshortint2^ < PTrshortint1^ then result:= true;
+                   found:= true;
+                   end;
+      stWord     : begin   {word}
+                   if PtrWord2^ < PtrWord1^ then result:= true;
+                   found:= true;
+                   end;
+      stSmallint : begin   {smallint}
+                   if PTrsmallint2^  < PTrsmallint1^  then result:= true;
+                   found:= true;
+                   end;
+      stLongint  : begin   {longint}
+                   if PtrLongint2^ < PtrLongint1^ then result:= true;
+                   found:= true;
+                   end;
+      stSingle   : begin   {single}
+                   if PTrsingle2^  < PTrsingle1^  then result:= true;
+                   found:= true;
+                   end;
+      stDouble   : begin   {double}
+                   if PtrDouble2^  < PtrDouble1^  then result:= true;
+                   found:= true;
+                   end;
+      stReal     : begin   {Real}
+                   if PtrReal2^  < PtrReal1^  then result:= true;
+                   found:= true;
+                   end;
+      stExtended : begin   {Extended}
+                   if PtrExtended2^  < PtrExtended1^  then result:= true;
+                   found:= true;
+                   end;
+      stBoolean  : begin   {Boolean}
+                   if PtrBoolean2^  < PtrBoolean1^  then result:= true;
+                   found:= true;
+                   end;
+      stPointer  : begin   {Pointer}
+                   if longint(PtrPointer2^)  < longint(PtrPointer1^)  then result:= true;
+                   found:= true;
+                   end;
+                 end; {Case}
+end;
+
+begin
+  if (offset < FItemSize) and (offset > -1) then begin
+    for j:= 0 to FItemcount - 1 do begin
+      for i:= 0 to FItemcount - 2 do begin
+        P1:= M.Memory;
+        P2:= P1;
+        P1:= OffsetPointer(P1, (i * FItemSize) + offset);
+        P2:= OffsetPointer(P2, ((i+1) * FItemSize) + offset);
+        {Inc( longint(P1), (i * FItemSize) + offset );
+        Inc( longint(P2), ((i+1) * FItemSize) + offset );}
+        if ComparePtr then Swap( i, i+1 );
+        if not found then begin
+          raise EDynHugeSortError.Create('Dynamic Array: Invalid sort type');
+          break;
+          end;
+        end; {for i}
+      end; {for j}
+    end
+  else raise EDynHugeSortError.Create('Dynamic Array: Error sorting array.');
+{$IFDEF WIN32}
+{$H+}
+{$ENDIF}
+end;
+
+
+{//////////////////////////////////////////////////////}
+{                  Dyntypes Classes                    }
+{//////////////////////////////////////////////////////}
+
+{*******************************}
+{       TrsCustomDynarray       }
+{*******************************}
+procedure TrsCustomDynarray.Clear;
+begin
+  DynPointer:= DynArray.Clear;
+end;
+
+procedure TrsCustomDynarray.Delete( Index : Longint  );
+begin
+  DynPointer:= DynArray.Delete(Index);
+end;
+
+procedure TrsCustomDynarray.Shift( Index1, Index2: Longint );
+begin
+  DynPointer:= DynArray.Shift(Index1, Index2);
+end;
+
+procedure TrsCustomDynarray.Swap( Index1, Index2: Longint );
+begin
+  DynPointer:= DynArray.Swap(Index1, Index2);
+end;
+
+procedure TrsCustomDynarray.SaveToFile( filename : String );
+begin
+  DynPointer:= DynArray.SavetoFile(filename);
+end;
+
+procedure TrsCustomDynarray.LoadFromFile( filename : String );
+begin
+  DynPointer:= DynArray.LoadFromFile(filename);
+end;
+
+procedure TrsCustomDynarray.SaveToStream( Stream : TStream );
+begin
+  DynArray.SavetoStream(Stream);
+end;
+
+procedure TrsCustomDynarray.LoadFromStream( Stream : TStream );
+begin
+  DynArray.LoadFromStream(Stream);
+end;
+
+function TrsCustomDynarray.GetCount : Longint;
+begin
+  result:= DynArray.Count;
+end;
+
+function TrsCustomDynarray.GetSize : Longint;
+begin
+  result:= DynArray.Size;
+end;
+
+function TrsCustomDynarray.GetItemsize : Longint;
+begin
+  result:= DynArray.ItemSize;
+end;
+
+function TrsCustomDynarray.GetDataPtr  : pointer;
+begin
+  result:= DynArray.DataPtr;
+end;
+
+
+{*******************************}
+{         TrsDynByte            }
+{*******************************}
+constructor TrsDynByte.Create;
+begin
+  inherited Create;
+  DynArray:= TrsDynArray.Create(sizeof(byte));
+end;
+
+destructor TrsDynByte.Destroy;
+begin
+  Dynarray.Free;
+  inherited Destroy;
+end;
+
+function TrsDynByte.GetArrayData(Index : longint): Byte; {For Quick Access Array Property}
+begin
+  if Index < Count then
+    Result:= TSizeByte(DynPointer^)[Index]
+  else raise EDynArrayTypeAccessError.Create('Dynamic Byte Array: Index out of bounds');
+end;
+
+procedure TrsDynByte.SetArrayData(Index : longint; MyByte : Byte);  {For Quick Access Array Property}
+begin
+  if Index <= Count then begin
+    if Index < count then TSizeByte(DynPointer^)[Index] := MyByte else
+      if Index = Count then DynPointer:= Dynarray.add(MyByte); {Assigning to count will add item}
+  end
+  else raise EDynArrayTypeAccessError.Create('Dynamic Byte Array: Index out of bounds');
+end;
+
+procedure TrsDynByte.Add( Item : Byte );
+begin
+  DynPointer:= DynArray.Add(Item);
+end;
+
+procedure TrsDynByte.Insert( Index: Longint; Item: Byte );
+begin
+  DynPointer:= DynArray.Insert(Index, Item);
+end;
+
+procedure TrsDynByte.Sort;
+begin
+  DynPointer:= DynArray.Sort( 0, stByte);
+end;
+
+procedure TrsDynByte.Assign( FromDyn : TrsDynByte );
+begin
+  DynPointer:= DynArray.Assign(FromDyn.Dynarray);
+end;
+
+{*******************************}
+{           TrsDynChar            }
+{*******************************}
+constructor TrsDynChar.Create;
+begin
+  inherited Create;
+  DynArray:= TrsDynArray.Create(sizeof(Char));
+end;
+
+destructor TrsDynChar.Destroy;
+begin
+  Dynarray.Free;
+  inherited Destroy;
+end;
+
+function TrsDynChar.GetArrayData(Index : longint): Char;
+begin
+  if Index < Count then
+    Result:= TSizeChar(DynPointer^)[Index]
+  else raise EDynArrayTypeAccessError.Create('Dynamic Char Array: Index out of bounds');
+
+end;
+
+procedure TrsDynChar.SetArrayData(Index : longint; MyChar : Char);
+begin
+  if Index <= Count then begin
+    if Index < count then TSizeChar(DynPointer^)[Index] := MyChar else
+      if Index = Count then DynPointer:= Dynarray.add(MyChar);
+  end
+  else raise EDynArrayTypeAccessError.Create('Dynamic Char Array: Index out of bounds');
+end;
+
+procedure TrsDynChar.Add( Item : Char );
+begin
+  DynPointer:= DynArray.Add(Item);
+end;
+
+procedure TrsDynChar.Insert( Index: Longint; Item: Char );
+begin
+  DynPointer:= DynArray.Insert(Index, Item);
+end;
+
+procedure TrsDynChar.Sort;
+begin
+  DynPointer:= DynArray.Sort( 0, stChar);
+end;
+
+procedure TrsDynChar.Assign( FromDyn : TrsDynChar );
+begin
+  DynPointer:= DynArray.Assign(FromDyn.Dynarray);
+end;
+
+{*******************************}
+{         TrsDynShortint          }
+{*******************************}
+constructor TrsDynShortint.Create;
+begin
+  inherited Create;
+  DynArray:= TrsDynArray.Create(sizeof(Shortint));
+end;
+
+destructor TrsDynShortint.Destroy;
+begin
+  Dynarray.Free;
+  inherited Destroy;
+end;
+
+function TrsDynShortint.GetArrayData(Index : longint): Shortint;
+begin
+  if Index < Count then
+    Result:= TSizeShortint(DynPointer^)[Index]
+  else raise EDynArrayTypeAccessError.Create('Dynamic Shortint Array: Index out of bounds');
+
+end;
+
+procedure TrsDynShortint.SetArrayData(Index : longint; MyShortint : Shortint);
+begin
+  if Index <= Count then begin
+    if Index < count then TSizeShortint(DynPointer^)[Index] := MyShortint else
+      if Index = Count then DynPointer:= Dynarray.add(MyShortint);
+  end
+  else raise EDynArrayTypeAccessError.Create('Dynamic Shortint Array: Index out of bounds');
+end;
+
+procedure TrsDynShortint.Add( Item : Shortint );
+begin
+  DynPointer:= DynArray.Add(Item);
+end;
+
+procedure TrsDynShortint.Insert( Index: Longint; Item: Shortint );
+begin
+  DynPointer:= DynArray.Insert(Index, Item);
+end;
+
+procedure TrsDynShortint.Sort;
+begin
+  DynPointer:= DynArray.Sort( 0, stShortint);
+end;
+
+procedure TrsDynShortint.Assign( FromDyn : TrsDynShortint );
+begin
+  DynPointer:= DynArray.Assign(FromDyn.Dynarray);
+end;
+
+{*******************************}
+{           TrsDynWord            }
+{*******************************}
+constructor TrsDynWord.Create;
+begin
+  inherited Create;
+  DynArray:= TrsDynArray.Create(sizeof(Word));
+end;
+
+destructor TrsDynWord.Destroy;
+begin
+  Dynarray.Free;
+  inherited Destroy;
+end;
+
+function TrsDynWord.GetArrayData(Index : longint): Word;
+begin
+  if Index < Count then
+    Result:= TSizeWord(DynPointer^)[Index]
+  else raise EDynArrayTypeAccessError.Create('Dynamic Word Array: Index out of bounds');
+
+end;
+
+procedure TrsDynWord.SetArrayData(Index : longint; MyWord : Word);
+begin
+  if Index <= Count then begin
+    if Index < count then TSizeWord(DynPointer^)[Index] := MyWord else
+      if Index = Count then DynPointer:= Dynarray.add(MyWord);
+  end
+  else raise EDynArrayTypeAccessError.Create('Dynamic Word Array: Index out of bounds');
+end;
+
+procedure TrsDynWord.Add( Item : Word );
+begin
+  DynPointer:= DynArray.Add(Item);
+end;
+
+procedure TrsDynWord.Insert( Index: Longint; Item: Word );
+begin
+  DynPointer:= DynArray.Insert(Index, Item);
+end;
+
+procedure TrsDynWord.Sort;
+begin
+  DynPointer:= DynArray.Sort( 0, stWord);
+end;
+
+procedure TrsDynWord.Assign( FromDyn : TrsDynWord );
+begin
+  DynPointer:= DynArray.Assign(FromDyn.Dynarray);
+end;
+
+{*******************************}
+{         TrsDynSmallint          }
+{*******************************}
+constructor TrsDynSmallint.Create;
+begin
+  inherited Create;
+  DynArray:= TrsDynArray.Create(sizeof(Smallint));
+end;
+
+destructor TrsDynSmallint.Destroy;
+begin
+  Dynarray.Free;
+  inherited Destroy;
+end;
+
+function TrsDynSmallint.GetArrayData(Index : longint): Smallint;
+begin
+  if Index < Count then
+    Result:= TSizeSmallint(DynPointer^)[Index]
+  else raise EDynArrayTypeAccessError.Create('Dynamic Smallint Array: Index out of bounds');
+
+end;
+
+procedure TrsDynSmallint.SetArrayData(Index : longint; MySmallint : Smallint);
+begin
+  if Index <= Count then begin
+    if Index < count then TSizeSmallint(DynPointer^)[Index] := MySmallint else
+      if Index = Count then DynPointer:= Dynarray.add(MySmallint);
+  end
+  else raise EDynArrayTypeAccessError.Create('Dynamic Smallint Array: Index out of bounds');
+end;
+
+procedure TrsDynSmallint.Add( Item : Smallint );
+begin
+  DynPointer:= DynArray.Add(Item);
+end;
+
+procedure TrsDynSmallint.Insert( Index: Longint; Item: Smallint );
+begin
+  DynPointer:= DynArray.Insert(Index, Item);
+end;
+
+procedure TrsDynSmallint.Sort;
+begin
+  DynPointer:= DynArray.Sort( 0, stSmallint);
+end;
+
+procedure TrsDynSmallint.Assign( FromDyn : TrsDynSmallint );
+begin
+  DynPointer:= DynArray.Assign(FromDyn.Dynarray);
+end;
+
+{*******************************}
+{          TrsDynLongint          }
+{*******************************}
+constructor TrsDynLongint.Create;
+begin
+  inherited Create;
+  DynArray:= TrsDynArray.Create(sizeof(Longint));
+end;
+
+destructor TrsDynLongint.Destroy;
+begin
+  Dynarray.Free;
+  inherited Destroy;
+end;
+
+function TrsDynLongint.GetArrayData(Index : longint): Longint;
+begin
+  if Index < Count then
+    Result:= TSizeLongint(DynPointer^)[Index]
+  else raise EDynArrayTypeAccessError.Create('Dynamic Longint Array: Index out of bounds');
+
+end;
+
+procedure TrsDynLongint.SetArrayData(Index : longint; MyLongint : Longint);
+begin
+  if Index <= Count then begin
+    if Index < count then TSizeLongint(DynPointer^)[Index] := MyLongint else
+      if Index = Count then DynPointer:= Dynarray.add(MyLongint);
+  end
+  else raise EDynArrayTypeAccessError.Create('Dynamic Longint Array: Index out of bounds');
+end;
+
+procedure TrsDynLongint.Add( Item : Longint );
+begin
+  DynPointer:= DynArray.Add(Item);
+end;
+
+procedure TrsDynLongint.Insert( Index: Longint; Item: Longint );
+begin
+  DynPointer:= DynArray.Insert(Index, Item);
+end;
+
+procedure TrsDynLongint.Sort;
+begin
+  DynPointer:= DynArray.Sort( 0, stLongint);
+end;
+
+procedure TrsDynLongint.Assign( FromDyn : TrsDynLongint );
+begin
+  DynPointer:= DynArray.Assign(FromDyn.Dynarray);
+end;
+
+{*******************************}
+{          TrsDynSingle           }
+{*******************************}
+constructor TrsDynSingle.Create;
+begin
+  inherited Create;
+  DynArray:= TrsDynArray.Create(sizeof(Single));
+end;
+
+destructor TrsDynSingle.Destroy;
+begin
+  Dynarray.Free;
+  inherited Destroy;
+end;
+
+function TrsDynSingle.GetArrayData(Index : longint): Single;
+begin
+  if Index < Count then
+    Result:= TSizeSingle(DynPointer^)[Index]
+  else raise EDynArrayTypeAccessError.Create('Dynamic Single Array: Index out of bounds');
+
+end;
+
+procedure TrsDynSingle.SetArrayData(Index : longint; MySingle : Single);
+begin
+  if Index <= Count then begin
+    if Index < count then TSizeSingle(DynPointer^)[Index] := MySingle else
+      if Index = Count then DynPointer:= Dynarray.add(MySingle);
+  end
+  else raise EDynArrayTypeAccessError.Create('Dynamic Single Array: Index out of bounds');
+end;
+
+procedure TrsDynSingle.Add( Item : Single );
+begin
+  DynPointer:= DynArray.Add(Item);
+end;
+
+procedure TrsDynSingle.Insert( Index: Longint; Item: Single );
+begin
+  DynPointer:= DynArray.Insert(Index, Item);
+end;
+
+procedure TrsDynSingle.Sort;
+begin
+  DynPointer:= DynArray.Sort( 0, stSingle);
+end;
+
+procedure TrsDynSingle.Assign( FromDyn : TrsDynSingle );
+begin
+  DynPointer:= DynArray.Assign(FromDyn.Dynarray);
+end;
+
+{*******************************}
+{          TrsDynDouble           }
+{*******************************}
+constructor TrsDynDouble.Create;
+begin
+  inherited Create;
+  DynArray:= TrsDynArray.Create(sizeof(Double));
+end;
+
+destructor TrsDynDouble.Destroy;
+begin
+  Dynarray.Free;
+  inherited Destroy;
+end;
+
+function TrsDynDouble.GetArrayData(Index : longint): Double;
+begin
+  if Index < Count then
+    Result:= TSizeDouble(DynPointer^)[Index]
+  else raise EDynArrayTypeAccessError.Create('Dynamic Double Array: Index out of bounds');
+
+end;
+
+procedure TrsDynDouble.SetArrayData(Index : longint; MyDouble : Double);
+begin
+  if Index <= Count then begin
+    if Index < count then TSizeDouble(DynPointer^)[Index] := MyDouble else
+      if Index = Count then DynPointer:= Dynarray.add(MyDouble);
+  end
+  else raise EDynArrayTypeAccessError.Create('Dynamic Double Array: Index out of bounds');
+end;
+
+procedure TrsDynDouble.Add( Item : Double );
+begin
+  DynPointer:= DynArray.Add(Item);
+end;
+
+procedure TrsDynDouble.Insert( Index: Longint; Item: Double );
+begin
+  DynPointer:= DynArray.Insert(Index, Item);
+end;
+
+procedure TrsDynDouble.Sort;
+begin
+  DynPointer:= DynArray.Sort( 0, stDouble);
+end;
+
+procedure TrsDynDouble.Assign( FromDyn : TrsDynDouble );
+begin
+  DynPointer:= DynArray.Assign(FromDyn.Dynarray);
+end;
+
+{*******************************}
+{           TrsDynReal            }
+{*******************************}
+constructor TrsDynReal.Create;
+begin
+  inherited Create;
+  DynArray:= TrsDynArray.Create(sizeof(Real));
+end;
+
+destructor TrsDynReal.Destroy;
+begin
+  Dynarray.Free;
+  inherited Destroy;
+end;
+
+function TrsDynReal.GetArrayData(Index : longint): Real;
+begin
+  if Index < Count then
+    Result:= TSizeReal(DynPointer^)[Index]
+  else raise EDynArrayTypeAccessError.Create('Dynamic Real Array: Index out of bounds');
+
+end;
+
+procedure TrsDynReal.SetArrayData(Index : longint; MyReal : Real);
+begin
+  if Index <= Count then begin
+    if Index < count then TSizeReal(DynPointer^)[Index] := MyReal else
+      if Index = Count then DynPointer:= Dynarray.add(MyReal);
+  end
+  else raise EDynArrayTypeAccessError.Create('Dynamic Real Array: Index out of bounds');
+end;
+
+procedure TrsDynReal.Add( Item : Real );
+begin
+  DynPointer:= DynArray.Add(Item);
+end;
+
+procedure TrsDynReal.Insert( Index: Longint; Item: Real );
+begin
+  DynPointer:= DynArray.Insert(Index, Item);
+end;
+
+procedure TrsDynReal.Sort;
+begin
+  DynPointer:= DynArray.Sort( 0, stReal);
+end;
+
+procedure TrsDynReal.Assign( FromDyn : TrsDynReal );
+begin
+  DynPointer:= DynArray.Assign(FromDyn.Dynarray);
+end;
+
+{*******************************}
+{         TrsDynExtended          }
+{*******************************}
+constructor TrsDynExtended.Create;
+begin
+  inherited Create;
+  DynArray:= TrsDynArray.Create(sizeof(Extended));
+end;
+
+destructor TrsDynExtended.Destroy;
+begin
+  Dynarray.Free;
+  inherited Destroy;
+end;
+
+function TrsDynExtended.GetArrayData(Index : longint): Extended;
+begin
+  if Index < Count then
+    Result:= TSizeExtended(DynPointer^)[Index]
+  else raise EDynArrayTypeAccessError.Create('Dynamic Extended Array: Index out of bounds');
+
+end;
+
+procedure TrsDynExtended.SetArrayData(Index : longint; MyExtended : Extended);
+begin
+  if Index <= Count then begin
+    if Index < count then TSizeExtended(DynPointer^)[Index] := MyExtended else
+      if Index = Count then DynPointer:= Dynarray.add(MyExtended);
+  end
+  else raise EDynArrayTypeAccessError.Create('Dynamic Extended Array: Index out of bounds');
+end;
+
+procedure TrsDynExtended.Add( Item : Extended );
+begin
+  DynPointer:= DynArray.Add(Item);
+end;
+
+procedure TrsDynExtended.Insert( Index: Longint; Item: Extended );
+begin
+  DynPointer:= DynArray.Insert(Index, Item);
+end;
+
+procedure TrsDynExtended.Sort;
+begin
+  DynPointer:= DynArray.Sort( 0, stExtended);
+end;
+
+procedure TrsDynExtended.Assign( FromDyn : TrsDynExtended );
+begin
+  DynPointer:= DynArray.Assign(FromDyn.Dynarray);
+end;
+
+{*******************************}
+{          TrsDynBoolean          }
+{*******************************}
+constructor TrsDynBoolean.Create;
+begin
+  inherited Create;
+  DynArray:= TrsDynArray.Create(sizeof(Boolean));
+end;
+
+destructor TrsDynBoolean.Destroy;
+begin
+  Dynarray.Free;
+  inherited Destroy;
+end;
+
+function TrsDynBoolean.GetArrayData(Index : longint): Boolean;
+begin
+  if Index < Count then
+    Result:= TSizeBoolean(DynPointer^)[Index]
+  else raise EDynArrayTypeAccessError.Create('Dynamic Boolean Array: Index out of bounds');
+
+end;
+
+procedure TrsDynBoolean.SetArrayData(Index : longint; MyBoolean : Boolean);
+begin
+  if Index <= Count then begin
+    if Index < count then TSizeBoolean(DynPointer^)[Index] := MyBoolean else
+      if Index = Count then DynPointer:= Dynarray.add(MyBoolean);
+  end
+  else raise EDynArrayTypeAccessError.Create('Dynamic Boolean Array: Index out of bounds');
+end;
+
+procedure TrsDynBoolean.Add( Item : Boolean );
+begin
+  DynPointer:= DynArray.Add(Item);
+end;
+
+procedure TrsDynBoolean.Insert( Index: Longint; Item: Boolean );
+begin
+  DynPointer:= DynArray.Insert(Index, Item);
+end;
+
+procedure TrsDynBoolean.Sort;
+begin
+  DynPointer:= DynArray.Sort( 0, stBoolean);
+end;
+
+procedure TrsDynBoolean.Assign( FromDyn : TrsDynBoolean );
+begin
+  DynPointer:= DynArray.Assign(FromDyn.Dynarray);
+end;
+
+{*******************************}
+{         TrsDynTypePointer       }
+{*******************************}
+constructor TrsDynTypePointer.Create;
+begin
+  inherited Create;
+  DynArray:= TrsDynArray.Create(sizeof(Pointer));
+end;
+
+destructor TrsDynTypePointer.Destroy;
+begin
+  Dynarray.Free;
+  inherited Destroy;
+end;
+
+function TrsDynTypePointer.GetArrayData(Index : longint): Pointer;
+begin
+  if Index < Count then
+    Result:= TSizePointer(DynPointer^)[Index]
+  else raise EDynArrayTypeAccessError.Create('Dynamic Pointer Array: Index out of bounds');
+
+end;
+
+procedure TrsDynTypePointer.SetArrayData(Index : longint; MyPointer : Pointer);
+begin
+  if Index <= Count then begin
+    if Index < count then TSizePointer(DynPointer^)[Index] := MyPointer else
+      if Index = Count then DynPointer:= Dynarray.add(MyPointer);
+  end
+  else raise EDynArrayTypeAccessError.Create('Dynamic Pointer Array: Index out of bounds');
+end;
+
+procedure TrsDynTypePointer.Add( Item : Pointer );
+begin
+  DynPointer:= DynArray.Add(Item);
+end;
+
+procedure TrsDynTypePointer.Insert( Index: Longint; Item: Pointer );
+begin
+  DynPointer:= DynArray.Insert(Index, Item);
+end;
+
+procedure TrsDynTypePointer.Sort;
+begin
+  DynPointer:= DynArray.Sort( 0, stPointer);
+end;
+
+procedure TrsDynTypePointer.Assign( FromDyn : TrsDynTypePointer);
+begin
+  DynPointer:= DynArray.Assign(FromDyn.Dynarray);
+end;
+
+
+end.

@@ -1,0 +1,46 @@
+package QR5Design_RAD6;
+
+{$R *.res}
+{$R 'QREPORT.DCR'}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{ DEBUGINFO ON}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS OFF}
+{ LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION ON}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO OFF}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES OFF}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST ON}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $5053FFEF}
+{$DESCRIPTION 'QuickReport 5.04.1 Components'}
+{$DESIGNONLY}
+{$IMPLICITBUILD OFF}
+
+requires
+  rtl,
+  designide,
+  vcl,
+  Vcldb,
+  vclx,
+  bdertl,
+  QR5Run_RAD6,
+  vclimg;
+
+contains
+  qreport in 'qreport.pas',
+  qrnew in 'qrnew.pas',
+  qridewz in 'qridewz.pas';
+
+end.
+

@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2016/05/17 12:46:28.000.395,C:\ComponentesXE\edtbusca\RPlanilhaEdtBusca.pas=</Transaction>
+    <Transaction>2016/05/17 12:49:30.000.999,=vclimg.dcp</Transaction>
+    <Transaction>2016/05/17 12:49:31.000.033,=DBXMSSQLDriver.dcp</Transaction>
+    <Transaction>2016/05/17 13:31:24.000.996,=dxCoreD15.dcp</Transaction>
+    <Transaction>2016/05/17 13:31:25.000.239,=dxSkinSpringTimeD15.dcp</Transaction>
+    <Transaction>2016/05/17 13:31:25.000.246,=dxSkinStardustD15.dcp</Transaction>
+    <Transaction>2016/05/17 13:31:25.000.183,=dxSkinOffice2007SilverD15.dcp</Transaction>
+    <Transaction>2016/05/17 13:31:25.000.204,=dxSkinOffice2010SilverD15.dcp</Transaction>
+    <Transaction>2016/05/17 13:31:25.000.051,=dxSkinsCoreD15.dcp</Transaction>
+    <Transaction>2016/05/17 13:31:25.000.262,=dxSkinValentineD15.dcp</Transaction>
+    <Transaction>2016/05/17 13:31:25.000.102,=dxSkinFoggyD15.dcp</Transaction>
+    <Transaction>2016/05/17 13:31:25.000.210,=dxSkinPumpkinD15.dcp</Transaction>
+    <Transaction>2016/05/17 13:31:25.000.005,=cxLibraryD15.dcp</Transaction>
+    <Transaction>2016/05/17 13:31:25.000.096,=dxSkinDarkSideD15.dcp</Transaction>
+    <Transaction>2016/05/17 13:31:25.000.067,=dxSkinBlackD15.dcp</Transaction>
+    <Transaction>2016/05/17 13:31:25.000.018,=dxGDIPlusD15.dcp</Transaction>
+    <Transaction>2016/05/17 13:31:25.000.062,=dxSkinXmas2008BlueD15.dcp</Transaction>
+    <Transaction>2016/05/17 13:31:25.000.028,=cxDataD15.dcp</Transaction>
+    <Transaction>2016/05/17 13:31:25.000.163,=dxSkinOffice2007BlueD15.dcp</Transaction>
+    <Transaction>2016/05/17 13:31:25.000.254,=dxSkinSummer2008D15.dcp</Transaction>
+    <Transaction>2016/05/17 13:31:25.000.073,=dxSkinBlueD15.dcp</Transaction>
+    <Transaction>2016/05/17 13:31:25.000.177,=dxSkinOffice2007PinkD15.dcp</Transaction>
+    <Transaction>2016/05/17 13:31:25.000.013,=dxThemeD15.dcp</Transaction>
+    <Transaction>2016/05/17 13:31:25.000.123,=dxSkinLilianD15.dcp</Transaction>
+    <Transaction>2016/05/17 13:31:25.000.116,=dxSkiniMaginaryD15.dcp</Transaction>
+    <Transaction>2016/05/17 13:31:25.000.232,=dxSkinSilverD15.dcp</Transaction>
+    <Transaction>2016/05/17 13:31:25.000.217,=dxSkinSevenD15.dcp</Transaction>
+    <Transaction>2016/05/17 13:31:25.000.090,=dxSkinDarkRoomD15.dcp</Transaction>
+    <Transaction>2016/05/17 13:31:25.000.039,=cxPageControlD15.dcp</Transaction>
+    <Transaction>2016/05/17 13:31:25.000.157,=dxSkinOffice2007BlackD15.dcp</Transaction>
+    <Transaction>2016/05/17 13:31:25.000.150,=dxSkinMoneyTwinsD15.dcp</Transaction>
+    <Transaction>2016/05/17 13:31:25.000.190,=dxSkinOffice2010BlackD15.dcp</Transaction>
+    <Transaction>2016/05/17 13:31:25.000.137,=dxSkinLondonLiquidSkyD15.dcp</Transaction>
+    <Transaction>2016/05/17 13:31:25.000.197,=dxSkinOffice2010BlueD15.dcp</Transaction>
+    <Transaction>2016/05/17 13:31:25.000.143,=dxSkinMcSkinD15.dcp</Transaction>
+    <Transaction>2016/05/17 13:31:25.000.108,=dxSkinGlassOceansD15.dcp</Transaction>
+    <Transaction>2016/05/17 13:31:25.000.225,=dxSkinSharpD15.dcp</Transaction>
+    <Transaction>2016/05/17 13:31:25.000.044,=cxGridD15.dcp</Transaction>
+    <Transaction>2016/05/17 13:31:25.000.034,=cxExtEditorsD15.dcp</Transaction>
+    <Transaction>2016/05/17 13:31:25.000.085,=dxSkinCoffeeD15.dcp</Transaction>
+    <Transaction>2016/05/17 13:31:25.000.056,=dxSkinscxPCPainterD15.dcp</Transaction>
+    <Transaction>2016/05/17 13:31:25.000.170,=dxSkinOffice2007GreenD15.dcp</Transaction>
+    <Transaction>2016/05/17 13:31:25.000.131,=dxSkinLiquidSkyD15.dcp</Transaction>
+    <Transaction>2016/05/17 13:31:25.000.023,=cxEditorsD15.dcp</Transaction>
+    <Transaction>2016/05/17 13:31:25.000.079,=dxSkinCaramelD15.dcp</Transaction>
+  </Transactions>
+</BorlandProject>

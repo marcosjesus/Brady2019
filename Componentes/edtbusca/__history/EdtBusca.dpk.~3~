@@ -1,0 +1,89 @@
+package EdtBusca;
+
+{$R *.res}
+{$R 'EdtBusca.dcr'}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO ON}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION ON}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES OFF}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$IMPLICITBUILD OFF}
+
+requires
+  rtl,
+  vcl,
+  dbrtl,
+  vcldb,
+  adortl,
+  bdertl,
+  dsnap,
+  dbexpress,
+  vclimg,
+  DBXMSSQLDriver,
+  dxCoreD15,
+  cxLibraryD15,
+  dxThemeD15,
+  dxGDIPlusD15,
+  cxEditorsD15,
+  cxDataD15,
+  cxExtEditorsD15,
+  cxPageControlD15,
+  cxGridD15,
+  dxSkinsCoreD15,
+  dxSkinscxPCPainterD15,
+  dxSkinXmas2008BlueD15,
+  dxSkinBlackD15,
+  dxSkinBlueD15,
+  dxSkinCaramelD15,
+  dxSkinCoffeeD15,
+  dxSkinDarkRoomD15,
+  dxSkinDarkSideD15,
+  dxSkinFoggyD15,
+  dxSkinGlassOceansD15,
+  dxSkiniMaginaryD15,
+  dxSkinLilianD15,
+  dxSkinLiquidSkyD15,
+  dxSkinLondonLiquidSkyD15,
+  dxSkinMcSkinD15,
+  dxSkinMoneyTwinsD15,
+  dxSkinOffice2007BlackD15,
+  dxSkinOffice2007BlueD15,
+  dxSkinOffice2007GreenD15,
+  dxSkinOffice2007PinkD15,
+  dxSkinOffice2007SilverD15,
+  dxSkinOffice2010BlackD15,
+  dxSkinOffice2010BlueD15,
+  dxSkinOffice2010SilverD15,
+  dxSkinPumpkinD15,
+  dxSkinSevenD15,
+  dxSkinSharpD15,
+  dxSkinSilverD15,
+  dxSkinSpringTimeD15,
+  dxSkinStardustD15,
+  dxSkinSummer2008D15,
+  dxSkinValentineD15;
+
+contains
+  EditBusca in 'EditBusca.pas',
+  FEditBusca in 'FEditBusca.pas' {FrmEditBusca},
+  EditBuscaAux in 'EditBuscaAux.pas',
+  Aguardando in 'Aguardando.pas' {FrmAguardando},
+  Funcoes in 'Funcoes.pas';
+
+end.

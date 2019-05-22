@@ -1,0 +1,35 @@
+﻿	<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+		<PropertyGroup>
+			<ProjectGuid>{BCE2B515-8285-4868-8A31-83C8F7723142}</ProjectGuid>
+		</PropertyGroup>
+		<ItemGroup>
+			<Projects Include="QR5Run_RAD6.dproj">
+				<Dependencies/>
+			</Projects>
+		</ItemGroup>
+		<ProjectExtensions>
+			<Borland.Personality>Default.Personality</Borland.Personality>
+			<Borland.ProjectType/>
+			<BorlandProject><BorlandProject><Default.Personality></Default.Personality></BorlandProject>
+</BorlandProject>
+		</ProjectExtensions>
+		<Target Name="QR5Run_RAD6">
+			<MSBuild Projects="QR5Run_RAD6.dproj"/>
+		</Target>
+		<Target Name="QR5Run_RAD6:Clean">
+			<MSBuild Targets="Clean" Projects="QR5Run_RAD6.dproj"/>
+		</Target>
+		<Target Name="QR5Run_RAD6:Make">
+			<MSBuild Targets="Make" Projects="QR5Run_RAD6.dproj"/>
+		</Target>
+		<Target Name="Build">
+			<CallTarget Targets="QR5Run_RAD6"/>
+		</Target>
+		<Target Name="Clean">
+			<CallTarget Targets="QR5Run_RAD6:Clean"/>
+		</Target>
+		<Target Name="Make">
+			<CallTarget Targets="QR5Run_RAD6:Make"/>
+		</Target>
+		<Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+	</Project>

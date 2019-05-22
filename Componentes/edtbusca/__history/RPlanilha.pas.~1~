@@ -1,0 +1,678 @@
+unit RPlanilha;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
+  ExtCtrls, AxCtrls, OleCtrls, vcf1, Db, DBTables, Buttons, ComCtrls,
+  StdActns, ActnList, Menus, StdCtrls, ImgList, ToolWin, ADODB, DBClient,
+  Grids, DBGrids;
+{
+Ass: Sr Thiago de Almeida Santos}
+
+
+
+type
+  TRelPlanilha = class(TForm)
+    MainMenu1: TMainMenu;
+    Arquivo1: TMenuItem;
+    Novo1: TMenuItem;
+    Excluir1: TMenuItem;
+    N4: TMenuItem;
+    Abir1: TMenuItem;
+    Gravar1: TMenuItem;
+    N1: TMenuItem;
+    Imprimir1: TMenuItem;
+    Imprimir2: TMenuItem;
+    ConfigurarImpressora1: TMenuItem;
+    N3: TMenuItem;
+    Fechar1: TMenuItem;
+    Editar1: TMenuItem;
+    Recortar1: TMenuItem;
+    Copiar1: TMenuItem;
+    Colar1: TMenuItem;
+    N2: TMenuItem;
+    Limpar1: TMenuItem;
+    Formatar1: TMenuItem;
+    Fontes1: TMenuItem;
+    Color1: TMenuItem;
+    Alinhamento1: TMenuItem;
+    Bordas1: TMenuItem;
+    Ordenar1: TMenuItem;
+    N5: TMenuItem;
+    Moeda1: TMenuItem;
+    Porcento1: TMenuItem;
+    Numero0001: TMenuItem;
+    FormataNumero1: TMenuItem;
+    SemCores1: TMenuItem;
+    SemGrade1: TMenuItem;
+    N9: TMenuItem;
+    Desfazer1: TMenuItem;
+    N10: TMenuItem;
+    Exibir1: TMenuItem;
+    BarradeEdio1: TMenuItem;
+    CoolBar1: TCoolBar;
+    ToolBar2: TToolBar;
+    ToolButton1: TToolButton;
+    ToolButton2: TToolButton;
+    ToolButton3: TToolButton;
+    ToolButton4: TToolButton;
+    ToolButton6: TToolButton;
+    ToolButton7: TToolButton;
+    ToolButton8: TToolButton;
+    ToolButton9: TToolButton;
+    ToolButton5: TToolButton;
+    DesfazerBarra: TToolButton;
+    ToolBar1: TToolBar;
+    ToolButton12: TToolButton;
+    ToolButton13: TToolButton;
+    ToolButton14: TToolButton;
+    ToolButton16: TToolButton;
+    ToolButton17: TToolButton;
+    PopAlinha: TPopupMenu;
+    AlinhaEsquerda1: TMenuItem;
+    AlinhaDireita1: TMenuItem;
+    Centralizar1: TMenuItem;
+    Justificar1: TMenuItem;
+    BarradeBotes1: TMenuItem;
+    ImageList1: TImageList;
+    Planilha: TF1Book;
+    procedure Fontes1Click(Sender: TObject);
+    procedure Color1Click(Sender: TObject);
+    procedure Alinhamento1Click(Sender: TObject);
+    procedure Bordas1Click(Sender: TObject);
+    procedure Recortar1Click(Sender: TObject);
+    procedure Copiar1Click(Sender: TObject);
+    procedure Colar1Click(Sender: TObject);
+    procedure Limpar1Click(Sender: TObject);
+    procedure desfazer1Click(Sender: TObject);
+    procedure Novo1Click(Sender: TObject);
+    procedure ConfigurarImpressora1Click(Sender: TObject);
+    procedure Imprimir1Click(Sender: TObject);
+    procedure Excluir1Click(Sender: TObject);
+    procedure Abir1Click(Sender: TObject);
+    procedure Gravar1Click(Sender: TObject);
+    procedure Fechar1Click(Sender: TObject);
+    procedure Moeda1Click(Sender: TObject);
+    procedure Porcento1Click(Sender: TObject);
+    procedure Numero0001Click(Sender: TObject);
+    procedure Imprimir2Click(Sender: TObject);
+    procedure SemCores1Click(Sender: TObject);
+    procedure SemGrade1Click(Sender: TObject);
+    procedure Ordenar1Click(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormataNumero1Click(Sender: TObject);
+    procedure PlanilhaStartEdit(Sender: TObject;
+      var EditString: WideString; var Cancel: Smallint);
+    procedure BarradeEdio1Click(Sender: TObject);
+    procedure ToolButton4Click(Sender: TObject);
+    procedure ToolButton1Click(Sender: TObject);
+    procedure ToolButton2Click(Sender: TObject);
+    procedure ToolButton7Click(Sender: TObject);
+    procedure ToolButton8Click(Sender: TObject);
+    procedure ToolButton9Click(Sender: TObject);
+    procedure DesfazerBarraClick(Sender: TObject);
+    procedure ToolButton13Click(Sender: TObject);
+    procedure ToolButton14Click(Sender: TObject);
+    procedure ToolButton17Click(Sender: TObject);
+    procedure ToolButton16Click(Sender: TObject);
+    procedure AlinhaEsquerda1Click(Sender: TObject);
+    procedure Centralizar1Click(Sender: TObject);
+    procedure AlinhaDireita1Click(Sender: TObject);
+    procedure Justificar1Click(Sender: TObject);
+    procedure BarradeBotes1Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  Procedure SetaPlanilha(Dados:TClientDataSet;Titulo:String='';Periodo:String='');overload;
+  Procedure SetaPlanilha(Dados:TADOQuery;Titulo:String='';Periodo:String='');overload;
+  Procedure SetaPlanilha(Dados:TDBGrid;Titulo:String='';Periodo:String=''); overload;
+  end;
+
+var
+  RelPlanilha: TRelPlanilha;
+
+implementation
+
+{$R *.DFM}
+
+
+procedure TRelPlanilha.Fontes1Click(Sender: TObject);
+begin
+  Planilha.TransactStart;
+  desfazer1.Enabled:=True;
+  DesfazerBarra.Enabled:=True;
+  Planilha.FormatFontDlg;
+end;
+
+procedure TRelPlanilha.Color1Click(Sender: TObject);
+begin
+  Planilha.TransactStart;
+  desfazer1.Enabled:=True;
+  DesfazerBarra.Enabled:=True;
+  Planilha.FormatPatternDlg;
+end;
+
+procedure TRelPlanilha.Alinhamento1Click(Sender: TObject);
+begin
+  Planilha.TransactStart;
+  desfazer1.Enabled:=True;
+  DesfazerBarra.Enabled:=True;
+  Planilha.FormatAlignmentDlg;
+end;
+
+procedure TRelPlanilha.Bordas1Click(Sender: TObject);
+begin
+  Planilha.TransactStart;
+  desfazer1.Enabled:=True;
+  DesfazerBarra.Enabled:=True;
+  Planilha.FormatBorderDlg;
+end;
+
+procedure TRelPlanilha.Recortar1Click(Sender: TObject);
+begin
+  Planilha.TransactStart;
+  desfazer1.Enabled:=True;
+  DesfazerBarra.Enabled:=True;
+  Planilha.EditCut;
+end;
+
+procedure TRelPlanilha.Copiar1Click(Sender: TObject);
+begin
+    Planilha.EditCopy;
+end;
+
+procedure TRelPlanilha.Colar1Click(Sender: TObject);
+begin
+  Planilha.TransactStart;
+  desfazer1.Enabled:=True;
+  DesfazerBarra.Enabled:=True;
+  Planilha.EditPaste;
+end;
+
+procedure TRelPlanilha.Limpar1Click(Sender: TObject);
+begin
+  Planilha.TransactStart;
+  desfazer1.Enabled:=True;
+  DesfazerBarra.Enabled:=True;
+  Planilha.EditClear(1);
+
+end;
+
+procedure TRelPlanilha.desfazer1Click(Sender: TObject);
+begin
+  Planilha.TransactRollback;
+  desfazer1.Enabled:= False;
+  DesfazerBarra.Enabled:=False;
+end;
+
+procedure TRelPlanilha.Novo1Click(Sender: TObject);
+begin
+  Planilha.InsertSheets(Planilha.Sheet+1,1);
+end;
+
+procedure TRelPlanilha.ConfigurarImpressora1Click(Sender: TObject);
+begin
+  Planilha.FilePrintSetupDlg;
+end;
+
+procedure TRelPlanilha.Imprimir1Click(Sender: TObject);
+begin
+  Planilha.SetSelection(2,Planilha.MinCol,Planilha.LastRow,Planilha.LastCol);
+  Planilha.PrintArea:= Planilha.Selection;
+  try
+    Planilha.FilePrint(true);
+  except
+     on Erro:Exception DO
+        if Erro.Message = 'Operation canceled' then
+  end;
+end;
+
+procedure TRelPlanilha.Excluir1Click(Sender: TObject);
+begin
+  if Application.MessageBox('Confirma exclusão da Planilha ?','Atenção',
+        MB_YesNo + Mb_IconExclamation) = MrYes then
+  Planilha.DeleteSheets(Planilha.Sheet,1);
+end;
+
+procedure TRelPlanilha.Abir1Click(Sender: TObject);
+var sLocFileName:WideString;
+    iLocFileType:smallint;
+begin
+  try
+    Planilha.OpenFileDlg('Abre arquivo de Prestação Serviços',iLocFileType,sLocFileName);
+    Planilha.Read(sLocFileName,iLocFileType);
+  Except
+    Application.MessageBox('Operação incompleta !!','Atenção!',MB_ICONSTOP+mb_DefButton2);
+  end;
+end;
+
+procedure TRelPlanilha.Gravar1Click(Sender: TObject);
+var sLocFileName:WideString;
+    iLocFileType:smallint;
+begin
+  try
+    Planilha.SaveFileDlg('Exporta Prestação Serviços',sLocFileName,iLocFileType);
+    Planilha.Write(sLocFileName,iLocFileType);
+  Except
+    Application.MessageBox('Arquivo não gravado por erro ou cancelamento !!','Atenção!',MB_ICONSTOP+mb_DefButton2);
+  end;
+
+end;
+
+procedure TRelPlanilha.Fechar1Click(Sender: TObject);
+begin
+ Close;
+end;
+
+procedure TRelPlanilha.Moeda1Click(Sender: TObject);
+begin
+  Planilha.TransactStart;
+  desfazer1.Enabled:=True;
+  Planilha.FormatCurrency2;
+end;
+
+procedure TRelPlanilha.Porcento1Click(Sender: TObject);
+begin
+  Planilha.TransactStart;
+  desfazer1.Enabled:=True;
+  Planilha.FormatPercent;
+end;
+
+procedure TRelPlanilha.Numero0001Click(Sender: TObject);
+begin
+  Planilha.TransactStart;
+  desfazer1.Enabled:=True;
+  Planilha.FormatFixed2;
+
+end;
+
+procedure TRelPlanilha.Imprimir2Click(Sender: TObject);
+begin
+  if Planilha.SelStartCol = 1 then
+     Planilha.SetSelection(Planilha.SelStartRow,Planilha.SelStartCol+Planilha.MinCol,Planilha.SelEndRow,Planilha.SelEndCol)
+  else  Planilha.SetSelection(Planilha.SelStartRow,Planilha.SelStartCol,Planilha.SelEndRow,Planilha.SelEndCol);
+
+  Planilha.PrintArea:= Planilha.Selection;
+  try
+    Planilha.FilePrint(true);
+  except
+     on Erro:Exception DO
+        if Erro.Message = 'Operation canceled' then
+  end;
+
+end;
+
+procedure TRelPlanilha.SemCores1Click(Sender: TObject);
+begin
+  if (SemCores1.Checked = True) then
+    SemCores1.Checked := False
+  else SemCores1.Checked := True;
+
+end;
+
+procedure TRelPlanilha.SemGrade1Click(Sender: TObject);
+begin
+  if (SemGrade1.Checked = True) then
+  begin
+    SemGrade1.Checked := False;
+    Planilha.ShowGridLines:= True;
+  end
+  else
+  begin
+    SemGrade1.Checked := True;
+    Planilha.ShowGridLines:= False;
+  end;
+end;
+
+procedure TRelPlanilha.Ordenar1Click(Sender: TObject);
+begin
+  Planilha.TransactStart;
+  desfazer1.Enabled:=True;
+  DesfazerBarra.Enabled:=True;
+  if (Planilha.SelStartCol < Planilha.MinCol +1) And (Planilha.MinCol <> 1)  then
+    Planilha.SelStartCol:= 1;
+
+  Planilha.SortDlg;
+
+end;
+
+procedure TRelPlanilha.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+  Action:= caFree;
+end;
+
+procedure TRelPlanilha.FormataNumero1Click(Sender: TObject);
+begin
+  Planilha.TransactStart;
+  desfazer1.Enabled:=True;
+  Planilha.FormatNumberDlg;
+end;
+
+procedure TRelPlanilha.PlanilhaStartEdit(Sender: TObject;
+  var EditString: WideString; var Cancel: Smallint);
+begin
+  Planilha.TransactStart;
+  desfazer1.Enabled:=True;
+  DesfazerBarra.Enabled:=True;
+end;
+
+
+
+procedure TRelPlanilha.BarradeEdio1Click(Sender: TObject);
+begin
+  if (BarradeEdio1.Checked = True) then
+  begin
+    BarradeEdio1.Checked := False;
+    Planilha.ShowEditBar:= False;
+  end
+  else
+  begin
+    BarradeEdio1.Checked := True;
+    Planilha.ShowEditBar:= True;
+  end;
+
+end;
+
+procedure TRelPlanilha.ToolButton4Click(Sender: TObject);
+begin
+  Imprimir1.Click;
+end;
+
+procedure TRelPlanilha.ToolButton1Click(Sender: TObject);
+begin
+  Abir1.Click;
+end;
+
+procedure TRelPlanilha.ToolButton2Click(Sender: TObject);
+begin
+  Gravar1.Click;
+end;
+
+procedure TRelPlanilha.ToolButton7Click(Sender: TObject);
+begin
+  Recortar1.Click;
+end;
+
+procedure TRelPlanilha.ToolButton8Click(Sender: TObject);
+begin
+  Copiar1.Click;
+end;
+
+procedure TRelPlanilha.ToolButton9Click(Sender: TObject);
+begin
+  Colar1.Click;
+end;
+
+procedure TRelPlanilha.DesfazerBarraClick(Sender: TObject);
+begin
+  desfazer1.Click;
+end;
+
+procedure TRelPlanilha.ToolButton13Click(Sender: TObject);
+begin
+  Fontes1.Click;
+end;
+
+procedure TRelPlanilha.ToolButton14Click(Sender: TObject);
+begin
+  Color1.Click;
+end;
+
+procedure TRelPlanilha.ToolButton17Click(Sender: TObject);
+begin
+  Alinhamento1.Click;
+end;
+
+procedure TRelPlanilha.ToolButton16Click(Sender: TObject);
+begin
+  Bordas1.Click;
+end;
+
+procedure TRelPlanilha.AlinhaEsquerda1Click(Sender: TObject);
+begin
+  Planilha.TransactStart;
+  desfazer1.Enabled:=True;
+  DesfazerBarra.Enabled:=True;
+  Planilha.SetSelection(Planilha.SelStartRow,Planilha.SelStartCol,Planilha.SelEndRow,Planilha.SelEndCol);
+  Planilha.SetAlignment(F1HAlignLeft,true,F1VAlignCenter,0);
+end;
+
+procedure TRelPlanilha.Centralizar1Click(Sender: TObject);
+begin
+  Planilha.TransactStart;
+  desfazer1.Enabled:=True;
+  DesfazerBarra.Enabled:=True;
+  Planilha.SetSelection(Planilha.SelStartRow,Planilha.SelStartCol,Planilha.SelEndRow,Planilha.SelEndCol);
+  Planilha.SetAlignment(F1HAlignCenter,true,F1VAlignCenter,0);
+
+end;
+
+procedure TRelPlanilha.AlinhaDireita1Click(Sender: TObject);
+begin
+  Planilha.TransactStart;
+  desfazer1.Enabled:=True;
+  DesfazerBarra.Enabled:=True;
+  Planilha.SetSelection(Planilha.SelStartRow,Planilha.SelStartCol,Planilha.SelEndRow,Planilha.SelEndCol);
+  Planilha.SetAlignment(F1HAlignRight,true,F1VAlignCenter,0);
+
+end;
+
+procedure TRelPlanilha.Justificar1Click(Sender: TObject);
+begin
+  Planilha.TransactStart;
+  desfazer1.Enabled:=True;
+  DesfazerBarra.Enabled:=True;
+  Planilha.SetSelection(Planilha.SelStartRow,Planilha.SelStartCol,Planilha.SelEndRow,Planilha.SelEndCol);
+  Planilha.SetAlignment(F1HAlignJustify,true,F1VAlignCenter,0);
+
+end;
+
+procedure TRelPlanilha.BarradeBotes1Click(Sender: TObject);
+begin
+  if (BarradeBotes1.Checked = True) then
+  begin
+    BarradeBotes1.Checked := False;
+    CoolBar1.Visible:= False;
+  end
+  else
+  begin
+    BarradeBotes1.Checked := True;
+    CoolBar1.Visible:= True;
+  end;
+
+end;
+
+procedure TRelPlanilha.SetaPlanilha(Dados: TClientDataSet;Titulo:String='';Periodo:String='');
+Var I,R : Integer;
+begin
+
+ Dados.DisableControls;
+ Planilha.NumberFormat:= '###,###,##0.00';
+
+  For I := 0 To Dados.FieldCount  - 1 do
+    Planilha.TextRC[1,i+1] := Dados.FieldDefList.FieldDefs[i].Name;
+
+  R:=3;
+  Dados.First;
+  While Not Dados.Eof do
+  begin
+    For I := 0 To Dados.FieldCount - 1 do
+    begin
+       If Dados.FieldDefList.FieldDefs[i].DataType = ftFloat Then
+       begin
+         Planilha.TextRC[R,I+1] :=  FloatToStrF(Dados.FieldList.Fields[i].AsFloat,ffCurrency,12,2);
+         Planilha.SetAlignment(F1HAlignRight,true,F1VAlignTop,0);
+       end
+       else
+         Planilha.TextRC[R,I+1] :=Dados.FieldList.Fields[i].Text;
+
+{       if Dados.Columns[i].Alignment = taRightJustify then
+          Planilha.SetAlignment(F1HAlignRight,true,F1VAlignTop,0)
+       else  if Dados.Columns[i].Alignment = taCenter then
+          Planilha.SetAlignment(F1HAlignCenter,true,F1VAlignTop,0)
+       else Planilha.SetAlignment(F1HAlignLeft,true,F1VAlignTop,0);}
+
+         Planilha.SetColWidth(i+1,i+1,Dados.Fields.Fields[i].DisplayWidth*250,false);
+    end;
+    Inc(R);
+    Dados.Next;
+  end;
+
+  // formata titulo
+  Planilha.SetSelection(1,1,1,Dados.FieldCount);
+  Planilha.SetBorder(0,0,0,0,0,0,0,0,0,0,0);
+  Planilha.SetPattern(1,$00FFCB97,0);
+  Planilha.SetFont('arial',8,true,False,False,False,clBlack,False,False);
+
+  Planilha.SetSelection(1,1,1,1);
+
+  Dados.EnableControls;
+  Dados.First;
+end;
+
+procedure TRelPlanilha.SetaPlanilha(Dados: TADOQuery;Titulo:String='';Periodo:String='');
+Var I,R : Integer;
+begin
+
+ Dados.DisableControls;
+ Planilha.NumberFormat:= '###,###,##0.00';
+
+  For I := 0 To Dados.FieldCount  - 1 do
+    Planilha.TextRC[1,i+1] := Dados.FieldDefList.FieldDefs[i].Name;
+
+  R:=3;
+  Dados.First;
+  While Not Dados.Eof do
+  begin
+    For I := 0 To Dados.FieldCount - 1 do
+    begin
+       If Dados.FieldDefList.FieldDefs[i].DataType = ftFloat Then
+       begin
+         Planilha.TextRC[R,I+1] :=  FloatToStrF(Dados.FieldList.Fields[i].AsFloat,ffCurrency,12,2);
+         Planilha.SetAlignment(F1HAlignRight,true,F1VAlignTop,0);
+       end
+       else
+         Planilha.TextRC[R,I+1] :=Dados.FieldList.Fields[i].Text;
+
+{       if Dados.Columns[i].Alignment = taRightJustify then
+          Planilha.SetAlignment(F1HAlignRight,true,F1VAlignTop,0)
+       else  if Dados.Columns[i].Alignment = taCenter then
+          Planilha.SetAlignment(F1HAlignCenter,true,F1VAlignTop,0)
+       else Planilha.SetAlignment(F1HAlignLeft,true,F1VAlignTop,0);}
+
+         Planilha.SetColWidth(i+1,i+1,Dados.Fields.Fields[i].DisplayWidth*250,false);
+    end;
+    Inc(R);
+    Dados.Next;
+  end;
+
+
+  // formata titulo
+  Planilha.SetSelection(1,1,1,Dados.FieldCount);
+  Planilha.SetBorder(0,0,0,0,0,0,0,0,0,0,0);
+  Planilha.SetPattern(1,$00FFCB97,0);
+  Planilha.SetFont('arial',8,true,False,False,False,clBlack,False,False);
+
+  Planilha.SetSelection(1,1,1,1);
+
+  // formata titulo
+  Planilha.SetSelection(2,1,2,Dados.FieldCount);
+  Planilha.SetBorder(0,0,0,0,0,0,0,0,0,0,0);
+  Planilha.SetPattern(1,$00FFCB97,0);
+  Planilha.SetFont('arial',8,true,False,False,False,clBlack,False,False);
+
+  Planilha.SetSelection(2,1,2,1);
+
+  // formata titulo
+  Planilha.SetSelection(4,1,4,Dados.FieldCount);
+  Planilha.SetBorder(0,0,0,0,0,0,0,0,0,0,0);
+  Planilha.SetPattern(1,$00FFCB97,0);
+  Planilha.SetFont('arial',8,true,False,False,False,clBlack,False,False);
+
+  Planilha.SetSelection(4,1,4,1);
+
+  Dados.EnableControls;
+  Dados.First;
+end;
+
+procedure TRelPlanilha.SetaPlanilha(Dados:TDBGrid;Titulo:String='';Periodo:String='');
+Var I,R : Integer;
+begin
+  Dados.DataSource.DataSet.DisableControls;
+  Planilha.NumberFormat:= '###,###,##0.00';
+
+  If Titulo <> '' Then
+   Planilha.TextRC[1,5] := Titulo;
+
+  If Periodo <> '' Then
+   Planilha.TextRC[2,5] := Periodo;
+
+
+  For I := 0 To Dados.FieldCount  - 1 do
+    Planilha.TextRC[4,i+1] := Dados.Columns.Items[i].Title.Caption;
+
+  R:=6;
+  Dados.DataSource.DataSet.First;
+  While Not Dados.DataSource.DataSet.Eof do
+  begin
+    For I := 0 To Dados.Columns.Count - 1 do
+    begin
+       If Dados.Columns[i].Field.DataType = ftFloat Then
+       begin
+         Planilha.TextRC[R,I+1] :=  FloatToStrF(Dados.Columns[I].Field.AsFloat,ffCurrency,12,2);
+         Planilha.SetAlignment(F1HAlignRight,true,F1VAlignTop,0);
+       end
+       else
+         Planilha.TextRC[R,I+1] := Dados.Columns[I].Field.DisplayText;
+
+       if Dados.Columns[i].Alignment = taRightJustify then
+          Planilha.SetAlignment(F1HAlignRight,true,F1VAlignTop,0)
+       else  if Dados.Columns[i].Alignment = taCenter then
+          Planilha.SetAlignment(F1HAlignCenter,true,F1VAlignTop,0)
+       else Planilha.SetAlignment(F1HAlignLeft,true,F1VAlignTop,0);
+
+         Planilha.SetColWidth(i+1,i+1,Dados.Columns[i].Width*40,false);
+    end;
+    Inc(R);
+    Dados.DataSource.DataSet.Next;
+  end;
+
+  // formata titulo
+  Planilha.SetSelection(1,1,1,Dados.FieldCount);
+  Planilha.SetBorder(0,0,0,0,0,0,0,0,0,0,0);
+  Planilha.SetPattern(1,$00FFCB97,0);
+  Planilha.SetFont('arial',8,true,False,False,False,clBlack,False,False);
+
+  Planilha.SetSelection(1,1,1,1);
+
+  // formata titulo
+  Planilha.SetSelection(2,1,2,Dados.FieldCount);
+  Planilha.SetBorder(0,0,0,0,0,0,0,0,0,0,0);
+  Planilha.SetPattern(1,$00FFCB97,0);
+  Planilha.SetFont('arial',8,true,False,False,False,clBlack,False,False);
+
+  Planilha.SetSelection(2,1,2,1);
+
+  // formata titulo
+  Planilha.SetSelection(4,1,4,Dados.FieldCount);
+  Planilha.SetBorder(0,0,0,0,0,0,0,0,0,0,0);
+  Planilha.SetPattern(1,$00FFCB97,0);
+  Planilha.SetFont('arial',8,true,False,False,False,clBlack,False,False);
+
+  Planilha.SetSelection(4,1,4,1);
+
+  Dados.DataSource.DataSet.EnableControls;
+  Dados.DataSource.DataSet.First;
+
+end;
+
+
+end.
+
+
+
+
+
