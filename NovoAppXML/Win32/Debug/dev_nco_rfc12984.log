@@ -1,0 +1,39 @@
+**** Log file opened by process 12984 at 2019-04-10 10:05:50 (UTC-03:00 Hora oficial do Brasil)
+
+SAP .NET Connector 3.0 with file version 3.0.10.0 running on 64-bit .NET Framework 4.0.30319.42000
+Program: \\GHOS2024\Brady\CielSapReadTable.exe
+Working directory: C:\Users\aluga.com\Brady2018\NovoAppXML\Win32\Debug
+Operating system:  Professional 64-bit 
+Processor: 4x AMD64 (or x64)
+SAP release: 720, Kernel release: 720, Kernel patch level: 324
+Hostname: DESKTOP-99M8LEG, IP address: 192.168.56.1, IP_v6 address: 
+
+Default trace level: None
+
+>> Error entry 2019-04-10 10:05:50.988 [Thread 1]
+[NAME=Ciel SAP Connector ASHOST=10.240.10.11 SYSNR=30 CLIENT=500 USER=sondapwce PASSWD=********]
+SAP.Middleware.Connector.RfcCommunicationException: Connection with convid [48177796] is closed, but cancel was not possible. CPIC layer returns (25) 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       program state check for conversation 48177796
+TIME        Wed Apr 10 10:05:50 2019
+RELEASE     720
+COMPONENT   CPIC (TCP/IP) with Unicode
+VERSION     3
+RC          471
+MODULE      r3cpic.c
+LINE        16736
+DETAIL      called function SAP_CMCANCEL in state without timeouts=0
+COUNTER     3
+
+   em SAP.Middleware.Connector.CpicConnection.CpicCancel()
+   em SAP.Middleware.Connector.CpicConnection.CpicReceive(Int32 timeout)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte* buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadBytes(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadRfcData(Byte[] buffer, Int32 offset, Int32 srcLength, Boolean skip)
+   em SAP.Middleware.Connector.RfcTable.RfcDeserialize(RfcConnection conn, Int32 srcLength, Int32 rowLength, TableCompression compression)
+   em SAP.Middleware.Connector.RfcConnection.ReadUpTo(RFCGET readState, RfcFunction function, RFCID toRid)
+   em SAP.Middleware.Connector.RfcConnection.RfcReceive(RfcFunction function)
+   em SAP.Middleware.Connector.RfcFunction.RfcDeserialize(RfcConnection conn, IRfcIOStream stream)
+   em SAP.Middleware.Connector.RfcFunction.RfcCallReceive(RfcConnection conn, IRfcIOStream stream, RFCID rid)
+   em SAP.Middleware.Connector.RfcFunction.Invoke(RfcDestination destination)

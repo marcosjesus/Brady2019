@@ -1,0 +1,1465 @@
+**** Log file opened by process 11628 at 2019-03-12 16:44:52 (UTC-03:00 Hora oficial do Brasil)
+
+SAP .NET Connector 3.0 with file version 3.0.10.0 running on 64-bit .NET Framework 4.0.30319.42000
+Program: \\GHOS2024\Brady\CielSapReadTable.exe
+Working directory: C:\Users\aluga.com\Brady2018\NovoAppXML\Win32\Debug
+Operating system:  Professional 64-bit 
+Processor: 4x AMD64 (or x64)
+SAP release: 720, Kernel release: 720, Kernel patch level: 324
+Hostname: DESKTOP-99M8LEG, IP address: 192.168.150.203, IP_v6 address: 
+
+Default trace level: None
+
+>> Error entry 2019-03-12 16:44:52.796 [Thread 1]
+SAP.Middleware.Connector.RfcCommunicationException: Connection with convid [23194758] is closed, but cancel was not possible. CPIC layer returns (25) 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       program state check for conversation 23194758
+TIME        Tue Mar 12 16:44:52 2019
+RELEASE     720
+COMPONENT   CPIC (TCP/IP) with Unicode
+VERSION     3
+RC          471
+MODULE      r3cpic.c
+LINE        16736
+DETAIL      called function SAP_CMCANCEL in state without timeouts=0
+COUNTER     3
+
+   em SAP.Middleware.Connector.CpicConnection.CpicCancel()
+   em SAP.Middleware.Connector.CpicConnection.CpicReceive(Int32 timeout)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte* buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadBytes(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadRfcData(Byte[] buffer, Int32 offset, Int32 srcLength, Boolean skip)
+   em SAP.Middleware.Connector.RfcTable.RfcDeserialize(RfcConnection conn, Int32 srcLength, Int32 rowLength, TableCompression compression)
+>> Error entry 2019-03-12 16:44:54.231 [Thread 1]
+[NAME=Ciel SAP Connector ASHOST=10.240.10.11 SYSNR=30 CLIENT=500 USER=sondapwce PASSWD=********]
+SAP.Middleware.Connector.RfcCommunicationException: Connection with convid [23194758] is closed, but cancel was not possible. CPIC layer returns (25) 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       program state check for conversation 23194758
+TIME        Tue Mar 12 16:44:52 2019
+RELEASE     720
+COMPONENT   CPIC (TCP/IP) with Unicode
+VERSION     3
+RC          471
+MODULE      r3cpic.c
+LINE        16736
+DETAIL      called function SAP_CMCANCEL in state without timeouts=0
+COUNTER     3
+
+   em SAP.Middleware.Connector.CpicConnection.CpicCancel()
+   em SAP.Middleware.Connector.CpicConnection.CpicReceive(Int32 timeout)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte* buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadBytes(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadRfcData(Byte[] buffer, Int32 offset, Int32 srcLength, Boolean skip)
+   em SAP.Middleware.Connector.RfcTable.RfcDeserialize(RfcConnection conn, Int32 srcLength, Int32 rowLength, TableCompression compression)
+   em SAP.Middleware.Connector.RfcConnection.ReadUpTo(RFCGET readState, RfcFunction function, RFCID toRid)
+   em SAP.Middleware.Connector.RfcConnection.RfcReceive(RfcFunction function)
+   em SAP.Middleware.Connector.RfcFunction.RfcDeserialize(RfcConnection conn, IRfcIOStream stream)
+   em SAP.Middleware.Connector.RfcFunction.RfcCallReceive(RfcConnection conn, IRfcIOStream stream, RFCID rid)
+   em SAP.Middleware.Connector.RfcFunction.Invoke(RfcDestination destination)
+**** Log file opened by process 16672 at 2019-03-12 17:22:30 (UTC-03:00 Hora oficial do Brasil)
+
+SAP .NET Connector 3.0 with file version 3.0.10.0 running on 64-bit .NET Framework 4.0.30319.42000
+Program: \\GHOS2024\Brady\CielSapReadTable.exe
+Working directory: C:\Users\aluga.com\Brady2018\NovoAppXML\Win32\Debug
+Operating system:  Professional 64-bit 
+Processor: 4x AMD64 (or x64)
+SAP release: 720, Kernel release: 720, Kernel patch level: 324
+Hostname: DESKTOP-99M8LEG, IP address: 192.168.150.203, IP_v6 address: 
+
+Default trace level: None
+
+>> Error entry 2019-03-12 17:22:30.906 [Thread 1]
+SAP.Middleware.Connector.RfcCommunicationException: Connection with convid [25486839] is closed, but cancel was not possible. CPIC layer returns (25) 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       program state check for conversation 25486839
+TIME        Tue Mar 12 17:22:30 2019
+RELEASE     720
+COMPONENT   CPIC (TCP/IP) with Unicode
+VERSION     3
+RC          471
+MODULE      r3cpic.c
+LINE        16736
+DETAIL      called function SAP_CMCANCEL in state without timeouts=0
+COUNTER     3
+
+   em SAP.Middleware.Connector.CpicConnection.CpicCancel()
+   em SAP.Middleware.Connector.CpicConnection.CpicReceive(Int32 timeout)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte* buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadBytes(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadRfcData(Byte[] buffer, Int32 offset, Int32 srcLength, Boolean skip)
+   em SAP.Middleware.Connector.RfcTable.RfcDeserialize(RfcConnection conn, Int32 srcLength, Int32 rowLength, TableCompression compression)
+>> Error entry 2019-03-12 17:22:32.680 [Thread 1]
+[NAME=Ciel SAP Connector ASHOST=10.240.10.11 SYSNR=30 CLIENT=500 USER=sondapwce PASSWD=********]
+SAP.Middleware.Connector.RfcCommunicationException: Connection with convid [25486839] is closed, but cancel was not possible. CPIC layer returns (25) 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       program state check for conversation 25486839
+TIME        Tue Mar 12 17:22:30 2019
+RELEASE     720
+COMPONENT   CPIC (TCP/IP) with Unicode
+VERSION     3
+RC          471
+MODULE      r3cpic.c
+LINE        16736
+DETAIL      called function SAP_CMCANCEL in state without timeouts=0
+COUNTER     3
+
+   em SAP.Middleware.Connector.CpicConnection.CpicCancel()
+   em SAP.Middleware.Connector.CpicConnection.CpicReceive(Int32 timeout)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte* buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadBytes(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadRfcData(Byte[] buffer, Int32 offset, Int32 srcLength, Boolean skip)
+   em SAP.Middleware.Connector.RfcTable.RfcDeserialize(RfcConnection conn, Int32 srcLength, Int32 rowLength, TableCompression compression)
+   em SAP.Middleware.Connector.RfcConnection.ReadUpTo(RFCGET readState, RfcFunction function, RFCID toRid)
+   em SAP.Middleware.Connector.RfcConnection.RfcReceive(RfcFunction function)
+   em SAP.Middleware.Connector.RfcFunction.RfcDeserialize(RfcConnection conn, IRfcIOStream stream)
+   em SAP.Middleware.Connector.RfcFunction.RfcCallReceive(RfcConnection conn, IRfcIOStream stream, RFCID rid)
+   em SAP.Middleware.Connector.RfcFunction.Invoke(RfcDestination destination)
+**** Log file opened by process 8956 at 2019-03-13 12:08:37 (UTC-03:00 Hora oficial do Brasil)
+
+SAP .NET Connector 3.0 with file version 3.0.10.0 running on 64-bit .NET Framework 4.0.30319.42000
+Program: \\GHOS2024\Brady\CielSapReadTable.exe
+Working directory: C:\Users\aluga.com\Brady2018\NovoAppXML\Win32\Debug
+Operating system:  Professional 64-bit 
+Processor: 4x AMD64 (or x64)
+SAP release: 720, Kernel release: 720, Kernel patch level: 324
+Hostname: DESKTOP-99M8LEG, IP address: 192.168.150.220, IP_v6 address: 
+
+Default trace level: None
+
+>> Error entry 2019-03-13 12:08:37.891 [Thread 1]
+SAP.Middleware.Connector.RfcCommunicationException: Connection with convid [93111590] is closed, but cancel was not possible. CPIC layer returns (25) 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       program state check for conversation 93111590
+TIME        Wed Mar 13 12:08:37 2019
+RELEASE     720
+COMPONENT   CPIC (TCP/IP) with Unicode
+VERSION     3
+RC          471
+MODULE      r3cpic.c
+LINE        16736
+DETAIL      called function SAP_CMCANCEL in state without timeouts=0
+COUNTER     3
+
+   em SAP.Middleware.Connector.CpicConnection.CpicCancel()
+   em SAP.Middleware.Connector.CpicConnection.CpicReceive(Int32 timeout)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte* buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadBytes(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadRfcData(Byte[] buffer, Int32 offset, Int32 srcLength, Boolean skip)
+   em SAP.Middleware.Connector.RfcTable.RfcDeserialize(RfcConnection conn, Int32 srcLength, Int32 rowLength, TableCompression compression)
+>> Error entry 2019-03-13 12:08:39.806 [Thread 1]
+[NAME=Ciel SAP Connector ASHOST=10.240.10.11 SYSNR=30 CLIENT=500 USER=sondapwce PASSWD=********]
+SAP.Middleware.Connector.RfcCommunicationException: Connection with convid [93111590] is closed, but cancel was not possible. CPIC layer returns (25) 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       program state check for conversation 93111590
+TIME        Wed Mar 13 12:08:37 2019
+RELEASE     720
+COMPONENT   CPIC (TCP/IP) with Unicode
+VERSION     3
+RC          471
+MODULE      r3cpic.c
+LINE        16736
+DETAIL      called function SAP_CMCANCEL in state without timeouts=0
+COUNTER     3
+
+   em SAP.Middleware.Connector.CpicConnection.CpicCancel()
+   em SAP.Middleware.Connector.CpicConnection.CpicReceive(Int32 timeout)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte* buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadBytes(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadRfcData(Byte[] buffer, Int32 offset, Int32 srcLength, Boolean skip)
+   em SAP.Middleware.Connector.RfcTable.RfcDeserialize(RfcConnection conn, Int32 srcLength, Int32 rowLength, TableCompression compression)
+   em SAP.Middleware.Connector.RfcConnection.ReadUpTo(RFCGET readState, RfcFunction function, RFCID toRid)
+   em SAP.Middleware.Connector.RfcConnection.RfcReceive(RfcFunction function)
+   em SAP.Middleware.Connector.RfcFunction.RfcDeserialize(RfcConnection conn, IRfcIOStream stream)
+   em SAP.Middleware.Connector.RfcFunction.RfcCallReceive(RfcConnection conn, IRfcIOStream stream, RFCID rid)
+   em SAP.Middleware.Connector.RfcFunction.Invoke(RfcDestination destination)
+**** Log file opened by process 10104 at 2019-03-19 11:27:49 (UTC-03:00 Hora oficial do Brasil)
+
+SAP .NET Connector 3.0 with file version 3.0.10.0 running on 64-bit .NET Framework 4.0.30319.42000
+Program: \\GHOS2024\Brady\CielSapReadTable.exe
+Working directory: C:\Users\aluga.com\Brady2018\NovoAppXML\Win32\Debug
+Operating system:  Professional 64-bit 
+Processor: 4x AMD64 (or x64)
+SAP release: 720, Kernel release: 720, Kernel patch level: 324
+Hostname: DESKTOP-99M8LEG, IP address: 192.168.150.195, IP_v6 address: 
+
+Default trace level: None
+
+>> Error entry 2019-03-19 11:27:49.557 [Thread 1]
+[NAME=Ciel SAP Connector ASHOST=10.240.10.11 SYSNR=30 CLIENT=500 USER=sondapwce PASSWD=********]
+SAP.Middleware.Connector.RfcAbapException: QUERY_LOCKED
+   em SAP.Middleware.Connector.RfcConnection.ThrowRfcErrorMsg()
+   em SAP.Middleware.Connector.RfcConnection.RfcReceive(RfcFunction function)
+   em SAP.Middleware.Connector.RfcFunction.RfcDeserialize(RfcConnection conn, IRfcIOStream stream)
+   em SAP.Middleware.Connector.RfcFunction.RfcCallReceive(RfcConnection conn, IRfcIOStream stream, RFCID rid)
+   em SAP.Middleware.Connector.RfcFunction.Invoke(RfcDestination destination)
+**** Log file opened by process 14476 at 2019-03-19 12:06:03 (UTC-03:00 Hora oficial do Brasil)
+
+SAP .NET Connector 3.0 with file version 3.0.10.0 running on 64-bit .NET Framework 4.0.30319.42000
+Program: \\GHOS2024\Brady\CielSapReadTable.exe
+Working directory: C:\Users\aluga.com\Brady2018\NovoAppXML\Win32\Debug
+Operating system:  Professional 64-bit 
+Processor: 4x AMD64 (or x64)
+SAP release: 720, Kernel release: 720, Kernel patch level: 324
+Hostname: DESKTOP-99M8LEG, IP address: 192.168.150.195, IP_v6 address: 
+
+Default trace level: None
+
+>> Error entry 2019-03-19 12:06:03.783 [Thread 1]
+SAP.Middleware.Connector.RfcCommunicationException: Connection with convid [15691106] is closed, but cancel was not possible. CPIC layer returns (25) 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       program state check for conversation 15691106
+TIME        Tue Mar 19 12:06:03 2019
+RELEASE     720
+COMPONENT   CPIC (TCP/IP) with Unicode
+VERSION     3
+RC          471
+MODULE      r3cpic.c
+LINE        16736
+DETAIL      called function SAP_CMCANCEL in state without timeouts=0
+COUNTER     3
+
+   em SAP.Middleware.Connector.CpicConnection.CpicCancel()
+   em SAP.Middleware.Connector.CpicConnection.CpicReceive(Int32 timeout)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte* buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadBytes(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadRfcData(Byte[] buffer, Int32 offset, Int32 srcLength, Boolean skip)
+   em SAP.Middleware.Connector.RfcTable.RfcDeserialize(RfcConnection conn, Int32 srcLength, Int32 rowLength, TableCompression compression)
+>> Error entry 2019-03-19 12:06:05.772 [Thread 1]
+[NAME=Ciel SAP Connector ASHOST=10.240.10.11 SYSNR=30 CLIENT=500 USER=sondapwce PASSWD=********]
+SAP.Middleware.Connector.RfcCommunicationException: Connection with convid [15691106] is closed, but cancel was not possible. CPIC layer returns (25) 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       program state check for conversation 15691106
+TIME        Tue Mar 19 12:06:03 2019
+RELEASE     720
+COMPONENT   CPIC (TCP/IP) with Unicode
+VERSION     3
+RC          471
+MODULE      r3cpic.c
+LINE        16736
+DETAIL      called function SAP_CMCANCEL in state without timeouts=0
+COUNTER     3
+
+   em SAP.Middleware.Connector.CpicConnection.CpicCancel()
+   em SAP.Middleware.Connector.CpicConnection.CpicReceive(Int32 timeout)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte* buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadBytes(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadRfcData(Byte[] buffer, Int32 offset, Int32 srcLength, Boolean skip)
+   em SAP.Middleware.Connector.RfcTable.RfcDeserialize(RfcConnection conn, Int32 srcLength, Int32 rowLength, TableCompression compression)
+   em SAP.Middleware.Connector.RfcConnection.ReadUpTo(RFCGET readState, RfcFunction function, RFCID toRid)
+   em SAP.Middleware.Connector.RfcConnection.RfcReceive(RfcFunction function)
+   em SAP.Middleware.Connector.RfcFunction.RfcDeserialize(RfcConnection conn, IRfcIOStream stream)
+   em SAP.Middleware.Connector.RfcFunction.RfcCallReceive(RfcConnection conn, IRfcIOStream stream, RFCID rid)
+   em SAP.Middleware.Connector.RfcFunction.Invoke(RfcDestination destination)
+**** Log file opened by process 2424 at 2019-03-19 15:43:59 (UTC-03:00 Hora oficial do Brasil)
+
+SAP .NET Connector 3.0 with file version 3.0.10.0 running on 64-bit .NET Framework 4.0.30319.42000
+Program: \\GHOS2024\Brady\CielSapReadTable.exe
+Working directory: C:\Users\aluga.com\Brady2018\NovoAppXML\Win32\Debug
+Operating system:  Professional 64-bit 
+Processor: 4x AMD64 (or x64)
+SAP release: 720, Kernel release: 720, Kernel patch level: 324
+Hostname: DESKTOP-99M8LEG, IP address: 192.168.150.195, IP_v6 address: 
+
+Default trace level: None
+
+>> Error entry 2019-03-19 15:44:00.000 [Thread 1]
+SAP.Middleware.Connector.RfcCommunicationException: Connection with convid [29051166] is closed, but cancel was not possible. CPIC layer returns (25) 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       program state check for conversation 29051166
+TIME        Tue Mar 19 15:43:59 2019
+RELEASE     720
+COMPONENT   CPIC (TCP/IP) with Unicode
+VERSION     3
+RC          471
+MODULE      r3cpic.c
+LINE        16736
+DETAIL      called function SAP_CMCANCEL in state without timeouts=0
+COUNTER     3
+
+   em SAP.Middleware.Connector.CpicConnection.CpicCancel()
+   em SAP.Middleware.Connector.CpicConnection.CpicReceive(Int32 timeout)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte* buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadBytes(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadRfcData(Byte[] buffer, Int32 offset, Int32 srcLength, Boolean skip)
+   em SAP.Middleware.Connector.RfcTable.RfcDeserialize(RfcConnection conn, Int32 srcLength, Int32 rowLength, TableCompression compression)
+>> Error entry 2019-03-19 15:44:02.203 [Thread 1]
+[NAME=Ciel SAP Connector ASHOST=10.240.10.11 SYSNR=30 CLIENT=500 USER=sondapwce PASSWD=********]
+SAP.Middleware.Connector.RfcCommunicationException: Connection with convid [29051166] is closed, but cancel was not possible. CPIC layer returns (25) 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       program state check for conversation 29051166
+TIME        Tue Mar 19 15:43:59 2019
+RELEASE     720
+COMPONENT   CPIC (TCP/IP) with Unicode
+VERSION     3
+RC          471
+MODULE      r3cpic.c
+LINE        16736
+DETAIL      called function SAP_CMCANCEL in state without timeouts=0
+COUNTER     3
+
+   em SAP.Middleware.Connector.CpicConnection.CpicCancel()
+   em SAP.Middleware.Connector.CpicConnection.CpicReceive(Int32 timeout)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte* buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadBytes(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadRfcData(Byte[] buffer, Int32 offset, Int32 srcLength, Boolean skip)
+   em SAP.Middleware.Connector.RfcTable.RfcDeserialize(RfcConnection conn, Int32 srcLength, Int32 rowLength, TableCompression compression)
+   em SAP.Middleware.Connector.RfcConnection.ReadUpTo(RFCGET readState, RfcFunction function, RFCID toRid)
+   em SAP.Middleware.Connector.RfcConnection.RfcReceive(RfcFunction function)
+   em SAP.Middleware.Connector.RfcFunction.RfcDeserialize(RfcConnection conn, IRfcIOStream stream)
+   em SAP.Middleware.Connector.RfcFunction.RfcCallReceive(RfcConnection conn, IRfcIOStream stream, RFCID rid)
+   em SAP.Middleware.Connector.RfcFunction.Invoke(RfcDestination destination)
+**** Log file opened by process 12796 at 2019-03-19 15:44:19 (UTC-03:00 Hora oficial do Brasil)
+
+SAP .NET Connector 3.0 with file version 3.0.10.0 running on 64-bit .NET Framework 4.0.30319.42000
+Program: \\GHOS2024\Brady\CielSapReadTable.exe
+Working directory: C:\Users\aluga.com\Brady2018\NovoAppXML\Win32\Debug
+Operating system:  Professional 64-bit 
+Processor: 4x AMD64 (or x64)
+SAP release: 720, Kernel release: 720, Kernel patch level: 324
+Hostname: DESKTOP-99M8LEG, IP address: 192.168.150.195, IP_v6 address: 
+
+Default trace level: None
+
+>> Error entry 2019-03-19 15:44:19.896 [Thread 1]
+SAP.Middleware.Connector.RfcCommunicationException: Connection with convid [29054171] is closed, but cancel was not possible. CPIC layer returns (25) 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       program state check for conversation 29054171
+TIME        Tue Mar 19 15:44:19 2019
+RELEASE     720
+COMPONENT   CPIC (TCP/IP) with Unicode
+VERSION     3
+RC          471
+MODULE      r3cpic.c
+LINE        16736
+DETAIL      called function SAP_CMCANCEL in state without timeouts=0
+COUNTER     3
+
+   em SAP.Middleware.Connector.CpicConnection.CpicCancel()
+   em SAP.Middleware.Connector.CpicConnection.CpicReceive(Int32 timeout)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte* buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadBytes(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadRfcData(Byte[] buffer, Int32 offset, Int32 srcLength, Boolean skip)
+   em SAP.Middleware.Connector.RfcTable.RfcDeserialize(RfcConnection conn, Int32 srcLength, Int32 rowLength, TableCompression compression)
+>> Error entry 2019-03-19 15:44:20.922 [Thread 1]
+[NAME=Ciel SAP Connector ASHOST=10.240.10.11 SYSNR=30 CLIENT=500 USER=sondapwce PASSWD=********]
+SAP.Middleware.Connector.RfcCommunicationException: Connection with convid [29054171] is closed, but cancel was not possible. CPIC layer returns (25) 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       program state check for conversation 29054171
+TIME        Tue Mar 19 15:44:19 2019
+RELEASE     720
+COMPONENT   CPIC (TCP/IP) with Unicode
+VERSION     3
+RC          471
+MODULE      r3cpic.c
+LINE        16736
+DETAIL      called function SAP_CMCANCEL in state without timeouts=0
+COUNTER     3
+
+   em SAP.Middleware.Connector.CpicConnection.CpicCancel()
+   em SAP.Middleware.Connector.CpicConnection.CpicReceive(Int32 timeout)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte* buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadBytes(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadRfcData(Byte[] buffer, Int32 offset, Int32 srcLength, Boolean skip)
+   em SAP.Middleware.Connector.RfcTable.RfcDeserialize(RfcConnection conn, Int32 srcLength, Int32 rowLength, TableCompression compression)
+   em SAP.Middleware.Connector.RfcConnection.ReadUpTo(RFCGET readState, RfcFunction function, RFCID toRid)
+   em SAP.Middleware.Connector.RfcConnection.RfcReceive(RfcFunction function)
+   em SAP.Middleware.Connector.RfcFunction.RfcDeserialize(RfcConnection conn, IRfcIOStream stream)
+   em SAP.Middleware.Connector.RfcFunction.RfcCallReceive(RfcConnection conn, IRfcIOStream stream, RFCID rid)
+   em SAP.Middleware.Connector.RfcFunction.Invoke(RfcDestination destination)
+**** Log file opened by process 15432 at 2019-03-20 09:35:45 (UTC-03:00 Hora oficial do Brasil)
+
+SAP .NET Connector 3.0 with file version 3.0.10.0 running on 64-bit .NET Framework 4.0.30319.42000
+Program: \\GHOS2024\Brady\CielSapReadTable.exe
+Working directory: C:\Users\aluga.com\Brady2018\NovoAppXML\Win32\Debug
+Operating system:  Professional 64-bit 
+Processor: 4x AMD64 (or x64)
+SAP release: 720, Kernel release: 720, Kernel patch level: 324
+Hostname: DESKTOP-99M8LEG, IP address: 192.168.150.199, IP_v6 address: 
+
+Default trace level: None
+
+>> Error entry 2019-03-20 09:35:45.353 [Thread 1]
+[NAME=Ciel SAP Connector ASHOST=10.240.10.11 SYSNR=30 CLIENT=500 USER=sondapwce PASSWD=********]
+SAP.Middleware.Connector.RfcAbapException: QUERY_LOCKED
+   em SAP.Middleware.Connector.RfcConnection.ThrowRfcErrorMsg()
+   em SAP.Middleware.Connector.RfcConnection.RfcReceive(RfcFunction function)
+   em SAP.Middleware.Connector.RfcFunction.RfcDeserialize(RfcConnection conn, IRfcIOStream stream)
+   em SAP.Middleware.Connector.RfcFunction.RfcCallReceive(RfcConnection conn, IRfcIOStream stream, RFCID rid)
+   em SAP.Middleware.Connector.RfcFunction.Invoke(RfcDestination destination)
+**** Log file opened by process 49844 at 2019-03-25 10:29:09 (UTC-03:00 Hora oficial do Brasil)
+
+SAP .NET Connector 3.0 with file version 3.0.10.0 running on 64-bit .NET Framework 4.0.30319.42000
+Program: \\GHOS2024\Brady\CielSapReadTable.exe
+Working directory: C:\Users\aluga.com\Brady2018\NovoAppXML\Win32\Debug
+Operating system:  Professional 64-bit 
+Processor: 4x AMD64 (or x64)
+SAP release: 720, Kernel release: 720, Kernel patch level: 324
+Hostname: DESKTOP-99M8LEG, IP address: 192.168.150.118, IP_v6 address: 
+
+Default trace level: None
+
+>> Error entry 2019-03-25 10:29:09.982 [Thread 1]
+SAP.Middleware.Connector.RfcCommunicationException: Connection with convid [32514447] is closed, but cancel was not possible. CPIC layer returns (25) 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       program state check for conversation 32514447
+TIME        Mon Mar 25 10:29:09 2019
+RELEASE     720
+COMPONENT   CPIC (TCP/IP) with Unicode
+VERSION     3
+RC          471
+MODULE      r3cpic.c
+LINE        16736
+DETAIL      called function SAP_CMCANCEL in state without timeouts=0
+COUNTER     3
+
+   em SAP.Middleware.Connector.CpicConnection.CpicCancel()
+   em SAP.Middleware.Connector.CpicConnection.CpicReceive(Int32 timeout)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte* buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadBytes(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadRfcData(Byte[] buffer, Int32 offset, Int32 srcLength, Boolean skip)
+   em SAP.Middleware.Connector.RfcTable.RfcDeserialize(RfcConnection conn, Int32 srcLength, Int32 rowLength, TableCompression compression)
+>> Error entry 2019-03-25 10:29:11.685 [Thread 1]
+[NAME=Ciel SAP Connector ASHOST=10.240.10.11 SYSNR=30 CLIENT=500 USER=sondapwce PASSWD=********]
+SAP.Middleware.Connector.RfcCommunicationException: Connection with convid [32514447] is closed, but cancel was not possible. CPIC layer returns (25) 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       program state check for conversation 32514447
+TIME        Mon Mar 25 10:29:09 2019
+RELEASE     720
+COMPONENT   CPIC (TCP/IP) with Unicode
+VERSION     3
+RC          471
+MODULE      r3cpic.c
+LINE        16736
+DETAIL      called function SAP_CMCANCEL in state without timeouts=0
+COUNTER     3
+
+   em SAP.Middleware.Connector.CpicConnection.CpicCancel()
+   em SAP.Middleware.Connector.CpicConnection.CpicReceive(Int32 timeout)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte* buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadBytes(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadRfcData(Byte[] buffer, Int32 offset, Int32 srcLength, Boolean skip)
+   em SAP.Middleware.Connector.RfcTable.RfcDeserialize(RfcConnection conn, Int32 srcLength, Int32 rowLength, TableCompression compression)
+   em SAP.Middleware.Connector.RfcConnection.ReadUpTo(RFCGET readState, RfcFunction function, RFCID toRid)
+   em SAP.Middleware.Connector.RfcConnection.RfcReceive(RfcFunction function)
+   em SAP.Middleware.Connector.RfcFunction.RfcDeserialize(RfcConnection conn, IRfcIOStream stream)
+   em SAP.Middleware.Connector.RfcFunction.RfcCallReceive(RfcConnection conn, IRfcIOStream stream, RFCID rid)
+   em SAP.Middleware.Connector.RfcFunction.Invoke(RfcDestination destination)
+**** Log file opened by process 65988 at 2019-03-25 13:07:21 (UTC-03:00 Hora oficial do Brasil)
+
+SAP .NET Connector 3.0 with file version 3.0.10.0 running on 64-bit .NET Framework 4.0.30319.42000
+Program: \\GHOS2024\Brady\CielSapReadTable.exe
+Working directory: C:\Users\aluga.com\Brady2018\NovoAppXML\Win32\Debug
+Operating system:  Professional 64-bit 
+Processor: 4x AMD64 (or x64)
+SAP release: 720, Kernel release: 720, Kernel patch level: 324
+Hostname: DESKTOP-99M8LEG, IP address: 192.168.150.118, IP_v6 address: 
+
+Default trace level: None
+
+>> Error entry 2019-03-25 13:07:21.625 [Thread 1]
+SAP.Middleware.Connector.RfcCommunicationException: Connection with convid [41744922] is closed, but cancel was not possible. CPIC layer returns (25) 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       program state check for conversation 41744922
+TIME        Mon Mar 25 13:07:21 2019
+RELEASE     720
+COMPONENT   CPIC (TCP/IP) with Unicode
+VERSION     3
+RC          471
+MODULE      r3cpic.c
+LINE        16736
+DETAIL      called function SAP_CMCANCEL in state without timeouts=0
+COUNTER     3
+
+   em SAP.Middleware.Connector.CpicConnection.CpicCancel()
+   em SAP.Middleware.Connector.CpicConnection.CpicReceive(Int32 timeout)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte* buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadBytes(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadRfcData(Byte[] buffer, Int32 offset, Int32 srcLength, Boolean skip)
+   em SAP.Middleware.Connector.RfcTable.RfcDeserialize(RfcConnection conn, Int32 srcLength, Int32 rowLength, TableCompression compression)
+>> Error entry 2019-03-25 13:07:23.372 [Thread 1]
+[NAME=Ciel SAP Connector ASHOST=10.240.10.11 SYSNR=30 CLIENT=500 USER=sondapwce PASSWD=********]
+SAP.Middleware.Connector.RfcCommunicationException: Connection with convid [41744922] is closed, but cancel was not possible. CPIC layer returns (25) 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       program state check for conversation 41744922
+TIME        Mon Mar 25 13:07:21 2019
+RELEASE     720
+COMPONENT   CPIC (TCP/IP) with Unicode
+VERSION     3
+RC          471
+MODULE      r3cpic.c
+LINE        16736
+DETAIL      called function SAP_CMCANCEL in state without timeouts=0
+COUNTER     3
+
+   em SAP.Middleware.Connector.CpicConnection.CpicCancel()
+   em SAP.Middleware.Connector.CpicConnection.CpicReceive(Int32 timeout)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte* buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadBytes(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadRfcData(Byte[] buffer, Int32 offset, Int32 srcLength, Boolean skip)
+   em SAP.Middleware.Connector.RfcTable.RfcDeserialize(RfcConnection conn, Int32 srcLength, Int32 rowLength, TableCompression compression)
+   em SAP.Middleware.Connector.RfcConnection.ReadUpTo(RFCGET readState, RfcFunction function, RFCID toRid)
+   em SAP.Middleware.Connector.RfcConnection.RfcReceive(RfcFunction function)
+   em SAP.Middleware.Connector.RfcFunction.RfcDeserialize(RfcConnection conn, IRfcIOStream stream)
+   em SAP.Middleware.Connector.RfcFunction.RfcCallReceive(RfcConnection conn, IRfcIOStream stream, RFCID rid)
+   em SAP.Middleware.Connector.RfcFunction.Invoke(RfcDestination destination)
+**** Log file opened by process 123556 at 2019-03-27 14:59:08 (UTC-03:00 Hora oficial do Brasil)
+
+SAP .NET Connector 3.0 with file version 3.0.10.0 running on 64-bit .NET Framework 4.0.30319.42000
+Program: \\GHOS2024\Brady\CielSapReadTable.exe
+Working directory: C:\Users\aluga.com\Brady2018\NovoAppXML\Win32\Debug
+Operating system:  Professional 64-bit 
+Processor: 4x AMD64 (or x64)
+SAP release: 720, Kernel release: 720, Kernel patch level: 324
+Hostname: DESKTOP-99M8LEG, IP address: 192.168.150.149, IP_v6 address: 
+
+Default trace level: None
+
+>> Error entry 2019-03-27 14:59:08.542 [Thread 1]
+SAP.Middleware.Connector.RfcCommunicationException: Connection with convid [20736014] is closed, but cancel was not possible. CPIC layer returns (25) 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       program state check for conversation 20736014
+TIME        Wed Mar 27 14:59:08 2019
+RELEASE     720
+COMPONENT   CPIC (TCP/IP) with Unicode
+VERSION     3
+RC          471
+MODULE      r3cpic.c
+LINE        16736
+DETAIL      called function SAP_CMCANCEL in state without timeouts=0
+COUNTER     3
+
+   em SAP.Middleware.Connector.CpicConnection.CpicCancel()
+   em SAP.Middleware.Connector.CpicConnection.CpicReceive(Int32 timeout)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte* buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadBytes(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadRfcData(Byte[] buffer, Int32 offset, Int32 srcLength, Boolean skip)
+   em SAP.Middleware.Connector.RfcTable.RfcDeserialize(RfcConnection conn, Int32 srcLength, Int32 rowLength, TableCompression compression)
+>> Error entry 2019-03-27 14:59:10.283 [Thread 1]
+[NAME=Ciel SAP Connector ASHOST=10.240.10.11 SYSNR=30 CLIENT=500 USER=sondapwce PASSWD=********]
+SAP.Middleware.Connector.RfcCommunicationException: Connection with convid [20736014] is closed, but cancel was not possible. CPIC layer returns (25) 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       program state check for conversation 20736014
+TIME        Wed Mar 27 14:59:08 2019
+RELEASE     720
+COMPONENT   CPIC (TCP/IP) with Unicode
+VERSION     3
+RC          471
+MODULE      r3cpic.c
+LINE        16736
+DETAIL      called function SAP_CMCANCEL in state without timeouts=0
+COUNTER     3
+
+   em SAP.Middleware.Connector.CpicConnection.CpicCancel()
+   em SAP.Middleware.Connector.CpicConnection.CpicReceive(Int32 timeout)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte* buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadBytes(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadRfcData(Byte[] buffer, Int32 offset, Int32 srcLength, Boolean skip)
+   em SAP.Middleware.Connector.RfcTable.RfcDeserialize(RfcConnection conn, Int32 srcLength, Int32 rowLength, TableCompression compression)
+   em SAP.Middleware.Connector.RfcConnection.ReadUpTo(RFCGET readState, RfcFunction function, RFCID toRid)
+   em SAP.Middleware.Connector.RfcConnection.RfcReceive(RfcFunction function)
+   em SAP.Middleware.Connector.RfcFunction.RfcDeserialize(RfcConnection conn, IRfcIOStream stream)
+   em SAP.Middleware.Connector.RfcFunction.RfcCallReceive(RfcConnection conn, IRfcIOStream stream, RFCID rid)
+   em SAP.Middleware.Connector.RfcFunction.Invoke(RfcDestination destination)
+**** Log file opened by process 127284 at 2019-03-27 15:02:58 (UTC-03:00 Hora oficial do Brasil)
+
+SAP .NET Connector 3.0 with file version 3.0.10.0 running on 64-bit .NET Framework 4.0.30319.42000
+Program: \\GHOS2024\Brady\CielSapReadTable.exe
+Working directory: C:\Users\aluga.com\Brady2018\NovoAppXML\Win32\Debug
+Operating system:  Professional 64-bit 
+Processor: 4x AMD64 (or x64)
+SAP release: 720, Kernel release: 720, Kernel patch level: 324
+Hostname: DESKTOP-99M8LEG, IP address: 192.168.150.149, IP_v6 address: 
+
+Default trace level: None
+
+>> Error entry 2019-03-27 15:02:58.692 [Thread 1]
+SAP.Middleware.Connector.RfcCommunicationException: Connection with convid [21284766] is closed, but cancel was not possible. CPIC layer returns (25) 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       program state check for conversation 21284766
+TIME        Wed Mar 27 15:02:58 2019
+RELEASE     720
+COMPONENT   CPIC (TCP/IP) with Unicode
+VERSION     3
+RC          471
+MODULE      r3cpic.c
+LINE        16736
+DETAIL      called function SAP_CMCANCEL in state without timeouts=0
+COUNTER     3
+
+   em SAP.Middleware.Connector.CpicConnection.CpicCancel()
+   em SAP.Middleware.Connector.CpicConnection.CpicReceive(Int32 timeout)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte* buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadBytes(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadRfcData(Byte[] buffer, Int32 offset, Int32 srcLength, Boolean skip)
+   em SAP.Middleware.Connector.RfcTable.RfcDeserialize(RfcConnection conn, Int32 srcLength, Int32 rowLength, TableCompression compression)
+>> Error entry 2019-03-27 15:03:01.627 [Thread 1]
+[NAME=Ciel SAP Connector ASHOST=10.240.10.11 SYSNR=30 CLIENT=500 USER=sondapwce PASSWD=********]
+SAP.Middleware.Connector.RfcCommunicationException: Connection with convid [21284766] is closed, but cancel was not possible. CPIC layer returns (25) 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       program state check for conversation 21284766
+TIME        Wed Mar 27 15:02:58 2019
+RELEASE     720
+COMPONENT   CPIC (TCP/IP) with Unicode
+VERSION     3
+RC          471
+MODULE      r3cpic.c
+LINE        16736
+DETAIL      called function SAP_CMCANCEL in state without timeouts=0
+COUNTER     3
+
+   em SAP.Middleware.Connector.CpicConnection.CpicCancel()
+   em SAP.Middleware.Connector.CpicConnection.CpicReceive(Int32 timeout)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte* buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadBytes(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadRfcData(Byte[] buffer, Int32 offset, Int32 srcLength, Boolean skip)
+   em SAP.Middleware.Connector.RfcTable.RfcDeserialize(RfcConnection conn, Int32 srcLength, Int32 rowLength, TableCompression compression)
+   em SAP.Middleware.Connector.RfcConnection.ReadUpTo(RFCGET readState, RfcFunction function, RFCID toRid)
+   em SAP.Middleware.Connector.RfcConnection.RfcReceive(RfcFunction function)
+   em SAP.Middleware.Connector.RfcFunction.RfcDeserialize(RfcConnection conn, IRfcIOStream stream)
+   em SAP.Middleware.Connector.RfcFunction.RfcCallReceive(RfcConnection conn, IRfcIOStream stream, RFCID rid)
+   em SAP.Middleware.Connector.RfcFunction.Invoke(RfcDestination destination)
+**** Log file opened by process 140868 at 2019-03-28 08:50:25 (UTC-03:00 Hora oficial do Brasil)
+
+SAP .NET Connector 3.0 with file version 3.0.10.0 running on 64-bit .NET Framework 4.0.30319.42000
+Program: \\GHOS2024\Brady\CielSapReadTable.exe
+Working directory: C:\Users\aluga.com\Brady2018\NovoAppXML\Win32\Debug
+Operating system:  Professional 64-bit 
+Processor: 4x AMD64 (or x64)
+SAP release: 720, Kernel release: 720, Kernel patch level: 324
+Hostname: DESKTOP-99M8LEG, IP address: 192.168.150.180, IP_v6 address: 
+
+Default trace level: None
+
+>> Error entry 2019-03-28 08:50:25.764 [Thread 1]
+SAP.Middleware.Connector.RfcCommunicationException: Connection with convid [85015618] is closed, but cancel was not possible. CPIC layer returns (25) 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       program state check for conversation 85015618
+TIME        Thu Mar 28 08:50:25 2019
+RELEASE     720
+COMPONENT   CPIC (TCP/IP) with Unicode
+VERSION     3
+RC          471
+MODULE      r3cpic.c
+LINE        16736
+DETAIL      called function SAP_CMCANCEL in state without timeouts=0
+COUNTER     3
+
+   em SAP.Middleware.Connector.CpicConnection.CpicCancel()
+   em SAP.Middleware.Connector.CpicConnection.CpicReceive(Int32 timeout)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte* buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadBytes(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadRfcData(Byte[] buffer, Int32 offset, Int32 srcLength, Boolean skip)
+   em SAP.Middleware.Connector.RfcTable.RfcDeserialize(RfcConnection conn, Int32 srcLength, Int32 rowLength, TableCompression compression)
+>> Error entry 2019-03-28 08:50:27.714 [Thread 1]
+[NAME=Ciel SAP Connector ASHOST=10.240.10.11 SYSNR=30 CLIENT=500 USER=sondapwce PASSWD=********]
+SAP.Middleware.Connector.RfcCommunicationException: Connection with convid [85015618] is closed, but cancel was not possible. CPIC layer returns (25) 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       program state check for conversation 85015618
+TIME        Thu Mar 28 08:50:25 2019
+RELEASE     720
+COMPONENT   CPIC (TCP/IP) with Unicode
+VERSION     3
+RC          471
+MODULE      r3cpic.c
+LINE        16736
+DETAIL      called function SAP_CMCANCEL in state without timeouts=0
+COUNTER     3
+
+   em SAP.Middleware.Connector.CpicConnection.CpicCancel()
+   em SAP.Middleware.Connector.CpicConnection.CpicReceive(Int32 timeout)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte* buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadBytes(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadRfcData(Byte[] buffer, Int32 offset, Int32 srcLength, Boolean skip)
+   em SAP.Middleware.Connector.RfcTable.RfcDeserialize(RfcConnection conn, Int32 srcLength, Int32 rowLength, TableCompression compression)
+   em SAP.Middleware.Connector.RfcConnection.ReadUpTo(RFCGET readState, RfcFunction function, RFCID toRid)
+   em SAP.Middleware.Connector.RfcConnection.RfcReceive(RfcFunction function)
+   em SAP.Middleware.Connector.RfcFunction.RfcDeserialize(RfcConnection conn, IRfcIOStream stream)
+   em SAP.Middleware.Connector.RfcFunction.RfcCallReceive(RfcConnection conn, IRfcIOStream stream, RFCID rid)
+   em SAP.Middleware.Connector.RfcFunction.Invoke(RfcDestination destination)
+**** Log file opened by process 152120 at 2019-03-29 08:10:22 (UTC-03:00 Hora oficial do Brasil)
+
+SAP .NET Connector 3.0 with file version 3.0.10.0 running on 64-bit .NET Framework 4.0.30319.42000
+Program: \\GHOS2024\Brady\CielSapReadTable.exe
+Working directory: C:\Users\aluga.com\Brady2018\NovoAppXML\Win32\Debug
+Operating system:  Professional 64-bit 
+Processor: 4x AMD64 (or x64)
+SAP release: 720, Kernel release: 720, Kernel patch level: 324
+Hostname: DESKTOP-99M8LEG, IP address: 192.168.150.238, IP_v6 address: 
+
+Default trace level: None
+
+>> Error entry 2019-03-29 08:10:22.869 [Thread 1]
+[NAME=Ciel SAP Connector ASHOST=10.240.10.11 SYSNR=30 CLIENT=500 USER=sondapwce PASSWD=********]
+SAP.Middleware.Connector.RfcCommunicationCanceledException: Connection with convid [69604052] was canceled
+   em SAP.Middleware.Connector.CpicConnection.CpicCancel()
+   em SAP.Middleware.Connector.CpicConnection.CpicReceive(Int32 timeout)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte* buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadBytes(Byte* buffer, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadRfcIDBegin(Int32& length)
+   em SAP.Middleware.Connector.RfcConnection.ReadUpTo(RFCGET readState, RfcFunction function, RFCID toRid)
+   em SAP.Middleware.Connector.RfcConnection.RfcReceive(RfcFunction function)
+   em SAP.Middleware.Connector.RfcFunction.RfcDeserialize(RfcConnection conn, IRfcIOStream stream)
+   em SAP.Middleware.Connector.RfcFunction.RfcCallReceive(RfcConnection conn, IRfcIOStream stream, RFCID rid)
+   em SAP.Middleware.Connector.RfcFunction.Invoke(RfcDestination destination)
+**** Log file opened by process 161660 at 2019-03-29 08:12:02 (UTC-03:00 Hora oficial do Brasil)
+
+SAP .NET Connector 3.0 with file version 3.0.10.0 running on 64-bit .NET Framework 4.0.30319.42000
+Program: \\GHOS2024\Brady\CielSapReadTable.exe
+Working directory: C:\Users\aluga.com\Brady2018\NovoAppXML\Win32\Debug
+Operating system:  Professional 64-bit 
+Processor: 4x AMD64 (or x64)
+SAP release: 720, Kernel release: 720, Kernel patch level: 324
+Hostname: DESKTOP-99M8LEG, IP address: 192.168.150.238, IP_v6 address: 
+
+Default trace level: None
+
+>> Error entry 2019-03-29 08:12:02.908 [Thread 1]
+SAP.Middleware.Connector.RfcCommunicationException: Connection with convid [69842056] is closed, but cancel was not possible. CPIC layer returns (25) 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       program state check for conversation 69842056
+TIME        Fri Mar 29 08:12:02 2019
+RELEASE     720
+COMPONENT   CPIC (TCP/IP) with Unicode
+VERSION     3
+RC          471
+MODULE      r3cpic.c
+LINE        16736
+DETAIL      called function SAP_CMCANCEL in state without timeouts=0
+COUNTER     3
+
+   em SAP.Middleware.Connector.CpicConnection.CpicCancel()
+   em SAP.Middleware.Connector.CpicConnection.CpicReceive(Int32 timeout)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte* buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadBytes(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadRfcData(Byte[] buffer, Int32 offset, Int32 srcLength, Boolean skip)
+   em SAP.Middleware.Connector.RfcTable.RfcDeserialize(RfcConnection conn, Int32 srcLength, Int32 rowLength, TableCompression compression)
+>> Error entry 2019-03-29 08:12:04.368 [Thread 1]
+[NAME=Ciel SAP Connector ASHOST=10.240.10.11 SYSNR=30 CLIENT=500 USER=sondapwce PASSWD=********]
+SAP.Middleware.Connector.RfcCommunicationException: Connection with convid [69842056] is closed, but cancel was not possible. CPIC layer returns (25) 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       program state check for conversation 69842056
+TIME        Fri Mar 29 08:12:02 2019
+RELEASE     720
+COMPONENT   CPIC (TCP/IP) with Unicode
+VERSION     3
+RC          471
+MODULE      r3cpic.c
+LINE        16736
+DETAIL      called function SAP_CMCANCEL in state without timeouts=0
+COUNTER     3
+
+   em SAP.Middleware.Connector.CpicConnection.CpicCancel()
+   em SAP.Middleware.Connector.CpicConnection.CpicReceive(Int32 timeout)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte* buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadBytes(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadRfcData(Byte[] buffer, Int32 offset, Int32 srcLength, Boolean skip)
+   em SAP.Middleware.Connector.RfcTable.RfcDeserialize(RfcConnection conn, Int32 srcLength, Int32 rowLength, TableCompression compression)
+   em SAP.Middleware.Connector.RfcConnection.ReadUpTo(RFCGET readState, RfcFunction function, RFCID toRid)
+   em SAP.Middleware.Connector.RfcConnection.RfcReceive(RfcFunction function)
+   em SAP.Middleware.Connector.RfcFunction.RfcDeserialize(RfcConnection conn, IRfcIOStream stream)
+   em SAP.Middleware.Connector.RfcFunction.RfcCallReceive(RfcConnection conn, IRfcIOStream stream, RFCID rid)
+   em SAP.Middleware.Connector.RfcFunction.Invoke(RfcDestination destination)
+**** Log file opened by process 17368 at 2019-04-09 17:01:18 (UTC-03:00 Hora oficial do Brasil)
+
+SAP .NET Connector 3.0 with file version 3.0.10.0 running on 64-bit .NET Framework 4.0.30319.42000
+Program: \\GHOS2024\Brady\CielSapReadTable.exe
+Working directory: C:\Users\aluga.com\Brady2018\NovoAppXML\Win32\Debug
+Operating system:  Professional 64-bit 
+Processor: 4x AMD64 (or x64)
+SAP release: 720, Kernel release: 720, Kernel patch level: 324
+Hostname: DESKTOP-99M8LEG, IP address: 192.168.150.147, IP_v6 address: 
+
+Default trace level: None
+
+>> Error entry 2019-04-09 17:01:18.083 [Thread 1]
+[NAME=Ciel SAP Connector ASHOST=10.240.10.11 SYSNR=30 CLIENT=500 USER=sondapwce PASSWD=********]
+SAP.Middleware.Connector.RfcAbapException: QUERY_LOCKED
+   em SAP.Middleware.Connector.RfcConnection.ThrowRfcErrorMsg()
+   em SAP.Middleware.Connector.RfcConnection.RfcReceive(RfcFunction function)
+   em SAP.Middleware.Connector.RfcFunction.RfcDeserialize(RfcConnection conn, IRfcIOStream stream)
+   em SAP.Middleware.Connector.RfcFunction.RfcCallReceive(RfcConnection conn, IRfcIOStream stream, RFCID rid)
+   em SAP.Middleware.Connector.RfcFunction.Invoke(RfcDestination destination)
+**** Log file opened by process 15784 at 2019-04-10 10:05:50 (UTC-03:00 Hora oficial do Brasil)
+
+SAP .NET Connector 3.0 with file version 3.0.10.0 running on 64-bit .NET Framework 4.0.30319.42000
+Program: \\GHOS2024\Brady\CielSapReadTable.exe
+Working directory: C:\Users\aluga.com\Brady2018\NovoAppXML\Win32\Debug
+Operating system:  Professional 64-bit 
+Processor: 4x AMD64 (or x64)
+SAP release: 720, Kernel release: 720, Kernel patch level: 324
+Hostname: DESKTOP-99M8LEG, IP address: 192.168.56.1, IP_v6 address: 
+
+Default trace level: None
+
+>> Error entry 2019-04-10 10:05:50.778 [Thread 1]
+SAP.Middleware.Connector.RfcCommunicationException: Connection with convid [48175791] is closed, but cancel was not possible. CPIC layer returns (25) 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       program state check for conversation 48175791
+TIME        Wed Apr 10 10:05:50 2019
+RELEASE     720
+COMPONENT   CPIC (TCP/IP) with Unicode
+VERSION     3
+RC          471
+MODULE      r3cpic.c
+LINE        16736
+DETAIL      called function SAP_CMCANCEL in state without timeouts=0
+COUNTER     3
+
+   em SAP.Middleware.Connector.CpicConnection.CpicCancel()
+   em SAP.Middleware.Connector.CpicConnection.CpicReceive(Int32 timeout)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte* buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadBytes(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadRfcData(Byte[] buffer, Int32 offset, Int32 srcLength, Boolean skip)
+   em SAP.Middleware.Connector.RfcTable.RfcDeserialize(RfcConnection conn, Int32 srcLength, Int32 rowLength, TableCompression compression)
+>> Error entry 2019-04-10 10:05:52.661 [Thread 1]
+[NAME=Ciel SAP Connector ASHOST=10.240.10.11 SYSNR=30 CLIENT=500 USER=sondapwce PASSWD=********]
+SAP.Middleware.Connector.RfcCommunicationException: Connection with convid [48175791] is closed, but cancel was not possible. CPIC layer returns (25) 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       program state check for conversation 48175791
+TIME        Wed Apr 10 10:05:50 2019
+RELEASE     720
+COMPONENT   CPIC (TCP/IP) with Unicode
+VERSION     3
+RC          471
+MODULE      r3cpic.c
+LINE        16736
+DETAIL      called function SAP_CMCANCEL in state without timeouts=0
+COUNTER     3
+
+   em SAP.Middleware.Connector.CpicConnection.CpicCancel()
+   em SAP.Middleware.Connector.CpicConnection.CpicReceive(Int32 timeout)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte* buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadBytes(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadRfcData(Byte[] buffer, Int32 offset, Int32 srcLength, Boolean skip)
+   em SAP.Middleware.Connector.RfcTable.RfcDeserialize(RfcConnection conn, Int32 srcLength, Int32 rowLength, TableCompression compression)
+   em SAP.Middleware.Connector.RfcConnection.ReadUpTo(RFCGET readState, RfcFunction function, RFCID toRid)
+   em SAP.Middleware.Connector.RfcConnection.RfcReceive(RfcFunction function)
+   em SAP.Middleware.Connector.RfcFunction.RfcDeserialize(RfcConnection conn, IRfcIOStream stream)
+   em SAP.Middleware.Connector.RfcFunction.RfcCallReceive(RfcConnection conn, IRfcIOStream stream, RFCID rid)
+   em SAP.Middleware.Connector.RfcFunction.Invoke(RfcDestination destination)
+**** Log file opened by process 7968 at 2019-04-15 11:13:35 (UTC-03:00 Hora oficial do Brasil)
+
+SAP .NET Connector 3.0 with file version 3.0.10.0 running on 64-bit .NET Framework 4.0.30319.42000
+Program: \\GHOS2024\Brady\CielSapReadTable.exe
+Working directory: C:\Users\aluga.com\Brady2018\NovoAppXML\Win32\Debug
+Operating system:  Professional 64-bit 
+Processor: 4x AMD64 (or x64)
+SAP release: 720, Kernel release: 720, Kernel patch level: 324
+Hostname: DESKTOP-99M8LEG, IP address: 192.168.150.137, IP_v6 address: 
+
+Default trace level: None
+
+>> Error entry 2019-04-15 11:13:35.859 [Thread 1]
+[NAME=Ciel SAP Connector ASHOST=10.240.10.11 SYSNR=30 CLIENT=500 USER=sondapwce PASSWD=********]
+SAP.Middleware.Connector.RfcAbapException: NO_VARIANT
+   em SAP.Middleware.Connector.RfcConnection.ThrowRfcErrorMsg()
+   em SAP.Middleware.Connector.RfcConnection.RfcReceive(RfcFunction function)
+   em SAP.Middleware.Connector.RfcFunction.RfcDeserialize(RfcConnection conn, IRfcIOStream stream)
+   em SAP.Middleware.Connector.RfcFunction.RfcCallReceive(RfcConnection conn, IRfcIOStream stream, RFCID rid)
+   em SAP.Middleware.Connector.RfcFunction.Invoke(RfcDestination destination)
+**** Log file opened by process 11492 at 2019-04-15 11:17:40 (UTC-03:00 Hora oficial do Brasil)
+
+SAP .NET Connector 3.0 with file version 3.0.10.0 running on 64-bit .NET Framework 4.0.30319.42000
+Program: \\GHOS2024\Brady\CielSapReadTable.exe
+Working directory: C:\Users\aluga.com\Brady2018\NovoAppXML\Win32\Debug
+Operating system:  Professional 64-bit 
+Processor: 4x AMD64 (or x64)
+SAP release: 720, Kernel release: 720, Kernel patch level: 324
+Hostname: DESKTOP-99M8LEG, IP address: 192.168.150.137, IP_v6 address: 
+
+Default trace level: None
+
+>> Error entry 2019-04-15 11:17:40.486 [Thread 1]
+[NAME=Ciel SAP Connector ASHOST=10.240.10.11 SYSNR=30 CLIENT=500 USER=sondapwce PASSWD=********]
+SAP.Middleware.Connector.RfcAbapException: NO_VARIANT
+   em SAP.Middleware.Connector.RfcConnection.ThrowRfcErrorMsg()
+   em SAP.Middleware.Connector.RfcConnection.RfcReceive(RfcFunction function)
+   em SAP.Middleware.Connector.RfcFunction.RfcDeserialize(RfcConnection conn, IRfcIOStream stream)
+   em SAP.Middleware.Connector.RfcFunction.RfcCallReceive(RfcConnection conn, IRfcIOStream stream, RFCID rid)
+   em SAP.Middleware.Connector.RfcFunction.Invoke(RfcDestination destination)
+**** Log file opened by process 16504 at 2019-04-15 12:02:15 (UTC-03:00 Hora oficial do Brasil)
+
+SAP .NET Connector 3.0 with file version 3.0.10.0 running on 64-bit .NET Framework 4.0.30319.42000
+Program: \\GHOS2024\Brady\CielSapReadTable.exe
+Working directory: C:\Users\aluga.com\Brady2018\NovoAppXML\Win32\Debug
+Operating system:  Professional 64-bit 
+Processor: 4x AMD64 (or x64)
+SAP release: 720, Kernel release: 720, Kernel patch level: 324
+Hostname: DESKTOP-99M8LEG, IP address: 192.168.150.137, IP_v6 address: 
+
+Default trace level: None
+
+>> Error entry 2019-04-15 12:02:15.997 [Thread 1]
+SAP.Middleware.Connector.RfcCommunicationException: Connection with convid [43450302] is closed, but cancel was not possible. CPIC layer returns (25) 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       program state check for conversation 43450302
+TIME        Mon Apr 15 12:02:15 2019
+RELEASE     720
+COMPONENT   CPIC (TCP/IP) with Unicode
+VERSION     3
+RC          471
+MODULE      r3cpic.c
+LINE        16736
+DETAIL      called function SAP_CMCANCEL in state without timeouts=0
+COUNTER     3
+
+   em SAP.Middleware.Connector.CpicConnection.CpicCancel()
+   em SAP.Middleware.Connector.CpicConnection.CpicReceive(Int32 timeout)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte* buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadBytes(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadRfcData(Byte[] buffer, Int32 offset, Int32 srcLength, Boolean skip)
+   em SAP.Middleware.Connector.RfcTable.RfcDeserialize(RfcConnection conn, Int32 srcLength, Int32 rowLength, TableCompression compression)
+>> Error entry 2019-04-15 12:02:17.428 [Thread 1]
+[NAME=Ciel SAP Connector ASHOST=10.240.10.11 SYSNR=30 CLIENT=500 USER=sondapwce PASSWD=********]
+SAP.Middleware.Connector.RfcCommunicationException: Connection with convid [43450302] is closed, but cancel was not possible. CPIC layer returns (25) 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       program state check for conversation 43450302
+TIME        Mon Apr 15 12:02:15 2019
+RELEASE     720
+COMPONENT   CPIC (TCP/IP) with Unicode
+VERSION     3
+RC          471
+MODULE      r3cpic.c
+LINE        16736
+DETAIL      called function SAP_CMCANCEL in state without timeouts=0
+COUNTER     3
+
+   em SAP.Middleware.Connector.CpicConnection.CpicCancel()
+   em SAP.Middleware.Connector.CpicConnection.CpicReceive(Int32 timeout)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte* buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadBytes(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadRfcData(Byte[] buffer, Int32 offset, Int32 srcLength, Boolean skip)
+   em SAP.Middleware.Connector.RfcTable.RfcDeserialize(RfcConnection conn, Int32 srcLength, Int32 rowLength, TableCompression compression)
+   em SAP.Middleware.Connector.RfcConnection.ReadUpTo(RFCGET readState, RfcFunction function, RFCID toRid)
+   em SAP.Middleware.Connector.RfcConnection.RfcReceive(RfcFunction function)
+   em SAP.Middleware.Connector.RfcFunction.RfcDeserialize(RfcConnection conn, IRfcIOStream stream)
+   em SAP.Middleware.Connector.RfcFunction.RfcCallReceive(RfcConnection conn, IRfcIOStream stream, RFCID rid)
+   em SAP.Middleware.Connector.RfcFunction.Invoke(RfcDestination destination)
+**** Log file opened by process 4548 at 2019-04-30 13:12:31 (UTC-03:00 Hora oficial do Brasil)
+
+SAP .NET Connector 3.0 with file version 3.0.10.0 running on 64-bit .NET Framework 4.0.30319.42000
+Program: \\GHOS2024\Brady\CielSapReadTable.exe
+Working directory: C:\Users\aluga.com\Brady2018\NovoAppXML\Win32\Debug
+Operating system:  Professional 64-bit 
+Processor: 4x AMD64 (or x64)
+SAP release: 720, Kernel release: 720, Kernel patch level: 324
+Hostname: DESKTOP-99M8LEG, IP address: 192.168.150.29, IP_v6 address: 
+
+Default trace level: None
+
+>> Error entry 2019-04-30 13:12:32.517 [Thread 1]
+[NAME=Ciel SAP Connector ASHOST=10.240.10.11 SYSNR=30 CLIENT=500 USER=sondapwce PASSWD=********]
+SAP.Middleware.Connector.RfcAbapException: NO_VARIANT
+   em SAP.Middleware.Connector.RfcConnection.ThrowRfcErrorMsg()
+   em SAP.Middleware.Connector.RfcConnection.RfcReceive(RfcFunction function)
+   em SAP.Middleware.Connector.RfcFunction.RfcDeserialize(RfcConnection conn, IRfcIOStream stream)
+   em SAP.Middleware.Connector.RfcFunction.RfcCallReceive(RfcConnection conn, IRfcIOStream stream, RFCID rid)
+   em SAP.Middleware.Connector.RfcFunction.Invoke(RfcDestination destination)
+**** Log file opened by process 8788 at 2019-04-30 13:55:51 (UTC-03:00 Hora oficial do Brasil)
+
+SAP .NET Connector 3.0 with file version 3.0.10.0 running on 64-bit .NET Framework 4.0.30319.42000
+Program: \\GHOS2024\Brady\CielSapReadTable.exe
+Working directory: C:\Users\aluga.com\Brady2018\NovoAppXML\Win32\Debug
+Operating system:  Professional 64-bit 
+Processor: 4x AMD64 (or x64)
+SAP release: 720, Kernel release: 720, Kernel patch level: 324
+Hostname: DESKTOP-99M8LEG, IP address: 192.168.150.29, IP_v6 address: 
+
+Default trace level: None
+
+>> Error entry 2019-04-30 13:55:51.170 [Thread 1]
+[NAME=Ciel SAP Connector ASHOST=10.240.10.11 SYSNR=30 CLIENT=500 USER=sondapwce PASSWD=********]
+SAP.Middleware.Connector.RfcAbapException: QUERY_LOCKED
+   em SAP.Middleware.Connector.RfcConnection.ThrowRfcErrorMsg()
+   em SAP.Middleware.Connector.RfcConnection.RfcReceive(RfcFunction function)
+   em SAP.Middleware.Connector.RfcFunction.RfcDeserialize(RfcConnection conn, IRfcIOStream stream)
+   em SAP.Middleware.Connector.RfcFunction.RfcCallReceive(RfcConnection conn, IRfcIOStream stream, RFCID rid)
+   em SAP.Middleware.Connector.RfcFunction.Invoke(RfcDestination destination)
+**** Log file opened by process 14992 at 2019-05-07 08:59:15 (UTC-03:00 Hora oficial do Brasil)
+
+SAP .NET Connector 3.0 with file version 3.0.10.0 running on 64-bit .NET Framework 4.0.30319.42000
+Program: \\GHOS2024\Brady\CielSapReadTable.exe
+Working directory: C:\Users\aluga.com\Brady2018\NovoAppXML\Win32\Debug
+Operating system:  Professional 64-bit 
+Processor: 4x AMD64 (or x64)
+SAP release: 720, Kernel release: 720, Kernel patch level: 324
+Hostname: DESKTOP-99M8LEG, IP address: 192.168.150.106, IP_v6 address: 
+
+Default trace level: None
+
+>> Error entry 2019-05-07 08:59:16.293 [Thread 1]
+[NAME=Ciel SAP Connector ASHOST=10.240.10.11 SYSNR=30 CLIENT=500 USER=sondapwce PASSWD=********]
+SAP.Middleware.Connector.RfcAbapException: QUERY_LOCKED
+   em SAP.Middleware.Connector.RfcConnection.ThrowRfcErrorMsg()
+   em SAP.Middleware.Connector.RfcConnection.RfcReceive(RfcFunction function)
+   em SAP.Middleware.Connector.RfcFunction.RfcDeserialize(RfcConnection conn, IRfcIOStream stream)
+   em SAP.Middleware.Connector.RfcFunction.RfcCallReceive(RfcConnection conn, IRfcIOStream stream, RFCID rid)
+   em SAP.Middleware.Connector.RfcFunction.Invoke(RfcDestination destination)
+**** Log file opened by process 5584 at 2019-05-07 08:59:55 (UTC-03:00 Hora oficial do Brasil)
+
+SAP .NET Connector 3.0 with file version 3.0.10.0 running on 64-bit .NET Framework 4.0.30319.42000
+Program: \\GHOS2024\Brady\CielSapReadTable.exe
+Working directory: C:\Users\aluga.com\Brady2018\NovoAppXML\Win32\Debug
+Operating system:  Professional 64-bit 
+Processor: 4x AMD64 (or x64)
+SAP release: 720, Kernel release: 720, Kernel patch level: 324
+Hostname: DESKTOP-99M8LEG, IP address: 192.168.150.106, IP_v6 address: 
+
+Default trace level: None
+
+>> Error entry 2019-05-07 08:59:55.541 [Thread 1]
+SAP.Middleware.Connector.RfcCommunicationException: Connection with convid [16681927] is closed, but cancel was not possible. CPIC layer returns (25) 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       program state check for conversation 16681927
+TIME        Tue May 07 08:59:55 2019
+RELEASE     720
+COMPONENT   CPIC (TCP/IP) with Unicode
+VERSION     3
+RC          471
+MODULE      r3cpic.c
+LINE        16736
+DETAIL      called function SAP_CMCANCEL in state without timeouts=0
+COUNTER     3
+
+   em SAP.Middleware.Connector.CpicConnection.CpicCancel()
+   em SAP.Middleware.Connector.CpicConnection.CpicReceive(Int32 timeout)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte* buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadBytes(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadRfcData(Byte[] buffer, Int32 offset, Int32 srcLength, Boolean skip)
+   em SAP.Middleware.Connector.RfcTable.RfcDeserialize(RfcConnection conn, Int32 srcLength, Int32 rowLength, TableCompression compression)
+>> Error entry 2019-05-07 08:59:56.340 [Thread 1]
+[NAME=Ciel SAP Connector ASHOST=10.240.10.11 SYSNR=30 CLIENT=500 USER=sondapwce PASSWD=********]
+SAP.Middleware.Connector.RfcCommunicationException: Connection with convid [16681927] is closed, but cancel was not possible. CPIC layer returns (25) 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       program state check for conversation 16681927
+TIME        Tue May 07 08:59:55 2019
+RELEASE     720
+COMPONENT   CPIC (TCP/IP) with Unicode
+VERSION     3
+RC          471
+MODULE      r3cpic.c
+LINE        16736
+DETAIL      called function SAP_CMCANCEL in state without timeouts=0
+COUNTER     3
+
+   em SAP.Middleware.Connector.CpicConnection.CpicCancel()
+   em SAP.Middleware.Connector.CpicConnection.CpicReceive(Int32 timeout)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte* buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadBytes(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadRfcData(Byte[] buffer, Int32 offset, Int32 srcLength, Boolean skip)
+   em SAP.Middleware.Connector.RfcTable.RfcDeserialize(RfcConnection conn, Int32 srcLength, Int32 rowLength, TableCompression compression)
+   em SAP.Middleware.Connector.RfcConnection.ReadUpTo(RFCGET readState, RfcFunction function, RFCID toRid)
+   em SAP.Middleware.Connector.RfcConnection.RfcReceive(RfcFunction function)
+   em SAP.Middleware.Connector.RfcFunction.RfcDeserialize(RfcConnection conn, IRfcIOStream stream)
+   em SAP.Middleware.Connector.RfcFunction.RfcCallReceive(RfcConnection conn, IRfcIOStream stream, RFCID rid)
+   em SAP.Middleware.Connector.RfcFunction.Invoke(RfcDestination destination)
+**** Log file opened by process 1468 at 2019-05-07 09:02:40 (UTC-03:00 Hora oficial do Brasil)
+
+SAP .NET Connector 3.0 with file version 3.0.10.0 running on 64-bit .NET Framework 4.0.30319.42000
+Program: \\GHOS2024\Brady\CielSapReadTable.exe
+Working directory: C:\Users\aluga.com\Brady2018\NovoAppXML\Win32\Debug
+Operating system:  Professional 64-bit 
+Processor: 4x AMD64 (or x64)
+SAP release: 720, Kernel release: 720, Kernel patch level: 324
+Hostname: DESKTOP-99M8LEG, IP address: 192.168.150.106, IP_v6 address: 
+
+Default trace level: None
+
+>> Error entry 2019-05-07 09:02:40.746 [Thread 1]
+[NAME=Ciel SAP Connector ASHOST=10.240.10.11 SYSNR=30 CLIENT=500 USER=sondapwce PASSWD=********]
+SAP.Middleware.Connector.RfcAbapException: QUERY_LOCKED
+   em SAP.Middleware.Connector.RfcConnection.ThrowRfcErrorMsg()
+   em SAP.Middleware.Connector.RfcConnection.RfcReceive(RfcFunction function)
+   em SAP.Middleware.Connector.RfcFunction.RfcDeserialize(RfcConnection conn, IRfcIOStream stream)
+   em SAP.Middleware.Connector.RfcFunction.RfcCallReceive(RfcConnection conn, IRfcIOStream stream, RFCID rid)
+   em SAP.Middleware.Connector.RfcFunction.Invoke(RfcDestination destination)
+**** Log file opened by process 4624 at 2019-05-07 13:27:32 (UTC-03:00 Hora oficial do Brasil)
+
+SAP .NET Connector 3.0 with file version 3.0.10.0 running on 64-bit .NET Framework 4.0.30319.42000
+Program: \\GHOS2024\Brady\CielSapReadTable.exe
+Working directory: C:\Users\aluga.com\Brady2018\NovoAppXML\Win32\Debug
+Operating system:  Professional 64-bit 
+Processor: 4x AMD64 (or x64)
+SAP release: 720, Kernel release: 720, Kernel patch level: 324
+Hostname: DESKTOP-99M8LEG, IP address: 192.168.150.106, IP_v6 address: 
+
+Default trace level: None
+
+>> Error entry 2019-05-07 13:27:33.097 [Thread 1]
+SAP.Middleware.Connector.RfcCommunicationException: Connection with convid [32270554] is closed, but cancel was not possible. CPIC layer returns (25) 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       program state check for conversation 32270554
+TIME        Tue May 07 13:27:30 2019
+RELEASE     720
+COMPONENT   CPIC (TCP/IP) with Unicode
+VERSION     3
+RC          471
+MODULE      r3cpic.c
+LINE        16736
+DETAIL      called function SAP_CMCANCEL in state without timeouts=0
+COUNTER     3
+
+   em SAP.Middleware.Connector.CpicConnection.CpicCancel()
+   em SAP.Middleware.Connector.CpicConnection.CpicReceive(Int32 timeout)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte* buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadBytes(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadRfcData(Byte[] buffer, Int32 offset, Int32 srcLength, Boolean skip)
+   em SAP.Middleware.Connector.RfcTable.RfcDeserialize(RfcConnection conn, Int32 srcLength, Int32 rowLength, TableCompression compression)
+>> Error entry 2019-05-07 13:27:34.589 [Thread 1]
+[NAME=Ciel SAP Connector ASHOST=10.240.10.11 SYSNR=30 CLIENT=500 USER=sondapwce PASSWD=********]
+SAP.Middleware.Connector.RfcCommunicationException: Connection with convid [32270554] is closed, but cancel was not possible. CPIC layer returns (25) 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       program state check for conversation 32270554
+TIME        Tue May 07 13:27:30 2019
+RELEASE     720
+COMPONENT   CPIC (TCP/IP) with Unicode
+VERSION     3
+RC          471
+MODULE      r3cpic.c
+LINE        16736
+DETAIL      called function SAP_CMCANCEL in state without timeouts=0
+COUNTER     3
+
+   em SAP.Middleware.Connector.CpicConnection.CpicCancel()
+   em SAP.Middleware.Connector.CpicConnection.CpicReceive(Int32 timeout)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte* buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadBytes(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadRfcData(Byte[] buffer, Int32 offset, Int32 srcLength, Boolean skip)
+   em SAP.Middleware.Connector.RfcTable.RfcDeserialize(RfcConnection conn, Int32 srcLength, Int32 rowLength, TableCompression compression)
+   em SAP.Middleware.Connector.RfcConnection.ReadUpTo(RFCGET readState, RfcFunction function, RFCID toRid)
+   em SAP.Middleware.Connector.RfcConnection.RfcReceive(RfcFunction function)
+   em SAP.Middleware.Connector.RfcFunction.RfcDeserialize(RfcConnection conn, IRfcIOStream stream)
+   em SAP.Middleware.Connector.RfcFunction.RfcCallReceive(RfcConnection conn, IRfcIOStream stream, RFCID rid)
+   em SAP.Middleware.Connector.RfcFunction.Invoke(RfcDestination destination)
+**** Log file opened by process 11136 at 2019-05-15 14:53:15 (UTC-03:00 Hora oficial do Brasil)
+
+SAP .NET Connector 3.0 with file version 3.0.10.0 running on 64-bit .NET Framework 4.0.30319.42000
+Program: \\GHOS2024\Brady\CielSapReadTable.exe
+Working directory: C:\Users\aluga.com\Brady2018\NovoAppXML\Win32\Debug
+Operating system:  Professional 64-bit 
+Processor: 4x AMD64 (or x64)
+SAP release: 720, Kernel release: 720, Kernel patch level: 324
+Hostname: DESKTOP-99M8LEG, IP address: 192.168.150.204, IP_v6 address: 
+
+Default trace level: None
+
+>> Error entry 2019-05-15 14:53:15.863 [Thread 1]
+[NAME=Ciel SAP Connector ASHOST=10.240.10.11 SYSNR=30 CLIENT=500 USER=sondapwce PASSWD=********]
+SAP.Middleware.Connector.RfcAbapException: NO_VARIANT
+   em SAP.Middleware.Connector.RfcConnection.ThrowRfcErrorMsg()
+   em SAP.Middleware.Connector.RfcConnection.RfcReceive(RfcFunction function)
+   em SAP.Middleware.Connector.RfcFunction.RfcDeserialize(RfcConnection conn, IRfcIOStream stream)
+   em SAP.Middleware.Connector.RfcFunction.RfcCallReceive(RfcConnection conn, IRfcIOStream stream, RFCID rid)
+   em SAP.Middleware.Connector.RfcFunction.Invoke(RfcDestination destination)
+**** Log file opened by process 9480 at 2019-05-15 14:53:56 (UTC-03:00 Hora oficial do Brasil)
+
+SAP .NET Connector 3.0 with file version 3.0.10.0 running on 64-bit .NET Framework 4.0.30319.42000
+Program: \\GHOS2024\Brady\CielSapReadTable.exe
+Working directory: C:\Users\aluga.com\Brady2018\NovoAppXML\Win32\Debug
+Operating system:  Professional 64-bit 
+Processor: 4x AMD64 (or x64)
+SAP release: 720, Kernel release: 720, Kernel patch level: 324
+Hostname: DESKTOP-99M8LEG, IP address: 192.168.150.204, IP_v6 address: 
+
+Default trace level: None
+
+>> Error entry 2019-05-15 14:53:56.796 [Thread 1]
+SAP.Middleware.Connector.RfcCommunicationException: Connection with convid [46253606] is closed, but cancel was not possible. CPIC layer returns (25) 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       program state check for conversation 46253606
+TIME        Wed May 15 14:53:56 2019
+RELEASE     720
+COMPONENT   CPIC (TCP/IP) with Unicode
+VERSION     3
+RC          471
+MODULE      r3cpic.c
+LINE        16736
+DETAIL      called function SAP_CMCANCEL in state without timeouts=0
+COUNTER     3
+
+   em SAP.Middleware.Connector.CpicConnection.CpicCancel()
+   em SAP.Middleware.Connector.CpicConnection.CpicReceive(Int32 timeout)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte* buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadBytes(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadRfcData(Byte[] buffer, Int32 offset, Int32 srcLength, Boolean skip)
+   em SAP.Middleware.Connector.RfcTable.RfcDeserialize(RfcConnection conn, Int32 srcLength, Int32 rowLength, TableCompression compression)
+>> Error entry 2019-05-15 14:53:57.911 [Thread 1]
+[NAME=Ciel SAP Connector ASHOST=10.240.10.11 SYSNR=30 CLIENT=500 USER=sondapwce PASSWD=********]
+SAP.Middleware.Connector.RfcCommunicationException: Connection with convid [46253606] is closed, but cancel was not possible. CPIC layer returns (25) 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       program state check for conversation 46253606
+TIME        Wed May 15 14:53:56 2019
+RELEASE     720
+COMPONENT   CPIC (TCP/IP) with Unicode
+VERSION     3
+RC          471
+MODULE      r3cpic.c
+LINE        16736
+DETAIL      called function SAP_CMCANCEL in state without timeouts=0
+COUNTER     3
+
+   em SAP.Middleware.Connector.CpicConnection.CpicCancel()
+   em SAP.Middleware.Connector.CpicConnection.CpicReceive(Int32 timeout)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte* buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadBytes(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadRfcData(Byte[] buffer, Int32 offset, Int32 srcLength, Boolean skip)
+   em SAP.Middleware.Connector.RfcTable.RfcDeserialize(RfcConnection conn, Int32 srcLength, Int32 rowLength, TableCompression compression)
+   em SAP.Middleware.Connector.RfcConnection.ReadUpTo(RFCGET readState, RfcFunction function, RFCID toRid)
+   em SAP.Middleware.Connector.RfcConnection.RfcReceive(RfcFunction function)
+   em SAP.Middleware.Connector.RfcFunction.RfcDeserialize(RfcConnection conn, IRfcIOStream stream)
+   em SAP.Middleware.Connector.RfcFunction.RfcCallReceive(RfcConnection conn, IRfcIOStream stream, RFCID rid)
+   em SAP.Middleware.Connector.RfcFunction.Invoke(RfcDestination destination)
+**** Log file opened by process 10880 at 2019-05-15 15:12:35 (UTC-03:00 Hora oficial do Brasil)
+
+SAP .NET Connector 3.0 with file version 3.0.10.0 running on 64-bit .NET Framework 4.0.30319.42000
+Program: \\GHOS2024\Brady\CielSapReadTable.exe
+Working directory: C:\Users\aluga.com\Brady2018\NovoAppXML\Win32\Debug
+Operating system:  Professional 64-bit 
+Processor: 4x AMD64 (or x64)
+SAP release: 720, Kernel release: 720, Kernel patch level: 324
+Hostname: DESKTOP-99M8LEG, IP address: 192.168.150.204, IP_v6 address: 
+
+Default trace level: None
+
+>> Error entry 2019-05-15 15:12:35.478 [Thread 1]
+[NAME=Ciel SAP Connector ASHOST=10.240.10.11 SYSNR=30 CLIENT=500 USER=sondapwce PASSWD=********]
+SAP.Middleware.Connector.RfcAbapException: NO_VARIANT
+   em SAP.Middleware.Connector.RfcConnection.ThrowRfcErrorMsg()
+   em SAP.Middleware.Connector.RfcConnection.RfcReceive(RfcFunction function)
+   em SAP.Middleware.Connector.RfcFunction.RfcDeserialize(RfcConnection conn, IRfcIOStream stream)
+   em SAP.Middleware.Connector.RfcFunction.RfcCallReceive(RfcConnection conn, IRfcIOStream stream, RFCID rid)
+   em SAP.Middleware.Connector.RfcFunction.Invoke(RfcDestination destination)
+**** Log file opened by process 2644 at 2019-05-15 15:15:27 (UTC-03:00 Hora oficial do Brasil)
+
+SAP .NET Connector 3.0 with file version 3.0.10.0 running on 64-bit .NET Framework 4.0.30319.42000
+Program: \\GHOS2024\Brady\CielSapReadTable.exe
+Working directory: C:\Users\aluga.com\Brady2018\NovoAppXML\Win32\Debug
+Operating system:  Professional 64-bit 
+Processor: 4x AMD64 (or x64)
+SAP release: 720, Kernel release: 720, Kernel patch level: 324
+Hostname: DESKTOP-99M8LEG, IP address: 192.168.150.204, IP_v6 address: 
+
+Default trace level: None
+
+>> Error entry 2019-05-15 15:15:27.534 [Thread 1]
+[NAME=Ciel SAP Connector ASHOST=10.240.10.11 SYSNR=30 CLIENT=500 USER=sondapwce PASSWD=********]
+SAP.Middleware.Connector.RfcAbapException: NO_VARIANT
+   em SAP.Middleware.Connector.RfcConnection.ThrowRfcErrorMsg()
+   em SAP.Middleware.Connector.RfcConnection.RfcReceive(RfcFunction function)
+   em SAP.Middleware.Connector.RfcFunction.RfcDeserialize(RfcConnection conn, IRfcIOStream stream)
+   em SAP.Middleware.Connector.RfcFunction.RfcCallReceive(RfcConnection conn, IRfcIOStream stream, RFCID rid)
+   em SAP.Middleware.Connector.RfcFunction.Invoke(RfcDestination destination)
+**** Log file opened by process 15352 at 2019-05-16 22:06:05 (UTC-03:00 Hora oficial do Brasil)
+
+SAP .NET Connector 3.0 with file version 3.0.10.0 running on 64-bit .NET Framework 4.0.30319.42000
+Program: \\GHOS2024\Brady\CielSapReadTable.exe
+Working directory: C:\Users\aluga.com\Brady2018\NovoAppXML\Win32\Debug
+Operating system:  Professional 64-bit 
+Processor: 4x AMD64 (or x64)
+SAP release: 720, Kernel release: 720, Kernel patch level: 324
+Hostname: DESKTOP-99M8LEG, IP address: 192.168.150.184, IP_v6 address: 
+
+Default trace level: None
+
+>> Error entry 2019-05-16 22:06:05.611 [Thread 1]
+[NAME=Ciel SAP Connector ASHOST=10.240.10.11 SYSNR=30 CLIENT=500 USER=sondapwce PASSWD=********]
+SAP.Middleware.Connector.RfcAbapException: NO_VARIANT
+   em SAP.Middleware.Connector.RfcConnection.ThrowRfcErrorMsg()
+   em SAP.Middleware.Connector.RfcConnection.RfcReceive(RfcFunction function)
+   em SAP.Middleware.Connector.RfcFunction.RfcDeserialize(RfcConnection conn, IRfcIOStream stream)
+   em SAP.Middleware.Connector.RfcFunction.RfcCallReceive(RfcConnection conn, IRfcIOStream stream, RFCID rid)
+   em SAP.Middleware.Connector.RfcFunction.Invoke(RfcDestination destination)
+**** Log file opened by process 14656 at 2019-05-16 22:08:50 (UTC-03:00 Hora oficial do Brasil)
+
+SAP .NET Connector 3.0 with file version 3.0.10.0 running on 64-bit .NET Framework 4.0.30319.42000
+Program: \\GHOS2024\Brady\CielSapReadTable.exe
+Working directory: C:\Users\aluga.com\Brady2018\NovoAppXML\Win32\Debug
+Operating system:  Professional 64-bit 
+Processor: 4x AMD64 (or x64)
+SAP release: 720, Kernel release: 720, Kernel patch level: 324
+Hostname: DESKTOP-99M8LEG, IP address: 192.168.150.184, IP_v6 address: 
+
+Default trace level: None
+
+>> Error entry 2019-05-16 22:08:51.106 [Thread 1]
+SAP.Middleware.Connector.RfcCommunicationException: Connection with convid [58605450] is closed, but cancel was not possible. CPIC layer returns (25) 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       program state check for conversation 58605450
+TIME        Thu May 16 22:08:50 2019
+RELEASE     720
+COMPONENT   CPIC (TCP/IP) with Unicode
+VERSION     3
+RC          471
+MODULE      r3cpic.c
+LINE        16736
+DETAIL      called function SAP_CMCANCEL in state without timeouts=0
+COUNTER     3
+
+   em SAP.Middleware.Connector.CpicConnection.CpicCancel()
+   em SAP.Middleware.Connector.CpicConnection.CpicReceive(Int32 timeout)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte* buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadBytes(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadRfcData(Byte[] buffer, Int32 offset, Int32 srcLength, Boolean skip)
+   em SAP.Middleware.Connector.RfcTable.RfcDeserialize(RfcConnection conn, Int32 srcLength, Int32 rowLength, TableCompression compression)
+>> Error entry 2019-05-16 22:08:52.714 [Thread 1]
+[NAME=Ciel SAP Connector ASHOST=10.240.10.11 SYSNR=30 CLIENT=500 USER=sondapwce PASSWD=********]
+SAP.Middleware.Connector.RfcCommunicationException: Connection with convid [58605450] is closed, but cancel was not possible. CPIC layer returns (25) 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       program state check for conversation 58605450
+TIME        Thu May 16 22:08:50 2019
+RELEASE     720
+COMPONENT   CPIC (TCP/IP) with Unicode
+VERSION     3
+RC          471
+MODULE      r3cpic.c
+LINE        16736
+DETAIL      called function SAP_CMCANCEL in state without timeouts=0
+COUNTER     3
+
+   em SAP.Middleware.Connector.CpicConnection.CpicCancel()
+   em SAP.Middleware.Connector.CpicConnection.CpicReceive(Int32 timeout)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte* buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadBytes(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadRfcData(Byte[] buffer, Int32 offset, Int32 srcLength, Boolean skip)
+   em SAP.Middleware.Connector.RfcTable.RfcDeserialize(RfcConnection conn, Int32 srcLength, Int32 rowLength, TableCompression compression)
+   em SAP.Middleware.Connector.RfcConnection.ReadUpTo(RFCGET readState, RfcFunction function, RFCID toRid)
+   em SAP.Middleware.Connector.RfcConnection.RfcReceive(RfcFunction function)
+   em SAP.Middleware.Connector.RfcFunction.RfcDeserialize(RfcConnection conn, IRfcIOStream stream)
+   em SAP.Middleware.Connector.RfcFunction.RfcCallReceive(RfcConnection conn, IRfcIOStream stream, RFCID rid)
+   em SAP.Middleware.Connector.RfcFunction.Invoke(RfcDestination destination)
+**** Log file opened by process 12964 at 2019-05-16 22:09:32 (UTC-03:00 Hora oficial do Brasil)
+
+SAP .NET Connector 3.0 with file version 3.0.10.0 running on 64-bit .NET Framework 4.0.30319.42000
+Program: \\GHOS2024\Brady\CielSapReadTable.exe
+Working directory: C:\Users\aluga.com\Brady2018\NovoAppXML\Win32\Debug
+Operating system:  Professional 64-bit 
+Processor: 4x AMD64 (or x64)
+SAP release: 720, Kernel release: 720, Kernel patch level: 324
+Hostname: DESKTOP-99M8LEG, IP address: 192.168.150.184, IP_v6 address: 
+
+Default trace level: None
+
+>> Error entry 2019-05-16 22:09:33.291 [Thread 1]
+SAP.Middleware.Connector.RfcCommunicationException: Connection with convid [58610455] is closed, but cancel was not possible. CPIC layer returns (25) 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       program state check for conversation 58610455
+TIME        Thu May 16 22:09:32 2019
+RELEASE     720
+COMPONENT   CPIC (TCP/IP) with Unicode
+VERSION     3
+RC          471
+MODULE      r3cpic.c
+LINE        16736
+DETAIL      called function SAP_CMCANCEL in state without timeouts=0
+COUNTER     3
+
+   em SAP.Middleware.Connector.CpicConnection.CpicCancel()
+   em SAP.Middleware.Connector.CpicConnection.CpicReceive(Int32 timeout)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte* buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadBytes(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadRfcData(Byte[] buffer, Int32 offset, Int32 srcLength, Boolean skip)
+   em SAP.Middleware.Connector.RfcTable.RfcDeserialize(RfcConnection conn, Int32 srcLength, Int32 rowLength, TableCompression compression)
+>> Error entry 2019-05-16 22:09:34.435 [Thread 1]
+[NAME=Ciel SAP Connector ASHOST=10.240.10.11 SYSNR=30 CLIENT=500 USER=sondapwce PASSWD=********]
+SAP.Middleware.Connector.RfcCommunicationException: Connection with convid [58610455] is closed, but cancel was not possible. CPIC layer returns (25) 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       program state check for conversation 58610455
+TIME        Thu May 16 22:09:32 2019
+RELEASE     720
+COMPONENT   CPIC (TCP/IP) with Unicode
+VERSION     3
+RC          471
+MODULE      r3cpic.c
+LINE        16736
+DETAIL      called function SAP_CMCANCEL in state without timeouts=0
+COUNTER     3
+
+   em SAP.Middleware.Connector.CpicConnection.CpicCancel()
+   em SAP.Middleware.Connector.CpicConnection.CpicReceive(Int32 timeout)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte* buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.CpicConnection.Read(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadBytes(Byte[] buffer, Int32 offset, Int32 count)
+   em SAP.Middleware.Connector.RfcConnection.ReadRfcData(Byte[] buffer, Int32 offset, Int32 srcLength, Boolean skip)
+   em SAP.Middleware.Connector.RfcTable.RfcDeserialize(RfcConnection conn, Int32 srcLength, Int32 rowLength, TableCompression compression)
+   em SAP.Middleware.Connector.RfcConnection.ReadUpTo(RFCGET readState, RfcFunction function, RFCID toRid)
+   em SAP.Middleware.Connector.RfcConnection.RfcReceive(RfcFunction function)
+   em SAP.Middleware.Connector.RfcFunction.RfcDeserialize(RfcConnection conn, IRfcIOStream stream)
+   em SAP.Middleware.Connector.RfcFunction.RfcCallReceive(RfcConnection conn, IRfcIOStream stream, RFCID rid)
+   em SAP.Middleware.Connector.RfcFunction.Invoke(RfcDestination destination)
+**** Log file opened by process 2340 at 2019-05-20 14:00:28 (UTC-03:00 Hora oficial do Brasil)
+
+SAP .NET Connector 3.0 with file version 3.0.10.0 running on 64-bit .NET Framework 4.0.30319.42000
+Program: \\GHOS2024\Brady\CielSapReadTable.exe
+Working directory: C:\Users\aluga.com\Brady2018\NovoAppXML\Win32\Debug
+Operating system:  Professional 64-bit 
+Processor: 4x AMD64 (or x64)
+SAP release: 720, Kernel release: 720, Kernel patch level: 324
+Hostname: DESKTOP-99M8LEG, IP address: 192.168.150.74, IP_v6 address: 
+
+Default trace level: None
+
+>> Error entry 2019-05-20 14:00:28.542 [Thread 1]
+[NAME=Ciel SAP Connector ASHOST=10.240.10.11 SYSNR=30 CLIENT=500 USER=sondapwce PASSWD=********]
+SAP.Middleware.Connector.RfcAbapException: NO_VARIANT
+   em SAP.Middleware.Connector.RfcConnection.ThrowRfcErrorMsg()
+   em SAP.Middleware.Connector.RfcConnection.RfcReceive(RfcFunction function)
+   em SAP.Middleware.Connector.RfcFunction.RfcDeserialize(RfcConnection conn, IRfcIOStream stream)
+   em SAP.Middleware.Connector.RfcFunction.RfcCallReceive(RfcConnection conn, IRfcIOStream stream, RFCID rid)
+   em SAP.Middleware.Connector.RfcFunction.Invoke(RfcDestination destination)
+**** Log file opened by process 3268 at 2019-05-20 14:16:03 (UTC-03:00 Hora oficial do Brasil)
+
+SAP .NET Connector 3.0 with file version 3.0.10.0 running on 64-bit .NET Framework 4.0.30319.42000
+Program: \\GHOS2024\Brady\CielSapReadTable.exe
+Working directory: C:\Users\aluga.com\Brady2018\NovoAppXML\Win32\Debug
+Operating system:  Professional 64-bit 
+Processor: 4x AMD64 (or x64)
+SAP release: 720, Kernel release: 720, Kernel patch level: 324
+Hostname: DESKTOP-99M8LEG, IP address: 192.168.150.74, IP_v6 address: 
+
+Default trace level: None
+
+>> Error entry 2019-05-20 14:16:03.590 [Thread 1]
+[NAME=Ciel SAP Connector ASHOST=10.240.10.11 SYSNR=30 CLIENT=500 USER=sondapwce PASSWD=********]
+SAP.Middleware.Connector.RfcAbapException: NO_VARIANT
+   em SAP.Middleware.Connector.RfcConnection.ThrowRfcErrorMsg()
+   em SAP.Middleware.Connector.RfcConnection.RfcReceive(RfcFunction function)
+   em SAP.Middleware.Connector.RfcFunction.RfcDeserialize(RfcConnection conn, IRfcIOStream stream)
+   em SAP.Middleware.Connector.RfcFunction.RfcCallReceive(RfcConnection conn, IRfcIOStream stream, RFCID rid)
+   em SAP.Middleware.Connector.RfcFunction.Invoke(RfcDestination destination)
