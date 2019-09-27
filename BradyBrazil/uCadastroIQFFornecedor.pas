@@ -47,7 +47,6 @@ type
     FDQueryTIQF_FornecedorTIQF_FORCER: TStringField;
     cxTableViewIQF_FornecedorTIQF_FORCER: TcxGridDBColumn;
     FDQueryTIQF_FornecedorTIQF_FORCERDATVAL: TSQLTimeStampField;
-    cxTableViewIQF_FornecedorTIQF_FORCERDATVAL: TcxGridDBColumn;
     FDQueryTIQF_FornecedorTIQF_FORDOCMANUAL: TStringField;
     FDQueryTIQF_FornecedorTIQF_FORDOCSUPA: TStringField;
     FDQueryTIQF_FornecedorTIQF_FORDOCBALP: TStringField;
@@ -64,10 +63,6 @@ type
     FDQueryTIQF_FornecedorTIQF_DTSUPPLY: TSQLTimeStampField;
     FDQueryTIQF_FornecedorTIQF_DTBALANCO: TSQLTimeStampField;
     FDQueryTIQF_FornecedorTIQF_DTDOP: TSQLTimeStampField;
-    cxTableViewIQF_FornecedorTIQF_DTMANUAL: TcxGridDBColumn;
-    cxTableViewIQF_FornecedorTIQF_DTSUPPLY: TcxGridDBColumn;
-    cxTableViewIQF_FornecedorTIQF_DTBALANCO: TcxGridDBColumn;
-    cxTableViewIQF_FornecedorTIQF_DTDOP: TcxGridDBColumn;
     cxStyle: TcxStyleRepository;
     cxStylePVencido: TcxStyle;
     cxStyleRAtraso: TcxStyle;
@@ -82,6 +77,8 @@ type
     cxStyleCartorio: TcxStyle;
     cxStyleProtesto: TcxStyle;
     cxStyleConciliado: TcxStyle;
+    FDQueryTIQF_FornecedorTIQF_CLASSIFICACAO: TStringField;
+    cxTableViewIQF_FornecedorTIQF_CLASSIFICACAO: TcxGridDBColumn;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormContextPopup(Sender: TObject; MousePos: TPoint; var Handled: Boolean);
     procedure FormCreate(Sender: TObject);
@@ -142,6 +139,7 @@ var
   AColumn  : TcxCustomGridTableItem;
   Tipo, Status, vStatus, Boleto, Conciliado : Variant;
 begin
+  {
   try
     AColumn := Sender.FindItemByName('cxTableViewIQF_FornecedorTIQF_FORCERDATVAL');
     Status  := ARecord.Values[AColumn.Index];
@@ -154,6 +152,7 @@ begin
    Except
 
   end;
+  }
 end;
 
 procedure TFr_CadastroIQFFornecedor.FDQueryTIQF_FornecedorTIQF_FORDOCBALPChange(

@@ -61,7 +61,8 @@ uses
   uUploadTaxasHoras in 'uUploadTaxasHoras.pas' {Fr_UploadTaxasHoras},
   uCalcGM in 'uCalcGM.pas' {Fr_CalcGM},
   uRelatGrossMargin in 'uRelatGrossMargin.pas' {Fr_RelatGrossMargin},
-  uRelatorioRecuperacaoClientes in 'uRelatorioRecuperacaoClientes.pas' {Fr_RelatorioRecuperacaoClientes};
+  uRelatorioRecuperacaoClientes in 'uRelatorioRecuperacaoClientes.pas' {Fr_RelatorioRecuperacaoClientes},
+  uDashBoard in 'uDashBoard.pas' {frmExibeDashBoard};
 
 {$R *.res}
 
@@ -98,7 +99,6 @@ begin
         System.IOUtils.TFile.Copy( ExtractFileDir(ParamStr(0)) + '\DB.ini', MyDocumentsPath + '\DB.ini' );
 
       Application.CreateForm(TFr_Brady, Fr_Brady);
-
   finally
 
       Fr_MainSplashScreen.Hide;

@@ -107,6 +107,16 @@ begin
   varCodCargoAnt := '';
   varCentroCustoAnt := '';
   varCodCargoAnt := '';
+
+  qryAux.Close;
+  qryAux.Sql.Clear;
+  qryAux.Sql.Add('Select FUN_FUNCIONARIO_ID From Parametros  where ServidorSMTP = 0 ') ;
+  qryAux.Open;
+  EdiCodigo.AsInteger := qryAux.FieldByName('FUN_FUNCIONARIO_ID').AsInteger + 1 ;
+  qryAux.close;
+
+  EditBuscaParticipante.Text := EdiCodigo.AsString;
+  ediMatricula.SetFocus;
 end;
 
 procedure TFrmCadParticipante.ButSalvarClick(Sender: TObject);
@@ -122,6 +132,23 @@ begin
               (varCentroCustoAnt <> varToStr(EditBuscaCentroCusto.bs_KeyValue)) or
               (varFilialAnt <> varToStr(EditBuscaFilial.bs_KeyValue))) then
           begin
+
+
+            qryAux.Close;
+            qryAux.SQL.Clear;
+            qryAux.SQL.Add('Update Parametros  ');
+            qryAux.SQL.Add(' Set FUN_FUNCIONARIO_ID = :FUN_FUNCIONARIO_ID ');
+            qryAux.SQL.Add(' where ServidorSMTP = 0 ');
+            qryAux.Params.ParamByName('FUN_FUNCIONARIO_ID').AsString := EditBuscaParticipante.Text;
+
+             Try
+                qryAux.ExecSQL;
+             Except
+               On E:Exception do
+                begin
+                  Mens_MensInf( 'Falha ao Atualizar Parametros (FUN_FUNCIONARIO_ID): ' + E.Message );
+                end;
+             End;
 
             qryAux.Close;
             qryAux.SQL.Clear;

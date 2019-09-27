@@ -334,6 +334,22 @@ type
     FDQueryTSOP_UOMTSOP_DTIMPORTACAO: TSQLTimeStampField;
     FDQueryTSOP_GMCustosTSOP_DTIMPORTACAO: TSQLTimeStampField;
     FDConsultaMagentoLocal: TFDQuery;
+    FDQueryTSOP_OrderBillingTSOP_DTASUSPENSO: TSQLTimeStampField;
+    FDQueryTSOP_OrderBillingTSOP_SUSPEXCLUIDO: TIntegerField;
+    FDQueryTSOP_OrderBillingTSOP_MOTIVOEXCLUSAO: TStringField;
+    FDQueryTSOP_OrderBillingTSOP_SALESITEM: TIntegerField;
+    FDQueryConsultaFamilia: TFDQuery;
+    FDQueryTSOP_GMCustos_Original: TFDQuery;
+    FDQueryTSOP_GMCustos_OriginalTSOP_GMCCOD: TFDAutoIncField;
+    FDQueryTSOP_GMCustos_OriginalTSOP_GMCITE: TStringField;
+    FDQueryTSOP_GMCustos_OriginalTSOP_GMCSIT: TStringField;
+    FDQueryTSOP_GMCustos_OriginalTSOP_GMCLOT: TBCDField;
+    FDQueryTSOP_GMCustos_OriginalTSOP_GMCDAT: TSQLTimeStampField;
+    FDQueryTSOP_GMCustos_OriginalTSOP_GMCCUSSTD: TBCDField;
+    FDQueryTSOP_GMCustos_OriginalTSOP_GMCCUSMOV: TBCDField;
+    FDQueryTSOP_GMCustos_OriginalTSOP_GMCPRIUNI: TBCDField;
+    FDQueryTSOP_GMCustos_OriginalTSOP_GMCBUD: TStringField;
+    FDQueryTSOP_GMCustos_OriginalTSOP_DT_IMPORTACAO: TDateField;
     procedure FDQueryTSOP_OrderBillingNewRecord(DataSet: TDataSet);
   private
     { Private declarations }

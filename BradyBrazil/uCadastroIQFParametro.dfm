@@ -67,7 +67,6 @@ object Fr_CadastroIQFParametro: TFr_CadastroIQFParametro
     Align = alClient
     TabOrder = 0
     RootLevelOptions.DetailTabsPosition = dtpTop
-    ExplicitWidth = 1027
     object cxTableViewIQF_Parametro: TcxGridDBBandedTableView
       Navigator.Buttons.CustomButtons = <>
       DataController.DataSource = DataSourceTIQF_Parametro
@@ -138,7 +137,7 @@ object Fr_CadastroIQFParametro: TFr_CadastroIQFParametro
         Position.RowIndex = 0
       end
       object cxTableViewIQF_ParametroTIQF_PARDOCBALP: TcxGridDBBandedColumn
-        Caption = 'Balan'#231'o Patrimonial'
+        Caption = 'Serasa'
         DataBinding.FieldName = 'TIQF_PARDOCBALP'
         Width = 115
         Position.BandIndex = 1
@@ -226,7 +225,6 @@ object Fr_CadastroIQFParametro: TFr_CadastroIQFParametro
     BevelWidth = 2
     TabOrder = 1
     Visible = False
-    ExplicitLeft = 358
     object ImageSQLSplashScreen: TImage
       Left = 2
       Top = 2

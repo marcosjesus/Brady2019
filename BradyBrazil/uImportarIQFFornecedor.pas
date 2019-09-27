@@ -90,6 +90,7 @@ type
     FDQueryTIQF_FornecedorTIQF_DTSUPPLY: TSQLTimeStampField;
     FDQueryTIQF_FornecedorTIQF_DTBALANCO: TSQLTimeStampField;
     FDQueryTIQF_FornecedorTIQF_DTDOP: TSQLTimeStampField;
+    FDQueryTIQF_FornecedorTIQF_CLASSIFICACAO: TStringField;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure cxButtonArquivoClick(Sender: TObject);
     procedure cxButtonImportarClick(Sender: TObject);
@@ -181,7 +182,7 @@ var
   varColumnNOMFOR         : Integer;
   varColumnFORATIVO       : Integer;
   varColumnFORDOCCER      : Integer;
-  varColumnFORCERDATVAL   : Integer;
+  //varColumnFORCERDATVAL   : Integer;
 
   varColumnFORDOCMANUAL   : Integer;
   varColumnFORDOCSUPA     : Integer;
@@ -191,11 +192,14 @@ var
   varColumnFORDPO3045     : Integer;
   varColumnFORDPO4660     : Integer;
   varColumnFORDPO6190     : Integer;
-
+ {
   varColumnTIQF_DTMANUAL  : Integer;
   varColumnTIQF_DTSUPPLY  : Integer;
   varColumnTIQF_DTBALANCO : Integer;
   varColumnTIQF_DTDOP     : Integer;
+  }
+  varColumnClassificacao  : Integer;
+
 
   varColumnTIQF_Categoria : Integer;
 
@@ -204,11 +208,15 @@ var
   varNOMFOR         : String;
   varFORATIVO       : String;
   varFORDOCCER      : String;
+  {
   varFORCERDATVAL   : TDateTime;
   varTIQF_DTMANUAL  : TDateTime;
   varTIQF_DTSUPPLY  : TDateTime;
   varTIQF_DTBALANCO : TDateTime;
   varTIQF_DTDOP     : TDateTime;
+  }
+  varClassificacao  : String;
+
 
 
   varFORDOCMANUAL  : String;
@@ -241,13 +249,13 @@ begin
       varColumnNOMFOR         := -1;
       varColumnFORATIVO       := -1;
       varColumnFORDOCCER      := -1;
+      {
       varColumnFORCERDATVAL   := -1;
-
       varColumnTIQF_DTMANUAL  := -1;
       varColumnTIQF_DTSUPPLY  := -1;
       varColumnTIQF_DTBALANCO := -1;
       varColumnTIQF_DTDOP     := -1;
-
+       }
       varColumnFORDOCMANUAL   := -1;
       varColumnFORDOCSUPA     := -1;
       varColumnFORDOCBALP     := -1;
@@ -256,6 +264,7 @@ begin
       varColumnFORDPO4660     := -1;
       varColumnFORDPO6190     := -1;
       varColumnTIQF_Categoria := -1;
+      varColumnClassificacao  := -1;
 
 
       for I := 0 to dxSpreadSheet.SheetCount-1 do
@@ -277,31 +286,31 @@ begin
         if UpperCase(dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString) = 'ATIVO' then
            varColumnFORATIVO := I;
 
-          if UpperCase(dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString) = 'CERTIFICACAO' then
+        if UpperCase(dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString) = 'CERTIFICACAO' then
            varColumnFORDOCCER := I;
 
-         if UpperCase(dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString) = 'DATA DE VALIDADE' then
-           varColumnFORCERDATVAL := I;
+        //if UpperCase(dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString) = 'DATA DE VALIDADE' then
+        //   varColumnFORCERDATVAL := I;
 
 
         if UpperCase(dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString) = 'MANUAL FORNECEDOR' then
            varColumnFORDOCMANUAL := I;
 
-        if UpperCase(dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString) = 'DT MANUAL FORNECEDOR' then
-           varColumnTIQF_DTMANUAL := I;
+        //if UpperCase(dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString) = 'DT MANUAL FORNECEDOR' then
+        //   varColumnTIQF_DTMANUAL := I;
 
 
         if UpperCase(dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString) = 'SUPPLY AGREEMENT' then
            varColumnFORDOCSUPA := I;
 
-        if UpperCase(dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString) = 'DT SUPPLY AGREEMENT' then
-           varColumnTIQF_DTSUPPLY := I;
+        //if UpperCase(dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString) = 'DT SUPPLY AGREEMENT' then
+        //   varColumnTIQF_DTSUPPLY := I;
 
-        if UpperCase(dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString) = 'BALANCO PATRIMONIAL' then
+        if UpperCase(dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString) = 'SERASA' then
            varColumnFORDOCBALP := I;
 
-        if UpperCase(dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString) = 'DT BALANCO PATRIMONIAL' then
-           varColumnTIQF_DTBALANCO := I;
+        //if UpperCase(dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString) = 'DT SERASA' then
+         //  varColumnTIQF_DTBALANCO := I;
 
 
         if UpperCase(dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString) = '0 - 29 DIAS' then
@@ -316,9 +325,11 @@ begin
         if UpperCase(dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString) = '61 - 90 DIAS' then
            varColumnFORDPO6190 := I;
 
-        if UpperCase(dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString) = 'DT DPO' then
-           varColumnTIQF_DTDOP := I;
+        //if UpperCase(dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString) = 'DT DPO' then
+        //   varColumnTIQF_DTDOP := I;
 
+        if UpperCase(dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString) = 'CLASSIFICACAO' then
+           varColumnClassificacao := I;
 
       end;
 
@@ -337,14 +348,14 @@ begin
       if varColumnFORDOCCER = -1 then
         raise Exception.Create('Coluna "Certificacao" não foi encontrada na planilha selecionada.');
 
-      if varColumnFORCERDATVAL        = -1 Then
-        raise Exception.Create('Coluna "Data de Validade" não foi encontrada na planilha selecionada.');
+     // if varColumnFORCERDATVAL        = -1 Then
+     //   raise Exception.Create('Coluna "Data de Validade" não foi encontrada na planilha selecionada.');
 
       if varColumnFORDOCMANUAL = -1 Then
         raise Exception.Create('Coluna "Manual Fornecedor" não foi encontrada na planilha selecionada.');
 
-      if varColumnTIQF_DTMANUAL = -1 Then
-        raise Exception.Create('Coluna "DT Manual Fornecedor" não foi encontrada na planilha selecionada.');
+     // if varColumnTIQF_DTMANUAL = -1 Then
+     //   raise Exception.Create('Coluna "DT Manual Fornecedor" não foi encontrada na planilha selecionada.');
 
       if varColumnFORDOCCER    = -1 Then
         raise Exception.Create('Coluna "Certificacao" não foi encontrada na planilha selecionada.');
@@ -352,14 +363,14 @@ begin
       if varColumnFORDOCSUPA   = -1 Then
         raise Exception.Create('Coluna "Supply Agreement" não foi encontrada na planilha selecionada.');
 
-      if varColumnTIQF_DTSUPPLY   = -1 Then
-        raise Exception.Create('Coluna "DT Supply Agreement" não foi encontrada na planilha selecionada.');
+      //if varColumnTIQF_DTSUPPLY   = -1 Then
+      //  raise Exception.Create('Coluna "DT Supply Agreement" não foi encontrada na planilha selecionada.');
 
       if varColumnFORDOCBALP   = -1 Then
-        raise Exception.Create('Coluna "Balanco Patrimonial" não foi encontrada na planilha selecionada.');
+        raise Exception.Create('Coluna "Serasa" não foi encontrada na planilha selecionada.');
 
-      if varColumnTIQF_DTBALANCO   = -1 Then
-        raise Exception.Create('Coluna "DT Balanco Patrimonial" não foi encontrada na planilha selecionada.');
+      //if varColumnTIQF_DTBALANCO   = -1 Then
+      //  raise Exception.Create('Coluna "DT Serasa" não foi encontrada na planilha selecionada.');
 
       if varColumnFORDPO0029 = -1 then
         raise Exception.Create('Coluna "0 - 29 DIAS" não foi encontrada na planilha selecionada.');
@@ -373,9 +384,11 @@ begin
       if varColumnFORDPO6190   = -1 Then
         raise Exception.Create('Coluna "61 - 90 Dias" não foi encontrada na planilha selecionada.');
 
-      if varColumnTIQF_DTDOP   = -1 Then
-        raise Exception.Create('Coluna "DT DPO" não foi encontrada na planilha selecionada.');
+      //if varColumnTIQF_DTDOP   = -1 Then
+      //  raise Exception.Create('Coluna "DT DPO" não foi encontrada na planilha selecionada.');
 
+      if varColumnClassificacao = -1 then
+          raise Exception.Create('Coluna "Classificacao" não foi encontrada na planilha selecionada.');
 
 
       FDQueryTIQF_Fornecedor.Close;
@@ -394,7 +407,7 @@ begin
           Continue;
 
         varNOMFOR         := dxSpreadSheet.ActiveSheetAsTable.Rows[I].Cells[varColumnNOMFOR].AsString;
-
+        {
         //data do certificado
         if assigned(dxSpreadSheet.ActiveSheetAsTable.Rows[I].Cells[varColumnFORCERDATVAL]) then
         begin
@@ -419,7 +432,9 @@ begin
             if TryStrToInt( dxSpreadSheet.ActiveSheetAsTable.Rows[I].Cells[varColumnTIQF_DTMANUAL].AsString, varDate ) then
                varTIQF_DTMANUAL := varDate
             else
-               varTIQF_DTMANUAL := StrToDate(String( dxSpreadSheet.ActiveSheetAsTable.Rows[I].Cells[varColumnTIQF_DTMANUAL].AsString).Replace( '-', '/' ));
+               if String( dxSpreadSheet.ActiveSheetAsTable.Rows[I].Cells[varColumnTIQF_DTMANUAL].AsString).Replace( '-', '/' ) <> '' then
+                varTIQF_DTMANUAL := StrToDate(String( dxSpreadSheet.ActiveSheetAsTable.Rows[I].Cells[varColumnTIQF_DTMANUAL].AsString).Replace( '-', '/' ))
+               else varTIQF_DTMANUAL := StrToDate('31/12/9999');
 
         end
         else  varTIQF_DTMANUAL := StrToDate('31/12/9999');
@@ -433,12 +448,14 @@ begin
             if TryStrToInt( dxSpreadSheet.ActiveSheetAsTable.Rows[I].Cells[varColumnTIQF_DTSUPPLY].AsString, varDate ) then
                varTIQF_DTSUPPLY := varDate
             else
-               varTIQF_DTSUPPLY := StrToDate(String( dxSpreadSheet.ActiveSheetAsTable.Rows[I].Cells[varColumnTIQF_DTSUPPLY].AsString).Replace( '-', '/' ));
+               if String( dxSpreadSheet.ActiveSheetAsTable.Rows[I].Cells[varColumnTIQF_DTSUPPLY].AsString).Replace( '-', '/' ) <> '' then
+                 varTIQF_DTSUPPLY := StrToDate(String( dxSpreadSheet.ActiveSheetAsTable.Rows[I].Cells[varColumnTIQF_DTSUPPLY].AsString).Replace( '-', '/' ))
+               else  varTIQF_DTSUPPLY := StrToDate('31/12/9999');
 
         end
         else  varTIQF_DTSUPPLY := StrToDate('31/12/9999');
 
-         //data do balanco patrimonial
+         //data do serasa
         if assigned(dxSpreadSheet.ActiveSheetAsTable.Rows[I].Cells[varColumnTIQF_DTBALANCO]) then
         begin
           if dxSpreadSheet.ActiveSheetAsTable.Rows[I].Cells[varColumnTIQF_DTBALANCO].DataType = cdtDateTime then
@@ -447,7 +464,9 @@ begin
             if TryStrToInt( dxSpreadSheet.ActiveSheetAsTable.Rows[I].Cells[varColumnTIQF_DTBALANCO].AsString, varDate ) then
                varTIQF_DTBALANCO := varDate
             else
-               varTIQF_DTBALANCO := StrToDate(String( dxSpreadSheet.ActiveSheetAsTable.Rows[I].Cells[varColumnTIQF_DTBALANCO].AsString).Replace( '-', '/' ));
+                if String( dxSpreadSheet.ActiveSheetAsTable.Rows[I].Cells[varColumnTIQF_DTBALANCO].AsString).Replace( '-', '/' ) <> '' then
+                  varTIQF_DTBALANCO := StrToDate(String( dxSpreadSheet.ActiveSheetAsTable.Rows[I].Cells[varColumnTIQF_DTBALANCO].AsString).Replace( '-', '/' ))
+                else  varTIQF_DTBALANCO := StrToDate('31/12/9999');
 
         end
         else  varTIQF_DTBALANCO := StrToDate('31/12/9999');
@@ -461,11 +480,13 @@ begin
           if TryStrToInt( dxSpreadSheet.ActiveSheetAsTable.Rows[I].Cells[varColumnTIQF_DTDOP].AsString, varDate ) then
              varTIQF_DTDOP := varDate
           else
-             varTIQF_DTDOP := StrToDate(String( dxSpreadSheet.ActiveSheetAsTable.Rows[I].Cells[varColumnTIQF_DTDOP].AsString).Replace( '-', '/' ));
+             if String( dxSpreadSheet.ActiveSheetAsTable.Rows[I].Cells[varColumnTIQF_DTDOP].AsString).Replace( '-', '/' ) <> '' then
+               varTIQF_DTDOP := StrToDate(String( dxSpreadSheet.ActiveSheetAsTable.Rows[I].Cells[varColumnTIQF_DTDOP].AsString).Replace( '-', '/' ))
+             else varTIQF_DTDOP := StrToDate('31/12/9999');
 
         end
         else  varTIQF_DTDOP := StrToDate('31/12/9999');
-
+         }
         varFORATIVO       := dxSpreadSheet.ActiveSheetAsTable.Rows[I].Cells[varColumnFORATIVO].AsString;
         varFORDOCCER      := dxSpreadSheet.ActiveSheetAsTable.Rows[I].Cells[varColumnFORDOCCER].AsString;
 
@@ -493,6 +514,9 @@ begin
            varFORDPO6190     := dxSpreadSheet.ActiveSheetAsTable.Rows[I].Cells[varColumnFORDPO6190].AsString
         else  varFORDPO6190 := '';
 
+        if assigned(dxSpreadSheet.ActiveSheetAsTable.Rows[I].Cells[varColumnClassificacao]) then
+            varClassificacao :=  dxSpreadSheet.ActiveSheetAsTable.Rows[I].Cells[varColumnClassificacao].AsString
+        else  varClassificacao := '';
 
         if not FDQueryTIQF_Fornecedor.Locate( 'TIQF_FORSAP', varCODFOR, [] ) then
         begin
@@ -504,17 +528,19 @@ begin
           FDQueryTIQF_FornecedorTIQF_FORNOM.AsString         := varNOMFOR;
           FDQueryTIQF_FornecedorTIQF_FORATI.AsString         := varFORATIVO;
           FDQueryTIQF_FornecedorTIQF_FORCER.AsString         := varFORDOCCER;
-          FDQueryTIQF_FornecedorTIQF_FORCERDATVAL.AsDateTime := varFORCERDATVAL;
+
+        //  FDQueryTIQF_FornecedorTIQF_FORCERDATVAL.AsDateTime := varFORCERDATVAL;
           FDQueryTIQF_FornecedorTIQF_FORDOCMANUAL.AsString   := varFORDOCMANUAL;
           FDQueryTIQF_FornecedorTIQF_FORDOCSUPA.AsString     := varFORDOCSUPA;
           FDQueryTIQF_FornecedorTIQF_FORDOCBALP.AsString     := varFORDOCBALP;
 
           FDQueryTIQF_FornecedorTIQF_CATEGORIA.AsString      := varTIQF_CATEGORIA;
-          FDQueryTIQF_FornecedorTIQF_DTMANUAL.AsDateTime     := varTIQF_DTMANUAL;
+         { FDQueryTIQF_FornecedorTIQF_DTMANUAL.AsDateTime     := varTIQF_DTMANUAL;
           FDQueryTIQF_FornecedorTIQF_DTSUPPLY.AsDateTime     := varTIQF_DTSUPPLY;
           FDQueryTIQF_FornecedorTIQF_DTBALANCO.AsDateTime    := varTIQF_DTBALANCO;
           FDQueryTIQF_FornecedorTIQF_DTDOP.AsDateTime        := varTIQF_DTDOP;
-
+         }
+          FDQueryTIQF_FornecedorTIQF_CLASSIFICACAO.AsString  := varClassificacao;
 
 
           if varFORDPO0029 <> '' then

@@ -29,7 +29,8 @@ uses
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
   FireDAC.Stan.Async, FireDAC.DApt, Data.DB, FireDAC.Comp.DataSet,
   FireDAC.Comp.Client, cxContainer, cxEdit, Vcl.ComCtrls, dxCore, cxDateUtils,
-  cxTextEdit, cxMaskEdit, cxDropDownEdit, cxCalendar, cxLabel, dxGDIPlusClasses;
+  cxTextEdit, cxMaskEdit, cxDropDownEdit, cxCalendar, cxLabel, dxGDIPlusClasses,
+  Vcl.Buttons;
 
 
 
@@ -62,6 +63,7 @@ type
     cxLabel2: TcxLabel;
     sqlCC: TFDQuery;
     sqlGrupo: TFDQuery;
+    btnImportar: TBitBtn;
     procedure FormShow(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure EditBuscaVinculoClick(Sender: TObject);

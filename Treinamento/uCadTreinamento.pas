@@ -1004,7 +1004,7 @@ begin
       sqlFilial_C.Close;
       sqlFilial_C.SQL.Clear;
       sqlFilial_C.SQL.Add('Select CodFilial from Filial Where CNPJ = :CNPJ');
-      sqlFilial_C.Params.ParamByName('CNPJ').AsString := CNPJ;
+      sqlFilial_C.Params.ParamByName('CNPJ').AsString := Str_OnlyNumbers(CNPJ);
       sqlFilial_C.Open;
       if sqlFilial_C.IsEmpty then
       begin
@@ -1042,7 +1042,7 @@ begin
          End;
       end
       else
-        vCodFilial := sqlFilial_I.FieldByName('CodFilial').AsInteger;
+        vCodFilial := sqlFilial_C.FieldByName('CodFilial').AsInteger;
 
       result := IntToStr(vCodFilial);
 
@@ -1162,7 +1162,7 @@ var
  x:integer;
  resultado : string;
 begin
- for x:=1 to 10 do
+ for x:=1 to 6 do
    resultado:= resultado + str[Random(Length(str)) + 1];
 
    result := resultado
@@ -1174,7 +1174,7 @@ begin
   Result := False;
   qryAux.Close;
   qryAux.Sql.Clear;
-  qryAux.SQL.Add('select PathArqTreinamento From Parametros  ' );
+  qryAux.SQL.Add('select PathArqTreinamento From Parametros where ServidorSMTP = 0  ' );
   qryAux.Open;
 
   if qryAux.FieldByName('PathArqTreinamento').AsString <> '' then
@@ -1311,9 +1311,8 @@ var
   varDate, varCargoID : Integer;
   varUltimaLinha : Integer;
   bAchou : Boolean;
-
+  varCodigoFuncionario : String;
   varPath : String;
-
   R, V : Integer;
 begin
 
@@ -1322,7 +1321,6 @@ begin
 
   if varPath = EmptyStr then
     raise Exception.Create('Informe o arquivo primeiro.');
-
 
   Mensagem( 'Iniciando processo de importação...' );
   try
@@ -1430,9 +1428,9 @@ begin
             end;
 
 
-            if not Assigned(dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[5]) then
+            if ((Assigned(dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[5]) = False) or (dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[5].AsString = '')) then
             begin
-              varDataNascimento := Date;
+              varDataNascimento := 0;
               SalvarLogImport('Data de Nascimento', 'Data de Nascimento não informada');
             end
             else
@@ -1443,9 +1441,11 @@ begin
                 varDataNascimento := StrToDate(String(dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[5].AsString).Replace( '.', '/' ));
             end;
 
-            if not Assigned(dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[6]) then
+            if ((Assigned(dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[6]) = False) or (dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[6].AsString = '')) then
+
+            //if not Assigned(dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[6]) then
             begin
-              varDataAdmissao := Date;
+              varDataAdmissao := 0;
               SalvarLogImport('Data de Admissão', 'Data de Admissão não informada');
             end
             else
@@ -1457,10 +1457,11 @@ begin
 
             end;
 
-            if not Assigned(dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[7]) then
+            if ((Assigned(dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[7]) = False) or (dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[7].AsString = '')) then
+            //if not Assigned(dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[7]) then
             begin
               varDataDemissao := 0;
-              //SalvarLogImport('Data de Demissão', 'Data de Demissão não informada');
+              SalvarLogImport('Data de Demissão', 'Data de Demissão não informada');
             end
             else
             begin
@@ -1504,10 +1505,19 @@ begin
 
             if ((bAchou = False) and (varMATRICULA <> '')) then
             begin
+
+                qryAux.Close;
+                qryAux.Sql.Clear;
+                qryAux.Sql.Add('Select FUN_FUNCIONARIO_ID From Parametros  where ServidorSMTP = 0 ') ;
+                qryAux.Open;
+                varCodigoFuncionario := IntToStr(qryAux.FieldByName('FUN_FUNCIONARIO_ID').AsInteger + 1) ;
+                qryAux.close;
+
+
                 DB_Conect.sqlFunc.Close;
                 DB_Conect.sqlFunc.sql.Clear;
                 DB_Conect.sqlFunc.SQL.Add('INSERT INTO TRE_FUNCIONARIO ');
-                DB_Conect.sqlFunc.SQL.Add('  (FUN_MATRICULA ');
+                DB_Conect.sqlFunc.SQL.Add('  (FUN_FUNCIONARIO_ID, FUN_MATRICULA ');
                 DB_Conect.sqlFunc.SQL.Add('  ,CODFILIAL ');
                 DB_Conect.sqlFunc.SQL.Add('  ,FUN_NOME ');
                 DB_Conect.sqlFunc.SQL.Add('  ,FUN_SEXO ');
@@ -1518,7 +1528,7 @@ begin
                 DB_Conect.sqlFunc.SQL.Add('  ,TRE_CENTROCENTRO ');
                 DB_Conect.sqlFunc.SQL.Add('  ,FUN_ATIVO) ');
                 DB_Conect.sqlFunc.SQL.Add(' VALUES (  ');
-                DB_Conect.sqlFunc.SQL.Add('   :FUN_MATRICULA ');
+                DB_Conect.sqlFunc.SQL.Add('   :FUN_FUNCIONARIO_ID, :FUN_MATRICULA ');
                 DB_Conect.sqlFunc.SQL.Add('  ,:CODFILIAL ');
                 DB_Conect.sqlFunc.SQL.Add('  ,:FUN_NOME ');
                 DB_Conect.sqlFunc.SQL.Add('  ,:FUN_SEXO ');
@@ -1529,15 +1539,24 @@ begin
                 DB_Conect.sqlFunc.SQL.Add('  ,:TRE_CENTROCENTRO ');
                 DB_Conect.sqlFunc.SQL.Add('  ,:FUN_ATIVO) ');
 
+                DB_Conect.sqlFunc.Params.ParamByName('FUN_FUNCIONARIO_ID').AsString   := varCodigoFuncionario;
                 DB_Conect.sqlFunc.Params.ParamByName('FUN_MATRICULA').AsString        := varMatricula;
                 DB_Conect.sqlFunc.Params.ParamByName('CODFILIAL').AsString            := varFilial;
                 DB_Conect.sqlFunc.Params.ParamByName('FUN_NOME').AsString             := varNOME_PARTICIPANTE;
                 DB_Conect.sqlFunc.Params.ParamByName('FUN_SEXO').AsString             := varSexo;
-                DB_Conect.sqlFunc.Params.ParamByName('FUN_DTNASC').AsDateTime         := varDataNascimento;
-                DB_Conect.sqlFunc.Params.ParamByName('FUN_DTADM').AsDateTime          := varDataAdmissao;
-                if varDataDemissao = 0 then
-                  DB_Conect.sqlFunc.Params.ParamByName('FUN_DTDESL').AsDateTime         := Null
-                else DB_Conect.sqlFunc.Params.ParamByName('FUN_DTDESL').AsDateTime      := varDataDemissao;
+
+                if ((varDataNascimento = 0) or (varDataNascimento = DB_Conect.ConvertDate('1899-12-30'))) then
+                  DB_Conect.sqlFunc.Params.ParamByName('FUN_DTNASC').AsDateTime       := 0
+                else  DB_Conect.sqlFunc.Params.ParamByName('FUN_DTNASC').AsDateTime   := varDataNascimento;
+
+                if ((varDataAdmissao = 0) or (varDataAdmissao = DB_Conect.ConvertDate('1899-12-30'))) then
+                  DB_Conect.sqlFunc.Params.ParamByName('FUN_DTADM').AsDateTime        := 0
+                else  DB_Conect.sqlFunc.Params.ParamByName('FUN_DTADM').AsDateTime    := varDataAdmissao;
+
+                if ((varDataDemissao = 0) or (varDataDemissao = DB_Conect.ConvertDate('1899-12-30'))) then
+                  DB_Conect.sqlFunc.Params.ParamByName('FUN_DTDESL').AsDateTime       := 0
+                else DB_Conect.sqlFunc.Params.ParamByName('FUN_DTDESL').AsDateTime    := varDataDemissao;
+
 
                 DB_Conect.sqlFunc.Params.ParamByName('TRE_CARGO_ID').AsInteger        := varCargoID;
                 DB_Conect.sqlFunc.Params.ParamByName('TRE_CENTROCENTRO').AsString     := varCentroCusto;
@@ -1552,6 +1571,23 @@ begin
                     ShowMessage(E.Message);
                    end;
                 End;
+
+                qryAux.Close;
+                qryAux.SQL.Clear;
+                qryAux.SQL.Add('Update Parametros  ');
+                qryAux.SQL.Add(' Set FUN_FUNCIONARIO_ID = :FUN_FUNCIONARIO_ID ');
+                qryAux.SQL.Add(' where ServidorSMTP = 0 ');
+                qryAux.Params.ParamByName('FUN_FUNCIONARIO_ID').AsString := varCodigoFuncionario;
+
+                 Try
+                    qryAux.ExecSQL;
+                 Except
+                   On E:Exception do
+                    begin
+                      Mens_MensInf( 'Falha ao Atualizar Parametros (FUN_FUNCIONARIO_ID): ' + E.Message );
+                    end;
+                 End;
+
 
                 DB_Conect.sqlFunc.Close;
                 DB_Conect.sqlFunc.sql.Clear;
@@ -1587,23 +1623,38 @@ begin
 
             if (varMATRICULA <> '') then
             begin
-                DB_Conect.sqlFunc.close;
-                DB_Conect.sqlFunc.sql.Clear;
-                DB_Conect.sqlFunc.sql.Add('Insert into TRE_PARTICIPANTES (TRE_TREINAMENTO_ID, FUN_MATRICULA,   TRE_CARGO_ID, TRE_CENTROCENTRO)');
-                DB_Conect.sqlFunc.sql.Add('Values ( :TRE_TREINAMENTO_ID, :FUN_MATRICULA,   :TRE_CARGO_ID, :TRE_CENTROCENTRO)');
-                DB_Conect.sqlFunc.Params.ParamByName('TRE_TREINAMENTO_ID').AsString := EdiCodigo.AsString;
-                DB_Conect.sqlFunc.Params.ParamByName('FUN_MATRICULA').AsString      := varMatricula;
-                DB_Conect.sqlFunc.Params.ParamByName('TRE_CARGO_ID').AsInteger      := varCargoID;
-                DB_Conect.sqlFunc.Params.ParamByName('TRE_CENTROCENTRO').AsString   := varCentroCusto;
+                qryAux.Close;
+                qryAux.SQL.Clear;
+                qryAux.SQL.Add('Select TRE_TREINAMENTO_ID from TRE_PARTICIPANTES');
+                qryAux.SQL.Add(' Where TRE_TREINAMENTO_ID = :TRE_TREINAMENTO_ID ');
+                qryAux.SQL.Add(' and FUN_MATRICULA = :FUN_MATRICULA ');
+                qryAux.Params.ParamByName('TRE_TREINAMENTO_ID').AsString := EdiCodigo.AsString;
+                qryAux.Params.ParamByName('FUN_MATRICULA').AsString      := varMATRICULA;
+                qryAux.Open;
+                if qryAux.IsEmpty then
+                begin
 
-                Try
-                  DB_Conect.sqlFunc.ExecSQL;
-                Except
-                   On E:Exception do
-                    begin
-                      Mens_MensInf( 'Erro ao Inserir Participante: ' + E.Message );
-                    end;
-                End;
+                    DB_Conect.sqlFunc.close;
+                    DB_Conect.sqlFunc.sql.Clear;
+                    DB_Conect.sqlFunc.sql.Add('Insert into TRE_PARTICIPANTES (TRE_TREINAMENTO_ID, FUN_MATRICULA,   TRE_CARGO_ID, TRE_CENTROCENTRO)');
+                    DB_Conect.sqlFunc.sql.Add('Values ( :TRE_TREINAMENTO_ID, :FUN_MATRICULA,   :TRE_CARGO_ID, :TRE_CENTROCENTRO)');
+                    DB_Conect.sqlFunc.Params.ParamByName('TRE_TREINAMENTO_ID').AsString := EdiCodigo.AsString;
+                    DB_Conect.sqlFunc.Params.ParamByName('FUN_MATRICULA').AsString      := varMatricula;
+                    DB_Conect.sqlFunc.Params.ParamByName('TRE_CARGO_ID').AsInteger      := varCargoID;
+                    DB_Conect.sqlFunc.Params.ParamByName('TRE_CENTROCENTRO').AsString   := varCentroCusto;
+
+                    Try
+                      DB_Conect.sqlFunc.ExecSQL;
+                    Except
+                       On E:Exception do
+                        begin
+                          Mens_MensInf( 'Erro ao Inserir Participante: ' + E.Message );
+                        end;
+                    End;
+
+                end;
+
+
             end;
 
             Application.ProcessMessages;

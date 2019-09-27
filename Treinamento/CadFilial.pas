@@ -227,6 +227,7 @@ Begin
 
    EdiUF.Text := CbxUF.Text;
 
+
    //EdiCEP.Text := mskCEP.Text;
 
 
@@ -276,7 +277,8 @@ begin
   if varSalvarCEP then
   begin
       edicep.AsInteger := SalvarCEP(mskCEP.Text,EdiEnd.Text, EdiBairro.Text, EdiCidade.Text, cbxUF.Text);
-  end;
+  end
+  else
 
   inherited;
   CbxUF.ItemIndex := -1;

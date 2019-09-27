@@ -380,7 +380,7 @@ object Fr_RelatorioGestaoMercados: TFr_RelatorioGestaoMercados
         object cxLabelData: TcxLabel
           Left = 10
           Top = 3
-          Caption = 'Data Requerida:'
+          Caption = 'Data Documento:'
           ParentColor = False
           Style.BorderStyle = ebsNone
           Style.Color = clWhite
@@ -416,11 +416,11 @@ object Fr_RelatorioGestaoMercados: TFr_RelatorioGestaoMercados
           Left = 392
           Top = 3
           Properties.Items.Strings = (
-            'Data Requerida'
-            'Data Documento')
+            'Data Documento'
+            'Data Requerida')
           Properties.OnChange = cbxDataPropertiesChange
           TabOrder = 7
-          Text = 'Data Requerida'
+          Text = 'Data Documento'
           Width = 121
         end
       end
@@ -893,8 +893,8 @@ object Fr_RelatorioGestaoMercados: TFr_RelatorioGestaoMercados
     end
   end
   object PanelSQLSplashScreen: TPanel
-    Left = 405
-    Top = 303
+    Left = 753
+    Top = 235
     Width = 350
     Height = 175
     Anchors = []
@@ -3842,11 +3842,12 @@ object Fr_RelatorioGestaoMercados: TFr_RelatorioGestaoMercados
         '      ,TSOP_ORDBILVALLIQ = CAST(SUM(ISNULL(C01.TSOP_ORDBILVALLIQ' +
         ',0.00)) AS NUMERIC(15,02))'
       
-        'FROM dbo.VSOP_Months A01 CROSS JOIN dbo.VSOP_ClienteBySalesRep B' +
-        '01'
+        'FROM dbo.VSOP_Months A01 WITH (NOLOCK) CROSS JOIN dbo.VSOP_Clien' +
+        'teBySalesRep B01 WITH (NOLOCK)'
       
         '                         LEFT  JOIN dbo.VSOP_OrderBilling      C' +
-        '01 ON ( B01.TSOP_ORDBILCLICOD     = C01.TSOP_ORDBILCLICOD'
+        '01 WITH (NOLOCK) ON ( B01.TSOP_ORDBILCLICOD     = C01.TSOP_ORDBI' +
+        'LCLICOD'
       
         '                                                                ' +
         '    AND B01.TSOP_ORDBILCANNOM     = C01.TSOP_ORDBILCANNOM'
@@ -3909,11 +3910,16 @@ object Fr_RelatorioGestaoMercados: TFr_RelatorioGestaoMercados
         '      ,TSOP_ORDBILVALLIQ = CAST( SUM(ISNULL(C01.TSOP_BUDVLF,0.00' +
         ')) AS NUMERIC(15,02))'
       
-        'FROM dbo.VSOP_Months A01 CROSS JOIN dbo.VSOP_ClienteBySalesRep B' +
-        '01'
+        'FROM dbo.VSOP_Months A01 WITH (NOLOCK) CROSS JOIN dbo.VSOP_Clien' +
+        'teBySalesRep B01 WITH (NOLOCK)'
       
         '                         LEFT  JOIN TSOP_Budget                C' +
-        '01 ON ( B01.TSOP_ORDBILCLICOD     = C01.TSOP_BUDCLICOD'
+        '01 WITH (NOLOCK) ON ( B01.TSOP_ORDBILCLICOD     = C01.TSOP_BUDCL' +
+        'ICOD'
+      
+        '                                                                ' +
+        '                  AND B01.TSOP_ORDBILSITNOM     = C01.TSOP_ORDBI' +
+        'LSITNOM '
       
         '                                                                ' +
         '    AND A01.YEARDOC               = CASE WHEN MONTH(C01.TSOP_BUD' +
@@ -3979,6 +3985,9 @@ object Fr_RelatorioGestaoMercados: TFr_RelatorioGestaoMercados
       
         '                         LEFT  JOIN TSOP_Budget                C' +
         '01 ON ( B01.TSOP_ORDBILCLICOD     = C01.TSOP_BUDCLICOD'
+      
+        '                                                                ' +
+        '    AND B01.TSOP_ORDBILSITNOM     = C01.TSOP_ORDBILSITNOM'
       
         '                                                                ' +
         '    AND A01.YEARDOC               = CASE WHEN MONTH(C01.TSOP_BUD' +
@@ -4109,6 +4118,9 @@ object Fr_RelatorioGestaoMercados: TFr_RelatorioGestaoMercados
         '01 ON ( B01.TSOP_ORDBILCLICOD     = C01.TSOP_BUDCLICOD'
       
         '                                                                ' +
+        '    AND B01.TSOP_ORDBILSITNOM     = C01.TSOP_ORDBILSITNOM'
+      
+        '                                                                ' +
         '    AND A01.YEARDOC               = CASE WHEN MONTH(C01.TSOP_BUD' +
         'DAT) >= 8 THEN  1 ELSE 0 END +  YEAR(C01.TSOP_BUDDAT)'
       
@@ -4172,6 +4184,9 @@ object Fr_RelatorioGestaoMercados: TFr_RelatorioGestaoMercados
       
         '                         LEFT  JOIN TSOP_Budget                C' +
         '01 ON ( B01.TSOP_ORDBILCLICOD     = C01.TSOP_BUDCLICOD'
+      
+        '                                                                ' +
+        '    AND B01.TSOP_ORDBILSITNOM     = C01.TSOP_ORDBILSITNOM'
       
         '                                                                ' +
         '    AND A01.YEARDOC               = CASE WHEN MONTH(C01.TSOP_BUD' +
@@ -4301,6 +4316,9 @@ object Fr_RelatorioGestaoMercados: TFr_RelatorioGestaoMercados
         '01 ON ( B01.TSOP_ORDBILCLICOD     = C01.TSOP_BUDCLICOD'
       
         '                                                                ' +
+        '    AND B01.TSOP_ORDBILSITNOM     = C01.TSOP_ORDBILSITNOM'
+      
+        '                                                                ' +
         '    AND A01.YEARDOC               = CASE WHEN MONTH(C01.TSOP_BUD' +
         'DAT) >= 8 THEN  1 ELSE 0 END +  YEAR(C01.TSOP_BUDDAT)'
       
@@ -4364,6 +4382,9 @@ object Fr_RelatorioGestaoMercados: TFr_RelatorioGestaoMercados
       
         '                         LEFT  JOIN TSOP_Budget                C' +
         '01 ON ( B01.TSOP_ORDBILCLICOD     = C01.TSOP_BUDCLICOD'
+      
+        '                                                                ' +
+        '    AND B01.TSOP_ORDBILSITNOM     = C01.TSOP_ORDBILSITNOM'
       
         '                                                                ' +
         '    AND A01.YEARDOC               = CASE WHEN MONTH(C01.TSOP_BUD' +
@@ -4625,11 +4646,12 @@ object Fr_RelatorioGestaoMercados: TFr_RelatorioGestaoMercados
         '      ,TSOP_ORDBILQTDSKU = CAST(SUM(ISNULL(C01.TSOP_ORDBILQTDSKU' +
         ',0.00)) AS NUMERIC(15,02))'
       
-        'FROM dbo.VSOP_Months A01 CROSS JOIN dbo.VSOP_ClienteBySalesRep B' +
-        '01'
+        'FROM dbo.VSOP_Months A01  WITH (NOLOCK)  CROSS JOIN dbo.VSOP_Cli' +
+        'enteBySalesRepForecast B01 WITH (NOLOCK) '
       
-        '                         LEFT  JOIN dbo.VSOP_OrderBilling      C' +
-        '01 ON ( B01.TSOP_ORDBILCLICOD     = C01.TSOP_ORDBILCLICOD'
+        '                         LEFT  JOIN dbo.VSOP_OrderBillingFull   ' +
+        '  C01 WITH (NOLOCK)  ON ( B01.TSOP_ORDBILCLICOD     = C01.TSOP_O' +
+        'RDBILCLICOD'
       
         '                                                                ' +
         '    AND B01.TSOP_ORDBILCANNOM     = C01.TSOP_ORDBILCANNOM'
@@ -4644,13 +4666,12 @@ object Fr_RelatorioGestaoMercados: TFr_RelatorioGestaoMercados
         '    AND A01.MONTHDOC              = C01.TSOP_ORDBILMONDOCREQ'
       
         '                                                                ' +
-        '    AND C01.TSOP_ORDBILDATDOCREQ >= :MES_INI )'
+        '    &WHERE3 )'
       'WHERE 1 = 1 '
       '&WHERE1'
       '&WHERE2'
-      '  AND A01.YEARDOC =  :YEARDOC'
-      '  AND A01.MONTHDOC >= :MONTHDOC'
-      '   &WHERE3'
+      '&WHERE3'
+      ''
       'GROUP BY B01.TSOP_ORDBILREPNOM'
       '      ,B01.TSOP_REPNOMINT'
       '      ,B01.TSOP_REPMKT'
@@ -4694,11 +4715,12 @@ object Fr_RelatorioGestaoMercados: TFr_RelatorioGestaoMercados
         '      ,TSOP_ORDBILQTDSKU = CAST(SUM(ISNULL(C01.TSOP_ORDBILQTDSKU' +
         ',0.00)) AS NUMERIC(15,02))'
       
-        'FROM dbo.VSOP_Months A01 CROSS JOIN dbo.VSOP_ClienteBySalesRep B' +
-        '01'
+        'FROM dbo.VSOP_Months A01  WITH (NOLOCK)  CROSS JOIN dbo.VSOP_Cli' +
+        'enteBySalesRepForecast B01  WITH (NOLOCK) '
       
-        '                         LEFT  JOIN dbo.VSOP_OrderBilling      C' +
-        '01 ON ( B01.TSOP_ORDBILCLICOD     = C01.TSOP_ORDBILCLICOD'
+        '                         LEFT  JOIN dbo.VSOP_OrderBillingFull   ' +
+        '   C01  WITH (NOLOCK)  ON ( B01.TSOP_ORDBILCLICOD     = C01.TSOP' +
+        '_ORDBILCLICOD'
       
         '                                                                ' +
         '    AND B01.TSOP_ORDBILCANNOM     = C01.TSOP_ORDBILCANNOM'
@@ -4713,13 +4735,12 @@ object Fr_RelatorioGestaoMercados: TFr_RelatorioGestaoMercados
         '    AND A01.MONTHDOC              = C01.TSOP_ORDBILMONDOCREQ'
       
         '                                                                ' +
-        '    AND C01.TSOP_ORDBILDATDOCREQ >=  :MES_INI_ANT  )'
+        '    &WHERE3ANT  )'
       'WHERE 1 = 1 '
       '&WHERE1'
       '&WHERE2'
-      '  AND A01.YEARDOC = :YEARDOC_ANT'
-      '  AND A01.MONTHDOC >= :MONTHDOC_ANT'
-      '    &WHERE3ANT'
+      '&WHERE3ANT '
+      ''
       'GROUP BY B01.TSOP_ORDBILREPNOM'
       '      ,B01.TSOP_REPNOMINT'
       '      ,B01.TSOP_REPMKT'
@@ -4740,38 +4761,11 @@ object Fr_RelatorioGestaoMercados: TFr_RelatorioGestaoMercados
       'ORDER BY 1,2,3,4,5')
     Left = 192
     Top = 386
-    ParamData = <
-      item
-        Name = 'MES_INI'
-        DataType = ftDateTime
-        ParamType = ptInput
-      end
-      item
-        Name = 'YEARDOC'
-        DataType = ftInteger
-        ParamType = ptInput
-      end
-      item
-        Name = 'MONTHDOC'
-        DataType = ftInteger
-        ParamType = ptInput
-      end
-      item
-        Name = 'MES_INI_ANT'
-        DataType = ftDateTime
-        ParamType = ptInput
-      end
-      item
-        Name = 'YEARDOC_ANT'
-        DataType = ftInteger
-        ParamType = ptInput
-      end
-      item
-        Name = 'MONTHDOC_ANT'
-        DataType = ftInteger
-        ParamType = ptInput
-      end>
     MacroData = <
+      item
+        Value = Null
+        Name = 'WHERE3'
+      end
       item
         Value = Null
         Name = 'WHERE1'
@@ -4779,10 +4773,6 @@ object Fr_RelatorioGestaoMercados: TFr_RelatorioGestaoMercados
       item
         Value = Null
         Name = 'WHERE2'
-      end
-      item
-        Value = Null
-        Name = 'WHERE3'
       end
       item
         Value = Null
@@ -4917,11 +4907,12 @@ object Fr_RelatorioGestaoMercados: TFr_RelatorioGestaoMercados
         '      ,TSOP_ORDBILVALLIQ = CAST(SUM(ISNULL(C01.TSOP_ORDBILVALLIQ' +
         ',0.00)) AS NUMERIC(15,02))'
       
-        'FROM dbo.VSOP_Months A01 CROSS JOIN dbo.VSOP_ClienteBySalesRep  ' +
-        '      B01'
+        'FROM dbo.VSOP_Months A01 WITH (NOLOCK) CROSS JOIN dbo.VSOP_Clien' +
+        'teBySalesRep        B01 WITH (NOLOCK)'
       
         '                         LEFT  JOIN dbo.VSOP_OrderBilling       ' +
-        '      C01 ON ( B01.TSOP_ORDBILCLICOD     = C01.TSOP_ORDBILCLICOD'
+        '      C01 WITH (NOLOCK) ON ( B01.TSOP_ORDBILCLICOD     = C01.TSO' +
+        'P_ORDBILCLICOD'
       
         '                                                                ' +
         '           AND B01.TSOP_ORDBILCANNOM     = C01.TSOP_ORDBILCANNOM'
@@ -4986,11 +4977,12 @@ object Fr_RelatorioGestaoMercados: TFr_RelatorioGestaoMercados
         '      ,TSOP_ORDBILVALLIQ = CAST( SUM(ISNULL(C01.TSOP_BUDVLF,0.00' +
         ')) AS NUMERIC(15,02))'
       
-        'FROM dbo.VSOP_Months A01 CROSS JOIN dbo.VSOP_ClienteBySalesRep  ' +
-        '     B01'
+        'FROM dbo.VSOP_Months A01 WITH (NOLOCK) CROSS JOIN dbo.VSOP_Clien' +
+        'teBySalesRep       B01 WITH (NOLOCK)'
       
         '                         LEFT  JOIN dbo.VSOP_ClienteBySalesRepBu' +
-        'dget B02 ON ( B01.TSOP_ORDBILCLICOD     = B02.TSOP_ORDBILCLICOD'
+        'dget B02 WITH (NOLOCK) ON ( B01.TSOP_ORDBILCLICOD     = B02.TSOP' +
+        '_ORDBILCLICOD'
       
         '            '#9#9#9#9#9#9'                                              ' +
         '    AND B01.TSOP_ORDBILCANNOM     = B02.TSOP_ORDBILCANNOM'
@@ -4999,7 +4991,8 @@ object Fr_RelatorioGestaoMercados: TFr_RelatorioGestaoMercados
         '    AND B01.TSOP_ORDBILSITNOM     = B02.TSOP_ORDBILSITNOM )'
       
         '                         LEFT  JOIN TSOP_Budget                 ' +
-        '     C01 ON ( B02.TSOP_ORDBILCLICOD     = C01.TSOP_BUDCLICOD'
+        '     C01 WITH (NOLOCK) ON ( B02.TSOP_ORDBILCLICOD     = C01.TSOP' +
+        '_BUDCLICOD'
       
         '                                                                ' +
         '          AND A01.YEARDOC               = CASE WHEN MONTH(C01.TS' +
@@ -5232,11 +5225,12 @@ object Fr_RelatorioGestaoMercados: TFr_RelatorioGestaoMercados
         '      ,TSOP_ORDBILVALLIQ = CAST(SUM(ISNULL(C01.TSOP_ORDBILVALLIQ' +
         ',0.00)) AS NUMERIC(15,02))'
       
-        'FROM dbo.VSOP_Months A01 CROSS JOIN dbo.VSOP_ClienteFamiliaBySal' +
-        'esRep B01'
+        'FROM dbo.VSOP_Months A01 WITH (NOLOCK) CROSS JOIN dbo.VSOP_Clien' +
+        'teFamiliaBySalesRep B01 WITH (NOLOCK)'
       
         '                         LEFT  JOIN dbo.VSOP_OrderBilling       ' +
-        '      C01 ON ( B01.TSOP_ORDBILCLICOD     = C01.TSOP_ORDBILCLICOD'
+        '      C01 WITH (NOLOCK) ON ( B01.TSOP_ORDBILCLICOD     = C01.TSO' +
+        'P_ORDBILCLICOD'
       
         '                                                                ' +
         '           AND B01.TSOP_ORDBILCANNOM     = C01.TSOP_ORDBILCANNOM'
@@ -5308,12 +5302,12 @@ object Fr_RelatorioGestaoMercados: TFr_RelatorioGestaoMercados
         '      ,TSOP_ORDBILVALLIQ = CAST( SUM(ISNULL(C01.TSOP_BUDVLF,0.00' +
         ')) AS NUMERIC(15,02))'
       
-        'FROM dbo.VSOP_Months A01 CROSS JOIN dbo.VSOP_ClienteFamiliaBySal' +
-        'esRep       B01'
+        'FROM dbo.VSOP_Months A01 WITH (NOLOCK) CROSS JOIN dbo.VSOP_Clien' +
+        'teFamiliaBySalesRep       B01 WITH (NOLOCK)'
       
         '                         LEFT  JOIN dbo.VSOP_ClienteFamiliaBySal' +
-        'esRepBudget B02 ON ( B01.TSOP_ORDBILITEFAM     = B02.TSOP_ORDBIL' +
-        'ITEFAM'
+        'esRepBudget B02 WITH (NOLOCK) ON ( B01.TSOP_ORDBILITEFAM     = B' +
+        '02.TSOP_ORDBILITEFAM'
       
         '                                                                ' +
         '                 AND B01.TSOP_ORDBILCLICOD     = B02.TSOP_ORDBIL' +
@@ -5327,8 +5321,8 @@ object Fr_RelatorioGestaoMercados: TFr_RelatorioGestaoMercados
         ' )'
       
         '                         LEFT  JOIN TSOP_Budget                 ' +
-        '            C01 ON ( B02.TSOP_ORDBILCLICOD     = C01.TSOP_BUDCLI' +
-        'COD'
+        '            C01 WITH (NOLOCK) ON ( B02.TSOP_ORDBILCLICOD     = C' +
+        '01.TSOP_BUDCLICOD'
       
         #9#9#9#9#9#9'                                                          ' +
         '           AND B01.TSOP_ORDBILSITNOM     = C01.TSOP_ORDBILSITNOM'

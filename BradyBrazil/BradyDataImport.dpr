@@ -305,6 +305,7 @@ begin
 
       end;
 
+
     end;
 
   finally
@@ -348,6 +349,7 @@ begin
         else
           varArquivo.LoadFromFile( '\\GHOS2024\Brady\Files\ENG\BR-GM-002.TXT' );
 
+
         varArquivo.Insert(0,EmptyStr);
 
         Writeln('Config FDConnection');
@@ -359,8 +361,8 @@ begin
         if varInicial = 0 then
         begin
 
-          Writeln( 'Apagando TSOP_GMCustos' );
-          FDScriptTSOP_GMCustos.ExecuteAll;
+          //Writeln( 'Apagando TSOP_GMCustos' );
+          //FDScriptTSOP_GMCustos.ExecuteAll;
 
           I := 1;
           while I <= varArquivo.Count-1 do
@@ -448,7 +450,7 @@ begin
                   FDQueryTSOP_GMCustosTSOP_GMCCUSMOV.AsFloat := varCustoMoving;
                   FDQueryTSOP_GMCustosTSOP_GMCLOT.AsFloat := varLote;
                   FDQueryTSOP_GMCustosTSOP_GMCPRIUNI.AsFloat := varPriceUnit;
-                  FDQueryTSOP_GMCustosTSOP_DTIMPORTACAO.AsDateTime := DateUtils.StartOfTheMonth(DateUtils.StartOfTheMonth(Now)-1);
+                  //FDQueryTSOP_GMCustosTSOP_DTIMPORTACAO.AsDateTime := DateUtils.StartOfTheMonth(DateUtils.StartOfTheMonth(Now)-1);
                   try
 
                     FDQueryTSOP_GMCustos.Post;
@@ -555,6 +557,248 @@ begin
 
 end;
 
+
+
+procedure ImportarCustosOriginal(opcao: integer);
+var
+  X, I: Integer;
+  varArquivo: TStringList;
+  varMes, varAno: Integer;
+  varData: TDateTime;
+  varPlanta, varItem: String;
+  varCustoStandard, varCustoMoving, varPriceUnit, varLote: Extended;
+  varInicial, varFinal: Integer;
+  varCMD: AnsiString;
+
+begin
+
+  Writeln( 'Criando DataModule' );
+  Fr_Dados := TFr_Dados.Create(nil);
+
+  with Fr_Dados do
+  begin
+
+    Writeln( 'Iniciando processo de importação...' );
+    try
+
+      varArquivo := TStringList.Create;
+      try
+
+        Writeln( 'Carregando arquivo...' );
+
+        if opcao = 1 then
+          varArquivo.LoadFromFile( '\\GHOS2024\Brady\Files\ENG\BR-GM-001.TXT' )
+        else
+          varArquivo.LoadFromFile( '\\GHOS2024\Brady\Files\ENG\BR-GM-002.TXT' );
+
+       
+        varArquivo.Insert(0,EmptyStr);
+
+        Writeln('Config FDConnection');
+        FDConnection.Params.LoadFromFile( MyDocumentsPath + '\DB.ini' );
+
+        Writeln( 'Linha Inicial' );
+        varInicial := StrToIntDef(ParamStr(2).Replace('-',''),0);
+
+        if varInicial = 0 then
+        begin
+
+          //Writeln( 'Apagando TSOP_GMCustos' );
+          //FDScriptTSOP_GMCustos.ExecuteAll;
+
+          I := 1;
+          while I <= varArquivo.Count-1 do
+          begin
+
+            if opcao = 1 then
+              varCMD := AnsiString( ParamStr(0)+ ' ' + '-gm_custos_original -' + IntToStr(I) )
+            else
+              varCMD := AnsiString( ParamStr(0)+ ' ' + '-gm_custos_original -' + IntToStr(I) );
+
+            Writeln( varCMD );
+            WinExec( PAnsiChar(varCMD), 1 );
+            Inc(I,10000);
+
+          end;
+
+        end
+        else
+        begin
+
+          if ( varInicial + 9999 ) > (varArquivo.Count-1) then
+            varFinal := varArquivo.Count-1
+          else
+            varFinal := varInicial + 9999;
+
+          Writeln( 'Abrindo Conexão...' );
+          FDConnection.Open;
+          try
+
+            FDQueryTSOP_GMCustos_Original.Open;
+            try
+
+              Writeln( 'Lendo linhas da planilha...' );
+              for X := varInicial to varFinal do
+              begin
+
+                try
+                  if not (varArquivo[X].CountChar('|') = 11) then
+                    Continue;
+
+                  if Frac(X / 1000) = 0 then
+                    Writeln( 'Linha (" ' + IntToStr(X) + '/' + IntToStr(varArquivo.Count-1) + '") "' + Trim(varArquivo[X].Split(['|'])[1]) + '" ...' );
+
+                  varAno := StrToInt(varArquivo[X].Split(['|'])[5].Trim);
+                  varMes := StrToInt(varArquivo[X].Split(['|'])[6].Trim);
+
+                  if varMes <= 5 then
+                    varAno := varAno -1;
+
+                  if varMes <= 5 then
+                    varMes := varMes +7
+                  else
+                    varMes := varMes -5;
+
+                  varData := EncodeDate( varAno, varMes, 01 );
+                  varPlanta := varArquivo[X].Split(['|'])[2].Trim;
+                  varItem := varArquivo[X].Split(['|'])[1].Trim;
+                  varCustoStandard := StrToFloat(varArquivo[X].Split(['|'])[07].Trim.Replace( ',', '', [rfReplaceAll] ).Replace( '.', FormatSettings.DecimalSeparator, [rfReplaceAll] ));
+                  varCustoMoving := StrToFloat(varArquivo[X].Split(['|'])[09].Trim.Replace( ',', '', [rfReplaceAll] ).Replace( '.', FormatSettings.DecimalSeparator, [rfReplaceAll] ));
+                  varLote := StrToFloat(varArquivo[X].Split(['|'])[03].Trim.Replace( ',', '', [rfReplaceAll] ).Replace( '.', FormatSettings.DecimalSeparator, [rfReplaceAll] ));
+                  varPriceUnit := StrToFloat(varArquivo[X].Split(['|'])[11].Trim.Replace( ',', '', [rfReplaceAll] ).Replace( '.', FormatSettings.DecimalSeparator, [rfReplaceAll] ));
+
+//                  if FDQueryTSOP_GMCustos.Locate( 'TSOP_GMCDAT;TSOP_GMCSIT;TSOP_GMCITE;TSOP_GMCBUD', VarArrayOf( [varData,varPlanta,varItem,'E'] ) ) then
+//                  begin
+//
+//                    FDQueryTSOP_GMCustos.Edit;
+//                    FDQueryTSOP_GMCustosTSOP_GMCCUSSTD.AsFloat := varCustoStandard;
+//                    FDQueryTSOP_GMCustosTSOP_GMCCUSMOV.AsFloat := varCustoMoving;
+//                    FDQueryTSOP_GMCustosTSOP_GMCLOT.AsFloat := varLote;
+//                    FDQueryTSOP_GMCustosTSOP_GMCPRIUNI.AsFloat := varPriceUnit;
+//                    FDQueryTSOP_GMCustos.Post;
+//
+//                  end
+//                  else
+//                  begin
+
+                  FDQueryTSOP_GMCustos_Original.Append;
+
+                  FDQueryTSOP_GMCustos_OriginalTSOP_GMCSIT.AsString := varPlanta;
+                  FDQueryTSOP_GMCustos_OriginalTSOP_GMCITE.AsString := varItem;
+                  FDQueryTSOP_GMCustos_OriginalTSOP_GMCDAT.AsDateTime := varData;
+                  FDQueryTSOP_GMCustos_OriginalTSOP_GMCBUD.AsString := 'E';
+
+                  FDQueryTSOP_GMCustos_OriginalTSOP_GMCCUSSTD.AsFloat := varCustoStandard;
+                  FDQueryTSOP_GMCustos_OriginalTSOP_GMCCUSMOV.AsFloat := varCustoMoving;
+                  FDQueryTSOP_GMCustos_OriginalTSOP_GMCLOT.AsFloat := varLote;
+                  FDQueryTSOP_GMCustos_OriginalTSOP_GMCPRIUNI.AsFloat := varPriceUnit;
+                  FDQueryTSOP_GMCustos_OriginalTSOP_DT_IMPORTACAO.AsDateTime := DateUtils.StartOfTheMonth(Now);
+                  try
+
+                    FDQueryTSOP_GMCustos_Original.Post;
+
+                  except
+
+                    on E: Exception do
+                    begin
+
+                      Writeln( 'Post: ', E.Message );
+                      FDQueryTSOP_GMCustos_Original.Cancel;
+
+                    end;
+
+                  end;
+
+
+                  if Frac(I / 100) = 0 then
+                  begin
+
+                    try
+
+                      Writeln( 'ApplyUpdates' );
+                      FDQueryTSOP_GMCustos_Original.ApplyUpdates;
+
+                      Writeln( 'CommitUpdates' );
+                      FDQueryTSOP_GMCustos_Original.CommitUpdates;
+
+                    except
+
+                      on E: Exception do
+                      begin
+
+                        Writeln( 'CommitUpdates: ', E.Message );
+
+                      end;
+
+                    end;
+
+                  end;
+
+//                  end;
+
+                except
+
+                  on E: Exception do
+                  begin
+
+                    Writeln( 'Erro: ' + IntToStr( X ) + E.Message );
+
+                  end;
+
+                end;
+
+              end;
+
+            finally
+
+              try
+
+                Writeln( 'ApplyUpdates' );
+                FDQueryTSOP_GMCustos_Original.ApplyUpdates;
+
+                Writeln( 'CommitUpdates' );
+                FDQueryTSOP_GMCustos_Original.CommitUpdates;
+
+              except
+
+                on E: Exception do
+                begin
+
+                  Writeln( 'CommitUpdates'#13#10 + E.Message );
+
+                end;
+
+              end;
+
+              FDQueryTSOP_GMCustos_Original.Close;
+
+            end;
+
+          finally
+
+            FDConnection.Close;
+
+          end;
+
+        end;
+
+      finally
+
+        FreeAndNil(varArquivo);
+        FreeAndNil(Fr_Dados);
+
+      end;
+
+    finally
+
+      Writeln( EmptyStr );
+
+    end;
+
+  end;
+
+end;
+
 procedure ImportarUOM;
 var
   X, I: Integer;
@@ -581,6 +825,7 @@ begin
 
         Writeln( 'Carregando arquivo...' );
         varArquivo.LoadFromFile( '\\GHOS2024\Brady\Files\ENG\BR-UOM-001.TXT' );
+
         varArquivo.Insert(0,EmptyStr);
 
         Writeln('Config FDConnection');
@@ -636,11 +881,11 @@ begin
                 varPlanta         := varArquivo[X].Split(['|'])[2].Trim;
                 varItem           := varArquivo[X].Split(['|'])[1].Trim;
                 varUOM            := varArquivo[X].Split(['|'])[3].Trim;
-                varDataImportacao := DateUtils.StartOfTheMonth(DateUtils.StartOfTheMonth(Now)-1);
+                //varDataImportacao := DateUtils.StartOfTheMonth(DateUtils.StartOfTheMonth(Now)-1);
                 varNumerador      := StrToFloat(varArquivo[X].Split(['|'])[04].Trim.Replace( ',', '', [rfReplaceAll] ).Replace( '.', FormatSettings.DecimalSeparator, [rfReplaceAll] ));
                 varDenominador    := StrToFloat(varArquivo[X].Split(['|'])[05].Trim.Replace( ',', '', [rfReplaceAll] ).Replace( '.', FormatSettings.DecimalSeparator, [rfReplaceAll] ));
 
-                if FDQueryTSOP_UOM.Locate( 'TSOP_UOMITE;TSOP_UOMSIT;TSOP_UOMSIG;TSOP_DTIMPORTACAO', VarArrayOf( [varItem,varPlanta,varUOM,varDataImportacao] ) ) then
+                if FDQueryTSOP_UOM.Locate( 'TSOP_UOMITE;TSOP_UOMSIT;TSOP_UOMSIG', VarArrayOf( [varItem,varPlanta,varUOM] ) ) then
                 begin
 
                   FDQueryTSOP_UOM.Edit;
@@ -657,7 +902,7 @@ begin
                   FDQueryTSOP_UOMTSOP_UOMSIT.AsString := varPlanta;
                   FDQueryTSOP_UOMTSOP_UOMITE.AsString := varItem;
                   FDQueryTSOP_UOMTSOP_UOMSIG.AsString := varUOM;
-                  FDQueryTSOP_UOMTSOP_DTIMPORTACAO.AsDateTime := varDataImportacao;
+                  //FDQueryTSOP_UOMTSOP_DTIMPORTACAO.AsDateTime := varDataImportacao;
                   FDQueryTSOP_UOMTSOP_UOMNUM.AsFloat := varNumerador;
                   FDQueryTSOP_UOMTSOP_UOMDEM.AsFloat := varDenominador;
 
@@ -1857,6 +2102,9 @@ var
   varColumnNetValueSeton: Integer;
   varColumnNetValue: Integer;
 
+  varColumnSalesItem: Integer;
+
+
 
 
 
@@ -1890,14 +2138,18 @@ var
   varPrimaryCatalog : String;
   varCustomerPurchase : String;
 
+  varSalesItem: Integer;
+
   varScript: TStringList;
   varDataExcluir: TDateTime;
+
+  varSalesTry : Integer;
 
 begin
 
   Writeln('Inicio: ','Import Qlik Invoice');
 
-  Writeln('Apagando arquivo local. ', MyDocumentsPath+'\'+FSearchRecord.Name );
+   Writeln('Apagando arquivo local. ', MyDocumentsPath+'\'+FSearchRecord.Name );
   DeleteFile(PWideChar(MyDocumentsPath+'\'+FSearchRecord.Name));
 
   Writeln('Copiando arquivo local. ', MyDocumentsPath+'\'+FSearchRecord.Name );
@@ -1937,6 +2189,7 @@ begin
     varColumnNetValue := -1;
     varColumnPrimaryCatalog := -1;
     varColumnCustomerPurchase := -1;
+    varColumnSalesItem := -1;
 
     Writeln('Descobrindo Colunas');
     for I := dxSpreadSheet.ActiveSheetAsTable.Columns.FirstIndex to dxSpreadSheet.ActiveSheetAsTable.Columns.LastIndex do
@@ -1976,12 +2229,17 @@ begin
       if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = 'Sales Document #' then //Nova
         varColumnOrderNumber := I;
 
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = 'Sales Item #' then //Nova
+        varColumnSalesItem := I;
+
       // De acordo com Leandro e Luciana o Invoice line # é igual ao Order Line # mesmo para pedidos parciais.
       if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = 'Invoice Item #' then
         varColumnOrderLineNumber := I;
 
       if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = 'Billing Item #' then  // Nova
         varColumnOrderLineNumber := I;
+
+
 
       if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = 'Customer PO Date' then
         varColumnCustomerPODate := I;
@@ -2233,6 +2491,85 @@ begin
       if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2019 Dec Quantity' then
         varColumnBilledQty := I;
 
+        // 2020
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2020 Jan Quantity' then
+        varColumnBilledQty := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2020 Feb Quantity' then
+        varColumnBilledQty := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2020 Mar Quantity' then
+        varColumnBilledQty := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2020 Apr Quantity' then
+        varColumnBilledQty := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2020 May Quantity' then
+        varColumnBilledQty := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2020 Jun Quantity' then
+        varColumnBilledQty := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2020 Jul Quantity' then
+        varColumnBilledQty := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2020 Aug Quantity' then
+        varColumnBilledQty := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2020 Sep Quantity' then
+        varColumnBilledQty := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2020 Oct Quantity' then
+        varColumnBilledQty := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2020 Nov Quantity' then
+        varColumnBilledQty := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2020 Dec Quantity' then
+        varColumnBilledQty := I;
+
+
+        // 2021
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2021 Jan Quantity' then
+        varColumnBilledQty := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2021 Feb Quantity' then
+        varColumnBilledQty := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2021 Mar Quantity' then
+        varColumnBilledQty := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2021 Apr Quantity' then
+        varColumnBilledQty := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2021 May Quantity' then
+        varColumnBilledQty := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2021 Jun Quantity' then
+        varColumnBilledQty := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2021 Jul Quantity' then
+        varColumnBilledQty := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2021 Aug Quantity' then
+        varColumnBilledQty := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2021 Sep Quantity' then
+        varColumnBilledQty := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2021 Oct Quantity' then
+        varColumnBilledQty := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2021 Nov Quantity' then
+        varColumnBilledQty := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2021 Dec Quantity' then
+        varColumnBilledQty := I;
+
+
+
+
+
       //varColumnBillqtyinSKU
 
       if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2017 Jan Quantity in SKU' then
@@ -2311,7 +2648,7 @@ begin
 
 
 
-      //Novo
+      //Novo 2019
 
       if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2019 Jan Quantity in SKU' then
         varColumnBillqtyinSKU := I;
@@ -2348,6 +2685,83 @@ begin
 
       if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2019 Dec Quantity in SKU' then
         varColumnBillqtyinSKU := I;
+
+      // 2020
+
+       if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2020 Jan Quantity in SKU' then
+        varColumnBillqtyinSKU := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2020 Feb Quantity in SKU' then
+        varColumnBillqtyinSKU := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2020 Mar Quantity in SKU' then
+        varColumnBillqtyinSKU := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2020 Apr Quantity in SKU' then
+        varColumnBillqtyinSKU := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2020 May Quantity in SKU' then
+        varColumnBillqtyinSKU := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2020 Jun Quantity in SKU' then
+        varColumnBillqtyinSKU := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2020 Jul Quantity in SKU' then
+        varColumnBillqtyinSKU := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2020 Aug Quantity in SKU' then
+        varColumnBillqtyinSKU := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2020 Sep Quantity in SKU' then
+        varColumnBillqtyinSKU := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2020 Oct Quantity in SKU' then
+        varColumnBillqtyinSKU := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2020 Nov Quantity in SKU' then
+        varColumnBillqtyinSKU := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2020 Dec Quantity in SKU' then
+        varColumnBillqtyinSKU := I;
+
+      //  2021
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2021 Jan Quantity in SKU' then
+        varColumnBillqtyinSKU := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2021 Feb Quantity in SKU' then
+        varColumnBillqtyinSKU := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2021 Mar Quantity in SKU' then
+        varColumnBillqtyinSKU := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2021 Apr Quantity in SKU' then
+        varColumnBillqtyinSKU := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2021 May Quantity in SKU' then
+        varColumnBillqtyinSKU := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2021 Jun Quantity in SKU' then
+        varColumnBillqtyinSKU := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2021 Jul Quantity in SKU' then
+        varColumnBillqtyinSKU := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2021 Aug Quantity in SKU' then
+        varColumnBillqtyinSKU := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2021 Sep Quantity in SKU' then
+        varColumnBillqtyinSKU := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2021 Oct Quantity in SKU' then
+        varColumnBillqtyinSKU := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2021 Nov Quantity in SKU' then
+        varColumnBillqtyinSKU := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2021 Dec Quantity in SKU' then
+        varColumnBillqtyinSKU := I;
+
 
 
 
@@ -2452,6 +2866,84 @@ begin
       if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2019 Dec  Customer Sales' then
         varColumnNetValue := I;
 
+        //2020
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2020 Jan  Customer Sales' then
+        varColumnNetValue := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2020 Feb  Customer Sales' then
+        varColumnNetValue := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2020 Mar  Customer Sales' then
+        varColumnNetValue := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2020 Apr  Customer Sales' then
+        varColumnNetValue := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2020 May  Customer Sales' then
+        varColumnNetValue := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2020 Jun  Customer Sales' then
+        varColumnNetValue := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2020 Jul  Customer Sales' then
+        varColumnNetValue := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2020 Aug  Customer Sales' then
+        varColumnNetValue := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2020 Sep  Customer Sales' then
+        varColumnNetValue := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2020 Oct  Customer Sales' then
+        varColumnNetValue := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2020 Nov  Customer Sales' then
+        varColumnNetValue := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2020 Dec  Customer Sales' then
+        varColumnNetValue := I;
+
+
+        // 2021
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2021 Jan  Customer Sales' then
+        varColumnNetValue := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2021 Feb  Customer Sales' then
+        varColumnNetValue := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2021 Mar  Customer Sales' then
+        varColumnNetValue := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2021 Apr  Customer Sales' then
+        varColumnNetValue := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2021 May  Customer Sales' then
+        varColumnNetValue := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2021 Jun  Customer Sales' then
+        varColumnNetValue := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2021 Jul  Customer Sales' then
+        varColumnNetValue := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2021 Aug  Customer Sales' then
+        varColumnNetValue := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2021 Sep  Customer Sales' then
+        varColumnNetValue := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2021 Oct  Customer Sales' then
+        varColumnNetValue := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2021 Nov  Customer Sales' then
+        varColumnNetValue := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2021 Dec  Customer Sales' then
+        varColumnNetValue := I;
+
+
 //      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = 'Net Value - Seton' then
 //        varColumnNetValueSeton := I;
 
@@ -2477,6 +2969,9 @@ begin
 
     if varColumnOrderNumber = -1 then
 	    raise Exception.Create('Sales Order # não encontrado.');
+
+    if varColumnSalesItem = -1 then
+	    raise Exception.Create('Sales Item # não encontrado.');
 
     if varColumnOrderLineNumber = -1 then
 	    raise Exception.Create('Invoice Item # não encontrado.');
@@ -2530,13 +3025,13 @@ begin
 	    raise Exception.Create('Prod Hier 5 não encontrado.');
 
     if varColumnBilledQty = -1 then
-	    raise Exception.Create('2017 Q1/2/3/4 TD Qty não encontrado.');
+	    raise Exception.Create('2020 Q1/2/3/4 TD Qty não encontrado.');
 
     if varColumnBillqtyinSKU = -1 then
 	    raise Exception.Create('Bill.qty in SKU não encontrado.');
 
     if varColumnNetValue = -1 then
-	    raise Exception.Create('2017 Q1/2/3/4 TD Cust Sales não encontrado.');
+	    raise Exception.Create('2020 Q1/2/3/4 TD Cust Sales não encontrado.');
 
 //    if varColumnNetValueSeton = -1 then
 //	    raise Exception.Create('Net Value - Seton não encontrado.');
@@ -2628,6 +3123,10 @@ begin
                 varBillingType := 'Return';
 
               varOrderNumber := Trim(dxSpreadSheet.ActiveSheetAsTable.Rows[I].Cells[varColumnOrderNumber].AsString);
+
+              if TryStrToInt(dxSpreadSheet.ActiveSheetAsTable.Rows[I].Cells[varColumnSalesItem].AsString, varSalesTry) then
+               varSalesItem  := varSalesTry
+              else  varSalesItem := 0;
 
               varOrderLineNumber := StrToIntDef(Trim(dxSpreadSheet.ActiveSheetAsTable.Rows[I].Cells[varColumnOrderLineNumber].AsString),0);
               Try
@@ -2721,6 +3220,8 @@ begin
               FDQueryTSOP_OrderBillingTSOP_ORDBILQTDSKU.AsFloat       := varBillqtyinSKU;
               FDQueryTSOP_OrderBillingTSOP_PRIMARYCATALOG.AsString    := varPrimaryCatalog;
               FDQueryTSOP_OrderBillingTSOP_CUSTOMERPURCHASE.AsString  := varCustomerPurchase;
+              FDQueryTSOP_OrderBillingTSOP_SALESITEM.AsInteger        := varSalesItem;
+
 
               FDQueryTSOP_OrderBilling.Post;
 
@@ -5979,6 +6480,26 @@ begin
 
               if varTMKT_PROCOD <> 0 then
               begin
+
+                 FDQueryGravaPreco.Close;
+                 FDQueryGravaPreco.SQL.Clear;
+                 FDQueryGravaPreco.SQL.Add('Update TMKT_PRODUTO');
+                 FDQueryGravaPreco.SQL.Add(' Set TMKT_PRODES = :TMKT_PRODES ');
+                 FDQueryGravaPreco.SQL.Add( '   where tmkt_procodsap = :tmkt_procodsap ');
+                 FDQueryGravaPreco.Params.ParamByName('TMKT_PRODES').AsString    := varDescricao;
+                 FDQueryGravaPreco.Params.ParamByName('tmkt_procodsap').AsString := varYNumber;
+
+                  Try
+                   FDQueryGravaPreco.ExecSQL;
+                 except
+                    on E: Exception do
+                      begin
+
+                        Writeln( 'Salvar Preço: ', E.Message );
+
+                      end;
+                 End;
+
                  FDQueryGravaPreco.Close;
                  FDQueryGravaPreco.SQL.Clear;
                  FDQueryGravaPreco.SQL.Add('Update TMKT_PRECO');
@@ -7095,6 +7616,8 @@ begin
 
         Writeln( 'Abrindo arquivo \\GHOS2024\Brady\Files\ENG\BR-ENG-ITEM.txt' );
         varENG_003.LoadFromFile( '\\GHOS2024\Brady\Files\ENG\BR-ENG-ITEM.txt' );
+
+
         varENG_003.Insert(0,StringOfChar('|',12));
 
         Writeln( 'Removendo linhas' );
@@ -7176,7 +7699,7 @@ begin
                 except
                   FDQueryTMAQ_Item.FieldByName('TMAQ_ITEBASMAT').AsString := '';
                 end;
-                FDQueryTMAQ_Item.FieldByName('TMAQ_DTIMPORTACAO').AsDateTime :=   DateUtils.StartOfTheMonth(DateUtils.StartOfTheMonth(Now)-1);
+                //FDQueryTMAQ_Item.FieldByName('TMAQ_DTIMPORTACAO').AsDateTime :=   DateUtils.StartOfTheMonth(DateUtils.StartOfTheMonth(Now)-1);
 
                 try
 
@@ -8019,6 +8542,8 @@ var
   varAssunto: String;
   iAtual : Integer;
 
+  varSalvar : TStringList;
+
 begin
 
   if Monthly then
@@ -8045,6 +8570,9 @@ begin
   varBodyAux := TStringList.Create;
   varBody09  := TStringList.Create;
   varCC := TStringList.Create;
+
+  varSalvar := TStringList.Create;
+  varSalvar.Add('Vendedor;Grupo;Canal;Atual;Forecast;Billing;Backlog;');
 
   if Monthly then
   begin
@@ -8268,7 +8796,6 @@ begin
              (UpperCase(FDQuerySalesRepTSIS_USUNOM.AsString) = 'CLAUDIO BECHER') or
              (UpperCase(FDQuerySalesRepTSIS_USUNOM.AsString) = 'LEONARDO SCARPARO') or
              (UpperCase(FDQuerySalesRepTSIS_USUNOM.AsString) = 'VANESSA MENDES') or
-             (UpperCase(FDQuerySalesRepTSIS_USUNOM.AsString) = 'MARCEL ALBUQUERQUE') or
              (UpperCase(FDQuerySalesRepTSIS_USUNOM.AsString) = 'NEIRIVAL MENDES') or
              (UpperCase(FDQuerySalesRepTSIS_USUNOM.AsString) = 'RUBEN SANTANA')) Then
              begin
@@ -8280,6 +8807,7 @@ begin
           FDQueryVSOP_OrderBillingPedidos.ParamByName( 'MES_INI' ).AsDateTime :=  System.DateUtils.StartOfTheMonth(varNow);
           FDQueryVSOP_OrderBillingPedidos.ParamByName( 'MES_FIM' ).AsDateTime := System.DateUtils.EndOfTheMonth(varNow);
           FDQueryVSOP_OrderBillingPedidos.ParamByName( 'MES_ANT' ).AsDateTime := System.DateUtils.StartOfTheMonth(System.DateUtils.StartOfTheMonth(varNow)-1);
+          //FDQueryVSOP_OrderBillingPedidos.ParamByName( 'MES_ANT' ).AsDateTime := System.DateUtils.StartOfTheMonth(System.DateUtils.StartOfTheMonth(varNow));
           FDQueryVSOP_OrderBillingPedidos.ParamByName( 'SALESREP' ).AsString := FDQuerySalesRepTSIS_USUNOM.AsString;
 
           if System.DateUtils.MonthOf(varNow) >= 8 then
@@ -8430,7 +8958,7 @@ begin
                      //  (varLate <> 0.00) or
                       // (varMonth <> 0.00) then
                     begin
-                                                                                                                                                                                                                                                                                                                                       // era varLate para o novo email
+                                                                                                                                                                                                                                                                                                               // era varLate para o novo email
 
                       varBodyAux.Add( '<!-- ' + FormatFloat( '0,000,000.00', (varActual-varForecast)+1000000 ) + ' -->' + varBody03.Text.Replace( '%GrupoCliente%', FDQueryVSOP_OrderBillingPedidosTSOP_ORDBILGRUCLINOM.AsString )
                                                 .Replace( '%act-tot%', FormatFloat('#,##0', varActual) )
@@ -8499,7 +9027,15 @@ begin
                             end;
 
                         end;
-
+                        {
+                        varSalvar.Add(FDQuerySalesRepTSIS_USUNOM.AsString.ToUpper.Trim + ';' +
+                                        FDQueryVSOP_OrderBillingPedidosTSOP_ORDBILGRUCLINOM.AsString + ';' +
+                                        FDQueryVSOP_OrderBillingPedidosTSOP_ORDBILCANNOM.AsString.ToUpper.Trim + ';' +
+                                        FloatToStr(varActual) + ';'  +
+                                        FloatToStr(varForecast) + ';' +
+                                        FloatToStr(varBilling) + ';' +
+                                        FloatToStr(varBacklog) );
+                                        }
                       end;
 
                       if varCanal.ToUpper.Trim.Equals('DM') then  //Seton - Marcos
@@ -8595,6 +9131,17 @@ begin
 
                           end;
 
+
+                        {
+                          varSalvar.Add(FDQuerySalesRepTSIS_USUNOM.AsString.ToUpper.Trim + ';' +
+                                        FDQueryVSOP_OrderBillingPedidosTSOP_ORDBILGRUCLINOM.AsString + ';' +
+                                        FDQueryVSOP_OrderBillingPedidosTSOP_ORDBILCANNOM.AsString.ToUpper.Trim + ';' +
+                                        FloatToStr(varActual) + ';'  +
+                                        FloatToStr(varForecast) + ';' +
+                                        FloatToStr(varBilling) + ';' +
+                                        FloatToStr(varBacklog) );
+
+                          }
                           varActualTOTPID      := varActualTOTPID      + varActual;
                           varForecastTOTPID    := varForecastTOTPID    + varForecast;
                           varBillingTOTPID     := varBillingTOTPID     + varBilling;
@@ -8796,8 +9343,8 @@ begin
 
 
             varACBrMail.AddAddress(FDQuerySalesRepTSIS_USUEML.AsString, FDQuerySalesRepTSIS_USUNOM.AsString);
-            //varACBrMail.AddAddress('marcos.jesus.external@k2partnering.com', 'Marcos');
-            //varACBrMail.AddAddress('LUCIANA_PONTIERI@BRADYCORP.com', 'Luciana');
+           // varACBrMail.AddAddress('marcos.jesus.external@k2partnering.com', 'Marcos');
+           // varACBrMail.AddAddress('LUCIANA_PONTIERI@BRADYCORP.com', 'Luciana');
 
 
             varACBrMail.Subject := varAssunto;
@@ -8899,6 +9446,8 @@ begin
                                               .Replace( '%act/fct-geral%', FormatFloat('#,##0', varPercentualTOTPID)+'%' )
                                               .Replace('%act-ordb-geral%', FormatFloat('#,##0', varBlockTOTPID))
                                               .Replace('%mont-tot-geral%', FormatFloat('#,##0', varMonthTOTPID));
+
+
 
       //  varBodyTotal.Text := varBodyTotal.Text.Replace( '%back-tot-geral%', FormatFloat('#,##0', varBacklogMANMRO) ).Replace( '%gm-tot-geral%', FormatFloat('#,##0', varGrossMarginMANMRO) ).Replace( '%bill-tot-geral%', FormatFloat('#,##0', varBillingMANMRO) ).Replace( '%act-tot-geral%', FormatFloat('#,##0', varActualMANMRO) ).Replace( '%fct-tot-geral%', FormatFloat('#,##0', varForecastMANMRO) ).Replace( '%act-fct-geral%', FormatFloat('#,##0', varActualMANMRO-varForecastMANMRO) ).Replace( '%act/fct-geral%', FormatFloat('#,##0', varPercentualMANMRO)+'%' );
 
@@ -9062,24 +9611,24 @@ begin
             varACBrMail.From := 'suportebrasil@bradycorp.com';
             varACBrMail.FromName := 'Suporte Brasil';
 
-          //  varACBrMail.AddAddress('marcos.jesus.external@k2partnering.com', 'Marcos');
-            //varACBrMail.AddAddress('LUCIANA_PONTIERI@BRADYCORP.com', 'Luciana');
+           // varACBrMail.AddAddress('marcos.jesus.external@k2partnering.com', 'Marcos');
+           // varACBrMail.AddAddress('LUCIANA_PONTIERI@BRADYCORP.com', 'Luciana');
 
      //       varACBrMail.AddAddress( 'suportebrasil@bradycorp.com', 'Suporte Brasil' );
 
 
-             FDQueryTSOP_EMAIL.Close;
-             FDQueryTSOP_EMAIL.SQL.Clear;
-             FDQueryTSOP_EMAIL.SQL.Add('Select TSOP_EMAIL From TSOP_EMAIL where TSOP_ATIVO = ''S'' AND');
-             FDQueryTSOP_EMAIL.SQL.Add(' TSOP_PROGRAMA = ''SOP_DAILYSALESMAIL''');
-             FDQueryTSOP_EMAIL.Open;
-             FDQueryTSOP_EMAIL.First;
-             while not FDQueryTSOP_EMAIL.eof do
-             begin
-                varACBrMail.AddAddress(FDQueryTSOP_EMAIL.FieldByName('TSOP_EMAIL').AsString);
-                FDQueryTSOP_EMAIL.Next;
-             end;
-             FDQueryTSOP_EMAIL.Close;
+            FDQueryTSOP_EMAIL.Close;
+            FDQueryTSOP_EMAIL.SQL.Clear;
+            FDQueryTSOP_EMAIL.SQL.Add('Select TSOP_EMAIL From TSOP_EMAIL where TSOP_ATIVO = ''S'' AND');
+            FDQueryTSOP_EMAIL.SQL.Add(' TSOP_PROGRAMA = ''SOP_DAILYSALESMAIL''');
+            FDQueryTSOP_EMAIL.Open;
+            FDQueryTSOP_EMAIL.First;
+            while not FDQueryTSOP_EMAIL.eof do
+            begin
+               varACBrMail.AddAddress(FDQueryTSOP_EMAIL.FieldByName('TSOP_EMAIL').AsString);
+               FDQueryTSOP_EMAIL.Next;
+            end;
+            FDQueryTSOP_EMAIL.Close;
 
 
             varACBrMail.Subject := varAssunto;
@@ -9101,6 +9650,9 @@ begin
 
             end;
 
+       // varSalvar.SaveToFile('c:\brady\emaildiario_prod_MRO.txt');
+
+        FreeAndNil(varSalvar);
 
         // NAO ENVIAR NO TESTE
         varBody01.LoadFromFile( 'C:\Brady\AccOwner-01.html' );
@@ -9304,6 +9856,8 @@ begin
     FreeAndNil(varBody08);
     FreeAndNil(varBody09);
     FreeAndNil(varBodyAux);
+
+
 
   end;
 
@@ -11614,6 +12168,7 @@ begin
               SetLength(CodSeton, 1);
               Produto[0]   := varSETON_009[I].Split(['|'])[1].Trim;
               CodSeton[0]  := varSETON_009[I].Split(['|'])[2].Trim;
+
               bEnviar      := True;
               varNovoSaldo := StrToFloat(varSETON_009[I].Split(['|'])[4].Trim.Replace( ',', '', [rfReplaceAll] ).Replace( '.', FormatSettings.DecimalSeparator, [rfReplaceAll] ));
               varDescontar := 0;
@@ -13580,6 +14135,27 @@ begin
     try
 
       ImportarCustos(2);
+
+    except
+
+      on E: Exception do
+      begin
+
+        Writeln(E.ClassName, ' : ', E.Message);
+        Sleep(60000);
+
+      end;
+
+    end;
+
+  end
+  else
+  if ParamStr(1).Equals('-gm_custos_original') then
+  begin
+
+    try
+
+      ImportarCustosOriginal(1);
 
     except
 

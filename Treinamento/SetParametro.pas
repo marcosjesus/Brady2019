@@ -59,7 +59,7 @@ begin
     CaixaTexto.bs_Caption := 'Operação';
     CaixaTexto.bs_Table := 'Operacao With (NOLOCK)';
 
-    CaixaTexto.bs_Fields.Add('DESCRICAO;Operação;;' + inttostr(WIDTH_NOME220));                    //0
+    CaixaTexto.bs_Fields.Add('DESCRICAO;Operação;;' + inttostr(WIDTH_DESCRICAO));                    //0
     CaixaTexto.bs_Fields.Add('CodOperacao;#;;' + inttostr(WIDTH_DOCUMENTO));
 
     CaixaTexto.bs_TextResult := 'DESCRICAO';
@@ -71,7 +71,7 @@ begin
     CaixaTexto.bs_Caption := 'Perfil';
     CaixaTexto.bs_Table := 'Perfil With (NOLOCK)';
 
-    CaixaTexto.bs_Fields.Add('DESCRICAO;Perfil;;' + inttostr(WIDTH_NOME220));                    //0
+    CaixaTexto.bs_Fields.Add('DESCRICAO;Perfil;;' + inttostr(WIDTH_DESCRICAO));                    //0
     CaixaTexto.bs_Fields.Add('CodPerfil;#;;' + inttostr(WIDTH_DOCUMENTO));
 
     CaixaTexto.bs_TextResult := 'DESCRICAO';
@@ -83,7 +83,7 @@ begin
     CaixaTexto.bs_Caption := 'Periodicidade';
     CaixaTexto.bs_Table := 'TRE_PERIODICIDADE With (NOLOCK)';
 
-    CaixaTexto.bs_Fields.Add('DESCRICAO;Nome;;' + inttostr(WIDTH_NOME220));                    //0
+    CaixaTexto.bs_Fields.Add('DESCRICAO;Nome;;' + inttostr(WIDTH_DESCRICAO));                    //0
     CaixaTexto.bs_Fields.Add('PERIODICIDADE_ID;#;;' + inttostr(WIDTH_DOCUMENTO));
 
     CaixaTexto.bs_TextResult := 'PERIODICIDADE_ID';
@@ -95,7 +95,7 @@ begin
     CaixaTexto.bs_Caption := 'Periodicidade';
     CaixaTexto.bs_Table := 'TRE_PERIODICIDADE With (NOLOCK)';
 
-    CaixaTexto.bs_Fields.Add('PERIODICIDADE_ID;Codigo;;' + inttostr(WIDTH_DOCUMENTO));
+    CaixaTexto.bs_Fields.Add('PERIODICIDADE_ID;Codigo;;' + inttostr(WIDTH_CODIGO));
     CaixaTexto.bs_Fields.Add('DESCRICAO;Nome;;' + inttostr(WIDTH_NOME220));                    //0
 
 
@@ -108,7 +108,7 @@ begin
     CaixaTexto.bs_Caption := 'Tipo de Treinamento';
     CaixaTexto.bs_Table := 'TRE_TIPOTREINAMENTO With (NOLOCK)';
 
-    CaixaTexto.bs_Fields.Add('DESCRICAO;Nome;;' + inttostr(WIDTH_NOME220));                    //0
+    CaixaTexto.bs_Fields.Add('DESCRICAO;Nome;;' + inttostr(WIDTH_DESCRICAO));                    //0
     CaixaTexto.bs_Fields.Add('TRE_TIPOTREINAMENTO_ID;#;;' + inttostr(WIDTH_DOCUMENTO));
 
     CaixaTexto.bs_TextResult := 'TRE_TIPOTREINAMENTO_ID';
@@ -120,7 +120,7 @@ begin
     CaixaTexto.bs_Caption := 'Treinmento';
     CaixaTexto.bs_Table := 'TRE_TREINAMENTO T With (NOLOCK)';
 
-    CaixaTexto.bs_Fields.Add('C.CUR_NOMCURSO;Treinamento;;' + inttostr(WIDTH_NOME220));
+    CaixaTexto.bs_Fields.Add('C.CUR_NOMCURSO;Treinamento;;' + inttostr(WIDTH_DESCRICAO));
     CaixaTexto.bs_Fields.Add('T.TRE_DTREALIZACAO;Data;;' + inttostr(WIDTH_NOME220));
     CaixaTexto.bs_Fields.Add('T.TRE_TREINAMENTO_ID;#;;' + inttostr(WIDTH_DOCUMENTO));
 
@@ -136,7 +136,7 @@ begin
     CaixaTexto.bs_Table := 'TRE_TREINAMENTO T With (NOLOCK)';
 
     CaixaTexto.bs_Fields.Add('T.TRE_TREINAMENTO_ID;Codigo;;' + inttostr(WIDTH_DOCUMENTO));
-    CaixaTexto.bs_Fields.Add('C.CUR_NOMCURSO;Treinamento;;' + inttostr(WIDTH_NOME220));
+    CaixaTexto.bs_Fields.Add('C.CUR_NOMCURSO;Treinamento;;' + inttostr(WIDTH_DESCRICAO));
     CaixaTexto.bs_Fields.Add('T.TRE_DTREALIZACAO;Data;;' + inttostr(WIDTH_NOME220));
 
 
@@ -153,7 +153,7 @@ begin
     CaixaTexto.bs_Caption := 'Fornecedores';
     CaixaTexto.bs_Table := 'TRE_EMPRESA With (NOLOCK)';
 
-    CaixaTexto.bs_Fields.Add('TRE_EMPRESA.EMP_NOMEMPRESA;Nome;;' + inttostr(WIDTH_NOME220));                    //0
+    CaixaTexto.bs_Fields.Add('TRE_EMPRESA.EMP_NOMEMPRESA;Nome;;' + inttostr(WIDTH_DESCRICAO));                    //0
     CaixaTexto.bs_Fields.Add('TRE_EMPRESA.EMP_ID;#;;' + inttostr(WIDTH_DOCUMENTO));
     CaixaTexto.bs_Fields.Add('c.UF;UF;;' + inttostr(WIDTH_NOME220));
     CaixaTexto.bs_Fields.Add('c.CEP;CEP;;' + inttostr(WIDTH_NOME220));
@@ -171,7 +171,7 @@ begin
     CaixaTexto.bs_Caption := 'Fornecedores';
     CaixaTexto.bs_Table := 'TRE_EMPRESA With (NOLOCK)';
 
-    CaixaTexto.bs_Fields.Add('TRE_EMPRESA.EMP_NOMEMPRESA;Nome;;' + inttostr(WIDTH_NOME220));                    //0
+    CaixaTexto.bs_Fields.Add('TRE_EMPRESA.EMP_NOMEMPRESA;Nome;;' + inttostr(WIDTH_DESCRICAO));                    //0
     CaixaTexto.bs_Fields.Add('TRE_EMPRESA.EMP_ID;#;;' + inttostr(WIDTH_DOCUMENTO));
     CaixaTexto.bs_Fields.Add('c.UF;UF;;' + inttostr(WIDTH_NOME220));
     CaixaTexto.bs_Fields.Add('c.CEP;CEP;;' + inttostr(WIDTH_NOME220));
@@ -188,7 +188,7 @@ begin
     CaixaTexto.bs_Caption := 'Curso';
     CaixaTexto.bs_Table := 'TRE_CURSO C With (NOLOCK)';
 
-    CaixaTexto.bs_Fields.Add('C.CUR_NOMCURSO;Treinamento;;' + inttostr(WIDTH_NOME220));                    //0
+    CaixaTexto.bs_Fields.Add('C.CUR_NOMCURSO;Treinamento;;' + inttostr(WIDTH_DESCRICAO));                    //0
     CaixaTexto.bs_Fields.Add('C.CUR_CARGAHORARIA;Carga Horaria;;' + inttostr(WIDTH_NOME220));                    //0
     CaixaTexto.bs_Fields.Add('C.CUR_ID;Curso ID;;' + inttostr(WIDTH_DOCUMENTO));
 
@@ -202,7 +202,7 @@ begin
       CaixaTexto.bs_Caption := 'Curso';
     CaixaTexto.bs_Table := 'TRE_CURSO C With (NOLOCK)';
 
-    CaixaTexto.bs_Fields.Add('C.CUR_NOMCURSO;Treinamento;;' + inttostr(WIDTH_NOME220));                    //0
+    CaixaTexto.bs_Fields.Add('C.CUR_NOMCURSO;Treinamento;;' + inttostr(WIDTH_DESCRICAO));                    //0
     CaixaTexto.bs_Fields.Add('C.CUR_ID;#;;' + inttostr(WIDTH_DOCUMENTO));
 
     CaixaTexto.bs_TextResult := 'CUR_ID';
@@ -215,7 +215,7 @@ begin
     CaixaTexto.bs_Caption := 'Instrutor';
     CaixaTexto.bs_Table := 'TRE_INSTRUTOR I With (NOLOCK)';
 
-    CaixaTexto.bs_Fields.Add('I.INS_NOMINSTRUTOR;Instrutor;;' + inttostr(WIDTH_NOME220));                    //0
+    CaixaTexto.bs_Fields.Add('I.INS_NOMINSTRUTOR;Instrutor;;' + inttostr(WIDTH_DESCRICAO));                    //0
     CaixaTexto.bs_Fields.Add('I.INS_ID;#;;' + inttostr(WIDTH_DOCUMENTO));
     CaixaTexto.bs_Fields.Add('I.EMP_ID;#;;' + inttostr(WIDTH_DOCUMENTO));
     CaixaTexto.bs_Fields.Add('c.UF;UF;;' + inttostr(WIDTH_NOME220));
@@ -233,7 +233,7 @@ begin
     CaixaTexto.bs_Caption := 'Instrutor';
     CaixaTexto.bs_Table   := 'TRE_INSTRUTOR I With (NOLOCK)';
 
-    CaixaTexto.bs_Fields.Add('I.INS_NOMINSTRUTOR;Instrutor;;' + inttostr(WIDTH_NOME220));                    //0
+    CaixaTexto.bs_Fields.Add('I.INS_NOMINSTRUTOR;Instrutor;;' + inttostr(WIDTH_DESCRICAO));                    //0
     CaixaTexto.bs_Fields.Add('I.INS_ID;#;;' + inttostr(WIDTH_DOCUMENTO));
     CaixaTexto.bs_Fields.Add('I.EMP_ID;#;;' + inttostr(WIDTH_DOCUMENTO));
     CaixaTexto.bs_Fields.Add('c.UF;UF;;' + inttostr(WIDTH_NOME220));
@@ -252,12 +252,12 @@ begin
     CaixaTexto.bs_Table := 'TRE_FUNCIONARIO P With (NOLOCK)';
 
     CaixaTexto.bs_Fields.Add('F.AliasEmpresa;EMPRESA;;' + inttostr(WIDTH_NOME220));                    //0
-    CaixaTexto.bs_Fields.Add('P.FUN_NOME;Participante;;' + inttostr(WIDTH_NOME220));                    //0
+    CaixaTexto.bs_Fields.Add('P.FUN_NOME;Participante;;' + inttostr(WIDTH_DESCRICAO));                    //0
     CaixaTexto.bs_Fields.Add('P.FUN_MATRICULA;Matricula;;' + inttostr(WIDTH_DOCUMENTO));
     CaixaTexto.bs_Fields.Add('C.TRE_CARGO_ID;Cargo ID;;' + inttostr(WIDTH_DOCUMENTO));
-    CaixaTexto.bs_Fields.Add('C.DESCRICAO;Cargo;;' + inttostr(WIDTH_NOME220));
+    CaixaTexto.bs_Fields.Add('C.DESCRICAO;Cargo;;' + inttostr(WIDTH_DESCRICAO));
     CaixaTexto.bs_Fields.Add('CC.TRE_CENTROCENTRO;Centro de Custo ID;;' + inttostr(WIDTH_DOCUMENTO));
-    CaixaTexto.bs_Fields.Add('CC.DESCRICAO;Centro de Custo;;' + inttostr(WIDTH_NOME220));
+    CaixaTexto.bs_Fields.Add('CC.DESCRICAO;Centro de Custo;;' + inttostr(WIDTH_DESCRICAO));
 
     CaixaTexto.bs_Join := ' left outer join  TRE_CARGO C on C.TRE_CARGO_ID = P.TRE_CARGO_ID ' +
                           ' left outer join  TRE_CENTROCUSTO CC on CC.TRE_CENTROCENTRO = P.TRE_CENTROCENTRO ' +
@@ -274,7 +274,7 @@ begin
     CaixaTexto.bs_Table := 'TRE_FUNCIONARIO P With (NOLOCK)';
 
     CaixaTexto.bs_Fields.Add('F.AliasEmpresa;EMPRESA;;' + inttostr(WIDTH_NOME220));                    //0
-    CaixaTexto.bs_Fields.Add('P.FUN_NOME;Participante;;' + inttostr(WIDTH_NOME220));                    //0
+    CaixaTexto.bs_Fields.Add('P.FUN_NOME;Participante;;' + inttostr(WIDTH_DESCRICAO));                    //0
     CaixaTexto.bs_Fields.Add('P.FUN_MATRICULA;Matricula;;' + inttostr(WIDTH_DOCUMENTO));
 
     CaixaTexto.bs_Join := ' left outer join  FILIAL F on F.CODFILIAL = P.CODFILIAL ';
@@ -291,7 +291,7 @@ begin
     CaixaTexto.bs_Table := 'TRE_FUNCIONARIO P With (NOLOCK)';
 
     CaixaTexto.bs_Fields.Add('P.FUN_FUNCIONARIO_ID;Codigo;;' + inttostr(WIDTH_DOCUMENTO));
-    CaixaTexto.bs_Fields.Add('P.FUN_NOME;Participante;;' + inttostr(WIDTH_NOME220));                    //0
+    CaixaTexto.bs_Fields.Add('P.FUN_NOME;Participante;;' + inttostr(WIDTH_DESCRICAO));                    //0
     CaixaTexto.bs_Fields.Add('P.FUN_MATRICULA;Matricula;;' + inttostr(WIDTH_DOCUMENTO));
     CaixaTexto.bs_Fields.Add('C.DESCRICAO;Cargo;;' + inttostr(WIDTH_DOCUMENTO));
     CaixaTexto.bs_Fields.Add('P.CODFILIAL;#;;' + inttostr(WIDTH_DOCUMENTO));
@@ -309,7 +309,7 @@ begin
     CaixaTexto.bs_Table := 'TRE_FUNCIONARIO P With (NOLOCK)';
 
     CaixaTexto.bs_Fields.Add('P.FUN_FUNCIONARIO_ID;Codigo;;' + inttostr(WIDTH_DOCUMENTO));
-    CaixaTexto.bs_Fields.Add('P.FUN_NOME;Participante;;' + inttostr(WIDTH_NOME220));                    //0
+    CaixaTexto.bs_Fields.Add('P.FUN_NOME;Participante;;' + inttostr(WIDTH_DESCRICAO));                    //0
     CaixaTexto.bs_Fields.Add('P.FUN_MATRICULA;Matricula;;' + inttostr(WIDTH_DOCUMENTO));
     CaixaTexto.bs_Fields.Add('C.DESCRICAO;Cargo;;' + inttostr(WIDTH_DOCUMENTO));
     CaixaTexto.bs_Fields.Add('P.CODFILIAL;#;;' + inttostr(WIDTH_DOCUMENTO));

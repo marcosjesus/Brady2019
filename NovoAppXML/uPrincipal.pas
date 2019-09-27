@@ -840,6 +840,7 @@ begin
    stb.panels[0].Text := 'Usuário - ' + FrmLogin.EdiUsuNome.Text;
    stb.panels[1].Text := 'Servidor ' + pHost;
    stb.panels[2].Text := 'Data de Trabalho..: ' + DateToStr(Date);
+   stb.panels[6].Text := 'Servidor..: ' + DateToStr(Date);
 
    FrmLogin.Close ;
 

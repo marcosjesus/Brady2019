@@ -34,9 +34,6 @@ type
     EditBuscaInstrutor: TEditBusca;
     EditBuscaFilial: TEditBusca;
     qryAux: TFDQuery;
-    Panel11: TPanel;
-    EdiCPF: TrsSuperEdit;
-    MEdiCPF: TMaskEdit;
     Panel6: TPanel;
     EdiEnd: TrsSuperEdit;
     EdiCEP: TrsSuperEdit;
@@ -78,7 +75,6 @@ type
     procedure EditBuscaFilialClick(Sender: TObject);
     procedure ButExcluirClick(Sender: TObject);
     procedure EditBuscaFilialExit(Sender: TObject);
-    procedure EdiCPFChange(Sender: TObject);
     procedure mskCEPExit(Sender: TObject);
     procedure btnSalvaArqClick(Sender: TObject);
     procedure cxbEditPathClick(Sender: TObject);
@@ -126,7 +122,7 @@ begin
 
   if ChecarCaminhoRede Then
   begin
-     varPathFull := varPathRede  + '\' +  Str_OnlyNumbers(MEdiCPF.Text);
+     varPathFull := varPathRede  + '\' + EditBuscaInstrutor.Text;
      if not DB_Conect.DirExists(  varPathFull ) then
      begin
          if not ForceDirectories(  varPathFull ) then
@@ -237,7 +233,6 @@ begin
 
   EditBuscaInstrutor.Text := ediCodigo.AsString;
 
-  MEdiCPF.SetFocus;
 end;
 
 procedure TFrmCadInstrutor.ButSalvarClick(Sender: TObject);
@@ -256,7 +251,7 @@ begin
   begin
     qryAux.Close;
     qryAux.Sql.Clear;
-    qryAux.Sql.Add('update Parametros set CodigoInstrutor = CodigoInstrutor + 1 ') ;
+    qryAux.Sql.Add('update Parametros set CodigoInstrutor = CodigoInstrutor + 1   where ServidorSMTP = 0 ') ;
     qryAux.ExecSQL;
 
   end;
@@ -272,7 +267,7 @@ end;
 function TFrmCadInstrutor.Check: Boolean;
 begin
    Result := False ;
-
+{  retirado 30-05-2019
      // verifica CGC = CNPJ
    if Trim(Copy(MEdiCPF.Text, 1, 1)) <> '' then
       begin
@@ -289,7 +284,7 @@ begin
       end
    else
       EdiCPF.Text := '';
-
+  }
 
    If ( Test_IsEmptyStr(EdiNome.Text) ) Then
    Begin
@@ -323,13 +318,6 @@ begin
     ShellExecute(handle,'open',PChar(sqlArquivoCAMINHO.AsString + '\' + sqlArquivoNOMEARQUIVO.AsString ), '','',SW_SHOWNORMAL)
   else
     Mens_MensErro('Arquivo não encontrado em ' + sqlArquivoCAMINHO.AsString);
-end;
-
-procedure TFrmCadInstrutor.EdiCPFChange(Sender: TObject);
-begin
-  inherited;
-  MEdiCPF.EditMask := '###\.###\.###\-##;0;_';
-  MEdiCPF.Text := EdiCPF.AsString;
 end;
 
 procedure TFrmCadInstrutor.EdiCodigoEmpresaKeyPress(Sender: TObject;

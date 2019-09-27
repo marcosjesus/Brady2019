@@ -5,7 +5,7 @@
         <FrameworkType>VCL</FrameworkType>
         <MainSource>BradyBrazil.dpr</MainSource>
         <Base>True</Base>
-        <Config Condition="'$(Config)'==''">Debug</Config>
+        <Config Condition="'$(Config)'==''">Release</Config>
         <Platform Condition="'$(Platform)'==''">Win32</Platform>
         <TargetedPlatforms>3</TargetedPlatforms>
         <AppType>Application</AppType>
@@ -87,9 +87,9 @@
         <Debugger_RunParams>-sop_dailysalesmail</Debugger_RunParams>
         <VerInfo_Release>1</VerInfo_Release>
         <VerInfo_MinorVer>2</VerInfo_MinorVer>
-        <VerInfo_Keys>CompanyName=CIEL Soluções em TI;FileDescription=Brady;FileVersion=1.2.1.129;InternalName=Brady;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=Brady;ProductVersion=1.0.0.0;Comments=Rafael Petrella</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=CIEL Soluções em TI;FileDescription=Brady;FileVersion=1.2.1.209;InternalName=Brady;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=Brady;ProductVersion=1.0.0.0;Comments=Rafael Petrella</VerInfo_Keys>
         <DCC_BplOutput>C:\Brady\Projetos\BradyBrazil\Win32\Debug</DCC_BplOutput>
-        <VerInfo_Build>129</VerInfo_Build>
+        <VerInfo_Build>209</VerInfo_Build>
         <VerInfo_AutoIncVersion>true</VerInfo_AutoIncVersion>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>1033</VerInfo_Locale>
@@ -106,8 +106,8 @@
         <VerInfo_AutoIncVersion>true</VerInfo_AutoIncVersion>
         <VerInfo_MajorVer>2</VerInfo_MajorVer>
         <VerInfo_Release>2</VerInfo_Release>
-        <VerInfo_Keys>CompanyName=CIEL Soluções em TI;FileDescription=Brady;FileVersion=2.0.2.413;InternalName=Brady;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=Brady;ProductVersion=1.0.0.0;Comments=Rafael Petrella</VerInfo_Keys>
-        <VerInfo_Build>413</VerInfo_Build>
+        <VerInfo_Keys>CompanyName=CIEL Soluções em TI;FileDescription=Brady;FileVersion=2.0.2.483;InternalName=Brady;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=Brady;ProductVersion=1.0.0.0;Comments=Rafael Petrella</VerInfo_Keys>
+        <VerInfo_Build>483</VerInfo_Build>
         <DCC_BplOutput>C:\Brady\Projetos\BradyBrazil\Win32\Debug</DCC_BplOutput>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
     </PropertyGroup>
@@ -297,6 +297,10 @@
         </DCCReference>
         <DCCReference Include="uRelatorioRecuperacaoClientes.pas">
             <Form>Fr_RelatorioRecuperacaoClientes</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="uDashBoard.pas">
+            <Form>frmExibeDashBoard</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Release">

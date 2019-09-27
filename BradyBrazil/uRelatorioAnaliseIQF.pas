@@ -30,7 +30,8 @@ uses
   dxSkinPumpkin, dxSkinSeven, dxSkinSevenClassic, dxSkinSharp, dxSkinSharpPlus,
   dxSkinSilver, dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008,
   dxSkinTheAsphaltWorld, dxSkinsDefaultPainters, dxSkinValentine, dxSkinVS2010,
-  dxSkinWhiteprint, dxSkinXmas2008Blue,cxGridExportLink;
+  dxSkinWhiteprint, dxSkinXmas2008Blue,cxGridExportLink,
+  FireDAC.Comp.ScriptCommands, FireDAC.Comp.Script;
 
 type
   TFr_RelatorioAnaliseIQF = class(TForm)
@@ -169,6 +170,7 @@ type
     cxGridDBChartSeries1: TcxGridDBChartSeries;
     cxGridDBChartSeries2: TcxGridDBChartSeries;
     cxGridTMAQ_ApontamentoGrafico02: TcxGridLevel;
+    FDScriptCalcIQF: TFDScript;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure cxButtonRefreshClick(Sender: TObject);

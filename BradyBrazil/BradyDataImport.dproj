@@ -5,7 +5,7 @@
         <FrameworkType>VCL</FrameworkType>
         <MainSource>BradyDataImport.dpr</MainSource>
         <Base>True</Base>
-        <Config Condition="'$(Config)'==''">Debug</Config>
+        <Config Condition="'$(Config)'==''">Release</Config>
         <Platform Condition="'$(Platform)'==''">Win32</Platform>
         <TargetedPlatforms>3</TargetedPlatforms>
         <AppType>Console</AppType>
@@ -120,7 +120,7 @@
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
         <VerInfo_Locale>1033</VerInfo_Locale>
         <Manifest_File>None</Manifest_File>
-        <Debugger_RunParams>-sap_backlog</Debugger_RunParams>
+        <Debugger_RunParams>-sop_dailysalesmail</Debugger_RunParams>
         <DCC_RemoteDebug>false</DCC_RemoteDebug>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
@@ -137,8 +137,8 @@
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
         <VerInfo_AutoIncVersion>true</VerInfo_AutoIncVersion>
-        <VerInfo_Keys>CompanyName=CIEL Soluções em TI;FileDescription=Brady;FileVersion=2.0.2.594;InternalName=Brady;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=Brady;ProductVersion=1.0.0.0;Comments=Rafael Petrella</VerInfo_Keys>
-        <VerInfo_Build>594</VerInfo_Build>
+        <VerInfo_Keys>CompanyName=CIEL Soluções em TI;FileDescription=Brady;FileVersion=2.0.2.622;InternalName=Brady;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=Brady;ProductVersion=1.0.0.0;Comments=Rafael Petrella</VerInfo_Keys>
+        <VerInfo_Build>622</VerInfo_Build>
         <Icon_MainIcon>Brady_Icon.ico</Icon_MainIcon>
     </PropertyGroup>
     <ItemGroup>
@@ -244,27 +244,9 @@
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="D:\Embarcadero\ACBr\Lib\Delphi\LibD19\ACBrCapicom.bpl" Configuration="Debug" Class="DependencyPackage"/>
+                <DeployFile LocalName="D:\Embarcadero\ACBr\Lib\Delphi\LibD19\ACBrComum.bpl" Configuration="Debug" Class="DependencyPackage"/>
                 <DeployFile LocalName="$(BDS)\Redist\Win32\FireDACODBCDriver190.bpl" Configuration="Debug" Class="DependencyPackage"/>
-                <DeployFile LocalName="C:\Program Files (x86)\Embarcadero\RAD Studio\12.0\bin\designide190.bpl" Class="File">
-                    <Platform Name="Android">
-                        <RemoteName>designide190.bpl</RemoteName>
-                    </Platform>
-                    <Platform Name="iOSDevice">
-                        <RemoteName>designide190.bpl</RemoteName>
-                    </Platform>
-                    <Platform Name="OSX32">
-                        <RemoteName>designide190.bpl</RemoteName>
-                    </Platform>
-                    <Platform Name="iOSSimulator">
-                        <RemoteName>designide190.bpl</RemoteName>
-                    </Platform>
-                    <Platform Name="Win64">
-                        <RemoteName>designide190.bpl</RemoteName>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="Win32\Debug\BradyDataImport.exe" Configuration="Debug" Class="ProjectOutput">
-                    <Platform Name="Win32"/>
-                </DeployFile>
+                <DeployFile LocalName="D:\Embarcadero\ACBr\Lib\Delphi\LibD19\ACBr_NFe2.bpl" Configuration="Debug" Class="DependencyPackage"/>
                 <DeployFile LocalName="$(BDS)\Redist\Win32\dbrtl190.bpl" Configuration="Debug" Class="DependencyPackage"/>
                 <DeployFile LocalName="C:\Program Files (x86)\Embarcadero\RAD Studio\12.0\bin\vclx190.bpl" Class="File">
                     <Platform Name="Android">
@@ -310,10 +292,6 @@
                 </DeployFile>
                 <DeployFile LocalName="Win32\Debug\BradyDataImport.exe" Configuration="Debug" Class="ProjectOutput"/>
                 <DeployFile LocalName="$(BDS)\Redist\Win32\FireDACCommon190.bpl" Configuration="Debug" Class="DependencyPackage"/>
-                <DeployFile LocalName="$(BDS)\Redist\Win32\vclFireDAC190.bpl" Configuration="Debug" Class="DependencyPackage"/>
-                <DeployFile LocalName="$(BDS)\Redist\Win32\FireDAC190.bpl" Configuration="Debug" Class="DependencyPackage"/>
-                <DeployFile LocalName="$(BDS)\Redist\Win32\rtl190.bpl" Configuration="Debug" Class="DependencyPackage"/>
-                <DeployFile LocalName="D:\Embarcadero\ACBr\Lib\Delphi\LibD19\ACBrComum.bpl" Configuration="Debug" Class="DependencyPackage"/>
                 <DeployFile LocalName="C:\Program Files (x86)\Embarcadero\RAD Studio\12.0\bin\FireDACSqliteDriver190.bpl" Class="File">
                     <Platform Name="Android">
                         <RemoteName>FireDACSqliteDriver190.bpl</RemoteName>
@@ -331,7 +309,29 @@
                         <RemoteName>FireDACSqliteDriver190.bpl</RemoteName>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="D:\Embarcadero\ACBr\Lib\Delphi\LibD19\ACBr_NFe2.bpl" Configuration="Debug" Class="DependencyPackage"/>
+                <DeployFile LocalName="$(BDS)\Redist\Win32\FireDAC190.bpl" Configuration="Debug" Class="DependencyPackage"/>
+                <DeployFile LocalName="$(BDS)\Redist\Win32\vclFireDAC190.bpl" Configuration="Debug" Class="DependencyPackage"/>
+                <DeployFile LocalName="$(BDS)\Redist\Win32\rtl190.bpl" Configuration="Debug" Class="DependencyPackage"/>
+                <DeployFile LocalName="C:\Program Files (x86)\Embarcadero\RAD Studio\12.0\bin\designide190.bpl" Class="File">
+                    <Platform Name="Android">
+                        <RemoteName>designide190.bpl</RemoteName>
+                    </Platform>
+                    <Platform Name="iOSDevice">
+                        <RemoteName>designide190.bpl</RemoteName>
+                    </Platform>
+                    <Platform Name="OSX32">
+                        <RemoteName>designide190.bpl</RemoteName>
+                    </Platform>
+                    <Platform Name="iOSSimulator">
+                        <RemoteName>designide190.bpl</RemoteName>
+                    </Platform>
+                    <Platform Name="Win64">
+                        <RemoteName>designide190.bpl</RemoteName>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Win32\Debug\BradyDataImport.exe" Configuration="Debug" Class="ProjectOutput">
+                    <Platform Name="Win32"/>
+                </DeployFile>
                 <ProjectRoot Platform="Android" Name="$(PROJECTNAME)"/>
                 <ProjectRoot Platform="iOSDevice" Name="$(PROJECTNAME).app"/>
                 <ProjectRoot Platform="Win32" Name="$(PROJECTNAME)"/>

@@ -232,9 +232,13 @@ begin
 
     Mensagem( 'Obtendo dados (Entrada de Pedidos do Mês)...' );
 
-    FDQueryVSOP_OrderBillingPedidos.ParamByName( 'MES_INI' ).AsDateTime      := System.DateUtils.StartOfTheMonth(cxDateEdit_DATINI.Date);
-     FDQueryVSOP_OrderBillingPedidos.ParamByName( 'MES_INI_ANT' ).AsDateTime := System.DateUtils.StartOfTheMonth(cxDateEdit_DATINI.Date)-365;
+  //  FDQueryVSOP_OrderBillingPedidos.ParamByName( 'MES_INI' ).AsDateTime      := System.DateUtils.StartOfTheMonth(cxDateEdit_DATINI.Date);
 
+
+  //  FDQueryVSOP_OrderBillingPedidos.ParamByName( 'MES_INI_ANT' ).AsDateTime := System.DateUtils.StartOfTheMonth(cxDateEdit_DATINI.Date)-365;
+
+
+   {
     if System.DateUtils.MonthOf(Now) >= 8 then
     begin
       FDQueryVSOP_OrderBillingPedidos.ParamByName( 'YEARDOC' ).AsInteger := System.DateUtils.YearOf(cxDateEdit_DATINI.Date) + 1 ;
@@ -256,8 +260,9 @@ begin
       FDQueryVSOP_OrderBillingPedidos.ParamByName( 'MONTHDOC' ).AsInteger := System.DateUtils.MonthOf(cxDateEdit_DATINI.Date) + 5;
       FDQueryVSOP_OrderBillingPedidos.ParamByName( 'MONTHDOC_ANT' ).AsInteger := System.DateUtils.MonthOf(cxDateEdit_DATINI.Date) + 5;
     end;
-
+    }
     varTSOP_CANAL := EmptyStr;
+
     if cxCheckComboBoxTSOP_CANAL.States[0] = cbsChecked then
     begin
 
@@ -289,15 +294,27 @@ begin
 
     end;
 
-    if cbxData.ItemIndex = 0 then
+    if cbxData.ItemIndex = 1 then
     begin
-      FDQueryVSOP_OrderBillingPedidos.MacroByName( 'WHERE3' ).AsRaw := ' AND C01.TSOP_ORDBILDATDOCREQ BETWEEN :DtRecIni and :DtRecFim';
-      FDQueryVSOP_OrderBillingPedidos.ParamByName( 'DtRecIni' ).AsDateTime :=  cxDateEdit_DATINI.Date;
-      FDQueryVSOP_OrderBillingPedidos.ParamByName( 'DtRecFim' ).AsDateTime :=  cxDateEdit_DATFIM.Date;
+    {
+      FDQueryVSOP_OrderBillingPedidos.MacroByName( 'WHERE3' ).AsRaw := ' AND C01.TSOP_ORDBILDATDOCREQ  >= ''' +
+       FormatDateTime('yyyy-mm-dd 00:00:01',  cxDateEdit_DATINI.Date) + '''' +
+       ' and C01.TSOP_ORDBILDATDOCREQ <= ''' + FormatDateTime('yyyy-mm-dd 23:59:59', cxDateEdit_DATFIM.Date) + '''';
+ }
+      FDQueryVSOP_OrderBillingPedidos.MacroByName( 'WHERE3' ).AsRaw := ' AND C01.TSOP_ORDBILDATDOCREQ  >= :DtRecIni and  C01.TSOP_ORDBILDATDOCREQ <= :DtRecFim ';
+      FDQueryVSOP_OrderBillingPedidos.ParamByName( 'DtRecIni' ).AsString :=  FormatDateTime('yyyy-mm-dd 00:00:01',  System.DateUtils.StartOfTheMonth(System.DateUtils.EndOfTheMonth(cxDateEdit_DATINI.Date)));
+      FDQueryVSOP_OrderBillingPedidos.ParamByName( 'DtRecFim' ).AsString :=  FormatDateTime('yyyy-mm-dd 23:59:59', System.DateUtils.EndOfTheMonth(System.DateUtils.EndOfTheMonth(cxDateEdit_DATINI.Date)));
 
-      FDQueryVSOP_OrderBillingPedidos.MacroByName( 'WHERE3ANT' ).AsRaw := ' AND C01.TSOP_ORDBILDATDOCREQ BETWEEN :DtRecIniAnt and :DtRecFimAnt';
-      FDQueryVSOP_OrderBillingPedidos.ParamByName( 'DtRecIniAnt' ).AsDateTime :=  cxDateEdit_DATINI.Date-365;
-      FDQueryVSOP_OrderBillingPedidos.ParamByName( 'DtRecFimAnt' ).AsDateTime :=  cxDateEdit_DATFIM.Date-365;
+
+  {
+      FDQueryVSOP_OrderBillingPedidos.MacroByName( 'WHERE3ANT' ).AsRaw := ' AND C01.TSOP_ORDBILDATDOCREQ >= ''' +
+        FormatDateTime('yyyy-mm-dd 00:00:01', cxDateEdit_DATINI.Date-365 ) + '''' +
+        ' and C01.TSOP_ORDBILDATDOCREQ <= ''' + FormatDateTime('yyyy-mm-dd 23:59:59', cxDateEdit_DATFIM.Date-365) + '''';
+ }
+
+      FDQueryVSOP_OrderBillingPedidos.MacroByName( 'WHERE3ANT' ).AsRaw := ' AND C01.TSOP_ORDBILDATDOCREQ  >= :DtRecIniAnt and  C01.TSOP_ORDBILDATDOCREQ <= :DtRecFimAnt ';
+      FDQueryVSOP_OrderBillingPedidos.ParamByName( 'DtRecIniAnt' ).AsString :=  FormatDateTime('yyyy-mm-dd 00:00:01', System.DateUtils.StartOfTheMonth(System.DateUtils.EndOfTheMonth(cxDateEdit_DATINI.Date)-365));
+      FDQueryVSOP_OrderBillingPedidos.ParamByName( 'DtRecFimAnt' ).AsString :=  FormatDateTime('yyyy-mm-dd 23:59:59', System.DateUtils.EndOfTheMonth(System.DateUtils.EndOfTheMonth(cxDateEdit_DATINI.Date)-365));
 
       cxDBPivotGrid00FieldTSOP_ORDBILDAT.Caption := 'Data Requerida';
 
@@ -306,13 +323,13 @@ begin
     end
     else
     begin
-      FDQueryVSOP_OrderBillingPedidos.MacroByName( 'WHERE3' ).AsRaw := ' AND C01.TSOP_ORDBILDATDOC BETWEEN :DtDocIni and :DtDocFim';
-      FDQueryVSOP_OrderBillingPedidos.ParamByName( 'DtDocIni' ).AsDateTime :=  cxDateEdit_DATINI.Date;
-      FDQueryVSOP_OrderBillingPedidos.ParamByName( 'DtDocFim' ).AsDateTime :=  cxDateEdit_DATFIM.Date;
+      FDQueryVSOP_OrderBillingPedidos.MacroByName( 'WHERE3' ).AsRaw := ' AND C01.TSOP_ORDBILDATDOC >= :DtDocIni and  C01.TSOP_ORDBILDATDOC <= :DtDocFim';
+      FDQueryVSOP_OrderBillingPedidos.ParamByName( 'DtDocIni' ).AsDateTime :=  System.DateUtils.StartOfTheMonth(System.DateUtils.EndOfTheMonth(cxDateEdit_DATINI.Date));
+      FDQueryVSOP_OrderBillingPedidos.ParamByName( 'DtDocFim' ).AsDateTime :=  System.DateUtils.EndOfTheMonth(System.DateUtils.EndOfTheMonth(cxDateEdit_DATINI.Date));
 
-      FDQueryVSOP_OrderBillingPedidos.MacroByName( 'WHERE3ANT' ).AsRaw := ' AND C01.TSOP_ORDBILDATDOC BETWEEN :DtDocIniAnt and :DtDocFimAnt';
-      FDQueryVSOP_OrderBillingPedidos.ParamByName( 'DtDocIniAnt' ).AsDateTime :=  cxDateEdit_DATINI.Date-365;
-      FDQueryVSOP_OrderBillingPedidos.ParamByName( 'DtDocFimAnt' ).AsDateTime :=  cxDateEdit_DATFIM.Date-365;
+      FDQueryVSOP_OrderBillingPedidos.MacroByName( 'WHERE3ANT' ).AsRaw := ' AND C01.TSOP_ORDBILDATDOC >= :DtDocIniAnt and C01.TSOP_ORDBILDATDOC <= :DtDocFimAnt';
+      FDQueryVSOP_OrderBillingPedidos.ParamByName( 'DtDocIniAnt' ).AsDateTime :=  System.DateUtils.StartOfTheMonth(System.DateUtils.EndOfTheMonth(cxDateEdit_DATINI.Date)-365);
+      FDQueryVSOP_OrderBillingPedidos.ParamByName( 'DtDocFimAnt' ).AsDateTime :=  System.DateUtils.EndOfTheMonth(System.DateUtils.EndOfTheMonth(cxDateEdit_DATINI.Date)-365);
 
       cxDBPivotGrid00FieldTSOP_ORDBILDAT.Caption := 'Data Documento';
     end;
@@ -325,7 +342,6 @@ begin
 
 
     FDQueryVSOP_OrderBillingPedidos.MacroByName( 'WHERE2' ).AsRaw := varTSOP_CANAL;
-
 
 
     FDQueryVSOP_OrderBillingPedidos.Open;
@@ -472,8 +488,8 @@ end;
 procedure TFr_RelatorioGestaoMercados.cbxDataPropertiesChange(Sender: TObject);
 begin
   if cbxData.ItemIndex = 0 then
-     cxLabelData.Caption := 'Data Requerida:'
-  else cxLabelData.Caption  := 'Data Documento:';
+     cxLabelData.Caption := 'Data Documento:'
+  else cxLabelData.Caption  := 'Data Requerida:';
 end;
 
 procedure TFr_RelatorioGestaoMercados.cxButtonRefreshClick(Sender: TObject);

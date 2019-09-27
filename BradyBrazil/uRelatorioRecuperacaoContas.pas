@@ -57,9 +57,6 @@ type
     FDQueryVSOP_OrderBilling00TSOP_ORDBILREPNOM: TStringField;
     FDQueryVSOP_OrderBilling00TSOP_ORDBILGRUCLINOM: TStringField;
     FDQueryVSOP_OrderBilling00TSOP_PRIMARYCATALOG: TStringField;
-    PanelSQLSplashScreen: TPanel;
-    ImageSQLSplashScreen: TImage;
-    cxLabelMensagem: TcxLabel;
     SaveDialog: TSaveDialog;
     cxLabel4: TcxLabel;
     cxButtonEditPath: TcxButtonEdit;
@@ -118,9 +115,6 @@ type
     cxGridContasDBTableContasTSOP_ORDBILQTD: TcxGridDBColumn;
     cxGridContasDBTableContasTSOP_ORDBILVALLIQ: TcxGridDBColumn;
     cxGridContasDBTableContasTSOP_ORDBILITECOD: TcxGridDBColumn;
-    cxGridContasDBTableContasTSOP_ITECLISAPITECLICOD: TcxGridDBColumn;
-    cxGridContasDBTableContasTSOP_ORDBILITENOM: TcxGridDBColumn;
-    cxGridContasDBTableContasTSOP_ORDBILITEUNI: TcxGridDBColumn;
     cxGridContasDBTableContasTSOP_ORDBILTIPDOC: TcxGridDBColumn;
     cxGridContasDBTableContasTSOP_ORDBILYEADOCREQCAL: TcxGridDBColumn;
     cxGridContasDBTableContasTSOP_ORDBILMONDOCREQCAL: TcxGridDBColumn;
@@ -153,6 +147,12 @@ type
     cbPeriodo: TcxComboBox;
     FDQueryAux: TFDQuery;
     FDQueryAuxMES: TIntegerField;
+    FDQueryVSOP_OrderBilling00NRODIAS: TIntegerField;
+    cxGridContasDBTableContasNRODIAS: TcxGridDBColumn;
+    PanelSQLSplashScreen: TPanel;
+    ImageSQLSplashScreen: TImage;
+    cxLabelMensagem: TcxLabel;
+    FDQueryAux2: TFDQuery;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormContextPopup(Sender: TObject; MousePos: TPoint; var Handled: Boolean);
     procedure FormCreate(Sender: TObject);
@@ -162,6 +162,9 @@ type
     procedure cxButtonEditPathClick(Sender: TObject);
     procedure cxGridContasFocusedViewChanged(Sender: TcxCustomGrid;
       APrevFocusedView, AFocusedView: TcxCustomGridView);
+    procedure cxGridContasDBTableContasCellClick(Sender: TcxCustomGridTableView;
+      ACellViewInfo: TcxGridTableDataCellViewInfo; AButton: TMouseButton;
+      AShift: TShiftState; var AHandled: Boolean);
   private
     procedure Mensagem( pMensagem: String );
     { Private declarations }
@@ -178,7 +181,7 @@ implementation
 
 {$R *.dfm}
 
-uses uBrady, uUtils, uUtilsOwner;
+uses uBrady, uUtils, uUtilsOwner, ShellAPI;
 
 procedure TFr_RelatorioRecuperacaoContas.AbrirDataset;
 var
@@ -196,17 +199,35 @@ begin
 
     end;
 
+    // Volta registro aparecer na consulta após ser suspenso depois de 90 dias.
+    FDQueryAux2.Close;
+    FDQueryAux2.SQL.clear;
+    FDQueryAux2.SQL.Add('UPDATE TSOP_ORDERBILLING  ');
+    FDQueryAux2.SQL.Add('SET TSOP_DTASUSPENSO = NULL, TSOP_SUSPEXCLUIDO = NULL   ');
+    FDQueryAux2.SQL.Add('WHERE DATEDIFF(DAY,  TSOP_DTASUSPENSO, GETDATE()) > 90 AND TSOP_SUSPEXCLUIDO = 1 ');
+    FDQueryAux2.SQL.Add('AND  TSOP_ORDBILTIPDOC = ''BILLING'' ');
+    Try
+     FDQueryAux2.ExecSQL;
+    except
+      on E : Exception do
+        begin
+          MessageDlg( 'Erro ao Alterar Tabela TSOP_OrderBilling: ' + #13 + #13 +
+                       E.Message, mtError, [ mbOk ], 0 );
+        end;
+    end;
+
+
     Mensagem( 'Obtendo dados (Recuperação de Contas)...' );
     if cbPeriodo.ItemIndex = 0 then
-      iPeriodo := 3
+      iPeriodo := 90
     else if cbPeriodo.ItemIndex = 1 then
-      iPeriodo := 6
+      iPeriodo := 280
     else if cbPeriodo.ItemIndex = 2 then
-      iPeriodo := 9
+      iPeriodo := 270
     else if cbPeriodo.ItemIndex = 3 then
-      iPeriodo := 12
+      iPeriodo := 360
     else if cbPeriodo.ItemIndex = 4 then
-      iPeriodo := 24
+      iPeriodo := 720
     else if cbPeriodo.ItemIndex = 5 then
     begin
       FDQueryAux.Close;
@@ -215,12 +236,12 @@ begin
     end;
 
     if cxCanal.Text <> '' then
-      FDQueryVSOP_OrderBilling00.MacroByName( 'WHERE1' ).AsRaw := ' AND COALESCE( C02.TSOP_DPACANTXTDEP, D01.TSOP_DPACANTXTDEP, C01.TSOP_DPACANTXTDEP, B.TSOP_ORDBILCANNOM ) = ' + QuotedStr(cxCanal.Text);
+      FDQueryVSOP_OrderBilling00.MacroByName( 'WHERE1' ).AsRaw := ' AND  TSOP_ORDBILCANNOM = ' + QuotedStr(cxCanal.Text);
 
     FDQueryVSOP_OrderBilling00.ParamByName( 'MESES' ).AsInteger := iPeriodo;
 
     if Fr_Brady.SalesRep then
-      FDQueryVSOP_OrderBilling00.MacroByName( 'WHERE' ).AsRaw := 'AND R.TSOP_REPNOM  = ' + QuotedStr(Fr_Brady.TSIS_USUNOM);
+      FDQueryVSOP_OrderBilling00.MacroByName( 'WHERE' ).AsRaw := 'AND TSOP_ORDBILREPNOM  =  ' + QuotedStr(Fr_Brady.TSIS_USUNOM);
 
     FDQueryVSOP_OrderBilling00.Open;
 
@@ -235,7 +256,7 @@ end;
 procedure TFr_RelatorioRecuperacaoContas.ButExcelClick(Sender: TObject);
 var
    dxSpreadSheet: TdxSpreadSheet;
-   I , X, toFIM : Integer;
+   I , X, Y, toFIM : Integer;
    varCor1,varCor2: TColor;
 begin
   if cxButtonEditPath.Text = EmptyStr then
@@ -254,28 +275,30 @@ begin
     dxSpreadSheet := TdxSpreadSheet.Create(nil);
     try
       toFIM := cxGridContasDBTableContas.ColumnCount;
+       Y:= 0;
       for I := 0 to toFIM-1 do
       begin
         if cxGridContasDBTableContas.Columns[I].Visible then
         begin
 
-           with dxSpreadSheet.ActiveSheetAsTable.CreateCell(0,I) do;
-
+           with dxSpreadSheet.ActiveSheetAsTable.CreateCell(0,Y) do;
+           Inc(Y);
         end;
       end;
 
       varCor1 := RGB( 255, 255, 204 );
       varCor2 := RGB(255,255,225);
 
+      Y := 0;
       for I := 0 to toFIM-1  do
       begin
         if cxGridContasDBTableContas.Columns[I].Visible then
         begin
-          with dxSpreadSheet.ActiveSheetAsTable.CreateCell(0,I) do
+          with dxSpreadSheet.ActiveSheetAsTable.CreateCell(0,Y) do
           begin
             Style.Brush.BackgroundColor := varCor1;
             AsString := cxGridContasDBTableContas.Columns[I].Caption;
-
+            Inc(Y);
           end;
         end;
       end;
@@ -293,12 +316,12 @@ begin
             varCor1 := RGB(216,234,204)
           else
             varCor1 := RGB(255,255,225);
-
+          Y := 0;
           for  I := 0 to toFIM-1  do
           begin
             if cxGridContasDBTableContas.Columns[I].Visible then
             begin
-                with dxSpreadSheet.ActiveSheetAsTable.CreateCell(X,I) do
+                with dxSpreadSheet.ActiveSheetAsTable.CreateCell(X,Y) do
                 begin
 
                    Style.Brush.BackgroundColor := varCor1;
@@ -306,13 +329,19 @@ begin
                      AsVariant := FormatDateTime('dd-mm-yyyy', cxGridContasDBTableContas.Columns[I].DataBinding.Field.Value)
                    else
                      AsVariant := cxGridContasDBTableContas.Columns[I].DataBinding.Field.Value;
+
+                   Inc(Y);
                 end;
             end;
           end;
 
+
+
+
           Inc(X);
           FDQueryVSOP_OrderBilling00.Next;
       end;
+
 
 
       FDQueryVSOP_OrderBilling00.EnableControls;
@@ -327,6 +356,14 @@ begin
   finally
     Mensagem( EmptyStr );
   end;
+end;
+
+procedure TFr_RelatorioRecuperacaoContas.Mensagem(pMensagem: String);
+begin
+  cxLabelMensagem.Caption := pMensagem;
+  PanelSQLSplashScreen.Visible := not pMensagem.IsEmpty;
+  Update;
+  Application.ProcessMessages;
 end;
 
 procedure TFr_RelatorioRecuperacaoContas.cxButtonEditPathClick(Sender: TObject);
@@ -345,6 +382,30 @@ begin
 
 end;
 
+procedure TFr_RelatorioRecuperacaoContas.cxGridContasDBTableContasCellClick(
+  Sender: TcxCustomGridTableView; ACellViewInfo: TcxGridTableDataCellViewInfo;
+  AButton: TMouseButton; AShift: TShiftState; var AHandled: Boolean);
+var
+  AValue, aURL : string;
+begin
+
+  if not (TcxGridDBColumn(ACellViewInfo.Item).DataBinding.FieldName = 'TSOP_ORDBILCLICOD') then
+    Exit;
+
+  if FDQueryVSOP_OrderBilling00TSOP_LINKSALESFORCE.AsString = '' then
+     raise Exception.Create('Não há link cadastrado para este cliente.');
+
+  if (ACellViewInfo.Item = cxGridContasDBTableContasTSOP_ORDBILCLICOD) and (AButton = mbLeft) then
+  begin
+    aURL := 'https://insidebrady.okta.com/home/salesforce/0oa1kietmbVQZCMLGIOU/46';
+    AValue := FDQueryVSOP_OrderBilling00TSOP_LINKSALESFORCE.AsString;
+    ShellExecute(0, 'OPEN', PChar(aURL), nil, nil, SW_SHOWMAXIMIZED);
+    Sleep(4000);
+    ShellExecute(0, 'OPEN', PChar(AValue), nil, nil, SW_SHOWMAXIMIZED);
+  end;
+
+end;
+
 procedure TFr_RelatorioRecuperacaoContas.cxGridContasFocusedViewChanged(
   Sender: TcxCustomGrid; APrevFocusedView, AFocusedView: TcxCustomGridView);
 begin
@@ -357,17 +418,52 @@ end;
 
 procedure TFr_RelatorioRecuperacaoContas.FDQueryVSOP_OrderBilling00BeforePost(
   DataSet: TDataSet);
+var
+ varOpcao : Integer;
 begin
    if FDQueryVSOP_OrderBilling00.State in [dsEdit] then
    begin
+
     if ((FDQueryVSOP_OrderBilling00TSOP_SUSPEXCLUIDO.AsInteger = 2) and
        (FDQueryVSOP_OrderBilling00TSOP_MOTIVOEXCLUSAO.AsString = '')) then
        begin
            FDQueryVSOP_OrderBilling00.Cancel;
            raise Exception.Create('Informe primeiro o motivo da exclusão do item.');
        end;
+       varOpcao := FDQueryVSOP_OrderBilling00TSOP_SUSPEXCLUIDO.AsInteger;
 
-    FDQueryVSOP_OrderBilling00TSOP_DTASUSPENSO.AsDateTime := Date;
+       if varOpcao = 2 then
+       begin
+         if messagedlg('Deseja Realmente Excluir?',mtConfirmation,[mbyes,mbno],0) = mrno then
+         begin
+           FDQueryVSOP_OrderBilling00.Cancel;
+           Exit;
+         end;
+       end;
+  //     FDQueryVSOP_OrderBilling00TSOP_DTASUSPENSO.AsDateTime := Date;
+
+       FDQueryAux2.Close;
+       FDQueryAux2.SQL.clear;
+       FDQueryAux2.SQL.Add('Update TSOP_OrderBilling ');
+       FDQueryAux2.SQL.Add(' Set TSOP_SUSPEXCLUIDO = :TSOP_SUSPEXCLUIDO ');
+       FDQueryAux2.SQL.Add(' ,TSOP_DTASUSPENSO = :TSOP_DTASUSPENSO ');
+       FDQueryAux2.SQL.Add(' ,TSOP_MOTIVOEXCLUSAO = :TSOP_MOTIVOEXCLUSAO ');
+       FDQueryAux2.SQL.Add('  Where TSOP_ORDBILCOD = :TSOP_ORDBILCOD');
+
+       FDQueryAux2.Params.ParamByName('TSOP_SUSPEXCLUIDO').AsInteger   := varOpcao;
+       FDQueryAux2.Params.ParamByName('TSOP_DTASUSPENSO').AsDateTime   := Date;
+       FDQueryAux2.Params.ParamByName('TSOP_MOTIVOEXCLUSAO').AsString  := FDQueryVSOP_OrderBilling00TSOP_MOTIVOEXCLUSAO.AsString;
+       FDQueryAux2.Params.ParamByName('TSOP_ORDBILCOD').AsInteger      := FDQueryVSOP_OrderBilling00TSOP_ORDBILCOD.AsInteger;
+
+       Try
+         FDQueryAux2.ExecSQL;
+       except
+          on E : Exception do
+            begin
+              MessageDlg( 'Erro ao Alterar Tabela TSOP_OrderBilling: ' + #13 + #13 +
+                           E.Message, mtError, [ mbOk ], 0 );
+            end;
+       end;
    end;
 end;
 
@@ -413,14 +509,5 @@ begin
 
 end;
 
-procedure TFr_RelatorioRecuperacaoContas.Mensagem(pMensagem: String);
-begin
-
-  cxLabelMensagem.Caption := pMensagem;
-  PanelSQLSplashScreen.Visible := not pMensagem.IsEmpty;
-  Update;
-  Application.ProcessMessages;
-
-end;
 
 end.

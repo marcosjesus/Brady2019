@@ -2,21 +2,25 @@ inherited FrmRelTreinamento: TFrmRelTreinamento
   Caption = 'Relatorio por Treinamento'
   ClientWidth = 1021
   ExplicitWidth = 1037
-  ExplicitHeight = 512
+  ExplicitHeight = 513
   PixelsPerInch = 96
   TextHeight = 13
   inherited PanFundo: TPanel
     Width = 1021
+    ExplicitWidth = 1021
     inherited PanTitulo: TPanel
       Top = 121
       Width = 1017
       ExplicitTop = 121
+      ExplicitWidth = 1017
       inherited ImaBarraSup: TImage
         Width = 1013
+        ExplicitWidth = 1013
       end
     end
     inherited ToolBar: TToolBar
       Width = 1017
+      ExplicitWidth = 1017
       inherited ButPesquisar: TcxButton
         OnClick = ButPesquisarClick
       end
@@ -121,6 +125,7 @@ inherited FrmRelTreinamento: TFrmRelTreinamento
     end
     inherited StatusBar: TdxStatusBar
       Width = 1017
+      ExplicitWidth = 1017
     end
     object cxFiltro: TcxGroupBox
       Left = 2
@@ -135,7 +140,6 @@ inherited FrmRelTreinamento: TFrmRelTreinamento
       Style.Font.Style = [fsBold]
       Style.IsFontAssigned = True
       TabOrder = 3
-      ExplicitWidth = 730
       Height = 119
       Width = 1017
       object Panel1: TPanel
@@ -335,9 +339,6 @@ inherited FrmRelTreinamento: TFrmRelTreinamento
       Height = 291
       Align = alClient
       TabOrder = 4
-      ExplicitLeft = 4
-      ExplicitTop = 127
-      ExplicitWidth = 830
       object cxGrid1DBTableView1: TcxGridDBTableView
         Navigator.Buttons.CustomButtons = <>
         DataController.DataSource = DSGrid
@@ -430,6 +431,7 @@ inherited FrmRelTreinamento: TFrmRelTreinamento
     Top = 232
     object dxPrinterGrid: TdxGridReportLink
       Component = cxGrid1
+      PageNumberFormat = pnfNumeral
       PrinterPage.DMPaper = 9
       PrinterPage.Footer = 6350
       PrinterPage.Header = 6350
@@ -442,6 +444,7 @@ inherited FrmRelTreinamento: TFrmRelTreinamento
       PrinterPage._dxMeasurementUnits_ = 0
       PrinterPage._dxLastMU_ = 2
       ReportTitle.Text = 'Relat'#243'rio por Treinamento'
+      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

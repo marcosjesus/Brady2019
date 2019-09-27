@@ -142,7 +142,8 @@ begin
   if varSalvarCEP then
   begin
       edicep.AsInteger := SalvarCEP(mskCEP.Text,EdiEnd.Text, EdiBairro.Text, EdiCidade.Text, cbxUF.Text);
-  end;
+  end
+  else  edicep.AsInteger  := 0;
 
   Inclui := (VarOperacao = OPE_INCLUSAO);
   inherited;

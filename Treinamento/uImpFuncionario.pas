@@ -280,7 +280,7 @@ var
   varCodFilial, varCargoID : Integer;
   dxSpreadSheet: TdxSpreadSheet;
 
-  varFilial, varCentroCustoID, varEstabelecimento, varMatricula, varNome, varSexo, varCargo, varCodCentroResultado, varNomeCentroResultado : String;
+  varCodigoFuncionario, varFilial, varCentroCustoID, varEstabelecimento, varMatricula, varNome, varSexo, varCargo, varCodCentroResultado, varNomeCentroResultado : String;
   varDataNascimento , varDataAdmissao  , varDataDesligamento : TDateTime;
   varDate: Integer;
   varUltimaLinha : Integer;
@@ -447,12 +447,20 @@ begin
                 end
                 else varCentroCustoID := VincularFuncionariocomCentroCusto( varCodCentroResultado, varNomeCentroResultado);
 
+                sqlAux.Close;
+                sqlAux.Sql.Clear;
+                sqlAux.Sql.Add('Select FUN_FUNCIONARIO_ID From Parametros  where ServidorSMTP = 0 ') ;
+                sqlAux.Open;
+                varCodigoFuncionario := IntToStr(sqlAux.FieldByName('FUN_FUNCIONARIO_ID').AsInteger + 1) ;
+                sqlAux.close;
+
+
                 with DB_Conect.sqlFunc do
                 begin
                     Close;
                     sql.Clear;
                     SQL.Add('INSERT INTO TRE_FUNCIONARIO ');
-                    SQL.Add('  (FUN_MATRICULA ');
+                    SQL.Add('  (FUN_FUNCIONARIO_ID,FUN_MATRICULA ');
                     SQL.Add('  ,CODFILIAL ');
                     SQL.Add('  ,FUN_NOME ');
                     SQL.Add('  ,FUN_SEXO ');
@@ -463,7 +471,7 @@ begin
                     SQL.Add('  ,TRE_CENTROCENTRO ');
                     SQL.Add('  ,FUN_ATIVO) ');
                     SQL.Add(' VALUES (  ');
-                    SQL.Add('   :FUN_MATRICULA ');
+                    SQL.Add('   :FUN_FUNCIONARIO_ID, :FUN_MATRICULA ');
                     SQL.Add('  ,:CODFILIAL ');
                     SQL.Add('  ,:FUN_NOME ');
                     SQL.Add('  ,:FUN_SEXO ');
@@ -478,6 +486,7 @@ begin
                     SQL.Add('  ,:TRE_CENTROCENTRO ');
                     SQL.Add('  ,:FUN_ATIVO) ');
 
+                    Params.ParamByName('FUN_FUNCIONARIO_ID').AsString   := varCodigoFuncionario;
                     Params.ParamByName('FUN_MATRICULA').AsString        := varMatricula;
                     Params.ParamByName('CODFILIAL').AsString            := varFilial;
                     Params.ParamByName('FUN_NOME').AsString             := varNome;
@@ -544,6 +553,22 @@ begin
                 end;
 
               end;
+
+              sqlAux.Close;
+              sqlAux.SQL.Clear;
+              sqlAux.SQL.Add('Update Parametros  ');
+              sqlAux.SQL.Add(' Set FUN_FUNCIONARIO_ID = :FUN_FUNCIONARIO_ID ');
+              sqlAux.SQL.Add(' where ServidorSMTP = 0 ');
+              sqlAux.Params.ParamByName('FUN_FUNCIONARIO_ID').AsString := varCodigoFuncionario;
+
+               Try
+                  sqlAux.ExecSQL;
+               Except
+                 On E:Exception do
+                  begin
+                    ShowMessage( 'Falha ao Atualizar Parametros (FUN_FUNCIONARIO_ID): ' + E.Message );
+                  end;
+               End
 
             end;
 

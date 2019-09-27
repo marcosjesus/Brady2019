@@ -1277,6 +1277,7 @@ begin
     Mensagem( 'Obtendo dados (00 - Customizado)...' );
     FDQueryVSOP_OrderBilling00.ParamByName( 'MES_INI' ).AsDateTime := cxDateEditTSOP_ORDBILDATDOCREQINI.Date;
     FDQueryVSOP_OrderBilling00.ParamByName( 'MES_FIM' ).AsDateTime := cxDateEditTSOP_ORDBILDATDOCREQFIM.Date;
+
     FDQueryVSOP_OrderBilling00.ParamByName( 'MES_INI2' ).AsDateTime := cxDateEditTSOP_ORDBILDATDOCINI.Date;
     FDQueryVSOP_OrderBilling00.ParamByName( 'MES_FIM2' ).AsDateTime := cxDateEditTSOP_ORDBILDATDOCFIM.Date;
 

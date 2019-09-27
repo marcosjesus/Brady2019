@@ -33,7 +33,8 @@ uses
   dxSkinOffice2013LightGray, dxSkinPumpkin, dxSkinSeven, dxSkinSevenClassic,
   dxSkinSharp, dxSkinSharpPlus, dxSkinSilver, dxSkinSpringTime, dxSkinStardust,
   dxSkinSummer2008, dxSkinTheAsphaltWorld, dxSkinsDefaultPainters,
-  dxSkinValentine, dxSkinVS2010, dxSkinWhiteprint, dxSkinXmas2008Blue;
+  dxSkinValentine, dxSkinVS2010, dxSkinWhiteprint, dxSkinXmas2008Blue,
+  FireDAC.Comp.ScriptCommands, FireDAC.Comp.Script;
 
 type
   TFr_RelatGrossMargin = class(TForm)
@@ -264,8 +265,6 @@ type
     cxLabel5: TcxLabel;
     cxLabel6: TcxLabel;
     DtRefBOM: TcxDateEdit;
-    cxMesTaxa: TcxComboBox;
-    cbxAno: TcxComboBox;
     cxDateEditTSOP_ORDBILDATDOCINI: TcxDateEdit;
     cxLabel7: TcxLabel;
     DtRefCosting: TcxDateEdit;
@@ -280,20 +279,26 @@ type
     cxTableViewGrossMargin00PriceUnit: TcxGridDBColumn;
     cxTableViewGrossMargin00UOM_1: TcxGridDBColumn;
     FDQueryVSOP_OrderBilling00DTREF: TStringField;
-    FDQueryBOMDataProcessamento: TSQLTimeStampField;
-    cxTableViewBomDataProcessamento: TcxGridDBColumn;
-    FDQueryCostingTSOP_DTIMPORTACAO: TSQLTimeStampField;
-    cxTableViewCostingTSOP_DTIMPORTACAO: TcxGridDBColumn;
-    FDQueryRoutingDataProcessamento: TSQLTimeStampField;
-    cxTableViewRoutingDataProcessamento: TcxGridDBColumn;
+    cxCheckBoxConsultar: TcxCheckBox;
+    FDStoredProcGet: TFDStoredProc;
+    FDQueryAux: TFDQuery;
+    FDScriptInsert: TFDScript;
+    FDScriptReindexa: TFDScript;
+    cxbtnProcessarGM: TcxButton;
+    FDStoredGavaHistoricoGM: TFDStoredProc;
+    dttaxaHora: TcxDateEdit;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure cxButtonEditPathClick(Sender: TObject);
     procedure ButExcelClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure cxButtonRefreshClick(Sender: TObject);
+    procedure cxCheckBoxConsultarClick(Sender: TObject);
+    procedure cxPageControlChange(Sender: TObject);
+    procedure cxbtnProcessarGMClick(Sender: TObject);
+    procedure cxDateEditTSOP_ORDBILDATDOCFIMExit(Sender: TObject);
   private
     { Private declarations }
-
+    pNivel : smallint;
     dxSpreadSheet: TdxSpreadSheet;
     procedure LoadGridCustomization;
     procedure CreatePlanilhaGrossMargin;
@@ -316,7 +321,7 @@ implementation
 
 {$R *.dfm}
 
-uses uBrady, uUtils;
+uses uBrady, uUtils, StrFun;
 
 
 { TForm1 }
@@ -324,6 +329,8 @@ uses uBrady, uUtils;
 procedure TFr_RelatGrossMargin.AbrirDataSet;
 var
  VAR_TSOP_GMHBUD  : String;
+ I : Integer;
+ varDTAplicada : TDateTime;
 begin
 
   Mensagem( 'Abrindo conexão...' );
@@ -350,38 +357,123 @@ begin
     else if cxComboBoxTipo.ItemIndex = 4 then
        VAR_TSOP_GMHBUD := 'M';
 
+    try
+      FDStoredProcGet.Close;
+      FDStoredProcGet.Connection := FDConnection;
+      FDStoredProcGet.StoredProcName := AnsiUpperCase( 'PSOP_RECUPERAGM' );
+      for I := 0 to FDStoredProcGet.Params.Count-1 do
+        FDStoredProcGet.Params.ClearValues(i);
+
+      FDStoredProcGet.Prepare;
+    except
+      on E : Exception do
+        begin
+          MessageDlg( 'Stored procedure error: ' + #13 + #13 +
+                       E.Message, mtError, [ mbOk ], 0 );
+        end;
+    end;
 
 
-      FDQueryVSOP_OrderBilling00.Close;
-      Mensagem( 'Obtendo dados (Gross Margin)...' );
-      FDQueryVSOP_OrderBilling00.ParamByName( 'V_BILLING_INI' ).AsDateTime := cxDateEditTSOP_ORDBILDATDOCINI.Date;
-      FDQueryVSOP_OrderBilling00.ParamByName( 'V_BILLING_FIM' ).AsDateTime := cxDateEditTSOP_ORDBILDATDOCFIM.Date;
-      FDQueryVSOP_OrderBilling00.ParamByName( 'V_COSTREF' ).AsDateTime     := DescricaoMes(cxMesTaxa.Text, cbxAno.Text);
-      FDQueryVSOP_OrderBilling00.ParamByName( 'V_BOMREF' ).AsDateTime      := DtRefBOM.Date;
-      FDQueryVSOP_OrderBilling00.ParamByName( 'V_TSOP_GMHBUD' ).AsString   := VAR_TSOP_GMHBUD;
-      FDQueryVSOP_OrderBilling00.Open;
+    // data em que os dados foram exportados do SAP
+    FDStoredProcGet.ParamByName( '@DATA' ).AsString          := FormatDateTime('yyyy-mm-dd 00:00:00', DtRefBOM.Date);
 
-      FDQueryBOM.Close;
-      Mensagem( 'Obtendo dados (BOM)...' );
-      FDQueryBOM.ParamByName( 'V_DATA1' ).AsDateTime      := DtRefBOM.Date;
-      FDQueryBOM.ParamByName( 'V_DATA2' ).AsDateTime      := DtRefBOM.Date;
-      FDQueryBOM.ParamByName( 'V_TSOP_GMHBUD' ).AsString  := VAR_TSOP_GMHBUD;
-      FDQueryBOM.Open;
+    if System.DateUtils.StartOfTheMonth(DtRefBOM.Date) =  System.DateUtils.StartOfTheMonth(dttaxaHora.Date) then
+    begin
+      FDStoredProcGet.ParamByName( '@DATAAPLICADA' ).IsNull;
+      FDStoredProcGet.ParamByName( '@PROCESSADO' ).AsBoolean := True; // Arquivo já processado
+    end
+    else
+    begin
+      FDStoredProcGet.ParamByName( '@DATAAPLICADA' ).AsString  := FormatDateTime('yyyy-mm-dd 00:00:00', System.DateUtils.StartOfTheMonth(dttaxaHora.Date));
+      FDStoredProcGet.ParamByName( '@PROCESSADO' ).AsBoolean   := True; // Arquivo já processado
+    end;
 
-      FDQueryCosting.Close;
-      Mensagem( 'Obtendo dados (Costing)...' );
-      FDQueryCosting.ParamByName( 'V_DATA' ).AsDateTime       := DtRefCosting.Date;
-      FDQueryCosting.ParamByName( 'V_TSOP_GMHBUD' ).AsString  := VAR_TSOP_GMHBUD;
-      FDQueryCosting.ParamByName( 'V_TSOP_DTIMPORTACAO' ).AsDateTime  := DtRefCosting.Date;
-      FDQueryCosting.Open;
+    Try
+        Try
+           FDStoredProcGet.ExecProc;
 
-      FDQueryRouting.Close;
-      Mensagem( 'Obtendo dados (Routing)...' );
-      FDQueryRouting.ParamByName( 'V_DATA1' ).AsDateTime      := DtRefBOM.Date;
-      FDQueryRouting.ParamByName( 'V_DATA2' ).AsDateTime      := DtRefBOM.Date;
-      FDQueryRouting.ParamByName( 'V_TSOP_GMHBUD' ).AsString  := VAR_TSOP_GMHBUD;
-      FDQueryRouting.Open;
+        except
+          on E : Exception do
+            begin
+              MessageDlg( 'Stored procedure error: ' + #13 + #13 +
+                           E.Message, mtError, [ mbOk ], 0 );
+            end;
+        end;
 
+    finally
+        Mensagem( EmptyStr );
+    end;
+
+
+    if pNivel = 0 then
+    begin
+        FDQueryVSOP_OrderBilling00.Close;
+        Mensagem( 'Obtendo dados (Gross Margin)...' );
+        FDQueryVSOP_OrderBilling00.ParamByName( 'V_BILLING_INI' ).AsDateTime := cxDateEditTSOP_ORDBILDATDOCINI.Date;
+        FDQueryVSOP_OrderBilling00.ParamByName( 'V_BILLING_FIM' ).AsDateTime := cxDateEditTSOP_ORDBILDATDOCFIM.Date;
+        FDQueryVSOP_OrderBilling00.ParamByName( 'V_COSTREF' ).AsDateTime     := dttaxaHora.Date;
+        FDQueryVSOP_OrderBilling00.ParamByName( 'V_BOMREF' ).AsDateTime      := DtRefBOM.Date;
+        FDQueryVSOP_OrderBilling00.ParamByName( 'V_TSOP_GMHBUD' ).AsString   := VAR_TSOP_GMHBUD;
+        FDQueryVSOP_OrderBilling00.Open;
+    end
+    else
+    if pNivel = 1 then
+    begin
+        FDQueryVSOP_OrderBilling00.Close;
+        Mensagem( 'Obtendo dados (Gross Margin)...' );
+        FDQueryVSOP_OrderBilling00.ParamByName( 'V_BILLING_INI' ).AsDateTime := cxDateEditTSOP_ORDBILDATDOCINI.Date;
+        FDQueryVSOP_OrderBilling00.ParamByName( 'V_BILLING_FIM' ).AsDateTime := cxDateEditTSOP_ORDBILDATDOCFIM.Date;
+        FDQueryVSOP_OrderBilling00.ParamByName( 'V_COSTREF' ).AsDateTime     := dttaxaHora.Date;
+        FDQueryVSOP_OrderBilling00.ParamByName( 'V_BOMREF' ).AsDateTime      := DtRefBOM.Date;
+        FDQueryVSOP_OrderBilling00.ParamByName( 'V_TSOP_GMHBUD' ).AsString   := VAR_TSOP_GMHBUD;
+        FDQueryVSOP_OrderBilling00.Open;
+
+        FDQueryBOM.Close;
+        Mensagem( 'Obtendo dados (BOM)...' );
+        FDQueryBOM.ParamByName( 'V_DATA1' ).AsDateTime      := DtRefBOM.Date;
+        FDQueryBOM.ParamByName( 'V_DATA2' ).AsDateTime      := DtRefBOM.Date;
+        FDQueryBOM.ParamByName( 'V_TSOP_GMHBUD' ).AsString  := VAR_TSOP_GMHBUD;
+        FDQueryBOM.Open;
+
+        FDQueryCosting.Close;
+        Mensagem( 'Obtendo dados (Costing)...' );
+        FDQueryCosting.ParamByName( 'V_DATA' ).AsDateTime       := DtRefCosting.Date;
+        FDQueryCosting.ParamByName( 'V_TSOP_GMHBUD' ).AsString  := VAR_TSOP_GMHBUD;
+        FDQueryCosting.Open;
+
+        FDQueryRouting.Close;
+        Mensagem( 'Obtendo dados (Routing)...' );
+        FDQueryRouting.ParamByName( 'V_DATA1' ).AsDateTime      := DtRefBOM.Date;
+        FDQueryRouting.ParamByName( 'V_DATA2' ).AsDateTime      := DtRefBOM.Date;
+        FDQueryRouting.ParamByName( 'V_TSOP_GMHBUD' ).AsString  := VAR_TSOP_GMHBUD;
+        FDQueryRouting.Open;
+    end
+    else if pNivel = 2 then
+    begin
+        FDQueryBOM.Close;
+        Mensagem( 'Obtendo dados (BOM)...' );
+        FDQueryBOM.ParamByName( 'V_DATA1' ).AsDateTime      := DtRefBOM.Date;
+        FDQueryBOM.ParamByName( 'V_DATA2' ).AsDateTime      := DtRefBOM.Date;
+        FDQueryBOM.ParamByName( 'V_TSOP_GMHBUD' ).AsString  := VAR_TSOP_GMHBUD;
+        FDQueryBOM.Open;
+    end
+    else if pNivel = 3 then
+    begin
+        FDQueryCosting.Close;
+        Mensagem( 'Obtendo dados (Costing)...' );
+        FDQueryCosting.ParamByName( 'V_DATA' ).AsDateTime       := DtRefCosting.Date;
+        FDQueryCosting.ParamByName( 'V_TSOP_GMHBUD' ).AsString  := VAR_TSOP_GMHBUD;
+        FDQueryCosting.Open;
+    end
+    else if pNivel = 4 then
+    begin
+        FDQueryRouting.Close;
+        Mensagem( 'Obtendo dados (Routing)...' );
+        FDQueryRouting.ParamByName( 'V_DATA1' ).AsDateTime      := DtRefBOM.Date;
+        FDQueryRouting.ParamByName( 'V_DATA2' ).AsDateTime      := DtRefBOM.Date;
+        FDQueryRouting.ParamByName( 'V_TSOP_GMHBUD' ).AsString  := VAR_TSOP_GMHBUD;
+        FDQueryRouting.Open;
+    end;
 
   finally
 
@@ -536,7 +628,7 @@ begin
 
       dxSpreadSheet.Sheets[1].Active := True;
 
-      for I := 0 to 11 do
+      for I := 0 to 10 do
       begin
 
         with dxSpreadSheet.ActiveSheetAsTable.CreateCell(0,I) do;
@@ -621,14 +713,14 @@ begin
              Style.Brush.BackgroundColor := varCor1;
              AsVariant := FDQueryBOMOrdem.AsString;
           end;
-
+          {
          with dxSpreadSheet.ActiveSheetAsTable.CreateCell(X,11) do
           begin
              Style.Brush.BackgroundColor := varCor1;
              Style.DataFormat.FormatCode := 'dd/mm/yyyy';
              AsVariant := FormatDateTime('dd/mm/yyyy', FDQueryBOMDataProcessamento.AsDateTime);
           end;
-
+           }
 
           if Odd(X) then
             varCor1 := RGB(255,255,225)
@@ -649,7 +741,7 @@ begin
 
   dxSpreadSheet.Sheets[2].Active := True;
 
-  for I := 0 to 7 do
+  for I := 0 to 6 do
   begin
 
     with dxSpreadSheet.ActiveSheetAsTable.CreateCell(0,I) do;
@@ -712,13 +804,13 @@ begin
        AsVariant := FDQueryCostingPriceUnit.AsFloat;
     end;
 
-    with dxSpreadSheet.ActiveSheetAsTable.CreateCell(X,7) do
+   { with dxSpreadSheet.ActiveSheetAsTable.CreateCell(X,7) do
     begin
        Style.Brush.BackgroundColor := varCor1;
        Style.DataFormat.FormatCode := 'dd/mm/yyyy';
        AsVariant := FormatDateTime('dd/mm/yyyy', FDQueryCostingTSOP_DTIMPORTACAO.AsDateTime);
     end;
-
+    }
     if Odd(X) then
       varCor1 := RGB(255,255,225)
     else
@@ -1150,7 +1242,7 @@ begin
 
   dxSpreadSheet.Sheets[3].Active := True;
 
-  for I := 0 to 17 do
+  for I := 0 to 16 do
   begin
 
     with dxSpreadSheet.ActiveSheetAsTable.CreateCell(0,I) do;
@@ -1261,14 +1353,14 @@ begin
          Style.DataFormat.FormatCode := '#,###.####';
          AsVariant := FDQueryRoutingRunOverheadCost.AsString;
       end;
-
+    {
       with dxSpreadSheet.ActiveSheetAsTable.CreateCell(X,17) do
       begin
         Style.Brush.BackgroundColor := varCor1;
         Style.DataFormat.FormatCode := 'dd/mm/yyyy';
         AsVariant := FormatDateTime('dd/mm/yyyy', FDQueryRoutingDataProcessamento.AsDateTime);
       end;
-
+     }
 
       if Odd(X) then
         varCor1 := RGB(255,255,225)
@@ -1279,6 +1371,111 @@ begin
 
       FDQueryRouting.Next;
   end;
+
+end;
+
+procedure TFr_RelatGrossMargin.cxbtnProcessarGMClick(Sender: TObject);
+var
+ I : Integer;
+begin
+     // se nao existir, precisa copiar os dados dos originais e chamar a rotina para processar ultimo historico.
+
+     try
+        Mensagem( 'Reindexando arquivos...' );
+        FDScriptInsert.Params.ParamByName('Banco').AsString := Str_Pal(FDConnection.Params[4],2,'=');
+        FDScriptInsert.ExecuteAll;
+
+     finally
+        Mensagem( EmptyStr );
+     end;
+
+    try
+      FDStoredProcGet.Close;
+      FDStoredProcGet.Connection := FDConnection;
+      FDStoredProcGet.StoredProcName := AnsiUpperCase( 'PSOP_RECUPERAGM' );
+      for I := 0 to FDStoredProcGet.Params.Count-1 do
+        FDStoredProcGet.Params.ClearValues(i);
+
+      FDStoredProcGet.Prepare;
+    except
+      on E : Exception do
+        begin
+          MessageDlg( 'Stored procedure error: ' + #13 + #13 +
+                       E.Message, mtError, [ mbOk ], 0 );
+        end;
+    end;
+
+
+    FDStoredProcGet.ParamByName( '@DATA' ).AsString          := FormatDateTime('yyyy-mm-dd 00:00:00', DtRefBOM.Date);
+    FDStoredProcGet.ParamByName( '@DATAAPLICADA' ).IsNull;
+    FDStoredProcGet.ParamByName( '@PROCESSADO' ).AsBoolean := False; // Arquivo não processado
+
+
+    Try
+        Try
+           FDStoredProcGet.ExecProc;
+
+        except
+          on E : Exception do
+            begin
+              MessageDlg( 'Stored procedure error: ' + #13 + #13 +
+                           E.Message, mtError, [ mbOk ], 0 );
+            end;
+        end;
+
+    Finally
+        Mensagem( EmptyStr );
+    End;
+
+
+    // processo em média demora 4 horas!!!
+    Try
+      Mensagem( 'Calculando Custo...' );
+      FDScriptInsert.ExecuteAll;
+
+      Mensagem( 'Calculo Finalizado.' );
+    Finally
+      Mensagem( EmptyStr );
+    End;
+
+    Mensagem( 'Gravando Historico GM.' );
+    Try
+      FDStoredGavaHistoricoGM.Close;
+      FDStoredGavaHistoricoGM.Connection := FDConnection;
+      FDStoredGavaHistoricoGM.StoredProcName := AnsiUpperCase( 'PSOP_HISTORICOGM' );
+      for I := 0 to FDStoredGavaHistoricoGM.Params.Count-1 do
+        FDStoredGavaHistoricoGM.Params.ClearValues(i);
+
+      FDStoredGavaHistoricoGM.Prepare;
+    Except
+      on E : Exception do
+        begin
+          MessageDlg( 'Stored procedure error: ' + #13 + #13 +
+                       E.Message, mtError, [ mbOk ], 0 );
+        end;
+    End;
+
+
+    FDStoredGavaHistoricoGM.ParamByName( '@DATA' ).AsString          := FormatDateTime('yyyy-mm-dd 00:00:00', DtRefBOM.Date);
+    FDStoredGavaHistoricoGM.ParamByName( '@DATA_APLICADA' ).AsString := FormatDateTime('yyyy-mm-dd 00:00:00', dttaxaHora.Date);
+    FDStoredGavaHistoricoGM.ParamByName( '@PROCESSADO' ).AsBoolean   := True; // Arquivo não processado
+    Try
+        Try
+           FDStoredGavaHistoricoGM.ExecProc;
+
+        except
+          on E : Exception do
+            begin
+              MessageDlg( 'Stored procedure error: ' + #13 + #13 +
+                           E.Message, mtError, [ mbOk ], 0 );
+            end;
+        end;
+
+    finally
+        Mensagem( EmptyStr );
+    end;
+
+
 
 end;
 
@@ -1293,6 +1490,46 @@ end;
 procedure TFr_RelatGrossMargin.cxButtonRefreshClick(Sender: TObject);
 begin
     AbrirDataSet;
+end;
+
+procedure TFr_RelatGrossMargin.cxCheckBoxConsultarClick(Sender: TObject);
+begin
+  if cxCheckBoxConsultar.Checked  then
+    pNivel := 1
+  else pNivel := 0;
+
+end;
+
+procedure TFr_RelatGrossMargin.cxDateEditTSOP_ORDBILDATDOCFIMExit(
+  Sender: TObject);
+begin
+    cxDateEditTSOP_ORDBILDATDOCINI.Date := System.DateUtils.StartOfTheMonth(cxDateEditTSOP_ORDBILDATDOCINI.Date);
+    DtRefBOM.Date   := cxDateEditTSOP_ORDBILDATDOCINI.Date;
+    dttaxaHora.Date := cxDateEditTSOP_ORDBILDATDOCINI.Date;
+    DtRefCosting.Date := cxDateEditTSOP_ORDBILDATDOCINI.Date;
+
+end;
+
+procedure TFr_RelatGrossMargin.cxPageControlChange(Sender: TObject);
+begin
+  if ((cxCheckBoxConsultar.Checked = False) and (cxPageControl.ActivePage = cxTabSheetGrossMargin)) then
+  begin
+      pNivel := 0;
+  end
+  else
+  if ((cxCheckBoxConsultar.Checked = False) and (cxPageControl.ActivePage = cxTabSheetBom)) Then
+  begin
+      pNivel := 2;
+  end
+  else  if ((cxCheckBoxConsultar.Checked = False) and (cxPageControl.ActivePage = cxTabSheetCosting )) Then
+  begin
+      pNivel := 3;
+  end
+  else  if ((cxCheckBoxConsultar.Checked = False) and (cxPageControl.ActivePage = cxTabSheetRouting)) Then
+  begin
+      pNivel := 4;
+  end;
+
 end;
 
 function TFr_RelatGrossMargin.DescricaoMes(MesExtenso, Ano: string): TDateTime;
@@ -1362,10 +1599,7 @@ begin
   cxDateEditTSOP_ORDBILDATDOCFIM.Date := EndOfTheMonth(VarMesAnterior);
 
   cxPageControl.ActivePage := cxTabSheetGrossMargin;
-
-  cbxAno.EditValue  := System.DateUtils.YearOf(now);
-  cxMesTaxa.ItemIndex    := cxMesTaxa.Properties.Items.IndexOf(RetornaMes(System.DateUtils.monthof(now)-1));
-
+  dttaxaHora.Date   :=  StartOfTheMonth(VarMesAnterior);
   DtRefBOM.Date     :=  StartOfTheMonth(VarMesAnterior);
   DtRefCosting.Date :=  StartOfTheMonth(VarMesAnterior);
 
@@ -1378,6 +1612,8 @@ begin
       cxTableViewGrossMargin00.Columns[I].Visible := True;
     end;
   end;
+
+  pNivel := 0;
 
 end;
 

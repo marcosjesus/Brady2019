@@ -845,6 +845,8 @@ begin
                 else
                   varCor2 := RGB(216,234,204);
 
+
+
               with dxSpreadSheet.ActiveSheetAsTable.CreateCell(X,I) do
               begin
 
@@ -1171,6 +1173,8 @@ begin
                     FDQueryTSOP_BudgetTSOP_BUDVLF.AsFloat := varForecast;
                     FDQueryTSOP_BudgetTSOP_USUCOD.AsInteger := Fr_Brady.TSIS_USUCOD;
                     FDQueryTSOP_BudgetTSOP_BUDDATCAD.AsDateTime := Now;
+                    if cxRadioGroupOpcao.ItemIndex = 0 then
+                        FDQueryTSOP_BudgetTSOP_BUDFAM.Clear;
 
                     try
                       FDQueryTSOP_Budget.Post;

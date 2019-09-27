@@ -1,16 +1,30 @@
 inherited FrmECFVinculoContaCentro: TFrmECFVinculoContaCentro
   Caption = 'Vincular Conta x Centro de Custo'
-  ExplicitWidth = 750
-  ExplicitHeight = 513
+  ClientHeight = 483
+  ClientWidth = 962
+  ExplicitWidth = 978
+  ExplicitHeight = 522
   PixelsPerInch = 96
   TextHeight = 13
   inherited PanFundo: TPanel
+    Width = 962
+    Height = 483
     inherited PanTitulo: TPanel
       Top = 29
+      Width = 958
       TabOrder = 4
       ExplicitTop = 29
+      inherited ImaBarraSup: TImage
+        Width = 954
+      end
+    end
+    inherited StatusBar: TdxStatusBar
+      Top = 461
+      Width = 958
     end
     inherited Panel27: TPanel
+      Top = 425
+      Width = 958
       TabOrder = 6
       inherited ButNovo: TcxButton
         Top = 1
@@ -22,12 +36,21 @@ inherited FrmECFVinculoContaCentro: TFrmECFVinculoContaCentro
         ExplicitTop = 0
         ExplicitHeight = 35
       end
+      object btnImportar: TBitBtn
+        Left = 472
+        Top = 8
+        Width = 75
+        Height = 25
+        Caption = 'btnImportar'
+        TabOrder = 8
+        OnClick = btnImportarClick
+      end
     end
     object Panel1: TPanel
       Tag = -2
       Left = 2
       Top = 2
-      Width = 730
+      Width = 958
       Height = 27
       Align = alTop
       Alignment = taLeftJustify
@@ -40,6 +63,7 @@ inherited FrmECFVinculoContaCentro: TFrmECFVinculoContaCentro
       Font.Style = [fsBold]
       ParentFont = False
       TabOrder = 0
+      ExplicitWidth = 730
       object EdiCodigo: TrsSuperEdit
         Tag = -2
         Left = 528
@@ -432,8 +456,8 @@ inherited FrmECFVinculoContaCentro: TFrmECFVinculoContaCentro
       end
     end
     object Panel7: TPanel
-      Left = 207
-      Top = 164
+      Left = 353
+      Top = 169
       Width = 527
       Height = 175
       Anchors = []
@@ -442,6 +466,8 @@ inherited FrmECFVinculoContaCentro: TFrmECFVinculoContaCentro
       BevelWidth = 2
       TabOrder = 9
       Visible = False
+      ExplicitLeft = 207
+      ExplicitTop = 164
       object Image1: TImage
         Left = 2
         Top = 2

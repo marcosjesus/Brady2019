@@ -3,21 +3,27 @@ inherited FrmRelParticipante: TFrmRelParticipante
   ClientHeight = 502
   ClientWidth = 1142
   ExplicitWidth = 1158
-  ExplicitHeight = 540
+  ExplicitHeight = 541
   PixelsPerInch = 96
   TextHeight = 13
   inherited PanFundo: TPanel
     Width = 1142
     Height = 502
+    ExplicitWidth = 1142
+    ExplicitHeight = 502
     inherited PanTitulo: TPanel
       Width = 1138
+      ExplicitWidth = 1138
       inherited ImaBarraSup: TImage
         Width = 1134
+        ExplicitWidth = 1134
       end
     end
     inherited ToolBar: TToolBar
       Top = 442
       Width = 1138
+      ExplicitTop = 442
+      ExplicitWidth = 1138
       inherited ButPesquisar: TcxButton
         TabOrder = 4
         OnClick = ButPesquisarClick
@@ -124,6 +130,8 @@ inherited FrmRelParticipante: TFrmRelParticipante
     inherited StatusBar: TdxStatusBar
       Top = 480
       Width = 1138
+      ExplicitTop = 480
+      ExplicitWidth = 1138
     end
     object cxFiltro: TcxGroupBox
       Left = 2
@@ -138,7 +146,6 @@ inherited FrmRelParticipante: TFrmRelParticipante
       Style.Font.Style = [fsBold]
       Style.IsFontAssigned = True
       TabOrder = 3
-      ExplicitWidth = 730
       Height = 85
       Width = 1138
       object Panel5: TPanel
@@ -260,9 +267,6 @@ inherited FrmRelParticipante: TFrmRelParticipante
       Align = alClient
       TabOrder = 4
       Properties.CustomButtons.Buttons = <>
-      ExplicitTop = 201
-      ExplicitWidth = 730
-      ExplicitHeight = 213
       ClientRectBottom = 349
       ClientRectLeft = 4
       ClientRectRight = 1134
@@ -275,9 +279,6 @@ inherited FrmRelParticipante: TFrmRelParticipante
       Height = 353
       Align = alClient
       TabOrder = 5
-      ExplicitLeft = 0
-      ExplicitTop = 84
-      ExplicitWidth = 1075
       object cxGrid1DBTableView1: TcxGridDBTableView
         Navigator.Buttons.CustomButtons = <>
         DataController.DataSource = DSGrid
@@ -478,6 +479,7 @@ inherited FrmRelParticipante: TFrmRelParticipante
     object dxPrinterGrid: TdxGridReportLink
       Active = True
       Component = cxGrid1
+      PageNumberFormat = pnfNumeral
       PrinterPage.DMPaper = 9
       PrinterPage.Footer = 6350
       PrinterPage.Header = 6350
@@ -490,8 +492,9 @@ inherited FrmRelParticipante: TFrmRelParticipante
       PrinterPage.PageSize.Y = 297000
       PrinterPage._dxMeasurementUnits_ = 0
       PrinterPage._dxLastMU_ = 2
-      ReportDocument.CreationDate = 43214.442495578700000000
+      ReportDocument.CreationDate = 43615.448495798610000000
       ReportTitle.Text = 'Relat'#243'rio por Participante'
+      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

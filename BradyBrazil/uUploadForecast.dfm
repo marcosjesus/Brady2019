@@ -3837,17 +3837,22 @@ object Fr_UploadForecast: TFr_UploadForecast
         '       AND NULLIF(RTRIM(LTRIM(C01.TSOP_BUDFAM)),'#39#39') IS NOT NULL ' +
         ')'
       ''
-      
-        'FULL JOIN ( select x.tsop_budclicod, x.tsop_ordbilsitnom, Max(x.' +
-        'tsop_buddatcad) as max_data'
-      '             from tsop_budget x'
-      '             where x.tsop_budtip = '#39'SF'#39
-      #9#9#9' and  NULLIF(rtrim(ltrim(x.tsop_budfam)),'#39#39' ) IS NOT NULL'
-      #9#9#9' group by  x.tsop_budclicod, x.tsop_ordbilsitnom ) J01'
-      'on    (   J01.tsop_budclicod = c01.tsop_budclicod'
-      '      and J01.tsop_ordbilsitnom = c01.tsop_ordbilsitnom '
-      #9'  and J01.max_data = c01.tsop_buddatcad )'
       ''
+      
+        #9#9#9#9#9'INNER JOIN ( SELECT X.TSOP_BUDCLICOD, X.TSOP_ORDBILSITNOM, ' +
+        ' X.TSOP_BUDFAM, X.TSOP_BUDDAT, MAX(X.TSOP_BUDDATCAD) AS MAX_DATA' +
+        '    '
+      #9#9#9#9#9#9'FROM TSOP_BUDGET X     '
+      #9#9#9#9#9#9'WHERE X.TSOP_BUDTIP = :TSOP_BUDTIP   '
+      #9#9#9#9#9#9'AND X.TSOP_BUDDATREF = :TSOP_BUDDATREF_ANT'
+      
+        #9#9#9#9#9'GROUP BY  X.TSOP_BUDCLICOD, X.TSOP_ORDBILSITNOM, X.TSOP_BUD' +
+        'FAM, X.TSOP_BUDDAT ) J01    '
+      #9#9#9#9#9'ON    (   J01.TSOP_BUDCLICOD = C01.TSOP_BUDCLICOD   '
+      #9#9#9#9#9'AND J01.TSOP_ORDBILSITNOM = C01.TSOP_ORDBILSITNOM   '
+      #9'  '#9#9#9'        AND J01.TSOP_BUDFAM = C01.TSOP_BUDFAM '
+      #9#9#9#9'        AND J01.TSOP_BUDDAT = C01.TSOP_BUDDAT '
+      #9#9#9#9'        AND J01.MAX_DATA = C01.TSOP_BUDDATCAD )   '
       'WHERE C01.TSOP_BUDTIP = :TSOP_BUDTIP'
       '  AND C01.TSOP_BUDDATREF = :TSOP_BUDDATREF_ANT'
       '&WHERE1'
