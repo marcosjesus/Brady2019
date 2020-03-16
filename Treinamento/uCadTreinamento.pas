@@ -392,7 +392,7 @@ begin
   qryAux.close;
 
   editxtDtRealizacao.Text := Str_DateToStr(Date) ;
-  EdiDatIni.Date := editxtDtRealizacao.AsDateTime;
+  EdiDatIni.Date :=  Date;
 
   //EditBuscaTreinamento.SetValue('TRE_TREINAMENTO_ID = ' + EdiCodigo.AsString);
   EditBuscaTreinamento.Text := EdiCodigo.AsString;
@@ -679,7 +679,7 @@ begin
         Exit ;
     End;
 
-    editxtDtRealizacao.ValidateData;
+   // editxtDtRealizacao.ValidateData;
 
     editxtDtTermino.AsDateTime := EdiDatFim.Date;
 
@@ -690,12 +690,13 @@ begin
 
         Exit ;
     End;
-    editxtDtTermino.ValidateData;
+
+   // editxtDtTermino.ValidateData;
 
     If (( editxtDtTermino.AsDateTime < editxtDtRealizacao.AsDateTime ) and (VarOperacao = OPE_INCLUSAO)) Then
     Begin
         Mens_MensInf('Data Término não pode ser anterior à Data Inicial') ;
-        editxtDtTermino.SetFocus ;
+        editxtDtTermino.SetFocus;
         Exit ;
     End;
 
@@ -1545,15 +1546,16 @@ begin
                 DB_Conect.sqlFunc.Params.ParamByName('FUN_NOME').AsString             := varNOME_PARTICIPANTE;
                 DB_Conect.sqlFunc.Params.ParamByName('FUN_SEXO').AsString             := varSexo;
 
-                if ((varDataNascimento = 0) or (varDataNascimento = DB_Conect.ConvertDate('1899-12-30'))) then
+
+                if (varDataNascimento = 0) then
                   DB_Conect.sqlFunc.Params.ParamByName('FUN_DTNASC').AsDateTime       := 0
                 else  DB_Conect.sqlFunc.Params.ParamByName('FUN_DTNASC').AsDateTime   := varDataNascimento;
 
-                if ((varDataAdmissao = 0) or (varDataAdmissao = DB_Conect.ConvertDate('1899-12-30'))) then
+                if (varDataAdmissao = 0) then
                   DB_Conect.sqlFunc.Params.ParamByName('FUN_DTADM').AsDateTime        := 0
                 else  DB_Conect.sqlFunc.Params.ParamByName('FUN_DTADM').AsDateTime    := varDataAdmissao;
 
-                if ((varDataDemissao = 0) or (varDataDemissao = DB_Conect.ConvertDate('1899-12-30'))) then
+                if (varDataDemissao = 0)  then
                   DB_Conect.sqlFunc.Params.ParamByName('FUN_DTDESL').AsDateTime       := 0
                 else DB_Conect.sqlFunc.Params.ParamByName('FUN_DTDESL').AsDateTime    := varDataDemissao;
 

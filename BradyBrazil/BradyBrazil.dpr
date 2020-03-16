@@ -62,7 +62,13 @@ uses
   uCalcGM in 'uCalcGM.pas' {Fr_CalcGM},
   uRelatGrossMargin in 'uRelatGrossMargin.pas' {Fr_RelatGrossMargin},
   uRelatorioRecuperacaoClientes in 'uRelatorioRecuperacaoClientes.pas' {Fr_RelatorioRecuperacaoClientes},
-  uDashBoard in 'uDashBoard.pas' {frmExibeDashBoard};
+  uDashBoard in 'uDashBoard.pas' {frmExibeDashBoard},
+  uEditoEmail in 'uEditoEmail.pas' {Fr_EditoEmail},
+  uFr_CadastroRegrasIQF in 'uFr_CadastroRegrasIQF.pas' {Fr_CadastroRegraIQF},
+  uConfig in 'uConfig.pas' {FConfig},
+  uFr_ListaEmail in 'uFr_ListaEmail.pas' {Fr_ListaEmail},
+  uFr_CadastroIQFCategoria in 'uFr_CadastroIQFCategoria.pas' {Fr_CadastroIQFCategoria},
+  uFr_UploadDistribuidores in 'uFr_UploadDistribuidores.pas' {Fr_UploadDistribuidores};
 
 {$R *.res}
 

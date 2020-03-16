@@ -133,7 +133,8 @@ begin
   inherited;
   if not OpenDialog.Execute then
     exit;
-
+   // Layout do Arquivo REGRAS RATEIO 2017 e INV L210.xlsx Original Gerado Pela Regina.
+   // Com base no arquivo acima, foi gerado o arquivo Layout_Rateio para usar aqui nesta importação
   varNomeArq := OpenDialog.FileName;
 
   DB_Conect := TDB_Conect.Create(nil);

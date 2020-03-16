@@ -4312,6 +4312,10 @@ inherited FrmCadTreinamento: TFrmCadTreinamento
       object TabAnexar: TcxTabSheet
         Caption = 'Anexar Documentos'
         ImageIndex = 2
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object Panel12: TPanel
           Tag = -1
           Left = 0
@@ -4581,7 +4585,7 @@ inherited FrmCadTreinamento: TFrmCadTreinamento
     Left = 514
     Top = 176
     Bitmap = {
-      494C0101260027005C0310001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010126002700640310001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000A0000000010020000000000000A0
       000000000000000000000000000000000000000000000000000096675E009F6F
       60009F6F60009F6F60009F6F60009F6F60009F6F60009F6F60009F6F60009F6F

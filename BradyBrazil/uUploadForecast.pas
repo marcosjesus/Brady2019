@@ -1094,7 +1094,7 @@ begin
 
                 Mensagem( 'Mês ( ' + IntToStr(varCurrentMonth) + '/12 )' + 'Linha (" ' + IntToStr(X) + '/' + IntToStr(dxSpreadSheet.ActiveSheetAsTable.Rows.LastIndex) + '") "' + Trim(dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[2].AsString) + '" ...' );
 
-                for I := 19 to 32 do
+                for I := 21 to 34 do    // era 19 e 32
                 begin
 
                   if (cxRadioGroupOpcao.ItemIndex = 0) and (I > 30) then

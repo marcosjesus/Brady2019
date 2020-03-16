@@ -213,6 +213,27 @@ type
     dxBarButton2: TdxBarButton;
     dxBarLargeButtonSIOPRecuperacaodeClientes: TdxBarLargeButton;
     dxBarLargeButtonSIOPDashBoard: TdxBarLargeButton;
+    dxRibbonTabMarketing: TdxRibbonTab;
+    dxBarButton3: TdxBarButton;
+    dxBarButton4: TdxBarButton;
+    dxBarManagerBarMarketing: TdxBar;
+    dxBarButtonEditorEmail: TdxBarButton;
+    dxBarLargeEditorEmail: TdxBarLargeButton;
+    dxBarButtonIQFCadastroRegra: TdxBarButton;
+    dxBarButton6: TdxBarButton;
+    dxBarButtonIQFCadastroMeta: TdxBarButton;
+    dxBarButton5: TdxBarButton;
+    dxBarLargeButton1: TdxBarLargeButton;
+    dxBarLargeButton2: TdxBarLargeButton;
+    dxBarButton7: TdxBarButton;
+    dxBarManagerBarParametros: TdxBar;
+    dxBarLargeButtonMKTConfig: TdxBarLargeButton;
+    dxBarManagerBarEmailEnviado: TdxBar;
+    dxBarLargeButtonMKTLista: TdxBarLargeButton;
+    dxBarButtonCategoria: TdxBarButton;
+    dxBarManagerBarUploadDistribuidores: TdxBar;
+    dxBarButton8: TdxBarButton;
+    dxBarLargeButtonUploadDistribuidores: TdxBarLargeButton;
     procedure FormCreate(Sender: TObject);
     procedure dxRibbonBackstageViewSISTEMATabChanged(Sender: TObject);
     procedure ValueListEditorStringsChange(Sender: TObject);
@@ -278,6 +299,14 @@ type
     procedure dxBarButtonIQFImportacaoFornecedorClick(Sender: TObject);
     procedure dxBarLargeButtonSIOPRecuperacaodeClientesClick(Sender: TObject);
     procedure dxBarLargeButtonSIOPDashBoardClick(Sender: TObject);
+    procedure dxBarButtonEditorEmailClick(Sender: TObject);
+    procedure dxBarLargeEditorEmailClick(Sender: TObject);
+    procedure dxBarButtonIQFCadastroMetaClick(Sender: TObject);
+    procedure dxBarButtonIQFCadastroRegraClick(Sender: TObject);
+    procedure dxBarLargeButtonMKTConfigClick(Sender: TObject);
+    procedure dxBarLargeButtonMKTListaClick(Sender: TObject);
+    procedure dxBarButtonCategoriaClick(Sender: TObject);
+    procedure dxBarLargeButtonUploadDistribuidoresClick(Sender: TObject);
   private
     FFormatoBR: TFormatSettings;
     FPainelOperador: Boolean;
@@ -323,7 +352,8 @@ uses uUtils, uRelatorioPreco, uRelatorioPartNumber, uCadastroSite, AsyncCalls, u
   uImportarIQFZMP05, uImportarIQFFornecedor, uUploadForecast, uRelatorioAnaliseIQF, uUploadBOM,
   uUploadCustosEstoque, uUploadRouting, uUploadTaxasHoras, uCalcGM, uCadastroProdutoSeton,
   uUploadProdutoSeton, uRelatorioRecuperacaoContas, uRelatorioGestaoMercados,uRelatorioRecuperacaoClientes,
-  uExibeForecast, uDashBoard;
+  uExibeForecast, uDashBoard,uEditoEmail,uFr_CadastroMetaIQF, uFr_CadastroRegrasIQF, uConfig,uFr_ListaEmail,
+  uFr_CadastroIQFCategoria,uFr_UploadDistribuidores;
 
 { TForm3 }
 
@@ -388,6 +418,37 @@ begin
   Fr_CadastroSetonForecast.Update;
 
   LocalAsyncVclCall( @AbrirDataset );
+end;
+
+procedure TFr_Brady.dxBarButtonCategoriaClick(Sender: TObject);
+  procedure AbrirDataset;
+  begin
+
+    Fr_CadastroIQFCategoria.AbrirDataset;
+
+  end;
+
+begin
+
+  if not Assigned(Fr_CadastroIQFPeriodo) then
+    Fr_CadastroIQFCategoria := TFr_CadastroIQFCategoria.Create(Self);
+
+  Fr_CadastroIQFCategoria.Visible := True;
+  Fr_CadastroIQFCategoria.Update;
+
+  LocalAsyncVclCall( @AbrirDataset );
+
+end;
+
+procedure TFr_Brady.dxBarButtonEditorEmailClick(Sender: TObject);
+begin
+  if not Assigned(Fr_UploadPodutoSeton) then
+    Fr_UploadPodutoSeton := TFr_UploadPodutoSeton.Create(Self);
+
+  Fr_UploadPodutoSeton.Visible := True;
+  Fr_UploadPodutoSeton.BringToFront;
+  Fr_UploadPodutoSeton.Update;
+
 end;
 
 procedure TFr_Brady.dxBarButtonGridToolsExportarExcelClick(Sender: TObject);
@@ -1096,6 +1157,47 @@ begin
 
 end;
 
+procedure TFr_Brady.dxBarLargeButtonMKTConfigClick(Sender: TObject);
+
+  procedure AbrirDataset;
+  begin
+
+    FConfig.AbrirDataset;
+
+  end;
+
+begin
+
+  if not Assigned(FConfig) then
+    FConfig := TFConfig.Create(Self);
+
+  FConfig.Visible := True;
+  FConfig.BringToFront;
+  FConfig.Update;
+
+  LocalAsyncVclCall( @AbrirDataset );
+
+end;
+
+procedure TFr_Brady.dxBarLargeButtonMKTListaClick(Sender: TObject);
+  procedure AbrirDataset;
+  begin
+
+    Fr_ListaEmail.AbrirDataset;
+
+  end;
+
+begin
+  if not Assigned(Fr_ListaEmail) then
+    Fr_ListaEmail := TFr_ListaEmail.Create(Self);
+
+  Fr_ListaEmail.Visible := True;
+  Fr_ListaEmail.BringToFront;
+  Fr_ListaEmail.Update;
+
+  LocalAsyncVclCall( @AbrirDataset );
+end;
+
 procedure TFr_Brady.dxBarButtonInovarCadastroClienteClick(Sender: TObject);
 
   procedure AbrirDataset;
@@ -1260,6 +1362,46 @@ begin
 
   Fr_CadastroIQFPeriodo.Visible := True;
   Fr_CadastroIQFPeriodo.Update;
+
+  LocalAsyncVclCall( @AbrirDataset );
+
+end;
+
+procedure TFr_Brady.dxBarButtonIQFCadastroRegraClick(Sender: TObject);
+  procedure AbrirDataset;
+  begin
+
+    Fr_CadastroRegraIQF.AbrirDataset;
+
+  end;
+
+begin
+
+  if not Assigned(Fr_CadastroRegraIQF) then
+    Fr_CadastroRegraIQF := TFr_CadastroRegraIQF.Create(Self);
+
+  Fr_CadastroRegraIQF.Visible := True;
+  Fr_CadastroRegraIQF.Update;
+
+  LocalAsyncVclCall( @AbrirDataset );
+
+end;
+
+procedure TFr_Brady.dxBarButtonIQFCadastroMetaClick(Sender: TObject);
+  procedure AbrirDataset;
+  begin
+
+    Fr_CadastroMetaIQF.AbrirDataset;
+
+  end;
+
+begin
+
+  if not Assigned(Fr_CadastroMetaIQF) then
+    Fr_CadastroMetaIQF := TFr_CadastroMetaIQF.Create(Self);
+
+  Fr_CadastroMetaIQF.Visible := True;
+  Fr_CadastroMetaIQF.Update;
 
   LocalAsyncVclCall( @AbrirDataset );
 
@@ -1508,6 +1650,37 @@ begin
   Fr_RelatorioVendas.Visible := True;
   Fr_RelatorioVendas.BringToFront;
   Fr_RelatorioVendas.Update;
+
+  LocalAsyncVclCall( @AbrirDataset );
+
+end;
+
+procedure TFr_Brady.dxBarLargeButtonUploadDistribuidoresClick(Sender: TObject);
+begin
+  if not Assigned(Fr_UploadDistribuidores) then
+    Fr_UploadDistribuidores := TFr_UploadDistribuidores.Create(Self);
+
+  Fr_UploadDistribuidores.Visible := True;
+  Fr_UploadDistribuidores.BringToFront;
+  Fr_UploadDistribuidores.Update;
+end;
+
+procedure TFr_Brady.dxBarLargeEditorEmailClick(Sender: TObject);
+
+  procedure AbrirDataset;
+  begin
+
+    Fr_EditoEmail.AbrirDataset;
+
+  end;
+
+begin
+  if not Assigned(Fr_EditoEmail) then
+    Fr_EditoEmail := TFr_EditoEmail.Create(Self);
+
+  Fr_EditoEmail.Visible := True;
+  Fr_EditoEmail.BringToFront;
+  Fr_EditoEmail.Update;
 
   LocalAsyncVclCall( @AbrirDataset );
 

@@ -153,7 +153,7 @@ object Fr_CadastroIQFParametro: TFr_CadastroIQFParametro
         Position.RowIndex = 0
       end
       object cxTableViewIQF_ParametroTIQF_PARDOP3045: TcxGridDBBandedColumn
-        Caption = '30 '#225' 45 Dias'
+        Caption = '30 '#225' 44 Dias'
         DataBinding.FieldName = 'TIQF_PARDOP3045'
         Width = 70
         Position.BandIndex = 2
@@ -161,7 +161,7 @@ object Fr_CadastroIQFParametro: TFr_CadastroIQFParametro
         Position.RowIndex = 0
       end
       object cxTableViewIQF_ParametroTIQF_PARDOP4660: TcxGridDBBandedColumn
-        Caption = '46 '#225' 60 Dias'
+        Caption = '45 '#225' 59 Dias'
         DataBinding.FieldName = 'TIQF_PARDOP4660'
         Width = 70
         Position.BandIndex = 2
@@ -169,7 +169,7 @@ object Fr_CadastroIQFParametro: TFr_CadastroIQFParametro
         Position.RowIndex = 0
       end
       object cxTableViewIQF_ParametroTIQF_PARDOP6190: TcxGridDBBandedColumn
-        Caption = '61 '#225' 90 Dias'
+        Caption = 'Acima de 60'
         DataBinding.FieldName = 'TIQF_PARDOP6190'
         Width = 70
         Position.BandIndex = 2

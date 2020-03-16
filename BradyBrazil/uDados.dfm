@@ -20,7 +20,7 @@ object Fr_Dados: TFr_Dados
       'User_Name=AppSOP'
       'Password=SOPApp1!'
       'ApplicationName=Brady'
-      'Database=AppSOP_HOM'
+      'Database=AppSOP'
       'MARS=yes'
       'LoginTimeout=300'
       'DriverID=MSSQL')
@@ -821,6 +821,26 @@ object Fr_Dados: TFr_Dados
       FieldName = 'TSOP_SALESITEM'
       Origin = 'TSOP_SALESITEM'
     end
+    object FDQueryTSOP_OrderBillingTSOP_ORDBILBUYERCONTACT: TStringField
+      FieldName = 'TSOP_ORDBILBUYERCONTACT'
+      Origin = 'TSOP_ORDBILBUYERCONTACT'
+      Size = 255
+    end
+    object FDQueryTSOP_OrderBillingTSOP_ORDBILBUYERCONTACTEMAIL: TStringField
+      FieldName = 'TSOP_ORDBILBUYERCONTACTEMAIL'
+      Origin = 'TSOP_ORDBILBUYERCONTACTEMAIL'
+      Size = 255
+    end
+    object FDQueryTSOP_OrderBillingTSOP_ORDBILBUYERCONTACTFIRSTNAME: TStringField
+      FieldName = 'TSOP_ORDBILBUYERCONTACTFIRSTNAME'
+      Origin = 'TSOP_ORDBILBUYERCONTACTFIRSTNAME'
+      Size = 255
+    end
+    object FDQueryTSOP_OrderBillingTSOP_ORDBILDAYOFWEEK: TStringField
+      FieldName = 'TSOP_ORDBILDAYOFWEEK'
+      Origin = 'TSOP_ORDBILDAYOFWEEK'
+      Size = 255
+    end
   end
   object FDScriptTSOP_OrderBilling: TFDScript
     SQLScripts = <
@@ -877,8 +897,8 @@ object Fr_Dados: TFr_Dados
       'SELECT *'
       'FROM TMAQ_ItemBOM A01'
       'WHERE 1=2')
-    Left = 616
-    Top = 53
+    Left = 624
+    Top = 93
     object FDQueryTMAQ_ItemBOMTMAQ_ITEBOMCOD: TFDAutoIncField
       FieldName = 'TMAQ_ITEBOMCOD'
       Origin = 'TMAQ_ITEBOMCOD'
@@ -995,8 +1015,8 @@ object Fr_Dados: TFr_Dados
     ResourceOptions.AssignedValues = [rvMacroCreate, rvMacroExpand, rvDirectExecute, rvPersistent]
     ResourceOptions.MacroCreate = False
     ResourceOptions.DirectExecute = True
-    Left = 616
-    Top = 109
+    Left = 624
+    Top = 157
   end
   object FDQueryTMAQ_ItemRouting: TFDQuery
     CachedUpdates = True
@@ -1942,7 +1962,7 @@ object Fr_Dados: TFr_Dados
       'FROM TSOP_OrderResquestDate A01'
       'WHERE 1=2')
     Left = 896
-    Top = 344
+    Top = 360
     object FDQueryTSOP_OrderResquestDateTSOP_ORDREQCOD: TFDAutoIncField
       FieldName = 'TSOP_ORDREQCOD'
       Origin = 'TSOP_ORDREQCOD'
@@ -3454,5 +3474,20 @@ object Fr_Dados: TFr_Dados
       Origin = 'TSOP_DT_IMPORTACAO'
       Required = True
     end
+  end
+  object FDQueryEmailMarketing: TFDQuery
+    Connection = FDConnection
+    Left = 544
+    Top = 16
+  end
+  object FDQueryEmailTemplate: TFDQuery
+    Connection = FDConnection
+    Left = 688
+    Top = 16
+  end
+  object FDQueryEmailAux: TFDQuery
+    Connection = FDConnection
+    Left = 680
+    Top = 72
   end
 end

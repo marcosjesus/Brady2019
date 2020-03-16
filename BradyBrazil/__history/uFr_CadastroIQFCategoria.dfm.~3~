@@ -1,0 +1,54 @@
+object Fr_CadastroIQFCategoria: TFr_CadastroIQFCategoria
+  Left = 0
+  Top = 0
+  Caption = 'IQF - Cadastro de Categoria'
+  ClientHeight = 362
+  ClientWidth = 650
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  FormStyle = fsMDIChild
+  OldCreateOrder = False
+  Visible = True
+  PixelsPerInch = 96
+  TextHeight = 13
+  object FDConnection: TFDConnection
+    Params.Strings = (
+      'SERVER=GHOS2023'
+      'User_Name=AppSOP'
+      'Password=SOPApp1!'
+      'ApplicationName=Brady'
+      'DATABASE=AppSOP'
+      'MARS=yes'
+      'DriverID=MSSQL'
+      '')
+    Left = 379
+    Top = 121
+  end
+  object FDQueryCategoria: TFDQuery
+    Connection = FDConnection
+    SQL.Strings = (
+      'SELECT * FROM TIQF_Categoria A01')
+    Left = 168
+    Top = 72
+    object FDQueryCategoriaTIQF_Categoria_ID: TFDAutoIncField
+      FieldName = 'TIQF_Categoria_ID'
+      Origin = 'TIQF_Categoria_ID'
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = True
+    end
+    object FDQueryCategoriaTIQF_Categoria_Descricao: TStringField
+      FieldName = 'TIQF_Categoria_Descricao'
+      Origin = 'TIQF_Categoria_Descricao'
+      Size = 200
+    end
+  end
+  object DataSourceCategoria: TDataSource
+    DataSet = FDQueryCategoria
+    Left = 168
+    Top = 160
+  end
+end

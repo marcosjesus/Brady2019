@@ -2661,7 +2661,7 @@ begin
 
   end
   else
-  if ((Copy( CharRead, 1, 2 ) = '23') or (Copy( CharRead, 1, 2 ) = '24') or (Copy( CharRead, 1, 2 ) = '25') or (Copy( CharRead, 1, 2 ) = '26') or (Copy( CharRead, 1, 2 ) = '27')) and (Length(CharRead) = 8) then
+  if ((Copy( CharRead, 1, 2 ) = '23') or (Copy( CharRead, 1, 2 ) = '24') or (Copy( CharRead, 1, 2 ) = '25') or (Copy( CharRead, 1, 2 ) = '26') or (Copy( CharRead, 1, 2 ) = '27') or (Copy( CharRead, 1, 2 ) = '28') ) and (Length(CharRead) = 8) then
   begin
 
     OnReadOrdemServico;

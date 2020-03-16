@@ -504,7 +504,7 @@ object Fr_CalcGM: TFr_CalcGM
       end
       object cxLabel9: TcxLabel
         Left = 10
-        Top = 126
+        Top = 123
         Caption = 'Arquivo'
         ParentColor = False
         Style.Color = clWhite
@@ -5783,8 +5783,8 @@ object Fr_CalcGM: TFr_CalcGM
   end
   object FDQueryGMHoras: TFDQuery
     Connection = FDConnection
-    Left = 130
-    Top = 376
+    Left = 170
+    Top = 360
   end
   object FDScriptInsert: TFDScript
     SQLScripts = <
@@ -6106,7 +6106,7 @@ object Fr_CalcGM: TFr_CalcGM
     SQL.Strings = (
       'select * from TMAQ_ItemRouting where 1 = 1')
     Left = 256
-    Top = 153
+    Top = 241
     object FDQueryRoutingTMAQ_ITEROUCOD: TFDAutoIncField
       FieldName = 'TMAQ_ITEROUCOD'
       Origin = 'TMAQ_ITEROUCOD'

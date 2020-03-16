@@ -5,6 +5,10 @@ interface
 uses
   System.DateUtils,
   System.StrUtils,
+  ShellAPI,
+  dxSpreadSheet,
+  dxSpreadSheetTypes,
+  dxSpreadSheetCore,
   cxCurrencyEdit,
   cxGridDBDataDefinitions,
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
@@ -33,7 +37,8 @@ uses
   dxSkinPumpkin, dxSkinSeven, dxSkinSevenClassic, dxSkinSharp, dxSkinSharpPlus,
   dxSkinSilver, dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008,
   dxSkinTheAsphaltWorld, dxSkinsDefaultPainters, dxSkinValentine, dxSkinVS2010,
-  dxSkinWhiteprint, dxSkinXmas2008Blue;
+  dxSkinWhiteprint, dxSkinXmas2008Blue, cxButtonEdit, Datasnap.Provider,
+  Datasnap.DBClient;
 
 type
   TfrmExibeForecast = class(TForm)
@@ -118,6 +123,47 @@ type
     cxStyleRepository1: TcxStyleRepository;
     cxStyleData: TcxStyle;
     cxStyleFamilia: TcxStyle;
+    TabTarget: TcxTabSheet;
+    cxButtonEditPath: TcxButtonEdit;
+    cxLabel9: TcxLabel;
+    cxButtonProcessar: TcxButton;
+    FDSalvaBudgetLK: TFDQuery;
+    FDSalvaBudgetLKTSOP_BUDCOD: TFDAutoIncField;
+    FDSalvaBudgetLKTSOP_BUDTIP: TStringField;
+    FDSalvaBudgetLKTSOP_BUDDATREF: TSQLTimeStampField;
+    FDSalvaBudgetLKTSOP_BUDDAT: TSQLTimeStampField;
+    FDSalvaBudgetLKTSOP_BUDCLICOD: TStringField;
+    FDSalvaBudgetLKTSOP_BUDVLF: TBCDField;
+    FDSalvaBudgetLKTSOP_BUDFAM: TStringField;
+    FDSalvaBudgetLKTSOP_ORDBILSITNOM: TStringField;
+    FDSalvaBudgetLKTSOP_USUCOD: TIntegerField;
+    FDSalvaBudgetLKTSOP_BUDDATCAD: TSQLTimeStampField;
+    CDSSalvaBudgetLK: TClientDataSet;
+    DataSetProviderSalvaBudgetLK: TDataSetProvider;
+    CDSSalvaBudgetLKTSOP_BUDCOD: TAutoIncField;
+    CDSSalvaBudgetLKTSOP_BUDTIP: TStringField;
+    CDSSalvaBudgetLKTSOP_BUDDATREF: TSQLTimeStampField;
+    CDSSalvaBudgetLKTSOP_BUDDAT: TSQLTimeStampField;
+    CDSSalvaBudgetLKTSOP_BUDCLICOD: TStringField;
+    CDSSalvaBudgetLKTSOP_BUDVLF: TBCDField;
+    CDSSalvaBudgetLKTSOP_BUDFAM: TStringField;
+    CDSSalvaBudgetLKTSOP_ORDBILSITNOM: TStringField;
+    CDSSalvaBudgetLKTSOP_USUCOD: TIntegerField;
+    CDSSalvaBudgetLKTSOP_BUDDATCAD: TSQLTimeStampField;
+    cxTabSheetUpload: TcxTabSheet;
+    cxLabel3: TcxLabel;
+    cxButtonEditUpload: TcxButtonEdit;
+    cxButtonUpload: TcxButton;
+    FDQueryTSOP_PeriodoImportacao: TFDQuery;
+    FDQueryTSOP_PeriodoImportacaoTSOP_PERIMPINI: TIntegerField;
+    FDQueryTSOP_PeriodoImportacaoTSOP_PERIMPFIN: TIntegerField;
+    FDQueryTSOP_PeriodoImportacaoTSOP_USUCOD: TIntegerField;
+    FDQueryTSOP_PeriodoImportacaoTSOP_PERIMPDATCAD: TSQLTimeStampField;
+    cxTextEditIni: TcxTextEdit;
+    cxTextEditFim: TcxTextEdit;
+    cxLabelIni: TcxLabel;
+    cxLabelAte: TcxLabel;
+    cxLblLiberar: TcxLabel;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure cxButtonRefreshClick(Sender: TObject);
@@ -133,6 +179,10 @@ type
     procedure cxGrid1DBBandedTableView1CustomDrawCell(
       Sender: TcxCustomGridTableView; ACanvas: TcxCanvas;
       AViewInfo: TcxGridTableDataCellViewInfo; var ADone: Boolean);
+    procedure cxButtonEditPathClick(Sender: TObject);
+    procedure cxButtonProcessarClick(Sender: TObject);
+    procedure cxButtonUploadClick(Sender: TObject);
+    procedure cxButtonEditUploadClick(Sender: TObject);
   private
     { Private declarations }
     NumeroLinhasGrid : Integer;
@@ -639,10 +689,28 @@ begin
                       Edit[y].Enabled := False;
 
                    // se dia for maior ou igual a 10, travar o mes seguinte.
-                   if ((DayOf(now) >= 10) and ((I-3) = 21)) then
+                  { if ((DayOf(now) >= 10) and ((I-3) = 21)) then
                       Edit[y].Enabled := False;
+                   }
 
-              
+                   if ((I-3) = 20)  then
+                      if DayOf(now) in [StrToIntDef(cxTextEditFim.Text,0)..StrToIntDef(cxTextEditIni.Text,0)] = false then
+                          Edit[y].Enabled := True;
+                  {
+                   if ((I-3) = 21)  then
+                      if DayOf(now) in [StrToIntDef(cxTextEditFim.Text,0)..StrToIntDef(cxTextEditIni.Text,0)] = false then
+                          Edit[y].Enabled := True
+                      else  Edit[y].Enabled := False;
+                   }
+                                                                                            {
+                   if (( (DayOf(now) >= StrToIntDef(cxTextEditIni.Text,0)) or (DayOf(now) <= StrToIntDef(cxTextEditFim.Text,0))  ) and ((I-3) = 20)) then
+                      Edit[y].Enabled := True;
+
+
+                   if (( (DayOf(now) >= StrToIntDef(cxTextEditIni.Text,0)) or (DayOf(now) <= StrToIntDef(cxTextEditFim.Text,0))  ) and ((I-3) = 21)) then
+                      Edit[y].Enabled := True;
+
+                                                                                             }
 
                    if (varData[0] = TrataDataHint(FDQueryForecast.Fields[I-3].FieldName)) then
                        TotalMeses[0]              := TotalMeses[0] + FDQueryForecast.Fields[I-3].AsFloat;
@@ -939,6 +1007,22 @@ begin
    }
 end;
 
+procedure TfrmExibeForecast.cxButtonEditPathClick(Sender: TObject);
+begin
+  if SaveDialog.Execute(Handle) then
+  begin
+    cxButtonEditPath.Text := SaveDialog.FileName;
+  end;
+end;
+
+procedure TfrmExibeForecast.cxButtonEditUploadClick(Sender: TObject);
+begin
+  if SaveDialog.Execute(Handle) then
+  begin
+    cxButtonEditUpload .Text := SaveDialog.FileName;
+  end;
+end;
+
 procedure TfrmExibeForecast.cxButtonInicioClick(Sender: TObject);
 var
   I, X: Integer;
@@ -1213,6 +1297,165 @@ begin
 
 end;
 
+procedure TfrmExibeForecast.cxButtonProcessarClick(Sender: TObject);
+var
+  I, X, Y, varAno, varMes : Integer;
+  dxSpreadSheet: TdxSpreadSheet;
+  varData, varDataReferencia : TDateTime;
+  varCanal, varPlanta, varCodCliente, varConta, varGrupo, varRegiao, varMercado, varAccOwer: String;
+
+  varMeses : Array of Extended;
+
+begin
+
+  Mensagem( 'Iniciando processo de importação...' );
+  try
+
+    dxSpreadSheet := TdxSpreadSheet.Create(nil);
+    try
+
+      Mensagem( 'Carregando planilha...' );
+      dxSpreadSheet.LoadFromFile( cxButtonEditPath.Text );
+      dxSpreadSheet.BeginUpdate;
+
+      FDConnection.Params.LoadFromFile( MyDocumentsPath + '\DB.ini' );
+
+      Mensagem( 'Abrindo Conexão...' );
+      FDConnection.Open;
+      try
+          CDSSalvaBudgetLK.Open;
+
+          Mensagem( 'Lendo linhas da planilha...' );
+          for X := dxSpreadSheet.ActiveSheetAsTable.Rows.FirstIndex+1 to dxSpreadSheet.ActiveSheetAsTable.Rows.LastIndex do
+          begin
+
+            try
+
+              if dxSpreadSheet.ActiveSheetAsTable.Rows[X].CellCount = 0 then
+                Continue;
+
+              if dxSpreadSheet.ActiveSheetAsTable.Rows[X].CellCount < 21 then
+                Continue;
+
+              Mensagem( 'Linha (" ' + IntToStr(X) + '/' + IntToStr(dxSpreadSheet.ActiveSheetAsTable.Rows.LastIndex) + '") "' + Trim(dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[2].AsString) + '" ...' );
+
+              if Trim(dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[0].AsString) = EmptyStr then
+                Continue;
+
+            except
+
+              Continue;
+
+            end;
+            SetLength(varMeses, 12);
+
+
+            varCanal      := dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[0].AsString;
+            varPlanta     := dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[1].AsString;
+            varCodCliente := dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[2].AsString;
+            varConta      := dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[3].AsString;
+            varGrupo      := dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[4].AsString;
+            varRegiao     := dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[5].AsString;
+            varMercado    := dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[6].AsString;
+            varAccOwer    := dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[7].AsString;
+
+            varMeses[0]   := dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[9].AsFloat;
+            varMeses[1]   := dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[10].AsFloat;
+            varMeses[2]   := dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[11].AsFloat;
+            varMeses[3]   := dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[12].AsFloat;
+            varMeses[4]   := dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[13].AsFloat;
+            varMeses[5]   := dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[14].AsFloat;
+            varMeses[6]   := dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[15].AsFloat;
+            varMeses[7]   := dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[16].AsFloat;
+            varMeses[8]   := dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[17].AsFloat;
+            varMeses[9]   := dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[18].AsFloat;
+            varMeses[10]  := dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[19].AsFloat;
+            varMeses[11]  := dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[20].AsFloat;
+
+            varAno := YearOf(Now);
+            varMes := MonthOf(Now);
+            if varMes < 8 then
+               varAno := varAno - 1;
+
+            varDataReferencia  := StrToDate('01/08/' + IntToStr(varAno));
+
+            for I := 0 to 11 do
+            begin
+                varData := StrToDate('01/08/' + IntToStr(YearOf(Now)));
+                for Y := 0 to 11 do
+                begin
+
+
+
+                    CDSSalvaBudgetLK.Append;
+                    CDSSalvaBudgetLK.FieldByName('TSOP_BUDTIP').AsString       :=  'LK';
+                    CDSSalvaBudgetLK.FieldByName('TSOP_BUDDATREF').AsDateTime  :=  varDataReferencia;
+                    CDSSalvaBudgetLK.FieldByName('TSOP_BUDDAT').AsDateTime     :=  varData;
+                    CDSSalvaBudgetLK.FieldByName('TSOP_BUDCLICOD').AsString    :=  varCodCliente;
+                    CDSSalvaBudgetLK.FieldByName('TSOP_BUDVLF').AsFloat        :=  Round(varMeses[I]);
+                    CDSSalvaBudgetLK.FieldByName('TSOP_ORDBILSITNOM').AsString :=  varPlanta;
+                    CDSSalvaBudgetLK.FieldByName('TSOP_USUCOD').AsInteger      :=  Fr_Brady.TSIS_USUCOD;
+                    CDSSalvaBudgetLK.FieldByName('TSOP_BUDDATCAD').AsDateTime  :=  Now;
+
+                    try
+                      CDSSalvaBudgetLK.Post;
+                    except
+                      on E: Exception do
+                      begin
+                        ShowMessage(E.Message);
+                        CDSSalvaBudgetLK.Cancel;
+                      end;
+                    end;
+                     varData := IncMonth(varData,1);
+                end;
+
+                varDataReferencia:= IncMonth(varDataReferencia, 1);
+            end;
+
+            for Y := 0 to 11 do
+               varMeses[Y] := 0;
+
+            try
+
+              CDSSalvaBudgetLK.ApplyUpdates(-1);
+
+            except
+
+              on E: Exception do
+              begin
+
+                ShowMessage( E.Message );
+
+              end;
+
+            end;
+
+            Application.ProcessMessages;
+
+          end;
+
+
+      finally
+
+        FDConnection.Close;
+        CDSSalvaBudgetLK.Close;
+      end;
+
+    finally
+
+      FreeAndNil(dxSpreadSheet);
+
+    end;
+
+  finally
+
+    Mensagem( EmptyStr );
+
+  end;
+
+
+end;
+
 procedure TfrmExibeForecast.cxButtonRefreshClick(Sender: TObject);
 
 begin
@@ -1222,6 +1465,247 @@ begin
        ABand.Bands.Clear;
    end;
    AbrirDataset;
+end;
+
+procedure TfrmExibeForecast.cxButtonUploadClick(Sender: TObject);
+var
+  I, X: Integer;
+  dxSpreadSheet: TdxSpreadSheet;
+  varData: TDateTime;
+  varDataReferencia: TDateTime;
+  varMesAno: String;
+  varMes, varAno: Integer;
+  varLocate: Boolean;
+  varSite, varFamilia, varCliente: String;
+  varForecast: Extended;
+  varCurrentMonth: Integer;
+
+begin
+
+  Mensagem( 'Iniciando processo de importação...' );
+  try
+
+    dxSpreadSheet := TdxSpreadSheet.Create(nil);
+    try
+
+      Mensagem( 'Carregando planilha...' );
+      dxSpreadSheet.LoadFromFile( cxButtonEditUpload.Text );
+      dxSpreadSheet.BeginUpdate;
+
+      FDConnection.Params.LoadFromFile( MyDocumentsPath + '\DB.ini' );
+
+      Mensagem( 'Abrindo Conexão...' );
+      FDConnection.Open;
+      try
+
+        for varCurrentMonth := 1 to 12 do
+        begin
+
+          varDataReferencia := IncMonth(System.DateUtils.StartOfTheMonth(Now),varCurrentMonth-1);
+
+          //if Fr_Brady.SalesRep then
+          //  FDQueryTSOP_Budget.MacroByName( 'WHERE1' ).AsRaw := ' AND A01.TSOP_ORDBILREPNOM = ' + QuotedStr(Fr_Brady.TSIS_USUNOM);
+
+          FDQueryTSOP_Budget.ParamByName( 'TSOP_BUDDATREF' ).AsDateTime := varDataReferencia;
+          FDQueryTSOP_Budget.ParamByName( 'TSOP_BUDTIP' ).AsString := getTSOP_BUDTIP;
+          FDQueryTSOP_Budget.Open;
+          try
+
+            Mensagem( 'Lendo linhas da planilha...' );
+            Application.ProcessMessages;
+            Sleep(1000);
+            Application.ProcessMessages;
+            Mensagem( 'Total de linhas: ' + IntToStr(dxSpreadSheet.ActiveSheetAsTable.Rows.LastIndex) );
+            Application.ProcessMessages;
+            Sleep(5000);
+            Application.ProcessMessages;
+
+            for X := dxSpreadSheet.ActiveSheetAsTable.Rows.FirstIndex+2 to dxSpreadSheet.ActiveSheetAsTable.Rows.LastIndex do
+            begin
+
+              try
+
+               //if (dxSpreadSheet.ActiveSheetAsTable.Rows[X].CellCount = 0) or (Trim(dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[0].AsString) = EmptyStr) then
+                //  Continue;
+
+                Try
+                   if not Assigned(dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[0]) then
+                      Continue;
+
+                   if ((dxSpreadSheet.ActiveSheetAsTable.Rows[X].CellCount = 0) or
+                       (Trim(dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[0].AsString) = EmptyStr)) then
+                      Continue;
+
+                except
+                   on E: Exception do
+                        begin
+                          ShowMessage(E.Message + ' - Eliminar linhas em branco o final do Arquivo Excel.');
+                        end;
+                End;
+
+                Mensagem( 'Mês ( ' + IntToStr(varCurrentMonth) + '/12 )' + 'Linha (" ' + IntToStr(X) + '/' + IntToStr(dxSpreadSheet.ActiveSheetAsTable.Rows.LastIndex) + '") "' + Trim(dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[2].AsString) + '" ...' );
+
+                for I := 22 to 33 do    // era 19 e 32
+                begin
+
+                  {if (cxRadioGroupOpcao.ItemIndex = 0) and (I > 30) then
+                    Continue;
+
+                  if (cxRadioGroupOpcao.ItemIndex <> 0) and (I < 21) then
+                    Continue;
+                   }
+
+                  varMes := -1;
+                  varMesAno := dxSpreadSheet.ActiveSheetAsTable.Rows[1].Cells[I].AsString;
+                  if varMesAno.Split(['-'])[0].Trim.ToUpper.Equals('JAN') or varMesAno.Split(['-'])[0].Trim.ToUpper.Equals('JAN') then
+                    varMes := 01
+                  else
+                  if varMesAno.Split(['-'])[0].Trim.ToUpper.Equals('FEV') or varMesAno.Split(['-'])[0].Trim.ToUpper.Equals('FEB') then
+                    varMes := 02
+                  else
+                  if varMesAno.Split(['-'])[0].Trim.ToUpper.Equals('MAR') or varMesAno.Split(['-'])[0].Trim.ToUpper.Equals('MAR') then
+                    varMes := 03
+                  else
+                  if varMesAno.Split(['-'])[0].Trim.ToUpper.Equals('ABR') or varMesAno.Split(['-'])[0].Trim.ToUpper.Equals('APR') then
+                    varMes := 04
+                  else
+                  if varMesAno.Split(['-'])[0].Trim.ToUpper.Equals('MAI') or varMesAno.Split(['-'])[0].Trim.ToUpper.Equals('MAY') then
+                    varMes := 05
+                  else
+                  if varMesAno.Split(['-'])[0].Trim.ToUpper.Equals('JUN') or varMesAno.Split(['-'])[0].Trim.ToUpper.Equals('JUN') then
+                    varMes := 06
+                  else
+                  if varMesAno.Split(['-'])[0].Trim.ToUpper.Equals('JUL') or varMesAno.Split(['-'])[0].Trim.ToUpper.Equals('JUL') then
+                    varMes := 07
+                  else
+                  if varMesAno.Split(['-'])[0].Trim.ToUpper.Equals('AGO') or varMesAno.Split(['-'])[0].Trim.ToUpper.Equals('AUG') then
+                    varMes := 08
+                  else
+                  if varMesAno.Split(['-'])[0].Trim.ToUpper.Equals('SET') or varMesAno.Split(['-'])[0].Trim.ToUpper.Equals('SEP') then
+                    varMes := 09
+                  else
+                  if varMesAno.Split(['-'])[0].Trim.ToUpper.Equals('OUT') or varMesAno.Split(['-'])[0].Trim.ToUpper.Equals('OCT') then
+                    varMes := 10
+                  else
+                  if varMesAno.Split(['-'])[0].Trim.ToUpper.Equals('NOV') or varMesAno.Split(['-'])[0].Trim.ToUpper.Equals('NOV') then
+                    varMes := 11
+                  else
+                  if varMesAno.Split(['-'])[0].Trim.ToUpper.Equals('DEZ') or varMesAno.Split(['-'])[0].Trim.ToUpper.Equals('DEC') then
+                    varMes := 12;
+
+                  try
+                     varAno      := StrToInt(varMesAno.Split(['-'])[1].Trim);
+                  except
+                       on E: Exception do
+                      begin
+                        ShowMessage('oi' + E.Message);
+                      end;
+                  end;
+                  varData     := EncodeDate( varAno, varMes, 01 );
+                  varForecast := dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[I].AsFloat;
+                  varCliente  := dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[2].AsString;
+                  varSite     := dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[4].AsString;
+                  varFamilia  := EmptyStr;
+
+                  varLocate := False;
+
+                  varLocate := FDQueryTSOP_Budget.Locate( 'TSOP_ORDBILSITNOM;TSOP_BUDCLICOD;TSOP_BUDDAT', VarArrayOf( [varSite,varCliente,varData] ) );
+
+                  if varForecast < 0.00 then
+                    varForecast := 0.00;
+
+                  if varLocate then
+                  begin
+
+                    FDQueryTSOP_Budget.Edit;
+                    FDQueryTSOP_BudgetTSOP_BUDVLF.AsFloat       := varForecast;
+                    FDQueryTSOP_BudgetTSOP_USUCOD.AsInteger     := Fr_Brady.TSIS_USUCOD;
+                    FDQueryTSOP_BudgetTSOP_BUDDATCAD.AsDateTime := Now;
+
+                    try
+                      FDQueryTSOP_Budget.Post;
+                    except
+                      on E: Exception do
+                      begin
+                        FDQueryTSOP_Budget.Cancel;
+                        ShowMessage(E.Message);
+                      end;
+                    end;
+
+                  end
+                  else
+                  begin
+
+                    if varForecast > 0.00 then
+                    begin
+
+                      FDQueryTSOP_Budget.Append;
+
+                      FDQueryTSOP_BudgetTSOP_BUDTIP.AsString       := getTSOP_BUDTIP;
+                      FDQueryTSOP_BudgetTSOP_BUDDATREF.AsDateTime  := varDataReferencia;
+                      FDQueryTSOP_BudgetTSOP_BUDDAT.AsDateTime     := varData;
+                      FDQueryTSOP_BudgetTSOP_BUDCLICOD.AsString    := varCliente;
+                      FDQueryTSOP_BudgetTSOP_BUDVLF.AsFloat        := varForecast;
+                      FDQueryTSOP_BudgetTSOP_ORDBILSITNOM.AsString := varSite;
+                      FDQueryTSOP_BudgetTSOP_USUCOD.AsInteger      := Fr_Brady.TSIS_USUCOD;
+                      FDQueryTSOP_BudgetTSOP_BUDDATCAD.AsDateTime  := Now;
+
+                      try
+                        FDQueryTSOP_Budget.Post;
+                      except
+                        on E: Exception do
+                        begin
+                          FDQueryTSOP_Budget.Cancel;
+                          ShowMessage(E.Message);
+                        end;
+                      end;
+
+                    end;
+
+                  end;
+
+                end;
+
+                Application.ProcessMessages;
+
+              except
+
+                on E: Exception do
+                begin
+                  ShowMessage(E.Message);
+                end;
+
+              end;
+
+            end;
+
+          finally
+
+            FDQueryTSOP_Budget.Close;
+
+          end;
+
+        end;
+
+        Application.MessageBox( 'Dados carregados com sucesso!!!', 'S&OP', MB_ICONINFORMATION );
+
+      finally
+
+        FDConnection.Close;
+
+      end;
+
+    finally
+
+      FreeAndNil(dxSpreadSheet);
+
+    end;
+
+  finally
+
+    Mensagem( EmptyStr );
+
+  end;
 end;
 
 procedure TfrmExibeForecast.cxGrid1DBBandedTableView1CustomDrawCell(
@@ -1685,8 +2169,8 @@ begin
 
                     pStoredProc := GetStoredProc( 'PSOP_ATUALIZAR_FORECAST' );
                     try
-                      pStoredProc.ParamByName( '@TSOP_USUCOD' ).AsInteger    := Fr_Brady.TSIS_USUCOD;
-                      pStoredProc.ParamByName( '@TSOP_BUDCLICOD' ).AsInteger :=  StrToInt(LblCodigo[y].Caption);
+                      pStoredProc.ParamByName( '@TSOP_USUCOD' ).AsInteger   :=  Fr_Brady.TSIS_USUCOD;
+                      pStoredProc.ParamByName( '@TSOP_BUDCLICOD' ).AsString :=  LblCodigo[y].Caption;
 
                       CallStoredProc( pStoredProc );
 
@@ -2038,6 +2522,35 @@ end;
 procedure TfrmExibeForecast.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
+  Mensagem( 'Abrindo Conexão...' );
+  if not FDConnection.Connected then
+  begin
+
+    FDConnection.Params.LoadFromFile( MyDocumentsPath + '\DB.ini' );
+    FDConnection.Open;
+
+  end;
+
+  Mensagem( 'Gravando periodo...' );
+  FDQueryTSOP_PeriodoImportacao.Close;
+  FDQueryTSOP_PeriodoImportacao.Open;
+
+  if (FDQueryTSOP_PeriodoImportacao.FieldByName('TSOP_PERIMPINI').AsInteger <> StrToIntDef(cxTextEditIni.Text,0)) or
+  (FDQueryTSOP_PeriodoImportacao.FieldByName('TSOP_PERIMPFIN').AsInteger <> StrToIntdef(cxTextEditFim.Text,0)) then
+  begin
+
+    FDQueryTSOP_PeriodoImportacao.Edit;
+    FDQueryTSOP_PeriodoImportacao.FieldByName('TSOP_PERIMPINI').AsString := cxTextEditIni.Text;
+    FDQueryTSOP_PeriodoImportacao.FieldByName('TSOP_PERIMPFIN').AsString := cxTextEditFim.Text;
+    FDQueryTSOP_PeriodoImportacao.FieldByName('TSOP_PERIMPDATCAD').AsDateTime := Now;
+    FDQueryTSOP_PeriodoImportacao.FieldByName('TSOP_USUCOD').AsInteger := Fr_Brady.TSIS_USUCOD;
+    FDQueryTSOP_PeriodoImportacao.Post;
+
+  end;
+
+  Mensagem( '' );
+
+
   frmExibeForecast := nil;
   Action := caFree;
 end;
@@ -2048,14 +2561,42 @@ begin
   dtInicial.Date       := (Now);
   cxButtonRefresh.Left := 593;
   ButExcel.Left        := 635;
+
   if Fr_Brady.SalesRep then
   begin
-    cxComboBoxTipo.Visible := False;
-    chkVendedor.Visible    := False;
-    lblTipo.Visible        := False;
-    cxButtonRefresh.Left   := 324;
-    ButExcel.Left          := 370;
+    cxComboBoxTipo.Visible   := False;
+    chkVendedor.Visible      := False;
+    lblTipo.Visible          := False;
+    Page.Pages[2].TabVisible := False;
+    Page.Pages[3].TabVisible := False;
+    cxLblLiberar.Visible     := False;
+    cxLabelIni.Visible       := False;
+    cxLabelAte.Visible       := False;
+    cxTextEditIni.Visible    := False;
+    cxTextEditFim.Visible    := False;
+    cxButtonRefresh.Left     := 324;
+    ButExcel.Left            := 370;
   end;
+
+  Mensagem( 'Abrindo Conexão...' );
+
+  if not FDConnection.Connected then
+  begin
+
+    FDConnection.Params.LoadFromFile( MyDocumentsPath + '\DB.ini' );
+    FDConnection.Open;
+
+  end;
+
+  Mensagem( 'Verificando periodo...' );
+  FDQueryTSOP_PeriodoImportacao.Close;
+  FDQueryTSOP_PeriodoImportacao.Open;
+
+  cxTextEditIni.Text := FDQueryTSOP_PeriodoImportacao.FieldByName('TSOP_PERIMPINI').AsString;
+  cxTextEditFim.Text := FDQueryTSOP_PeriodoImportacao.FieldByName('TSOP_PERIMPFIN').AsString;
+
+  FDConnection.Close;
+
 
   AbrirDataset;
 

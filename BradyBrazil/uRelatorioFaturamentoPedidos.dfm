@@ -63,7 +63,7 @@ object Fr_RelatorioFaturamentoPedidos: TFr_RelatorioFaturamentoPedidos
     Height = 597
     Align = alClient
     TabOrder = 0
-    Properties.ActivePage = cxTabSheetGrid
+    Properties.ActivePage = cxTabSheetPivot
     Properties.CustomButtons.Buttons = <>
     Properties.Images = Fr_Brady.cxSmallImages
     LookAndFeel.NativeStyle = False

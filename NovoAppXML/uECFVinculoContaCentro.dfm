@@ -9,23 +9,31 @@ inherited FrmECFVinculoContaCentro: TFrmECFVinculoContaCentro
   inherited PanFundo: TPanel
     Width = 962
     Height = 483
+    ExplicitWidth = 962
+    ExplicitHeight = 483
     inherited PanTitulo: TPanel
       Top = 29
       Width = 958
       TabOrder = 4
       ExplicitTop = 29
+      ExplicitWidth = 958
       inherited ImaBarraSup: TImage
         Width = 954
+        ExplicitWidth = 954
       end
     end
     inherited StatusBar: TdxStatusBar
       Top = 461
       Width = 958
+      ExplicitTop = 461
+      ExplicitWidth = 958
     end
     inherited Panel27: TPanel
       Top = 425
       Width = 958
       TabOrder = 6
+      ExplicitTop = 425
+      ExplicitWidth = 958
       inherited ButNovo: TcxButton
         Top = 1
         ExplicitTop = 1
@@ -63,7 +71,6 @@ inherited FrmECFVinculoContaCentro: TFrmECFVinculoContaCentro
       Font.Style = [fsBold]
       ParentFont = False
       TabOrder = 0
-      ExplicitWidth = 730
       object EdiCodigo: TrsSuperEdit
         Tag = -2
         Left = 528
@@ -466,8 +473,6 @@ inherited FrmECFVinculoContaCentro: TFrmECFVinculoContaCentro
       BevelWidth = 2
       TabOrder = 9
       Visible = False
-      ExplicitLeft = 207
-      ExplicitTop = 164
       object Image1: TImage
         Left = 2
         Top = 2

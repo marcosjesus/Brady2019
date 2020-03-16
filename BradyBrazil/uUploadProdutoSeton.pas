@@ -259,10 +259,8 @@ procedure TFr_UploadPodutoSeton.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
 
-  Mensagem( 'Abrindo Conexão...' );
-  FDConnection.Open;
 
-
+  Fr_UploadPodutoSeton  := nil;
   Action := caFree;
 
 end;

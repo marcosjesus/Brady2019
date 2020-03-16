@@ -5,6 +5,9 @@ interface
 uses
   System.DateUtils,
   System.StrUtils,
+  dxSpreadSheet,
+  dxSpreadSheetTypes,
+  cxExportPivotGridLink,
   cxGridDBDataDefinitions,
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, cxGraphics, cxControls, cxLookAndFeels,
@@ -33,7 +36,7 @@ uses
   dxSkinPumpkin, dxSkinSeven, dxSkinSevenClassic, dxSkinSharp, dxSkinSharpPlus,
   dxSkinSilver, dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008,
   dxSkinTheAsphaltWorld, dxSkinsDefaultPainters, dxSkinValentine, dxSkinVS2010,
-  dxSkinWhiteprint, dxSkinXmas2008Blue;
+  dxSkinWhiteprint, dxSkinXmas2008Blue, cxCurrencyEdit, Math;
 
 type
   TfrmExibeDashBoard = class(TForm)
@@ -45,9 +48,9 @@ type
     cxButtonRefresh: TcxButton;
     Page: TcxPageControl;
     TabForecast: TcxTabSheet;
-    cxGrid1: TcxGrid;
-    cxGrid1DBBandedTableView1: TcxGridDBBandedTableView;
-    cxGrid1Level1: TcxGridLevel;
+    cxGridTargetAno: TcxGrid;
+    cxGridTargetAnoDBBandedTableView1: TcxGridDBBandedTableView;
+    cxGridTargetAnoLevel1: TcxGridLevel;
     PanelSQLSplashScreen: TPanel;
     ImageSQLSplashScreen: TImage;
     cxLabelMensagem: TcxLabel;
@@ -63,7 +66,7 @@ type
     FDQueryTSOP_BudgetTSOP_USUCOD: TIntegerField;
     FDQueryTSOP_BudgetTSOP_BUDDATCAD: TSQLTimeStampField;
     sqlAux: TFDQuery;
-    cxLabel1: TcxLabel;
+    lblAno: TcxLabel;
     FDScript: TFDScript;
     chkVendedor: TcxCheckBox;
     ButExcel: TcxButton;
@@ -84,25 +87,14 @@ type
     cxStyleRepository1: TcxStyleRepository;
     cxStyleData: TcxStyle;
     dsFDStoredProc: TDataSource;
-    cxGrid1DBBandedTableView1TSOP_ORDBILREPNOM: TcxGridDBBandedColumn;
-    cxGrid1DBBandedTableView1TSOP_BUDCLICOD: TcxGridDBBandedColumn;
-    cxGrid1DBBandedTableView1TSOP_ORDBILGRUCLINOM_B: TcxGridDBBandedColumn;
-    cxGrid1DBBandedTableView1TSOP_ORDBILCLINOM: TcxGridDBBandedColumn;
-    cxGrid1DBBandedTableView1TSOP_ORDBILCANNOM: TcxGridDBBandedColumn;
-    cxGrid1DBBandedTableView1TSOP_ORDBILSITNOM: TcxGridDBBandedColumn;
-    cxGrid1DBBandedTableView1BILLING: TcxGridDBBandedColumn;
-    cxGrid1DBBandedTableView1FORECAST: TcxGridDBBandedColumn;
     TabTarget: TcxTabSheet;
     TabPedidos: TcxTabSheet;
-    cxGrid1DBBandedTableView1VARIACAO_REAL: TcxGridDBBandedColumn;
-    cxGrid1DBBandedTableView1VARIACAO_PORC: TcxGridDBBandedColumn;
     cxDBPivotGrid00: TcxDBPivotGrid;
     cxDBPivotGrid00FieldTSOP_ORDBILCANNOM: TcxDBPivotGridField;
     cxDBPivotGrid00FieldTSOP_ORDBILGRUCLINOM: TcxDBPivotGridField;
     cxDBPivotGrid00FieldTSOP_ORDBILREPNOM: TcxDBPivotGridField;
     cxDBPivotGrid00FieldTSOP_ORDBILSITNOM: TcxDBPivotGridField;
     cxDBPivotGrid00FieldBILLING: TcxDBPivotGridField;
-    cxDBPivotGrid00FieldFORECAST: TcxDBPivotGridField;
     cxDBPivotGrid00FieldVARIACAO_PORC: TcxDBPivotGridField;
     cxDBPivotGrid00Field_REAL: TcxDBPivotGridField;
     cxDBPivotGrid1: TcxDBPivotGrid;
@@ -166,10 +158,6 @@ type
     FDQueryVSOP_OrderBilling00GRUPO_CLIENTE: TStringField;
     FDQueryVSOP_OrderBilling00ACC_OWNER: TStringField;
     FDQueryVSOP_OrderBilling00COD_ITEM: TStringField;
-    FDQueryVSOP_OrderBilling00TOTAL_VENDAS_QTD: TFloatField;
-    FDQueryVSOP_OrderBilling00NET_SALE: TFloatField;
-    FDQueryVSOP_OrderBilling00GM_VALOR: TFloatField;
-    FDQueryVSOP_OrderBilling00GM_PERCENTUAL: TFloatField;
     cxDBPivotGrid3: TcxDBPivotGrid;
     cxDBPivotGridFieldCANAL: TcxDBPivotGridField;
     cxDBPivotGridFieldGRUPO_CLIENTE: TcxDBPivotGridField;
@@ -188,11 +176,9 @@ type
     cxDBPivotGrid00FieldTSOP_ORDBILREG: TcxDBPivotGridField;
     cxDBPivotGrid00FieldTSOP_ORDBILREGEST: TcxDBPivotGridField;
     cxDBPivotGrid00FieldTSOP_GRUCLIMER: TcxDBPivotGridField;
-    cxDBPivotGrid00FieldTSOP_ORDBILITEFAM: TcxDBPivotGridField;
     cxDBPivotGrid1FieldTSOP_ORDBILREG: TcxDBPivotGridField;
     cxDBPivotGrid1FieldTSOP_ORDBILREGEST: TcxDBPivotGridField;
     cxDBPivotGrid1FieldTSOP_GRUCLIMER: TcxDBPivotGridField;
-    cxDBPivotGrid1FieldTSOP_ORDBILITEFAM: TcxDBPivotGridField;
     FDStoredProc2TSOP_ORDBILREG: TStringField;
     FDStoredProc2TSOP_ORDBILREGEST: TStringField;
     FDStoredProc2TSOP_GRUCLIMER: TStringField;
@@ -208,13 +194,87 @@ type
     NegativeStyle: TcxStyle;
     PositiveStyle: TcxStyle;
     cxDBPivotGrid3FieldUoM: TcxDBPivotGridField;
+    cxDBPivotGridForecast: TcxDBPivotGridField;
+    FDQueryVSOP_OrderBilling00Periodo: TDateField;
+    cxDBPivotGrid3Periodo: TcxDBPivotGridField;
+    FDQueryVSOP_OrderBilling00TOTAL_VENDAS_QTD: TBCDField;
+    FDQueryVSOP_OrderBilling00NET_SALE: TBCDField;
+    FDQueryVSOP_OrderBilling00GM_VALOR: TBCDField;
+    cxStyleRepository3: TcxStyleRepository;
+    stlRed: TcxStyle;
+    cxGridPedidoDBTableView1: TcxGridDBTableView;
+    cxGridPedidoLevel1: TcxGridLevel;
+    cxGridPedido: TcxGrid;
+    cxGridPedidoDBTableView1TSOP_ORDBILREPNOM: TcxGridDBColumn;
+    cxGridPedidoDBTableView1TSOP_ORDBILGRUCLINOM: TcxGridDBColumn;
+    cxGridPedidoDBTableView1TSOP_ORDBILCANNOM: TcxGridDBColumn;
+    cxGridPedidoDBTableView1TSOP_ORDBILSITNOM: TcxGridDBColumn;
+    cxGridPedidoDBTableView1Actual: TcxGridDBColumn;
+    cxGridPedidoDBTableView1Backlog: TcxGridDBColumn;
+    cxGridPedidoDBTableView1Billing: TcxGridDBColumn;
+    cxGridPedidoDBTableView1GrossMargin: TcxGridDBColumn;
+    cxGridPedidoDBTableView1SalesFCST: TcxGridDBColumn;
+    cxGridPedidoDBTableView1BacklogTotal: TcxGridDBColumn;
+    cxGridPedidoDBTableView1TSOP_ORDBILREG: TcxGridDBColumn;
+    cxGridPedidoDBTableView1TSOP_ORDBILREGEST: TcxGridDBColumn;
+    cxGridPedidoDBTableView1TSOP_GRUCLIMER: TcxGridDBColumn;
+    cxGridForecastAnoDBTableView1: TcxGridDBTableView;
+    cxGridForecastAnoLevel1: TcxGridLevel;
+    cxGridForecastAno: TcxGrid;
+    cxGridForecastAnoDBTableView1TSOP_ORDBILREPNOM: TcxGridDBColumn;
+    cxGridForecastAnoDBTableView1TSOP_BUDCLICOD: TcxGridDBColumn;
+    cxGridForecastAnoDBTableView1TSOP_ORDBILGRUCLINOM: TcxGridDBColumn;
+    cxGridForecastAnoDBTableView1TSOP_ORDBILCLINOM: TcxGridDBColumn;
+    cxGridForecastAnoDBTableView1TSOP_ORDBILCANNOM: TcxGridDBColumn;
+    cxGridForecastAnoDBTableView1TSOP_ORDBILSITNOM: TcxGridDBColumn;
+    cxGridForecastAnoDBTableView1Act_Fcst: TcxGridDBColumn;
+    cxGridForecastAnoDBTableView1TARGET: TcxGridDBColumn;
+    cxGridForecastAnoDBTableView1TSOP_ORDBILREG: TcxGridDBColumn;
+    cxGridForecastAnoDBTableView1TSOP_ORDBILREGEST: TcxGridDBColumn;
+    cxGridForecastAnoDBTableView1TSOP_GRUCLIMER: TcxGridDBColumn;
+    cxGridForecastAnoDBTableView1TSOP_ORDBILITEFAM: TcxGridDBColumn;
+    cxGridGmClienteDBTableView1: TcxGridDBTableView;
+    cxGridGmClienteLevel1: TcxGridLevel;
+    cxGridGmCliente: TcxGrid;
+    cxGridGmClienteDBTableView1SITE: TcxGridDBColumn;
+    cxGridGmClienteDBTableView1CANAL: TcxGridDBColumn;
+    cxGridGmClienteDBTableView1COD_CLIENTE: TcxGridDBColumn;
+    cxGridGmClienteDBTableView1RAZAO_SOCIAL: TcxGridDBColumn;
+    cxGridGmClienteDBTableView1GRUPO_CLIENTE: TcxGridDBColumn;
+    cxGridGmClienteDBTableView1ACC_OWNER: TcxGridDBColumn;
+    cxGridGmClienteDBTableView1COD_ITEM: TcxGridDBColumn;
+    cxGridGmClienteDBTableView1Regio: TcxGridDBColumn;
+    cxGridGmClienteDBTableView1UF: TcxGridDBColumn;
+    cxGridGmClienteDBTableView1UoM: TcxGridDBColumn;
+    cxGridGmClienteDBTableView1Periodo: TcxGridDBColumn;
+    cxGridGmClienteDBTableView1TOTAL_VENDAS_QTD: TcxGridDBColumn;
+    cxGridGmClienteDBTableView1NET_SALE: TcxGridDBColumn;
+    cxGridGmClienteDBTableView1GM_VALOR: TcxGridDBColumn;
+    cxGridGmClienteDBTableView1GM_PERCENTUAL: TcxGridDBColumn;
+    cxGridTargetAnoDBBandedTableView1TSOP_ORDBILREPNOM: TcxGridDBBandedColumn;
+    cxGridTargetAnoDBBandedTableView1TSOP_BUDCLICOD: TcxGridDBBandedColumn;
+    cxGridTargetAnoDBBandedTableView1TSOP_ORDBILGRUCLINOM: TcxGridDBBandedColumn;
+    cxGridTargetAnoDBBandedTableView1TSOP_ORDBILCLINOM: TcxGridDBBandedColumn;
+    cxGridTargetAnoDBBandedTableView1TSOP_ORDBILCANNOM: TcxGridDBBandedColumn;
+    cxGridTargetAnoDBBandedTableView1TSOP_ORDBILSITNOM: TcxGridDBBandedColumn;
+    cxGridTargetAnoDBBandedTableView1BILLING: TcxGridDBBandedColumn;
+    cxGridTargetAnoDBBandedTableView1FORECAST: TcxGridDBBandedColumn;
+    cxGridTargetAnoDBBandedTableView1VARIACAO_REAL: TcxGridDBBandedColumn;
+    cxGridTargetAnoDBBandedTableView1VARIACAO_PORC: TcxGridDBBandedColumn;
+    cxGridTargetAnoDBBandedTableView1TSOP_ORDBILREG: TcxGridDBBandedColumn;
+    cxGridTargetAnoDBBandedTableView1TSOP_ORDBILREGEST: TcxGridDBBandedColumn;
+    cxGridTargetAnoDBBandedTableView1TSOP_GRUCLIMER: TcxGridDBBandedColumn;
+    FDQueryVSOP_OrderBilling00GM_PERCENTUAL: TFMTBCDField;
+    cxButtonEditPath: TcxButtonEdit;
+    cxLabel2: TcxLabel;
+    cbxMeses: TComboBox;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure cxButtonRefreshClick(Sender: TObject);
     procedure FormKeyPress(Sender: TObject; var Key: Char);
     procedure cxButton1Click(Sender: TObject);
     procedure ButExcelClick(Sender: TObject);
-    procedure cxGrid1DBBandedTableView1CustomDrawCell(
+    procedure cxGridTargetAnoDBBandedTableView1CustomDrawCell(
       Sender: TcxCustomGridTableView; ACanvas: TcxCanvas;
       AViewInfo: TcxGridTableDataCellViewInfo; var ADone: Boolean);
     procedure PageChange(Sender: TObject);
@@ -224,8 +284,14 @@ type
       ACell: TcxPivotGridDataCellViewInfo; var AStyle: TcxStyle);
     procedure cxDBPivotGrid2StylesGetContentStyle(Sender: TcxCustomPivotGrid;
       ACell: TcxPivotGridDataCellViewInfo; var AStyle: TcxStyle);
+    procedure cxButtonEditPathClick(Sender: TObject);
+    procedure cxDBPivotGridFieldGM_PERCENTUALCalculateCustomSummary(
+      Sender: TcxPivotGridField; ASummary: TcxPivotGridCrossCellSummary);
+    procedure cxDBPivotGrid3StylesGetContentStyle(Sender: TcxCustomPivotGrid;
+      ACell: TcxPivotGridDataCellViewInfo; var AStyle: TcxStyle);
   private
     { Private declarations }
+    dxSpreadSheet : TdxSpreadSheet;
     NumeroLinhasGrid : Integer;
     ABand  : TcxGridBand;
     iContaGrupo : Integer;
@@ -239,6 +305,8 @@ type
 
     LblTitulo, LblMedia : Array of TLabel;
     varMesesArrayB, varMesesArrayF : Array of TDateTime;
+
+    lstMeses : TStringList;
 
     varMesesComLabel,  varMesesComLabelB, varMesesComLabelF, varMesesSemLabelB, varMesesSemLabelF, varMesesSomaLinha : WideString;
     varDtInicial, varDtFinal : TDateTime;
@@ -255,6 +323,7 @@ type
     function LeftPad(value: integer; length: integer=2; pad: char='0'): string;
 
     function MontaDataDashBoard(DataAtual : TDateTime; bForecast : Boolean; bForecastDataFinal : Boolean; bPeriodoTodo : Boolean) : TDateTime;
+    procedure Exportar_GMCliente;
 
   public
     { Public declarations }
@@ -401,12 +470,10 @@ end;
 
 procedure TfrmExibeDashBoard.PageChange(Sender: TObject);
 begin
-  if  Page.ActivePage = TabGM then
-  begin
-     DtInicial.DateTime :=  StartOfTheMonth(Now)-1;
-     DtInicial.Enabled := False;
-  end
-  else DtInicial.Enabled := True;
+{  DtInicial.Visible := Page.ActivePage <> TabGM;
+  cbxMeses.Visible  := Page.ActivePage = TabGM;
+  if DtInicial.Visible then lblAno.Caption := 'Mês/Ano:' else   lblAno.Caption := 'Ano:';
+ }
 end;
 
 procedure TfrmExibeDashBoard.AbrirDataSet2;
@@ -483,7 +550,7 @@ begin
       else  FDStoredProc2.ParamByName( '@VENDEDOR' ).IsNull;
 
       FDStoredProc2.Open;
-
+       
     except
       on E : Exception do
         begin
@@ -500,10 +567,9 @@ end;
 
 procedure TfrmExibeDashBoard.AbrirDataSet3;
 var
- VAR_TSOP_GMHBUD  : String;
- varMesAnterior, varDataInicio, varDataFim : TDateTime;
- I : Integer;
-begin
+ varDataInicio, varDataFim, AnoFiscal : TDateTime;
+ Idx: Integer;
+begin   
 
   Mensagem( 'Abrindo conexão...' );
   try
@@ -516,37 +582,35 @@ begin
 
     end;
 
-     {
-    VAR_TSOP_GMHBUD := 'E';
-    if cxComboBoxTipo.ItemIndex = 0 then
-       VAR_TSOP_GMHBUD := 'E'
-    else if cxComboBoxTipo.ItemIndex = 1 then
-       VAR_TSOP_GMHBUD := 'B'
-    else if cxComboBoxTipo.ItemIndex = 2 then
-       VAR_TSOP_GMHBUD := 'A'
-    else if cxComboBoxTipo.ItemIndex = 3 then
-       VAR_TSOP_GMHBUD := 'T'
-    else if cxComboBoxTipo.ItemIndex = 4 then
-       VAR_TSOP_GMHBUD := 'M';
-
-      }
-
   Try
-      varMesAnterior := StartOfTheMonth(Now)-1;
-      varDataInicio  := StartOfTheMonth(VarMesAnterior);
-      varDataFim     := EndOfTheMonth(VarMesAnterior);
 
-
+       varDataInicio := MontaDataDashBoard(DtInicial.Date, False, False, false);              
+       varDataFim    := MontaDataDashBoard(varDataInicio, False, True, false); 
+    
+       if System.DateUtils.MonthOf(DtInicial.Date) >= 8 then
+          AnoFiscal := System.DateUtils.YearOf(DtInicial.Date) + 1;
+          
+    
+       if AnoFiscal >= System.DateUtils.YearOf(DtInicial.Date) then
+       begin
+          varDataFim := System.DateUtils.StartOfTheMonth(Now);
+          sqlAux.Close;
+          sqlAux.SQL.Clear;
+          sqlAux.SQL.Add('Select * From TSOP_LiberarConsGM Where DataProcessamento = :DataProcessamento');
+          sqlAux.Params.ParamByName('DataProcessamento').AsDate :=  IncMonth(varDataFim,-1);
+          sqlAux.Open;
+          if ((sqlAux.IsEmpty) or (sqlAux.FieldByName('Liberar').AsInteger = 0)) then
+             varDataFim := System.DateUtils.EndOfTheMonth(IncMonth(varDataFim,-1));
+       end;
+      
       FDQueryVSOP_OrderBilling00.Close;
       Mensagem( 'Obtendo dados (Gross Margin)...' );
-      FDQueryVSOP_OrderBilling00.ParamByName( 'V_BILLING_INI' ).AsDateTime := varDataInicio;
-      FDQueryVSOP_OrderBilling00.ParamByName( 'V_BILLING_FIM' ).AsDateTime := varDataFim;
-      FDQueryVSOP_OrderBilling00.ParamByName( 'V_COSTREF' ).AsDateTime     := varDataInicio;
-      FDQueryVSOP_OrderBilling00.ParamByName( 'V_BOMREF' ).AsDateTime      := varDataInicio;
-      FDQueryVSOP_OrderBilling00.ParamByName( 'V_TSOP_GMHBUD' ).AsString   := 'E';
+      FDQueryVSOP_OrderBilling00.ParamByName( 'DATAINI' ).AsDateTime := varDataInicio;
+      FDQueryVSOP_OrderBilling00.ParamByName( 'DATAFIM' ).AsDateTime := varDataFim;
+
 
       if ((chkVendedor.Checked) or (Fr_Brady.SalesRep)) then
-       FDQueryVSOP_OrderBilling00.MacroByName( 'WHERE' ).AsRaw := ' AND A01.TSOP_ORDBILREPNOM = ' +  QuotedStr(Fr_Brady.TSIS_USUNOM);
+       FDQueryVSOP_OrderBilling00.MacroByName( 'WHERE' ).AsRaw := ' AND D01.TSOP_REPNOM = ' +  QuotedStr(Fr_Brady.TSIS_USUNOM);
 
       FDQueryVSOP_OrderBilling00.Open;
 
@@ -678,9 +742,34 @@ end;
 
 procedure TfrmExibeDashBoard.ButExcelClick(Sender: TObject);
 begin
+
+
+  SaveDialog.InitialDir := GetCurrentDir;
+
+  if cxButtonEditPath.Text = EmptyStr then
+    raise Exception.Create('Informe o arquivo primeiro.');
+
   if Page.ActivePageIndex = 0 then
   begin
 
+        if FDStoredProc2.IsEmpty then
+            raise Exception.Create('Não há dados para serem exportados ao Excel');
+
+        SaveDialog.InitialDir := GetCurrentDir;
+
+        if SaveDialog.Execute then
+        begin
+           Mensagem( 'Exportando Grid Pedidos vs Forecast Mês (MTD)...' );
+           cxGridExportLink.ExportGridToXLSX(SaveDialog.FileName, cxGridPedido);
+           Mensagem('');
+           MessageDlg( pChar( 'Planilha exportada em  ' + ExtractFilePath(SaveDialog.FileName) )  , mtInformation, [ mbOk ], 0 );
+
+        end;
+
+  end
+  else
+   if  Page.ActivePageIndex = 1 then
+   begin
         if FDStoredProc.IsEmpty then
             raise Exception.Create('Não há dados para serem exportados ao Excel');
 
@@ -688,12 +777,204 @@ begin
 
         if SaveDialog.Execute then
         begin
-           ExportGridToExcel(SaveDialog.FileName, cxGrid1, True, True);
-           MessageDlg( pChar( 'Planilha exportada em  ' + ExtractFilePath(SaveDialog.FileName) )  , mtInformation, [ mbOk ], 0 );
-
+          Mensagem( 'Exportando Grid Faturamento vs Target YTD (Ano)...' );
+          cxGridExportLink.ExportGridToXLSX(SaveDialog.FileName, cxGridTargetAno);
+          MessageDlg( pChar( 'Planilha exportada em  ' + ExtractFilePath(SaveDialog.FileName) )  , mtInformation, [ mbOk ], 0 );
+          Mensagem('');
         end;
 
-  end;
+   end
+   else if  Page.ActivePageIndex = 2 then
+   begin
+
+          if FDStoredProc.IsEmpty then
+              raise Exception.Create('Não há dados para serem exportados ao Excel');
+
+          SaveDialog.InitialDir := GetCurrentDir;
+
+          if SaveDialog.Execute then
+          begin
+             Mensagem( 'Exportando Grid Faturamento + Forecast vs Target (Ano)...' );
+             cxGridExportLink.ExportGridToXLSX(SaveDialog.FileName, cxGridForecastAno);
+             MessageDlg( pChar( 'Planilha exportada em  ' + ExtractFilePath(SaveDialog.FileName) )  , mtInformation, [ mbOk ], 0 );
+             Mensagem('');
+          end;
+
+   end
+  else if  Page.ActivePageIndex = 3 then
+       begin
+
+          if FDQueryVSOP_OrderBilling00.IsEmpty then
+              raise Exception.Create('Não há dados para serem exportados ao Excel');
+
+          Exportar_GMCliente;
+       end;
+
+end;
+
+
+procedure TfrmExibeDashBoard.Exportar_GMCliente;
+var
+  I, X : Integer;
+  varCor1,varCor2: TColor;
+begin
+
+   Screen.Cursor := crHourGlass;
+   DeleteFile(PWideChar(MyDocumentsPath+'\DashBoard_GM_Cliente.xlsx'));
+   CopyFile( PWideChar('\\ghos2024\Brady\DashBoard_GM_Cliente.xlsx'), PWideChar(MyDocumentsPath+'\DashBoard_GM_Cliente.xlsx'), True );
+
+   Try
+       Mensagem( 'Criando Planilha...' );
+       dxSpreadSheet := TdxSpreadSheet.Create(nil);
+       try
+           Mensagem( 'Exportando Grid GM Por Cliente...' );
+           dxSpreadSheet.LoadFromFile( MyDocumentsPath+'\DashBoard_GM_Cliente.xlsx' );
+           dxSpreadSheet.BeginUpdate;
+
+           dxSpreadSheet.Sheets[0].Active := True;
+
+           for I := 0 to 14 do
+           begin
+
+             with dxSpreadSheet.ActiveSheetAsTable.CreateCell(0,I) do;
+
+           end;
+
+           FDQueryVSOP_OrderBilling00.First;
+           varCor1 := RGB( 255, 255, 204 );
+           varCor2 := RGB(255,255,225);
+
+           X := 1;
+           while not FDQueryVSOP_OrderBilling00.eof do
+           begin
+
+               with dxSpreadSheet.ActiveSheetAsTable.CreateCell(X,0) do
+               begin
+                   Style.Brush.BackgroundColor := varCor1;
+                   AsVariant := FDQueryVSOP_OrderBilling00SITE.AsString;
+               end;
+
+               with dxSpreadSheet.ActiveSheetAsTable.CreateCell(X,1) do
+               begin
+                   Style.Brush.BackgroundColor := varCor1;
+                   AsVariant := FDQueryVSOP_OrderBilling00CANAL.AsString;
+               end;
+
+               with dxSpreadSheet.ActiveSheetAsTable.CreateCell(X,2) do
+               begin
+                   Style.Brush.BackgroundColor := varCor1;
+                   AsVariant := FDQueryVSOP_OrderBilling00COD_CLIENTE.AsString;
+               end;
+
+               with dxSpreadSheet.ActiveSheetAsTable.CreateCell(X,3) do
+               begin
+                   Style.Brush.BackgroundColor := varCor1;
+                   AsVariant := FDQueryVSOP_OrderBilling00RAZAO_SOCIAL.AsString;
+
+               end;
+
+               with dxSpreadSheet.ActiveSheetAsTable.CreateCell(X,4) do
+               begin
+                   Style.Brush.BackgroundColor := varCor1;
+                   AsVariant := FDQueryVSOP_OrderBilling00GRUPO_CLIENTE.AsString;
+
+               end;
+
+
+               with dxSpreadSheet.ActiveSheetAsTable.CreateCell(X,5) do
+               begin
+                   Style.Brush.BackgroundColor := varCor1;
+                   AsVariant := FDQueryVSOP_OrderBilling00ACC_OWNER.AsString;
+
+               end;
+
+               with dxSpreadSheet.ActiveSheetAsTable.CreateCell(X,6) do
+               begin
+                   Style.Brush.BackgroundColor := varCor1;
+                   AsVariant := FDQueryVSOP_OrderBilling00COD_ITEM.AsString;
+
+               end;
+
+               with dxSpreadSheet.ActiveSheetAsTable.CreateCell(X,7) do
+               begin
+                   Style.Brush.BackgroundColor := varCor1;
+                   AsVariant := FDQueryVSOP_OrderBilling00Região.AsString;
+
+               end;
+
+               with dxSpreadSheet.ActiveSheetAsTable.CreateCell(X,8) do
+               begin
+                   Style.Brush.BackgroundColor := varCor1;
+                   AsVariant := FDQueryVSOP_OrderBilling00UF.AsString;
+
+               end;
+
+               with dxSpreadSheet.ActiveSheetAsTable.CreateCell(X,9) do
+               begin
+                   Style.Brush.BackgroundColor := varCor1;
+                   AsVariant := FDQueryVSOP_OrderBilling00UoM.AsString;
+
+               end;
+
+               with dxSpreadSheet.ActiveSheetAsTable.CreateCell(X,10) do
+               begin
+                   Style.Brush.BackgroundColor := varCor1;
+                   Style.DataFormat.FormatCode:='dd-mm-yyyy';
+                   AsVariant := FDQueryVSOP_OrderBilling00Periodo.AsString
+
+               end;
+
+               with dxSpreadSheet.ActiveSheetAsTable.CreateCell(X,11) do
+               begin
+                   Style.Brush.BackgroundColor := varCor1;
+                    Style.DataFormat.FormatCode := '#,###,###';
+                   AsVariant := FDQueryVSOP_OrderBilling00TOTAL_VENDAS_QTD.AsFloat;
+
+               end;
+
+               with dxSpreadSheet.ActiveSheetAsTable.CreateCell(X,12) do
+               begin
+                   Style.Brush.BackgroundColor := varCor1;
+                   Style.DataFormat.FormatCode := '#,###,###';
+                   AsVariant := FDQueryVSOP_OrderBilling00NET_SALE.AsFloat;
+
+               end;
+
+               with dxSpreadSheet.ActiveSheetAsTable.CreateCell(X,13) do
+               begin
+                   Style.Brush.BackgroundColor := varCor1;
+                   Style.DataFormat.FormatCode := '#,##0.00';
+                   AsVariant := FDQueryVSOP_OrderBilling00GM_VALOR.AsFloat;
+               end;
+
+               with dxSpreadSheet.ActiveSheetAsTable.CreateCell(X,14) do
+               begin
+                   Style.Brush.BackgroundColor := varCor1;
+                   Style.DataFormat.FormatCode := '#,##0.00';
+                   AsVariant := FDQueryVSOP_OrderBilling00GM_PERCENTUAL.AsFloat;
+               end;
+
+               if Odd(X) then
+                varCor1 := RGB(255,255,225)
+               else
+                varCor1 := RGB(216,234,204);
+
+               Inc(X);
+
+               FDQueryVSOP_OrderBilling00.Next;
+           end;
+
+           dxSpreadSheet.BeginUpdate;
+           dxSpreadSheet.SaveToFile( cxButtonEditPath.Text );
+           MessageDlg( pChar( 'Planilha exportada em  ' + ExtractFilePath(SaveDialog.FileName) )  , mtInformation, [ mbOk ], 0 );
+
+       finally
+          FreeAndNil(dxSpreadSheet);
+       end;
+   Finally
+          Mensagem( EmptyStr );
+          Screen.Cursor := crDefault;
+   End;
 end;
 
 procedure  TfrmExibeDashBoard.LimparTelaDinamica;
@@ -766,6 +1047,14 @@ begin
    }
 end;
 
+procedure TfrmExibeDashBoard.cxButtonEditPathClick(Sender: TObject);
+begin
+  if SaveDialog.Execute(Handle) then
+  begin
+    cxButtonEditPath.Text := SaveDialog.FileName;
+  end;
+end;
+
 procedure TfrmExibeDashBoard.cxButtonRefreshClick(Sender: TObject);
 begin
    if ((Page.ActivePage  = TabForecast) or (Page.ActivePage =  TabTarget))  then
@@ -802,7 +1091,31 @@ begin
     AStyle := NegativeStyle;
 end;
 
-procedure TfrmExibeDashBoard.cxGrid1DBBandedTableView1CustomDrawCell(
+procedure TfrmExibeDashBoard.cxDBPivotGrid3StylesGetContentStyle(
+  Sender: TcxCustomPivotGrid; ACell: TcxPivotGridDataCellViewInfo;
+  var AStyle: TcxStyle);
+begin
+  if ACell.Value < 0 then
+    AStyle := NegativeStyle;
+
+end;
+
+procedure TfrmExibeDashBoard.cxDBPivotGridFieldGM_PERCENTUALCalculateCustomSummary(
+  Sender: TcxPivotGridField; ASummary: TcxPivotGridCrossCellSummary);
+var
+  AValue: Variant;
+  AValue2 : Variant;
+begin
+  // for last field you can use previous calculated field value
+  AValue := ASummary.Owner.GetSummaryByField(cxDBPivotGridFieldGM_VALOR, cxDBPivotGridFieldGM_VALOR.SummaryType);
+  AValue2 := ASummary.Owner.GetSummaryByField(cxDBPivotGridFieldNET_SALE, cxDBPivotGridFieldNET_SALE.SummaryType);
+
+  if (VarIsNumeric(AValue) and VarIsNumeric(AValue2)) then
+    ASummary.Custom := (AValue / AValue2) * 100;
+
+end;
+
+procedure TfrmExibeDashBoard.cxGridTargetAnoDBBandedTableView1CustomDrawCell(
   Sender: TcxCustomGridTableView; ACanvas: TcxCanvas;
   AViewInfo: TcxGridTableDataCellViewInfo; var ADone: Boolean);
 //var
@@ -947,7 +1260,7 @@ begin
 
     //DtInicial.Date :=  IncMonth(System.DateUtils.StartOfTheMonth(Now),-5);
     varInicialBill := MontaDataDashBoard(DtInicial.Date, False, False, false);               // monta data inicial de billing
-    varFinalBill   := System.DateUtils.EndOfTheMonth(dtInicial.Date);  // monta data final de billing
+    varFinalBill   := System.DateUtils.EndOfTheMonth(IncMonth(dtInicial.Date,-1));  // monta data final de billing
 
     varMesesB      := MonthsBetween(varInicialBill, System.DateUtils.EndOfTheMonth(varFinalBill));
 
@@ -1036,22 +1349,55 @@ end;
 procedure TfrmExibeDashBoard.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
+  FreeAndNil(lstMeses);
   frmExibeDashBoard := nil;
   Action := caFree;
 end;
 
 procedure TfrmExibeDashBoard.FormCreate(Sender: TObject);
+var
+  sqlMeses :  TFDQuery;
+  I : Integer;
 begin
   Page.ActivePage      := TabPedidos;
-  dtInicial.Date       :=  Date;
+  dtInicial.Date       := Date;
   cxButtonRefresh.Left := 232;
-  ButExcel.Left        := 276;
+
   if Fr_Brady.SalesRep then
   begin
     chkVendedor.Visible    := False;
     cxButtonRefresh.Left   := 155;
-    ButExcel.Left          := 201;
   end;
+  
+  // Não utilizado até o momento.
+  {lstMeses := TStringList.Create;
+  sqlMeses := TFDQuery.Create(Nil);
+  Try
+    sqlMeses.Connection := FDConnection;
+    sqlMeses.SQL.Clear;
+    sqlMeses.SQL.Add('SELECT DISTINCT YEARDOC FROM TSOP_MONTHS WHERE YEARDOC >= ''2019''  ORDER BY 1');
+    sqlMeses.Open;
+    sqlMeses.First;
+    while not sqlMeses.Eof do
+    begin
+       lstMeses.Add(sqlMeses.FieldByName('YEARDOC').AsString);
+       sqlMeses.Next;
+    end;
+  Finally
+    FreeAndNil(sqlMeses);
+  End;
+
+  cbxMeses.Sorted := true;
+  cbxMeses.Items.BeginUpdate;
+  try
+    for I := 0 to lstMeses.Count-1 do begin
+      cbxMeses.Items.AddObject(lstMeses[I], TObject(I));
+    end;
+  finally
+    cbxMeses.Items.EndUpdate;
+  end;
+   }
+
 
   //AbrirDataset;
 end;

@@ -91,6 +91,7 @@ type
     FDQueryTIQF_FornecedorTIQF_DTBALANCO: TSQLTimeStampField;
     FDQueryTIQF_FornecedorTIQF_DTDOP: TSQLTimeStampField;
     FDQueryTIQF_FornecedorTIQF_CLASSIFICACAO: TStringField;
+    FDQueryCategoria: TFDQuery;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure cxButtonArquivoClick(Sender: TObject);
     procedure cxButtonImportarClick(Sender: TObject);
@@ -128,6 +129,10 @@ begin
 
       Mensagem( 'Obtendo dados (Fornecedor)...' );
       FDQueryTIQF_Fornecedor.Open;
+
+      Mensagem( 'Obtendo dados (Categoria)...' );
+      FDQueryCategoria.Open;
+
 
     finally
 
@@ -229,6 +234,8 @@ var
   varFORDPO6190    : String;
   varTIQF_CATEGORIA : String;
 
+  varCategoriaNova : TStringList;
+  varBCategoriaNova : Boolean;
 begin
 
   try
@@ -240,6 +247,7 @@ begin
       raise Exception.Create('Selecione uma aba da planilha.');
 
     dxSpreadSheet := TdxSpreadSheet.Create(nil);
+    varCategoriaNova := TStringList.Create;
     try
 
       Mensagem( 'Carregando planilha...' );
@@ -316,13 +324,13 @@ begin
         if UpperCase(dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString) = '0 - 29 DIAS' then
            varColumnFORDPO0029 := I;
 
-        if UpperCase(dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString) = '30 - 45 DIAS' then
+        if UpperCase(dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString) = '30 - 44 DIAS' then
            varColumnFORDPO3045 := I;
 
-        if UpperCase(dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString) = '46 - 60 DIAS' then
+        if UpperCase(dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString) = '45 - 59 DIAS' then
            varColumnFORDPO4660 := I;
 
-        if UpperCase(dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString) = '61 - 90 DIAS' then
+        if UpperCase(dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString) = 'ACIMA DE 60' then
            varColumnFORDPO6190 := I;
 
         //if UpperCase(dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString) = 'DT DPO' then
@@ -376,13 +384,13 @@ begin
         raise Exception.Create('Coluna "0 - 29 DIAS" não foi encontrada na planilha selecionada.');
 
       if varColumnFORDPO3045   = -1 Then
-        raise Exception.Create('Coluna "30 - 45 Dias" não foi encontrada na planilha selecionada.');
+        raise Exception.Create('Coluna "30 - 44 Dias" não foi encontrada na planilha selecionada.');
 
       if varColumnFORDPO4660   = -1 Then
-        raise Exception.Create('Coluna "46 - 60 Dias" não foi encontrada na planilha selecionada.');
+        raise Exception.Create('Coluna "45 - 59 Dias" não foi encontrada na planilha selecionada.');
 
       if varColumnFORDPO6190   = -1 Then
-        raise Exception.Create('Coluna "61 - 90 Dias" não foi encontrada na planilha selecionada.');
+        raise Exception.Create('Coluna "Acima de 60" não foi encontrada na planilha selecionada.');
 
       //if varColumnTIQF_DTDOP   = -1 Then
       //  raise Exception.Create('Coluna "DT DPO" não foi encontrada na planilha selecionada.');
@@ -390,7 +398,21 @@ begin
       if varColumnClassificacao = -1 then
           raise Exception.Create('Coluna "Classificacao" não foi encontrada na planilha selecionada.');
 
+      varCategoriaNova.Add('Fornecedor' + ';' +
+                           'Categoria' + ';' +
+                           'Nome' + ';' +
+                           'Ativo' + ';' +
+                           'Certificacao' + ';' +
+                           'Manual Fornecedor' + ';' +
+                           'Supply Agreement' + ';' +
+                           'Serasa' + ';' +
+                           '0 - 29 Dias' + ';' +
+                           '30 - 44 Dias' + ';' +
+                           '45 - 59 Dias' + ';' +
+                           'Acima de 60' + ';' +
+                           'Classificacao');
 
+      varBCategoriaNova := False;
       FDQueryTIQF_Fornecedor.Close;
       FDQueryTIQF_Fornecedor.Open;
 
@@ -518,58 +540,137 @@ begin
             varClassificacao :=  dxSpreadSheet.ActiveSheetAsTable.Rows[I].Cells[varColumnClassificacao].AsString
         else  varClassificacao := '';
 
-        if not FDQueryTIQF_Fornecedor.Locate( 'TIQF_FORSAP', varCODFOR, [] ) then
+
+        if not FDQueryCategoria.Locate( 'TIQF_CATEGORIA_DESCRICAO', varTIQF_CATEGORIA, [] ) then
         begin
 
-          Mensagem( 'Criando fornecedor ("' + varNOMFOR + '")...' );
-          FDQueryTIQF_Fornecedor.Append;
 
-          FDQueryTIQF_FornecedorTIQF_FORSAP.AsInteger        := varCODFOR;
-          FDQueryTIQF_FornecedorTIQF_FORNOM.AsString         := varNOMFOR;
-          FDQueryTIQF_FornecedorTIQF_FORATI.AsString         := varFORATIVO;
-          FDQueryTIQF_FornecedorTIQF_FORCER.AsString         := varFORDOCCER;
+            varCategoriaNova.Add(IntToStr(varCODFOR)  + ';' +
+                                 varTIQF_CATEGORIA + ';' +
+                                 varNOMFOR + ';' +
+                                 varFORATIVO + ';' +
+                                 varFORDOCCER + ';' +
+                                 varFORDOCMANUAL + ';' +
+                                 varFORDOCSUPA + ';' +
+                                 varFORDOCBALP + ';' +
+                                 varFORDPO0029  + ';' +
+                                 varFORDPO3045 + ';' +
+                                 varFORDPO4660 + ';' +
+                                 varFORDPO6190 + ';' +
+                                 varClassificacao + ';');
 
-        //  FDQueryTIQF_FornecedorTIQF_FORCERDATVAL.AsDateTime := varFORCERDATVAL;
-          FDQueryTIQF_FornecedorTIQF_FORDOCMANUAL.AsString   := varFORDOCMANUAL;
-          FDQueryTIQF_FornecedorTIQF_FORDOCSUPA.AsString     := varFORDOCSUPA;
-          FDQueryTIQF_FornecedorTIQF_FORDOCBALP.AsString     := varFORDOCBALP;
+            varBCategoriaNova := True;
 
-          FDQueryTIQF_FornecedorTIQF_CATEGORIA.AsString      := varTIQF_CATEGORIA;
-         { FDQueryTIQF_FornecedorTIQF_DTMANUAL.AsDateTime     := varTIQF_DTMANUAL;
-          FDQueryTIQF_FornecedorTIQF_DTSUPPLY.AsDateTime     := varTIQF_DTSUPPLY;
-          FDQueryTIQF_FornecedorTIQF_DTBALANCO.AsDateTime    := varTIQF_DTBALANCO;
-          FDQueryTIQF_FornecedorTIQF_DTDOP.AsDateTime        := varTIQF_DTDOP;
-         }
-          FDQueryTIQF_FornecedorTIQF_CLASSIFICACAO.AsString  := varClassificacao;
+        end
+        else
+        begin
+
+            if not FDQueryTIQF_Fornecedor.Locate( 'TIQF_FORSAP', varCODFOR, [] ) then
+            begin
+
+              Mensagem( 'Criando fornecedor ("' + varNOMFOR + '")...' );
+              FDQueryTIQF_Fornecedor.Append;
+
+              FDQueryTIQF_FornecedorTIQF_FORSAP.AsInteger        := varCODFOR;
+              FDQueryTIQF_FornecedorTIQF_FORNOM.AsString         := varNOMFOR;
+              FDQueryTIQF_FornecedorTIQF_FORATI.AsString         := varFORATIVO;
+              FDQueryTIQF_FornecedorTIQF_FORCER.AsString         := varFORDOCCER;
+
+            //  FDQueryTIQF_FornecedorTIQF_FORCERDATVAL.AsDateTime := varFORCERDATVAL;
+              FDQueryTIQF_FornecedorTIQF_FORDOCMANUAL.AsString   := varFORDOCMANUAL;
+              FDQueryTIQF_FornecedorTIQF_FORDOCSUPA.AsString     := varFORDOCSUPA;
+              FDQueryTIQF_FornecedorTIQF_FORDOCBALP.AsString     := varFORDOCBALP;
+
+              FDQueryTIQF_FornecedorTIQF_CATEGORIA.AsString      := varTIQF_CATEGORIA;
+             { FDQueryTIQF_FornecedorTIQF_DTMANUAL.AsDateTime     := varTIQF_DTMANUAL;
+              FDQueryTIQF_FornecedorTIQF_DTSUPPLY.AsDateTime     := varTIQF_DTSUPPLY;
+              FDQueryTIQF_FornecedorTIQF_DTBALANCO.AsDateTime    := varTIQF_DTBALANCO;
+              FDQueryTIQF_FornecedorTIQF_DTDOP.AsDateTime        := varTIQF_DTDOP;
+             }
+              FDQueryTIQF_FornecedorTIQF_CLASSIFICACAO.AsString  := varClassificacao;
 
 
-          if varFORDPO0029 <> '' then
-             FDQueryTIQF_FornecedorTIQF_FORDPODIAS.AsString :=  '0'
-          else if varFORDPO3045 <> '' then
-             FDQueryTIQF_FornecedorTIQF_FORDPODIAS.AsString :=  '1'
-          else if varFORDPO4660 <> '' then
-             FDQueryTIQF_FornecedorTIQF_FORDPODIAS.AsString :=  '2'
-          else if varFORDPO6190 <> '' then
-             FDQueryTIQF_FornecedorTIQF_FORDPODIAS.AsString :=  '3';
+              if varFORDPO0029 <> '' then
+                 FDQueryTIQF_FornecedorTIQF_FORDPODIAS.AsString :=  '0'
+              else if varFORDPO3045 <> '' then
+                 FDQueryTIQF_FornecedorTIQF_FORDPODIAS.AsString :=  '1'
+              else if varFORDPO4660 <> '' then
+                 FDQueryTIQF_FornecedorTIQF_FORDPODIAS.AsString :=  '2'
+              else if varFORDPO6190 <> '' then
+                 FDQueryTIQF_FornecedorTIQF_FORDPODIAS.AsString :=  '3';
 
-          try
+              try
 
-            FDQueryTIQF_Fornecedor.Post;
+                FDQueryTIQF_Fornecedor.Post;
 
-          except
+              except
 
-            FDQueryTIQF_Fornecedor.Cancel;
+                FDQueryTIQF_Fornecedor.Cancel;
 
-          end;
+              end;
 
+            end
+            else
+            begin
+
+              Mensagem( 'Alterando fornecedor ("' + varNOMFOR + '")...' );
+              FDQueryTIQF_Fornecedor.Edit;
+
+              FDQueryTIQF_FornecedorTIQF_FORSAP.AsInteger        := varCODFOR;
+              FDQueryTIQF_FornecedorTIQF_FORNOM.AsString         := varNOMFOR;
+              FDQueryTIQF_FornecedorTIQF_FORATI.AsString         := varFORATIVO;
+              FDQueryTIQF_FornecedorTIQF_FORCER.AsString         := varFORDOCCER;
+
+            //  FDQueryTIQF_FornecedorTIQF_FORCERDATVAL.AsDateTime := varFORCERDATVAL;
+              FDQueryTIQF_FornecedorTIQF_FORDOCMANUAL.AsString   := varFORDOCMANUAL;
+              FDQueryTIQF_FornecedorTIQF_FORDOCSUPA.AsString     := varFORDOCSUPA;
+              FDQueryTIQF_FornecedorTIQF_FORDOCBALP.AsString     := varFORDOCBALP;
+
+              FDQueryTIQF_FornecedorTIQF_CATEGORIA.AsString      := varTIQF_CATEGORIA;
+             { FDQueryTIQF_FornecedorTIQF_DTMANUAL.AsDateTime     := varTIQF_DTMANUAL;
+              FDQueryTIQF_FornecedorTIQF_DTSUPPLY.AsDateTime     := varTIQF_DTSUPPLY;
+              FDQueryTIQF_FornecedorTIQF_DTBALANCO.AsDateTime    := varTIQF_DTBALANCO;
+              FDQueryTIQF_FornecedorTIQF_DTDOP.AsDateTime        := varTIQF_DTDOP;
+             }
+              FDQueryTIQF_FornecedorTIQF_CLASSIFICACAO.AsString  := varClassificacao;
+
+
+              if varFORDPO0029 <> '' then
+                 FDQueryTIQF_FornecedorTIQF_FORDPODIAS.AsString :=  '0'
+              else if varFORDPO3045 <> '' then
+                 FDQueryTIQF_FornecedorTIQF_FORDPODIAS.AsString :=  '1'
+              else if varFORDPO4660 <> '' then
+                 FDQueryTIQF_FornecedorTIQF_FORDPODIAS.AsString :=  '2'
+              else if varFORDPO6190 <> '' then
+                 FDQueryTIQF_FornecedorTIQF_FORDPODIAS.AsString :=  '3';
+
+              try
+
+                FDQueryTIQF_Fornecedor.Post;
+
+              except
+
+                FDQueryTIQF_Fornecedor.Cancel;
+
+              end;
+
+            end;
         end;
 
       end;
 
+      if varBCategoriaNova then
+      begin
+          varCategoriaNova.SaveToFile( ExtractFilePath( cxTextEditFileName.Text ) + 'NovaCategoria.csv' );
+          Application.MessageBox( pchar('Categoria(s) Nova(s). Registro(s) não importado(s)' + #13#10 +
+           ExtractFilePath( cxTextEditFileName.Text ) + 'NovaCategoria.csv'), 'S&OP', MB_ICONINFORMATION );
+      end;
+
+
     finally
 
       FreeAndNil(dxSpreadSheet);
-
+      FreeAndNil(varCategoriaNova);
     end;
 
 

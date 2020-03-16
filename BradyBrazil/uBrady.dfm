@@ -112,7 +112,6 @@ object Fr_Brady: TFr_Brady
       Index = 6
     end
     object dxRibbonTabIQF: TdxRibbonTab
-      Active = True
       Caption = 'IQF'
       Groups = <
         item
@@ -149,6 +148,26 @@ object Fr_Brady: TFr_Brady
           ToolbarName = 'dxBarManagerBarUploadProdutoSeton'
         end>
       Index = 9
+    end
+    object dxRibbonTabMarketing: TdxRibbonTab
+      Active = True
+      Caption = 'Marketing'
+      Groups = <
+        item
+          Caption = 'Editor'
+          ToolbarName = 'dxBarManagerBarMarketing'
+        end
+        item
+          ToolbarName = 'dxBarManagerBarParametros'
+        end
+        item
+          ToolbarName = 'dxBarManagerBarEmailEnviado'
+        end
+        item
+          Caption = 'Distribuidores'
+          ToolbarName = 'dxBarManagerBarUploadDistribuidores'
+        end>
+      Index = 10
     end
   end
   object dxRibbonBackstageViewSISTEMA: TdxRibbonBackstageView
@@ -841,8 +860,8 @@ object Fr_Brady: TFr_Brady
     ImageOptions.LargeImages = cxLargeImages
     PopupMenuLinks = <>
     UseSystemFont = True
-    Left = 992
-    Top = 344
+    Left = 456
+    Top = 152
     DockControlHeights = (
       0
       0
@@ -1224,7 +1243,19 @@ object Fr_Brady: TFr_Brady
         end
         item
           Visible = True
+          ItemName = 'dxBarButtonIQFCadastroRegra'
+        end
+        item
+          Visible = True
           ItemName = 'dxBarButtonIQFCadastroForncedor'
+        end
+        item
+          Visible = True
+          ItemName = 'dxBarButtonIQFCadastroMeta'
+        end
+        item
+          Visible = True
+          ItemName = 'dxBarButtonCategoria'
         end>
       OneOnRow = False
       Row = 0
@@ -1233,9 +1264,9 @@ object Fr_Brady: TFr_Brady
       WholeRow = False
     end
     object dxBarManagerBarIQFImportacao: TdxBar
-      Caption = 'IQF - Importa'#231#227'o'
+      Caption = 'IQF - Importa'#231#227'o                                '
       CaptionButtons = <>
-      DockedLeft = 96
+      DockedLeft = 207
       DockedTop = 0
       FloatLeft = 1075
       FloatTop = 8
@@ -1259,7 +1290,7 @@ object Fr_Brady: TFr_Brady
     object dxBarManagerBarIQFRelatorio: TdxBar
       Caption = 'IQF - Relat'#243'rio'
       CaptionButtons = <>
-      DockedLeft = 241
+      DockedLeft = 402
       DockedTop = 0
       FloatLeft = 1075
       FloatTop = 8
@@ -1360,6 +1391,86 @@ object Fr_Brady: TFr_Brady
       Visible = True
       WholeRow = False
     end
+    object dxBarManagerBarMarketing: TdxBar
+      Caption = 'Marketing'
+      CaptionButtons = <>
+      DockedLeft = 0
+      DockedTop = 0
+      FloatLeft = 1283
+      FloatTop = 8
+      FloatClientWidth = 51
+      FloatClientHeight = 0
+      ItemLinks = <
+        item
+          Visible = True
+          ItemName = 'dxBarLargeEditorEmail'
+        end>
+      OneOnRow = False
+      Row = 1
+      UseOwnFont = False
+      Visible = True
+      WholeRow = False
+    end
+    object dxBarManagerBarParametros: TdxBar
+      Caption = 'Parametros'
+      CaptionButtons = <>
+      DockedLeft = 109
+      DockedTop = 0
+      FloatLeft = 1283
+      FloatTop = 8
+      FloatClientWidth = 0
+      FloatClientHeight = 0
+      ItemLinks = <
+        item
+          Visible = True
+          ItemName = 'dxBarLargeButtonMKTConfig'
+        end>
+      OneOnRow = False
+      Row = 1
+      UseOwnFont = False
+      Visible = True
+      WholeRow = False
+    end
+    object dxBarManagerBarEmailEnviado: TdxBar
+      Caption = 'Emails Enviados'
+      CaptionButtons = <>
+      DockedLeft = 218
+      DockedTop = 0
+      FloatLeft = 1283
+      FloatTop = 8
+      FloatClientWidth = 0
+      FloatClientHeight = 0
+      ItemLinks = <
+        item
+          Visible = True
+          ItemName = 'dxBarLargeButtonMKTLista'
+        end>
+      OneOnRow = False
+      Row = 1
+      UseOwnFont = False
+      Visible = True
+      WholeRow = False
+    end
+    object dxBarManagerBarUploadDistribuidores: TdxBar
+      Caption = '   Distribuidores   '
+      CaptionButtons = <>
+      DockedLeft = 311
+      DockedTop = 0
+      FloatLeft = 1283
+      FloatTop = 8
+      FloatClientWidth = 0
+      FloatClientHeight = 0
+      ItemLinks = <
+        item
+          Visible = True
+          ItemName = 'dxBarLargeButtonUploadDistribuidores'
+        end>
+      OneOnRow = True
+      Row = 0
+      UseOwnFont = False
+      Visible = True
+      WholeRow = False
+    end
     object dxBarButton1: TdxBarButton
       Caption = 'New Button'
       Category = 0
@@ -1411,6 +1522,258 @@ object Fr_Brady: TFr_Brady
       Visible = ivAlways
       ImageIndex = 45
       LargeImageIndex = 45
+    end
+    object dxBarButton3: TdxBarButton
+      Caption = 'New Button'
+      Category = 0
+      Hint = 'New Button'
+      Visible = ivAlways
+    end
+    object dxBarButton4: TdxBarButton
+      Caption = 'New Button'
+      Category = 0
+      Hint = 'New Button'
+      Visible = ivAlways
+    end
+    object dxBarButtonEditorEmail: TdxBarButton
+      Caption = 'Editor E-mail'
+      Category = 0
+      Hint = 'Editor E-mail'
+      Visible = ivAlways
+      OnClick = dxBarButtonEditorEmailClick
+    end
+    object dxBarLargeEditorEmail: TdxBarLargeButton
+      Caption = 'Email'
+      Category = 0
+      Hint = 'Email'
+      Visible = ivAlways
+      LargeGlyph.Data = {
+        36100000424D3610000000000000360000002800000020000000200000000100
+        2000000000000010000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000001000000010000000100000001000000010000
+        0001000000010000000100000001000000010000000100000000000000000000
+        0000000000000000000000000001000000020000000400000004000000040000
+        0005000000050000000500000005000000050000000500000005000000050000
+        0005000000050000000500000005000000050000000500000005000000050000
+        0005000000050000000500000005000000040000000200000001000000000000
+        0000000000000000000100000003000000080000000D00000010000000110000
+        0011000000110000001100000012000000120000001200000012000000120000
+        0012000000120000001300000013000000130000001300000013000000130000
+        00130000001300000013000000130000000F00000009000000031A131127402E
+        2960694D449F8E675BD800000007312F69A28F7079EDB18574FFA96F4BFFA768
+        3DFFA86A42FFAE806DFFAA8179FF4B49ADFF2C37BDFF373DB5FF9B777FFFAF82
+        70FFA86D49FFA5653CFFA66840FFAD7D6AFFA87D75FF4846AAFF2933BBFF363A
+        B3FF9A747DFFAD7F6EFFA66B47FF8A4926FF593423A300000009000000000000
+        000000000000000000030000000C303CC1FF424AC3FFDCDAEDFFF7F0ECFFBC8B
+        6AFFA7693FFFB07750FFEEE0D8FFF1EDF1FF5E65CBFF2D39BEFF404AC3FFDBD8
+        EAFFF5EEEAFFBB8868FFA6673DFFAE744EFFECDED5FFEFEBEFFF5B62C8FF2A35
+        BCFF3D47C0FFD8D6E7FFF5ECE7FFA26C50FF8C4B28FF0000000E1A1411274030
+        2A606B4F469F906B5DD80000000E4F4EAFFF323FC3FFF7EFEAFFF6EFEAFFF6EF
+        EAFFF7EFEAFFF6EFEAFFF6EEE9FFF6EEEAFFF7EEE9FFF6EFE9FFF6EEE9FFF6EE
+        E9FFF6EEE8FFF6EEE8FFF6EEE8FFF6EDE8FFF6EEE8FFF6EEE8FFF6EDE8FFF5ED
+        E8FFF6EDE8FFF6EEE7FFF6EDE7FFF4EBE7FF9F6952FF00000011000000000000
+        000000000000000000030000000EA87E76FF646DD0FFF7F0ECFFF7F0EBFFF7F0
+        EBFFF7EFEAFFF7F0EBFFF7EFEAFFF7EFEBFFF7EFEBFFF7EFEAFFF7EFEAFFF7EF
+        EAFFF7EFE9FFF6EFE9FFF7EFE9FFF7EFE9FFF6EFE9FFF7EFE9FFF7EEE9FFF7EE
+        E8FFF6EEE9FFF6EEE8FFF6EEE8FFD8D5E6FFA97B6BFF000000111B1412274231
+        2B606C50489F936D61D80000000DB0816EFFF3F1F6FFF7F0ECFFF8F0ECFFFAF4
+        F0FFFAF4F1FFF9F4F0FFFAF4F0FFF9F4F0FFF9F3F0FFF9F4F0FFF9F3F0FFF9F3
+        F0FFF9F4EFFFF9F3F0FFF7EFEAFFF7EFEAFFF7EFEAFFF7EFEAFFF6EFEAFFF7EF
+        E9FFF7EEE9FFF7EEE9FFF6EFE9FF353CB3FF957077FF00000010000000000000
+        000000000000000000030000000CB0774FFFF1E6DEFFF8F1EDFFF8F1EDFFC59E
+        8DFFC59E8CFFC49E8CFFC49D8CFFC59D8BFFC49D8CFFC49D8BFFC49D8BFFC49C
+        8BFFC49C8AFFC49B8BFFF7EFEBFFF7F0EBFFF7F0EAFFF7F0EBFFF7F0EBFFF7EF
+        EAFFF7EFEAFFF6EFEAFFF6EFEAFF222BB0FF2F33AAFF0000000F1B1412274232
+        2C606D524A9F947063D80000000BB1774EFFB7835EFFF9F2EEFFF8F2EEFFF4EA
+        E4FFF3E9E4FFF3E9E3FFF3E9E3FFF3E9E3FFF3E9E3FFF3E9E3FFF3E9E3FFF3E9
+        E2FFF3E8E2FFF3E8E2FFF8F1ECFFF8F1ECFFF7F0ECFFF7F0ECFFF8F0EBFFF7F0
+        EBFFF7F0ECFFF7F0EBFFF8EFEBFF575DC2FF242DB3FF0000000F000000000000
+        000000000000000000030000000BB37F5BFFB27B51FFF8F3EFFFF9F2EFFFC6A0
+        8FFFC69F8FFFC5A08FFFC69F8EFFC69F8DFFC59F8EFFC69F8DFFC59E8DFFC59E
+        8CFFC59D8CFFC59E8CFFF8F1EDFFF8F2EDFFF8F1ECFFF7F1ECFFF7F0ECFFF8F1
+        ECFFF8F0ECFFF7F0ECFFF8F0ECFFF2EFF2FF7C648BFF0000000E1B1513274334
+        2E6070554C9F977366D80000000AB88D7EFFC59B7BFFF9F3F0FFF9F3F0FFF4EB
+        E5FFF4EBE6FFF4EAE5FFF4EBE5FFF4EBE5FFF4EBE5FFF4EAE5FFF4EAE5FFF4EA
+        E4FFF3EAE4FFF3EAE4FFF9F2EEFFF8F1EDFFF9F2EEFFF8F1EDFFF8F1EEFFF8F1
+        EEFFF8F1EDFFF8F1EDFFF8F1ECFFEEE1DAFFB18576FF0000000D000000000000
+        0000000000000000000200000009A7878EFFFBF6F3FFFAF4F1FFFAF4F1FFC8A2
+        91FFC7A291FFC7A190FFC7A291FFC6A190FFC7A190FFC6A18FFFC6A08FFFC6A0
+        8FFFC6A08EFFC6A08EFFF8F2EFFFF8F2EFFFF9F2EFFFF8F2EFFFF8F2EEFFF8F2
+        EEFFF9F2EEFFF8F2EDFFF9F2EEFFAA7450FFAF826FFF0000000C1C1613274535
+        2F6071584E9F997769D800000009535ECBFFE2E4F6FFFAF5F2FFFAF4F2FFFAF5
+        F2FFFAF5F1FFFAF4F1FFFAF4F1FFFAF4F1FFF9F4F1FFF9F4F1FFF9F4F1FFF9F4
+        F0FFF9F4F0FFF9F4F0FFF9F3F0FFF9F3F0FFF9F3F0FFF9F3F0FFF9F3EFFFF9F2
+        EFFFF9F3EFFFF8F3EFFFF9F2EFFFA56944FFA66D48FF0000000C000000000000
+        00000000000000000002000000084B5DD5FF5B6BD8FFFAF6F3FFFBF5F3FFFAF5
+        F2FFFAF5F2FFFAF5F2FFFAF5F2FFFAF5F2FFFAF5F2FFFAF5F2FFFAF4F2FFFAF5
+        F1FFFAF4F2FFF9F5F1FFF9F4F1FFFAF4F1FFF9F4F0FFFCF9F8FFFCF9F8FFFCF9
+        F7FFFCF9F7FFFCF9F7FFFCF9F7FFBA8E70FFA66D46FF0000000B1C1614274536
+        3160735A509F9B7A6CD800000007686CC4FF4D5FD6FFFAF6F4FFFBF6F4FFFBF6
+        F4FFFBF6F3FFFBF5F3FFFAF6F3FFFAF6F3FFFAF6F3FFFBF5F2FFFAF5F2FFFAF5
+        F3FFFAF5F2FFFAF5F2FFFAF5F2FFFAF4F1FFFAF4F2FFFCFAF8FF646CDAFF6269
+        DAFF6067D8FF5E65D7FFFCF9F8FFF9F5F2FFB2846BFF0000000A000000000000
+        0000000000000000000200000007BC9991FF7887E0FFFCF7F4FFFBF7F4FFFBF7
+        F4FFFAF6F4FFFBF7F4FFFBF6F4FFFBF7F4FFFAF6F4FFFBF6F3FFFBF6F3FFFBF5
+        F4FFFBF6F3FFFAF5F3FFFAF6F3FFFBF5F3FFFAF5F3FFFCFAF9FF6C74DDFF6972
+        DDFF6770DCFF656EDBFFFCFAF8FFDFDFF2FFBA9284FF0000000A1D1714274638
+        3260755C539F9E7D70D800000006C29C8BFFF6F7FCFFFCF7F6FFFBF7F5FFFBF7
+        F6FFFBF7F5FFFCF7F5FFFBF7F5FFFBF6F5FFFBF7F5FFFBF6F4FFFBF6F5FFFBF6
+        F4FFFBF6F4FFFBF6F3FFFAF6F4FFFBF6F4FFFAF6F4FFFDFAF9FF727DE1FF707B
+        DFFF6F78DFFF6D76DEFFFDFAF9FF4D5DCEFFA88A90FF00000009000000000000
+        0000000000000000000100000005C1936EFFF6EDE7FFFCF8F6FFFBF8F6FFFCF8
+        F7FFFCF8F6FFFBF8F6FFFCF7F6FFFBF8F6FFFBF7F6FFFCF8F5FFFCF7F6FFFBF7
+        F6FFFBF7F5FFFBF6F5FFFBF6F5FFFBF7F5FFFBF6F5FFFDFAF9FF7986E3FF7784
+        E3FF7581E2FF747EE1FFFCFAF9FF4050CCFF4B56C6FF000000081D1715274739
+        3360765E549FA07F72D800000005C3956CFFC89F7AFFFCF9F8FFFCF8F8FFFCF9
+        F7FFFCF8F7FFFCF8F7FFFBF8F6FFFCF8F6FFFCF8F6FFFCF8F6FFFCF8F6FFFBF7
+        F6FFFBF7F6FFFCF8F6FFFCF7F6FFFBF7F5FFFBF7F5FFFDFBFAFF7F8DE6FF7D8B
+        E5FF7B89E5FF7A87E4FFFDFAF9FF6E7ADAFF4153CFFF00000007000000000000
+        0000000000000000000100000003C09776FAC49870FFFFFFFEFFFFFFFEFFFFFE
+        FEFFFFFEFEFFFFFEFEFFFFFEFEFFFFFEFEFFFFFEFEFFFFFEFEFFFFFEFEFFFFFE
+        FEFFFFFEFEFFFFFEFEFFFFFEFEFFFEFEFEFFFEFEFDFFFEFEFEFFFEFEFEFFFEFE
+        FEFFFEFEFEFFFEFEFEFFFEFEFEFFE8E0E2FF84759BF1000000051D181527483A
+        3460775F569FA28274D8000000023B312D4BBF9875F3D0B2A6FFD1B1A6FFD0B1
+        A5FFD0B1A4FFCFAFA3FFCFAEA2FFCEAEA2FFCEADA1FFCEACA0FFCDACA0FFCDAB
+        9EFFCBAB9DFFCBAA9DFFCBA99CFFCAA89BFFC9A89AFFC9A699FFC8A598FFC8A5
+        97FFC7A496FFC7A396FFC6A395FFA08171D33128244400000003000000000000
+        0000000000000000000000000001000000010000000300000003000000040000
+        0004000000040000000400000004000000040000000400000004000000040000
+        0004000000040000000500000005000000050000000500000005000000050000
+        0005000000050000000500000005000000040000000200000001000000000000
+        0000000000000000000000000000000000000000000100000001000000010000
+        0001000000010000000100000001000000010000000100000001000000010000
+        0001000000010000000100000001000000010000000100000001000000010000
+        0001000000010000000100000001000000010000000100000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000}
+      OnClick = dxBarLargeEditorEmailClick
+      HotImageIndex = 22
+      Width = 100
+      SyncImageIndex = False
+      ImageIndex = 22
+    end
+    object dxBarButton6: TdxBarButton
+      Caption = 'Fornecedor'
+      Category = 0
+      Hint = 'Fornecedor'
+      Visible = ivAlways
+    end
+    object dxBarButtonIQFCadastroMeta: TdxBarButton
+      Caption = 'Meta'
+      Category = 0
+      Hint = 'Meta'
+      Visible = ivAlways
+      ImageIndex = 45
+      LargeImageIndex = 45
+      OnClick = dxBarButtonIQFCadastroMetaClick
+    end
+    object dxBarButton5: TdxBarButton
+      Caption = 'Setup'
+      Category = 0
+      Hint = 'Setup'
+      Visible = ivAlways
+      ImageIndex = 37
+      LargeImageIndex = 37
+    end
+    object dxBarLargeButton1: TdxBarLargeButton
+      Caption = 'Config'
+      Category = 0
+      Hint = 'Config'
+      Visible = ivAlways
+      LargeImageIndex = 37
+      HotImageIndex = 37
+      Width = 100
+      SyncImageIndex = False
+      ImageIndex = 37
+    end
+    object dxBarLargeButton2: TdxBarLargeButton
+      Caption = 'New Button'
+      Category = 0
+      Hint = 'New Button'
+      Visible = ivAlways
+    end
+    object dxBarButton7: TdxBarButton
+      Caption = 'New Button'
+      Category = 0
+      Hint = 'New Button'
+      Visible = ivAlways
+    end
+    object dxBarLargeButtonMKTConfig: TdxBarLargeButton
+      Caption = 'Config'
+      Category = 0
+      Hint = 'Config'
+      Visible = ivAlways
+      LargeImageIndex = 37
+      OnClick = dxBarLargeButtonMKTConfigClick
+      HotImageIndex = 37
+      Width = 100
+      SyncImageIndex = False
+      ImageIndex = 37
+    end
+    object dxBarLargeButtonMKTLista: TdxBarLargeButton
+      Caption = 'Lista'
+      Category = 0
+      Hint = 'Lista'
+      Visible = ivAlways
+      LargeImageIndex = 21
+      OnClick = dxBarLargeButtonMKTListaClick
+    end
+    object dxBarButtonCategoria: TdxBarButton
+      Caption = 'Categoria'
+      Category = 0
+      Hint = 'Categoria'
+      Visible = ivAlways
+      ImageIndex = 45
+      LargeImageIndex = 45
+      OnClick = dxBarButtonCategoriaClick
+    end
+    object dxBarButton8: TdxBarButton
+      Caption = '        Upload         '
+      Category = 0
+      Hint = '        Upload         '
+      Visible = ivAlways
+      ImageIndex = 21
+      LargeImageIndex = 21
+    end
+    object dxBarLargeButtonUploadDistribuidores: TdxBarLargeButton
+      Caption = 'Upload        '
+      Category = 0
+      Hint = 'Upload        '
+      Visible = ivAlways
+      LargeImageIndex = 46
+      OnClick = dxBarLargeButtonUploadDistribuidoresClick
     end
     object dxBarButtonBarraAcessoRapidoSalvar: TdxBarButton
       Caption = 'Salvar'
@@ -1872,9 +2235,9 @@ object Fr_Brady: TFr_Brady
       OnClick = dxBarButtonInovarCadastroNotaFiscalClick
     end
     object dxBarButtonIQFCadastroParametros: TdxBarButton
-      Caption = 'Parametros'
+      Caption = 'Parametros      '
       Category = 11
-      Hint = 'Parametros'
+      Hint = 'Parametros      '
       Visible = ivAlways
       ImageIndex = 45
       LargeImageIndex = 45
@@ -1926,6 +2289,15 @@ object Fr_Brady: TFr_Brady
       ImageIndex = 45
       LargeImageIndex = 45
       OnClick = dxBarButtonIQFImportacaoFornecedorClick
+    end
+    object dxBarButtonIQFCadastroRegra: TdxBarButton
+      Caption = 'Regra Avalia'#231#227'o'
+      Category = 11
+      Hint = 'Regra Avalia'#231#227'o'
+      Visible = ivAlways
+      ImageIndex = 45
+      LargeImageIndex = 45
+      OnClick = dxBarButtonIQFCadastroRegraClick
     end
     object dxBarButtonGrossMarginImportacaoBOM: TdxBarButton
       Caption = 'Bill of Material'
@@ -4258,7 +4630,7 @@ object Fr_Brady: TFr_Brady
     Height = 32
     Width = 32
     FormatVersion = 1
-    DesignInfo = 9962130
+    DesignInfo = 8913538
     ImageInfo = <
       item
         Image.Data = {
@@ -11582,7 +11954,7 @@ object Fr_Brady: TFr_Brady
     LookAndFeel.Kind = lfUltraFlat
     TabProperties.CloseButtonMode = cbmEveryTab
     TabProperties.CustomButtons.Buttons = <>
-    Left = 584
+    Left = 576
     Top = 136
   end
   object FDQueryTSIS_Menu: TFDQuery
@@ -11636,16 +12008,16 @@ object Fr_Brady: TFr_Brady
     Images = cxSmallImages
     Ribbon = dxRibbon
     UseOwnFont = False
-    Left = 856
-    Top = 120
+    Left = 888
+    Top = 56
   end
   object SaveDialogExportGridExcel: TSaveDialog
     DefaultExt = 'xlsx'
     Filter = 'Excel (2007-2014)|*.xlsx'
     Options = [ofOverwritePrompt, ofHideReadOnly, ofPathMustExist, ofEnableSizing, ofDontAddToRecent]
     Title = 'Exportar para Excel (2007-2014)'
-    Left = 704
-    Top = 144
+    Left = 752
+    Top = 200
   end
   object dxSkinController1: TdxSkinController
     SkinName = 'Office2013White'

@@ -1,0 +1,262 @@
+unit uFr_ListaEmail;
+
+interface
+
+uses
+  System.IOUtils,
+  cxGridExportLink,
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, cxGraphics, cxLookAndFeels,
+  cxLookAndFeelPainters, Vcl.Menus, dxSkinsCore, dxSkinOffice2013White,
+  cxControls, cxContainer, cxEdit, dxSkinscxPCPainter, dxBarBuiltInMenu,
+  cxStyles, cxCustomData, cxFilter, cxData, cxDataStorage, cxNavigator, Data.DB,
+  cxDBData, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Error,
+  FireDAC.UI.Intf, FireDAC.Phys.Intf, FireDAC.Stan.Def, FireDAC.Stan.Pool,
+  FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Comp.Client, cxGridLevel, cxClasses,
+  cxGridCustomView, cxGridCustomTableView, cxGridTableView, cxGridDBTableView,
+  cxGrid, cxPC, Vcl.StdCtrls, cxTextEdit, cxMaskEdit, cxButtonEdit,
+  Vcl.ComCtrls, cxCheckBox, cxLabel, cxButtons, Vcl.ExtCtrls,
+  FireDAC.Stan.Param, FireDAC.DatS, FireDAC.DApt.Intf, FireDAC.DApt,
+  FireDAC.Comp.DataSet, dxGDIPlusClasses, dxSkinBlack, dxSkinBlue,
+  dxSkinBlueprint, dxSkinCaramel, dxSkinCoffee, dxSkinDarkRoom, dxSkinDarkSide,
+  dxSkinDevExpressDarkStyle, dxSkinDevExpressStyle, dxSkinFoggy,
+  dxSkinGlassOceans, dxSkinHighContrast, dxSkiniMaginary, dxSkinLilian,
+  dxSkinLiquidSky, dxSkinLondonLiquidSky, dxSkinMcSkin, dxSkinMetropolis,
+  dxSkinMetropolisDark, dxSkinMoneyTwins, dxSkinOffice2007Black,
+  dxSkinOffice2007Blue, dxSkinOffice2007Green, dxSkinOffice2007Pink,
+  dxSkinOffice2007Silver, dxSkinOffice2010Black, dxSkinOffice2010Blue,
+  dxSkinOffice2010Silver, dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray,
+  dxSkinPumpkin, dxSkinSeven, dxSkinSevenClassic, dxSkinSharp, dxSkinSharpPlus,
+  dxSkinSilver, dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008,
+  dxSkinTheAsphaltWorld, dxSkinsDefaultPainters, dxSkinValentine, dxSkinVS2010,
+  dxSkinWhiteprint, dxSkinXmas2008Blue;
+
+type
+  TFr_ListaEmail = class(TForm)
+    Panel1: TPanel;
+    ButExcel: TcxButton;
+    cxButtonEditPath: TcxButtonEdit;
+    Page: TcxPageControl;
+    cxTabSheetNEnviado: TcxTabSheet;
+    cxTabSheetEnviado: TcxTabSheet;
+    cxGridNEnviadosTableView: TcxGridDBTableView;
+    cxGridNEnviadosLevel1: TcxGridLevel;
+    cxGridNEnviados: TcxGrid;
+    FDConnection: TFDConnection;
+    FDQueryListaEmailN: TFDQuery;
+    dsListaEmailN: TDataSource;
+    FDQueryListaEmailNTSOP_ORDBILCOD: TIntegerField;
+    FDQueryListaEmailNTSOP_ORICOD: TIntegerField;
+    FDQueryListaEmailNTSOP_ORDBILSITNOM: TStringField;
+    FDQueryListaEmailNTSOP_ORDBILCANNOM: TStringField;
+    FDQueryListaEmailNTSOP_ORDBILDATDOC: TSQLTimeStampField;
+    FDQueryListaEmailNTSOP_ORDBILNRODOC: TStringField;
+    FDQueryListaEmailNTSOP_ORDBILTIPDOC: TStringField;
+    FDQueryListaEmailNTSOP_ORDBILNRODOCREF: TStringField;
+    FDQueryListaEmailNTSOP_ORDBILDATDOCREQ: TSQLTimeStampField;
+    FDQueryListaEmailNTSOP_ORDBILCLICOD: TStringField;
+    FDQueryListaEmailNTSOP_ORDBILCLINOM: TStringField;
+    FDQueryListaEmailNTSOP_ORDBILGRUCLINOM: TStringField;
+    FDQueryListaEmailNTSOP_ORDBILBUYERCONTACT: TStringField;
+    FDQueryListaEmailNTSOP_ORDBILBUYERCONTACTEMAIL: TStringField;
+    FDQueryListaEmailNTSOP_ORDBILBUYERCONTACTFIRSTNAME: TStringField;
+    FDQueryListaEmailNTSOP_ORDBILDAYOFWEEK: TStringField;
+    cxGridNEnviadosTableViewTSOP_ORDBILSITNOM: TcxGridDBColumn;
+    cxGridNEnviadosTableViewTSOP_ORDBILCANNOM: TcxGridDBColumn;
+    cxGridNEnviadosTableViewTSOP_ORDBILDATDOC: TcxGridDBColumn;
+    cxGridNEnviadosTableViewTSOP_ORDBILNRODOC: TcxGridDBColumn;
+    cxGridNEnviadosTableViewTSOP_ORDBILTIPDOC: TcxGridDBColumn;
+    cxGridNEnviadosTableViewTSOP_ORDBILNRODOCREF: TcxGridDBColumn;
+    cxGridNEnviadosTableViewTSOP_ORDBILDATDOCREQ: TcxGridDBColumn;
+    cxGridNEnviadosTableViewTSOP_ORDBILCLICOD: TcxGridDBColumn;
+    cxGridNEnviadosTableViewTSOP_ORDBILCLINOM: TcxGridDBColumn;
+    cxGridNEnviadosTableViewTSOP_ORDBILGRUCLINOM: TcxGridDBColumn;
+    cxGridNEnviadosTableViewTSOP_ORDBILBUYERCONTACT: TcxGridDBColumn;
+    cxGridNEnviadosTableViewTSOP_ORDBILBUYERCONTACTEMAIL: TcxGridDBColumn;
+    cxGridNEnviadosTableViewTSOP_ORDBILBUYERCONTACTFIRSTNAME: TcxGridDBColumn;
+    cxGridNEnviadosTableViewTSOP_ORDBILDAYOFWEEK: TcxGridDBColumn;
+    PanelSQLSplashScreen: TPanel;
+    ImageSQLSplashScreen: TImage;
+    cxLabelMensagem: TcxLabel;
+    cxGridEnviados: TcxGrid;
+    cxGridDBTableView1: TcxGridDBTableView;
+    cxGridLevel1: TcxGridLevel;
+    FDQueryListaEmailS: TFDQuery;
+    dsListaEmailS: TDataSource;
+    FDQueryListaEmailSTSOP_ORDBILCOD: TIntegerField;
+    FDQueryListaEmailSTSOP_ORICOD: TIntegerField;
+    FDQueryListaEmailSTSOP_ORDBILSITNOM: TStringField;
+    FDQueryListaEmailSTSOP_ORDBILCANNOM: TStringField;
+    FDQueryListaEmailSTSOP_ORDBILDATDOC: TSQLTimeStampField;
+    FDQueryListaEmailSTSOP_ORDBILNRODOC: TStringField;
+    FDQueryListaEmailSTSOP_ORDBILTIPDOC: TStringField;
+    FDQueryListaEmailSTSOP_ORDBILNRODOCREF: TStringField;
+    FDQueryListaEmailSTSOP_ORDBILDATDOCREQ: TSQLTimeStampField;
+    FDQueryListaEmailSTSOP_ORDBILCLICOD: TStringField;
+    FDQueryListaEmailSTSOP_ORDBILCLINOM: TStringField;
+    FDQueryListaEmailSTSOP_ORDBILGRUCLINOM: TStringField;
+    FDQueryListaEmailSTSOP_ORDBILBUYERCONTACT: TStringField;
+    FDQueryListaEmailSTSOP_ORDBILBUYERCONTACTEMAIL: TStringField;
+    FDQueryListaEmailSTSOP_ORDBILBUYERCONTACTFIRSTNAME: TStringField;
+    FDQueryListaEmailSTSOP_ORDBILDAYOFWEEK: TStringField;
+    FDQueryListaEmailSTSOP_DATA_ENVIO: TSQLTimeStampField;
+    cxGridDBTableView1TSOP_ORDBILCOD: TcxGridDBColumn;
+    cxGridDBTableView1TSOP_ORDBILSITNOM: TcxGridDBColumn;
+    cxGridDBTableView1TSOP_ORDBILCANNOM: TcxGridDBColumn;
+    cxGridDBTableView1TSOP_ORDBILDATDOC: TcxGridDBColumn;
+    cxGridDBTableView1TSOP_ORDBILNRODOC: TcxGridDBColumn;
+    cxGridDBTableView1TSOP_ORDBILTIPDOC: TcxGridDBColumn;
+    cxGridDBTableView1TSOP_ORDBILNRODOCREF: TcxGridDBColumn;
+    cxGridDBTableView1TSOP_ORDBILDATDOCREQ: TcxGridDBColumn;
+    cxGridDBTableView1TSOP_ORDBILCLICOD: TcxGridDBColumn;
+    cxGridDBTableView1TSOP_ORDBILCLINOM: TcxGridDBColumn;
+    cxGridDBTableView1TSOP_ORDBILGRUCLINOM: TcxGridDBColumn;
+    cxGridDBTableView1TSOP_ORDBILBUYERCONTACT: TcxGridDBColumn;
+    cxGridDBTableView1TSOP_ORDBILBUYERCONTACTEMAIL: TcxGridDBColumn;
+    cxGridDBTableView1TSOP_ORDBILBUYERCONTACTFIRSTNAME: TcxGridDBColumn;
+    cxGridDBTableView1TSOP_ORDBILDAYOFWEEK: TcxGridDBColumn;
+    cxGridDBTableView1TSOP_DATA_ENVIO: TcxGridDBColumn;
+    cxLabel2: TcxLabel;
+    SaveDialogExportGridExcel: TSaveDialog;
+    procedure FormContextPopup(Sender: TObject; MousePos: TPoint;
+      var Handled: Boolean);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormCreate(Sender: TObject);
+    procedure ButExcelClick(Sender: TObject);
+  private
+
+    procedure Mensagem(pMensagem: String);
+    { Private declarations }
+  public
+    { Public declarations }
+    procedure AbrirDataset;
+    procedure LoadGridCustomization;
+  end;
+
+var
+  Fr_ListaEmail: TFr_ListaEmail;
+
+implementation
+
+{$R *.dfm}
+
+uses uUtils, uBrady;
+
+
+procedure TFr_ListaEmail.ButExcelClick(Sender: TObject);
+begin
+
+  if Page.ActivePage = cxTabSheetNEnviado Then
+  begin
+    if FDQueryListaEmailN.IsEmpty then
+      raise Exception.Create('Não há dados para serem exportados ao Excel');
+
+    SaveDialogExportGridExcel.InitialDir := GetCurrentDir;
+    Try
+      try
+          if SaveDialogExportGridExcel.Execute  then
+            cxGridExportLink.ExportGridToXLSX( SaveDialogExportGridExcel.FileName, cxGridNEnviados, true, true );
+        except
+           on E: Exception do
+                begin
+                   raise Exception.Create(E.Message);
+                end;
+         End;
+    Finally
+         Application.MessageBox( 'Arquivo salvo com sucesso!!!', 'S&OP', MB_ICONINFORMATION );
+    End;
+  end
+  else
+  begin
+
+    if FDQueryListaEmailS.IsEmpty then
+      raise Exception.Create('Não há dados para serem exportados ao Excel');
+
+    SaveDialogExportGridExcel.InitialDir := GetCurrentDir;
+    Try
+      try
+          if SaveDialogExportGridExcel.Execute  then
+            cxGridExportLink.ExportGridToXLSX( SaveDialogExportGridExcel.FileName, cxGridEnviados, true, true );
+        except
+           on E: Exception do
+                begin
+                   raise Exception.Create(E.Message);
+                end;
+         End;
+    Finally
+         Application.MessageBox( 'Arquivo salvo com sucesso!!!', 'S&OP', MB_ICONINFORMATION );
+    End;
+  end;
+
+end;
+
+procedure TFr_ListaEmail.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  FDQueryListaEmailN.Close;
+  FDQueryListaEmailS.Close;
+
+  FDConnection.Close;
+
+  Fr_ListaEmail := nil;
+  Action := caFree;
+end;
+
+procedure TFr_ListaEmail.FormContextPopup(Sender: TObject; MousePos: TPoint;
+  var Handled: Boolean);
+begin
+  Fr_Brady.PopupGridTools( cxGridNEnviados.ActiveView );
+end;
+
+procedure TFr_ListaEmail.FormCreate(Sender: TObject);
+begin
+  LoadGridCustomization;
+end;
+
+procedure TFr_ListaEmail.AbrirDataset;
+begin
+
+  if not FDConnection.Connected then
+  begin
+
+    Mensagem( 'Abrindo conexão...' );
+    try
+
+      FDConnection.Params.LoadFromFile( MyDocumentsPath + '\DB.ini' );
+      FDConnection.Open;
+
+      Mensagem( 'Obtendo dados (Lista de E-mails)...' );
+      FDQueryListaEmailN.Open;
+      FDQueryListaEmailS.Open;
+
+
+    finally
+
+      Mensagem( EmptyStr );
+
+    end;
+
+  end;
+
+end;
+
+procedure TFr_ListaEmail.LoadGridCustomization;
+begin
+
+  if System.IOUtils.TFile.Exists( MyDocumentsPath + '\' + Name + '_' + cxGridNEnviadosTableView.Name + '.ini' ) then
+    cxGridNEnviadosTableView.RestoreFromIniFile( MyDocumentsPath + '\' + Name + '_' + cxGridNEnviadosTableView.Name + '.ini' );
+
+end;
+
+
+procedure TFr_ListaEmail.Mensagem(pMensagem: String);
+begin
+
+  cxLabelMensagem.Caption := pMensagem;
+  PanelSQLSplashScreen.Visible := not pMensagem.IsEmpty;
+  Update;
+  Application.ProcessMessages;
+
+end;
+
+
+end.

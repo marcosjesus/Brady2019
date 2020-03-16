@@ -79,6 +79,7 @@ type
     cxStyleConciliado: TcxStyle;
     FDQueryTIQF_FornecedorTIQF_CLASSIFICACAO: TStringField;
     cxTableViewIQF_FornecedorTIQF_CLASSIFICACAO: TcxGridDBColumn;
+    FDQueryCategoria: TFDQuery;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormContextPopup(Sender: TObject; MousePos: TPoint; var Handled: Boolean);
     procedure FormCreate(Sender: TObject);
@@ -89,7 +90,10 @@ type
     procedure cxTableViewIQF_FornecedorStylesGetContentStyle(
       Sender: TcxCustomGridTableView; ARecord: TcxCustomGridRecord;
       AItem: TcxCustomGridTableItem; var AStyle: TcxStyle);
+    procedure cxTableViewIQF_FornecedorInitEdit(Sender: TcxCustomGridTableView;
+      AItem: TcxCustomGridTableItem; AEdit: TcxCustomEdit);
   private
+    varCategoria : TStringList;
     procedure Mensagem( pMensagem: String );
     { Private declarations }
   public
@@ -127,7 +131,38 @@ begin
       Mensagem( EmptyStr );
 
     end;
+    varCategoria := TStringList.Create;
 
+    FDQueryCategoria.Close;
+    FDQueryCategoria.SQL.Clear;
+    FDQueryCategoria.SQL.Add('Select * from TIQF_Categoria order by TIQF_Categoria_Descricao');
+    FDQueryCategoria.Open;
+    if not FDQueryCategoria.IsEmpty then
+    begin
+       FDQueryCategoria.First;
+       while not FDQueryCategoria.Eof do
+       begin
+          varCategoria.Add(FDQueryCategoria.FieldByName('TIQF_Categoria_Descricao').AsString);
+          FDQueryCategoria.Next;
+       end;
+    end;
+
+  end;
+
+end;
+
+procedure TFr_CadastroIQFFornecedor.cxTableViewIQF_FornecedorInitEdit(
+  Sender: TcxCustomGridTableView; AItem: TcxCustomGridTableItem;
+  AEdit: TcxCustomEdit);
+
+var
+  I: Integer;
+begin
+  if AEdit is TcxComboBox then
+  begin
+    TcxComboBox(AEdit).Clear;
+    for I := 0 to varCategoria.Count - 1 do
+      TcxComboBox(AEdit).Properties.Items.Add(varCategoria[I]);
   end;
 
 end;
@@ -208,6 +243,9 @@ end;
 procedure TFr_CadastroIQFFornecedor.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
 
+  if varCategoria <> Nil then
+    FreeAndNil(varCategoria);
+
   FDQueryTIQF_Fornecedor.Close;
   FDConnection.Close;
 
@@ -227,6 +265,8 @@ procedure TFr_CadastroIQFFornecedor.FormCreate(Sender: TObject);
 begin
 
   LoadGridCustomization;
+
+
 
 end;
 

@@ -67,8 +67,8 @@ object frmExibeForecast: TfrmExibeForecast
     Align = alTop
     TabOrder = 0
     object cxButtonRefresh: TcxButton
-      Left = 593
-      Top = 2
+      Left = 589
+      Top = 0
       Width = 40
       Height = 31
       Hint = 'Consulta'
@@ -365,6 +365,33 @@ object frmExibeForecast: TfrmExibeForecast
       ParentFont = False
       OnClick = ButExcelClick
     end
+    object cxTextEditIni: TcxTextEdit
+      Left = 851
+      Top = 5
+      TabOrder = 9
+      Width = 34
+    end
+    object cxTextEditFim: TcxTextEdit
+      Left = 917
+      Top = 5
+      TabOrder = 10
+      Width = 34
+    end
+    object cxLabelIni: TcxLabel
+      Left = 680
+      Top = 8
+      Caption = 'Per'#237'odo Importa'#231#227'o entre os dias'
+    end
+    object cxLabelAte: TcxLabel
+      Left = 891
+      Top = 7
+      Caption = 'At'#233
+    end
+    object cxLblLiberar: TcxLabel
+      Left = 957
+      Top = 8
+      Caption = 'liberar para altera'#231#227'o'
+    end
   end
   object Panel2: TPanel
     Left = 0
@@ -390,10 +417,6 @@ object frmExibeForecast: TfrmExibeForecast
       object TabForecast: TcxTabSheet
         Caption = 'Forecast'
         ImageIndex = 0
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object cxGrid1: TcxGrid
           Left = 0
           Top = 0
@@ -426,10 +449,6 @@ object frmExibeForecast: TfrmExibeForecast
       object TabLancamento: TcxTabSheet
         Caption = 'Lan'#231'amento'
         ImageIndex = 1
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object Panel14: TPanel
           Left = 58
           Top = 467
@@ -639,6 +658,72 @@ object frmExibeForecast: TfrmExibeForecast
               end
             end
           end
+        end
+      end
+      object TabTarget: TcxTabSheet
+        Caption = 'Target LK'
+        ImageIndex = 2
+        object cxButtonEditPath: TcxButtonEdit
+          Left = 10
+          Top = 32
+          Properties.Buttons = <
+            item
+              Default = True
+              Kind = bkEllipsis
+            end>
+          Properties.ReadOnly = True
+          TabOrder = 0
+          OnClick = cxButtonEditPathClick
+          Width = 337
+        end
+        object cxLabel9: TcxLabel
+          Left = 10
+          Top = 11
+          Caption = 'Arquivo'
+          ParentColor = False
+          Style.Color = clWhite
+        end
+        object cxButtonProcessar: TcxButton
+          Left = 271
+          Top = 59
+          Width = 76
+          Height = 25
+          Caption = 'Importar'
+          TabOrder = 2
+          OnClick = cxButtonProcessarClick
+        end
+      end
+      object cxTabSheetUpload: TcxTabSheet
+        Caption = 'Forecast Upload'
+        ImageIndex = 3
+        object cxLabel3: TcxLabel
+          Left = 18
+          Top = 19
+          Caption = 'Arquivo'
+          ParentColor = False
+          Style.Color = clWhite
+        end
+        object cxButtonEditUpload: TcxButtonEdit
+          Left = 18
+          Top = 40
+          Properties.Buttons = <
+            item
+              Default = True
+              Kind = bkEllipsis
+            end>
+          Properties.ReadOnly = True
+          TabOrder = 1
+          OnClick = cxButtonEditUploadClick
+          Width = 337
+        end
+        object cxButtonUpload: TcxButton
+          Left = 279
+          Top = 67
+          Width = 76
+          Height = 25
+          Caption = 'Importar'
+          TabOrder = 2
+          OnClick = cxButtonUploadClick
         end
       end
     end
@@ -3903,8 +3988,8 @@ object frmExibeForecast: TfrmExibeForecast
   object FDStoredProc: TFDStoredProc
     Connection = FDConnection
     StoredProcName = 'AppSOP.dbo.PSOP_ATUALIZAR_FORECAST'
-    Left = 317
-    Top = 237
+    Left = 333
+    Top = 301
     ParamData = <
       item
         Position = 1
@@ -3921,7 +4006,7 @@ object frmExibeForecast: TfrmExibeForecast
       item
         Position = 3
         Name = '@TSOP_BUDCLICOD'
-        DataType = ftInteger
+        DataType = ftString
         ParamType = ptInput
       end
       item
@@ -3932,8 +4017,8 @@ object frmExibeForecast: TfrmExibeForecast
       end>
   end
   object SaveDialog: TSaveDialog
-    DefaultExt = '*.xls'
-    Filter = 'Arquivos Excel|*.xls'
+    DefaultExt = '*.xlsx'
+    Filter = 'Arquivos Excel|*.xlsx'
     Left = 278
     Top = 390
   end
@@ -4040,16 +4125,16 @@ object frmExibeForecast: TfrmExibeForecast
     Top = 310
   end
   object PopupMenuDet: TPopupMenu
-    Left = 317
-    Top = 165
+    Left = 213
+    Top = 277
     object VerDetalhe1: TMenuItem
       Caption = 'Ver Detalhe dos Lan'#231'amentos'
       OnClick = VerDetalhe1Click
     end
   end
   object cxStyleRepository1: TcxStyleRepository
-    Left = 389
-    Top = 93
+    Left = 317
+    Top = 197
     PixelsPerInch = 96
     object cxStyleData: TcxStyle
       AssignedValues = [svColor, svTextColor]
@@ -4059,6 +4144,162 @@ object frmExibeForecast: TfrmExibeForecast
     object cxStyleFamilia: TcxStyle
       AssignedValues = [svColor]
       Color = cl3DLight
+    end
+  end
+  object FDSalvaBudgetLK: TFDQuery
+    CachedUpdates = True
+    Connection = FDConnection
+    UpdateOptions.AssignedValues = [uvUpdateChngFields, uvUpdateMode, uvLockMode, uvRefreshMode, uvCheckRequired, uvCheckReadOnly, uvCheckUpdatable]
+    UpdateOptions.UpdateChangedFields = False
+    UpdateOptions.RefreshMode = rmManual
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.CheckReadOnly = False
+    UpdateOptions.CheckUpdatable = False
+    UpdateOptions.AutoIncFields = 'TSOP_BUDCOD'
+    SQL.Strings = (
+      'SELECT *'
+      'FROM TSOP_Budget A01'
+      'where 1 = 1')
+    Left = 136
+    Top = 160
+    object FDSalvaBudgetLKTSOP_BUDCOD: TFDAutoIncField
+      FieldName = 'TSOP_BUDCOD'
+      Origin = 'TSOP_BUDCOD'
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = True
+    end
+    object FDSalvaBudgetLKTSOP_BUDTIP: TStringField
+      FieldName = 'TSOP_BUDTIP'
+      Origin = 'TSOP_BUDTIP'
+      Required = True
+      FixedChar = True
+      Size = 2
+    end
+    object FDSalvaBudgetLKTSOP_BUDDATREF: TSQLTimeStampField
+      FieldName = 'TSOP_BUDDATREF'
+      Origin = 'TSOP_BUDDATREF'
+      Required = True
+    end
+    object FDSalvaBudgetLKTSOP_BUDDAT: TSQLTimeStampField
+      FieldName = 'TSOP_BUDDAT'
+      Origin = 'TSOP_BUDDAT'
+      Required = True
+    end
+    object FDSalvaBudgetLKTSOP_BUDCLICOD: TStringField
+      FieldName = 'TSOP_BUDCLICOD'
+      Origin = 'TSOP_BUDCLICOD'
+      Required = True
+      Size = 255
+    end
+    object FDSalvaBudgetLKTSOP_BUDVLF: TBCDField
+      FieldName = 'TSOP_BUDVLF'
+      Origin = 'TSOP_BUDVLF'
+      Required = True
+      Precision = 15
+      Size = 2
+    end
+    object FDSalvaBudgetLKTSOP_BUDFAM: TStringField
+      FieldName = 'TSOP_BUDFAM'
+      Origin = 'TSOP_BUDFAM'
+      Size = 255
+    end
+    object FDSalvaBudgetLKTSOP_ORDBILSITNOM: TStringField
+      FieldName = 'TSOP_ORDBILSITNOM'
+      Origin = 'TSOP_ORDBILSITNOM'
+      Size = 255
+    end
+    object FDSalvaBudgetLKTSOP_USUCOD: TIntegerField
+      FieldName = 'TSOP_USUCOD'
+      Origin = 'TSOP_USUCOD'
+      Required = True
+    end
+    object FDSalvaBudgetLKTSOP_BUDDATCAD: TSQLTimeStampField
+      FieldName = 'TSOP_BUDDATCAD'
+      Origin = 'TSOP_BUDDATCAD'
+      Required = True
+    end
+  end
+  object CDSSalvaBudgetLK: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    ProviderName = 'DataSetProviderSalvaBudgetLK'
+    Left = 453
+    Top = 157
+    object CDSSalvaBudgetLKTSOP_BUDCOD: TAutoIncField
+      FieldName = 'TSOP_BUDCOD'
+      ReadOnly = True
+    end
+    object CDSSalvaBudgetLKTSOP_BUDTIP: TStringField
+      FieldName = 'TSOP_BUDTIP'
+      Required = True
+      FixedChar = True
+      Size = 2
+    end
+    object CDSSalvaBudgetLKTSOP_BUDDATREF: TSQLTimeStampField
+      FieldName = 'TSOP_BUDDATREF'
+      Required = True
+    end
+    object CDSSalvaBudgetLKTSOP_BUDDAT: TSQLTimeStampField
+      FieldName = 'TSOP_BUDDAT'
+      Required = True
+    end
+    object CDSSalvaBudgetLKTSOP_BUDCLICOD: TStringField
+      FieldName = 'TSOP_BUDCLICOD'
+      Required = True
+      Size = 255
+    end
+    object CDSSalvaBudgetLKTSOP_BUDVLF: TBCDField
+      FieldName = 'TSOP_BUDVLF'
+      Required = True
+      Precision = 15
+      Size = 2
+    end
+    object CDSSalvaBudgetLKTSOP_BUDFAM: TStringField
+      FieldName = 'TSOP_BUDFAM'
+      Size = 255
+    end
+    object CDSSalvaBudgetLKTSOP_ORDBILSITNOM: TStringField
+      FieldName = 'TSOP_ORDBILSITNOM'
+      Size = 255
+    end
+    object CDSSalvaBudgetLKTSOP_USUCOD: TIntegerField
+      FieldName = 'TSOP_USUCOD'
+      Required = True
+    end
+    object CDSSalvaBudgetLKTSOP_BUDDATCAD: TSQLTimeStampField
+      FieldName = 'TSOP_BUDDATCAD'
+      Required = True
+    end
+  end
+  object DataSetProviderSalvaBudgetLK: TDataSetProvider
+    DataSet = FDSalvaBudgetLK
+    Left = 509
+    Top = 253
+  end
+  object FDQueryTSOP_PeriodoImportacao: TFDQuery
+    Connection = FDConnection
+    SQL.Strings = (
+      'SELECT *'
+      'FROM TSOP_PeriodoImportacao A01')
+    Left = 128
+    Top = 440
+    object FDQueryTSOP_PeriodoImportacaoTSOP_PERIMPINI: TIntegerField
+      FieldName = 'TSOP_PERIMPINI'
+      Origin = 'TSOP_PERIMPINI'
+      Required = True
+    end
+    object FDQueryTSOP_PeriodoImportacaoTSOP_PERIMPFIN: TIntegerField
+      FieldName = 'TSOP_PERIMPFIN'
+      Origin = 'TSOP_PERIMPFIN'
+      Required = True
+    end
+    object FDQueryTSOP_PeriodoImportacaoTSOP_USUCOD: TIntegerField
+      FieldName = 'TSOP_USUCOD'
+      Origin = 'TSOP_USUCOD'
+    end
+    object FDQueryTSOP_PeriodoImportacaoTSOP_PERIMPDATCAD: TSQLTimeStampField
+      FieldName = 'TSOP_PERIMPDATCAD'
+      Origin = 'TSOP_PERIMPDATCAD'
     end
   end
 end

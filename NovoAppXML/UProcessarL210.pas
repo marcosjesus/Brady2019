@@ -641,6 +641,7 @@ var
   varCor1,varCor2: TColor;
   varSubtotal: array[2..13] of string;
   fValor : Array [2..13] of Currency;
+  varbFirst : Boolean;
 
 begin
 
@@ -734,7 +735,7 @@ begin
                   AsVariant :=  'Outros Custos'
 
                 end;
-
+                varbFirst := True;
                 for I := 2 to 13 do
                 begin
 
@@ -744,7 +745,14 @@ begin
                     Style.Font.Style := Style.Font.Style + [fsBold];
                     Style.Brush.BackgroundColor := varCor2;
                     Style.DataFormat.FormatCode := '#,##0.00';
-                    SetText('=SUM('+ varCelulas[I] + IntToStr( 11 ) + ':' + varCelulas[I] + IntToStr(13)+')', True);
+
+
+                    if varbFirst then
+                      SetText('=SUM('+ varCelulas[I] + IntToStr( 11 ) + ':' + varCelulas[I] + IntToStr(13)+')', True)
+                    else
+                      SetText('=' + varCelulas[I-1] + IntToStr(X+1) + '+' + 'SUM('+ varCelulas[I] + IntToStr( 11 ) + ':' + varCelulas[I] + IntToStr(13)+')', True);
+
+                    varbFirst := False;
 
                     if varSubtotal[I].IsEmpty then
                       varSubtotal[I] := '=' + varCelulas[I] + IntToStr(X+1)
@@ -1019,6 +1027,7 @@ begin
 
                 end;
 
+                varbFirst := True;
                 for I := 2 to 13 do
                 begin
 
@@ -1028,6 +1037,16 @@ begin
                     Style.Font.Style := Style.Font.Style + [fsBold];
                     Style.Brush.BackgroundColor := varCor2;
                     Style.DataFormat.FormatCode := '#,##0.00';
+
+                     {
+                    if varbFirst then
+                      SetText('=SUM('+ varCelulas[I] + IntToStr( 11 ) + ':' + varCelulas[I] + IntToStr(13)+')', True)
+                    else
+                      SetText('=' + varCelulas[I-1] + IntToStr(X+1) + '+' + 'SUM('+ varCelulas[I] + IntToStr( 11 ) + ':' + varCelulas[I] + IntToStr(13)+')', True);
+
+                    varbFirst := False;
+                    }
+
                     SetText('=SUM('+ varCelulas[I] + IntToStr( 18 ) + ':' + varCelulas[I] + IntToStr(21)+')', True);
 
                     if varSubtotal[I].IsEmpty then
@@ -1068,6 +1087,7 @@ begin
                     Style.Font.Style := Style.Font.Style + [fsBold];
                     Style.Brush.BackgroundColor := varCor2;
                     Style.DataFormat.FormatCode := '#,##0.00';
+
                     SetText('=SUM('+ varCelulas[I] + IntToStr( 17 ) + '+' + varCelulas[I] + IntToStr(22)+')', True);
 
 

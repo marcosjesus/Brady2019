@@ -2132,14 +2132,14 @@ initialization
  FormatSettings.NegCurrFormat  := 2;
  FormatSettings.CurrencyDecimals := 2 ;
 
- FuFmt.sDateSeparator := '/' ;
+ FuFmt.sDateSeparator := '-' ;
  FuFmt.sTimeSeparator := ':' ;
  FuFmt.sThousandSeparator := '.' ;
  FuFmt.sDecimalSeparator := ',' ;
  FuFmt.CurrencyDecimals := 2 ;
  FuFmt.sCurrencyString := 'R$' ;
- FuFmt.sShortDateFormat := 'dd/mm/yyyy';
- FuFmt.sLongDateFormat  := 'dd/mm/yyyy';
+ FuFmt.sShortDateFormat := 'yyyy-mm-dd';
+ FuFmt.sLongDateFormat  := 'yyyy-mm-dd';
  FuFmt.sShortTimeFormat := 'hh:mm:ss';
 
 end.

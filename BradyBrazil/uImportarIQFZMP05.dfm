@@ -3211,7 +3211,7 @@ object Fr_ImportarIQFZMP05: TFr_ImportarIQFZMP05
         Properties.ListOptions.SyncMode = True
         Properties.ListSource = DataSourceTIQF_Periodo
         TabOrder = 0
-        Width = 180
+        Width = 396
       end
     end
   end

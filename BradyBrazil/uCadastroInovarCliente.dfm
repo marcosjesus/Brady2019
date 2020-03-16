@@ -66,6 +66,7 @@ object Fr_CadastroInovarCliente: TFr_CadastroInovarCliente
     Align = alClient
     TabOrder = 0
     RootLevelOptions.DetailTabsPosition = dtpTop
+    ExplicitTop = 8
     object cxTableViewCliente: TcxGridDBTableView
       Navigator.Buttons.ConfirmDelete = True
       Navigator.Buttons.CustomButtons = <>

@@ -159,12 +159,20 @@ begin
     dxSpreadSheet := TdxSpreadSheet.Create(nil);
     try
 
-      dxSpreadSheet.LoadFromFile( cxTextEditFileName.Text );
+      try
 
-      cxComboBoxSheet.Properties.Items.Clear;
-      for I := 0 to dxSpreadSheet.SheetCount-1 do
-        cxComboBoxSheet.Properties.Items.Add( dxSpreadSheet.Sheets[I].Caption );
+        dxSpreadSheet.LoadFromFile( cxTextEditFileName.Text );
 
+        cxComboBoxSheet.Properties.Items.Clear;
+        for I := 0 to dxSpreadSheet.SheetCount-1 do
+          cxComboBoxSheet.Properties.Items.Add( dxSpreadSheet.Sheets[I].Caption );
+
+      except
+          on E: Exception do
+           begin
+            ShowMessage('Erro ao abrir planilha. Elimine possível link externo dentro da planilha (Exemplo: PROCV).')
+           end;
+      end;
     finally
 
       FreeAndNil(dxSpreadSheet);

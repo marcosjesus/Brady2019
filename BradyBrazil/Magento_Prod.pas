@@ -7669,6 +7669,7 @@ implementation
 function GetMage_Api_Model_Server_V2_HandlerPortType(UseWSDL: Boolean; Addr: string; HTTPRIO: THTTPRIO): Mage_Api_Model_Server_V2_HandlerPortType;
 const
   defWSDL = 'https://www.seton.com.br/index.php/api/v2_soap/index/?wsdl=1';
+ // defWSDL = 'https://seton.com.br/index.php/api/v2_soap?wsdl=1';
   defURL  = 'https://adminseton.seton.com.br/index.php/api/v2_soap/index/?SID=lktm5ghp62s799k90n2895g0u4';
   defSvc  = 'MagentoService';
   defPrt  = 'Mage_Api_Model_Server_V2_HandlerPort';

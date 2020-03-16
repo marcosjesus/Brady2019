@@ -350,6 +350,13 @@ type
     FDQueryTSOP_GMCustos_OriginalTSOP_GMCPRIUNI: TBCDField;
     FDQueryTSOP_GMCustos_OriginalTSOP_GMCBUD: TStringField;
     FDQueryTSOP_GMCustos_OriginalTSOP_DT_IMPORTACAO: TDateField;
+    FDQueryTSOP_OrderBillingTSOP_ORDBILBUYERCONTACT: TStringField;
+    FDQueryTSOP_OrderBillingTSOP_ORDBILBUYERCONTACTEMAIL: TStringField;
+    FDQueryTSOP_OrderBillingTSOP_ORDBILBUYERCONTACTFIRSTNAME: TStringField;
+    FDQueryTSOP_OrderBillingTSOP_ORDBILDAYOFWEEK: TStringField;
+    FDQueryEmailMarketing: TFDQuery;
+    FDQueryEmailTemplate: TFDQuery;
+    FDQueryEmailAux: TFDQuery;
     procedure FDQueryTSOP_OrderBillingNewRecord(DataSet: TDataSet);
   private
     { Private declarations }

@@ -31,6 +31,7 @@ uses
   dxSpreadSheetCore,
   FireDAC.Stan.Param,
   FireDAC.Comp.DataSet,
+  idGlobal,
   IdIOHandler,
   IdIOHandlerSocket,
   IdIOHandlerStack,
@@ -47,6 +48,8 @@ uses
   IdSMTPBase,
   IdSMTP,
   IdAttachment,
+  IdText,
+  IdAttachmentFile,
   SQLTimST,
   pcteConversaoCTe,
   pcteCTe,
@@ -57,7 +60,8 @@ uses
   Forms,
   uDados in 'uDados.pas' {Fr_Dados: TDataModule},
   uUtils in 'uUtils.pas',
-  Magento_Prod in 'Magento_Prod.pas';
+  //Magento_Prod in 'Magento_Prod.pas',
+  v2_soap in 'v2_soap.pas';
 
 var
   FSearchRecord: TSearchRec;
@@ -80,7 +84,8 @@ var
   PastaLOG                 : String;
 
   //Integração Seton x Magento
-  varMagento : Mage_Api_Model_Server_V2_HandlerPortType;
+  //varMagento : Mage_Api_Model_Server_V2_HandlerPortType;
+  varMagento : PortType;
   HTTPRIO1   : THTTPRIO;
   varArqLogSetonMagento : String;
   varSessionIDMagento  : System.string;
@@ -2104,8 +2109,17 @@ var
 
   varColumnSalesItem: Integer;
 
+  varColumnBuyerContact    : Integer;
+  varColumnBuyerContactemail  : Integer;
+  varColumnBuyerContactFirstName  : Integer;
+  varColumnDayoftheWeek  : Integer;
 
 
+
+  varBuyerContact    : String;
+  varBuyerContactemail  : String;
+  varBuyerContactFirstName  : String;
+  varDayoftheWeek  : String;
 
 
   varColumnPrimaryCatalog : Integer;
@@ -2190,6 +2204,12 @@ begin
     varColumnPrimaryCatalog := -1;
     varColumnCustomerPurchase := -1;
     varColumnSalesItem := -1;
+
+    varColumnBuyerContact    := -1;
+    varColumnBuyerContactemail  := -1;
+    varColumnBuyerContactFirstName  := -1;
+    varColumnDayoftheWeek  := -1;
+
 
     Writeln('Descobrindo Colunas');
     for I := dxSpreadSheet.ActiveSheetAsTable.Columns.FirstIndex to dxSpreadSheet.ActiveSheetAsTable.Columns.LastIndex do
@@ -2351,6 +2371,36 @@ begin
         varColumnDescription := I;
 
       end;
+
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = 'Buyer Contact #' then  //Nova
+      begin
+
+        varColumnBuyerContact := I;
+
+      end;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = 'Buyer Contact Email' then  //Nova
+      begin
+
+        varColumnBuyerContactemail := I;
+
+      end;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = 'Buyer Contact First Name' then  //Nova
+      begin
+
+        varColumnBuyerContactFirstName := I;
+
+      end;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = 'Day of the Week' then  //Nova
+      begin
+
+        varColumnDayoftheWeek := I;
+
+      end;
+
 
 
       if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = 'Base UOM' then
@@ -3033,6 +3083,22 @@ begin
     if varColumnNetValue = -1 then
 	    raise Exception.Create('2020 Q1/2/3/4 TD Cust Sales não encontrado.');
 
+         {
+
+    if varColumnBuyerContact    = -1 then
+      raise Exception.Create('Buyer Contact # não encontrado.');
+
+    if varColumnBuyerContactemail  = -1 then
+      raise Exception.Create('Buyer Contact Email não encontrado.');
+
+    if varColumnBuyerContactFirstName  = -1 then
+      raise Exception.Create('Buyer Contact First Name não encontrado.');
+
+    if varColumnDayoftheWeek  = -1 then
+      raise Exception.Create('Day of Week não encontrado.');
+
+          }
+
 //    if varColumnNetValueSeton = -1 then
 //	    raise Exception.Create('Net Value - Seton não encontrado.');
 
@@ -3194,6 +3260,15 @@ begin
               varNetValue := //dxSpreadSheet.ActiveSheetAsTable.Rows[I].Cells[varColumnNetValueSeton].AsFloat +
                              dxSpreadSheet.ActiveSheetAsTable.Rows[I].Cells[varColumnNetValue].AsFloat;
 
+              //Marketing
+
+
+              varBuyerContact := Trim(dxSpreadSheet.ActiveSheetAsTable.Rows[I].Cells[varColumnBuyerContact].AsString);
+              varBuyerContactemail := Trim(dxSpreadSheet.ActiveSheetAsTable.Rows[I].Cells[varColumnBuyerContactemail].AsString);
+              varBuyerContactFirstName := Trim(dxSpreadSheet.ActiveSheetAsTable.Rows[I].Cells[varColumnBuyerContactFirstName].AsString);
+              varDayoftheWeek := Trim(dxSpreadSheet.ActiveSheetAsTable.Rows[I].Cells[varColumnDayoftheWeek].AsString);
+
+
               FDQueryTSOP_OrderBilling.Append;
               FDQueryTSOP_OrderBillingTSOP_ORDBILSITNOM.AsString      := varPlant;
               FDQueryTSOP_OrderBillingTSOP_ORDBILCANNOM.AsString      := varSalesOrg;
@@ -3221,6 +3296,12 @@ begin
               FDQueryTSOP_OrderBillingTSOP_PRIMARYCATALOG.AsString    := varPrimaryCatalog;
               FDQueryTSOP_OrderBillingTSOP_CUSTOMERPURCHASE.AsString  := varCustomerPurchase;
               FDQueryTSOP_OrderBillingTSOP_SALESITEM.AsInteger        := varSalesItem;
+
+
+              FDQueryTSOP_OrderBillingTSOP_ORDBILBUYERCONTACT.AsString            := varBuyerContact;
+              FDQueryTSOP_OrderBillingTSOP_ORDBILBUYERCONTACTEMAIL.AsString       := varBuyerContactemail;
+              FDQueryTSOP_OrderBillingTSOP_ORDBILBUYERCONTACTFIRSTNAME.AsString   := varBuyerContactFirstName;
+              FDQueryTSOP_OrderBillingTSOP_ORDBILDAYOFWEEK.AsString               := varDayoftheWeek;
 
 
               FDQueryTSOP_OrderBilling.Post;
@@ -3524,7 +3605,7 @@ begin
       Writeln('Identificando linha header');
       HeaderRow := 0;
       for Y := 1 to MaxRow do
-        if String(ArrData[Y, 1]).Trim.Equals('Posting Date') then   //SoldTo Country
+        if String(ArrData[Y, 4]).Trim.Equals('Posting Date') then   //SoldTo Country
           HeaderRow := Y;
       Writeln('Linha header: ', HeaderRow);
 
@@ -3544,7 +3625,7 @@ begin
         for I := Low(ArNFEmissao) to High(ArNFEmissao) do
         begin
 
-          if ArrData[Y,1] = ArNFEmissao[I] then
+          if ArrData[Y,4] = ArNFEmissao[I] then
             ExistsNFEmissao := True;
 
         end;
@@ -3553,7 +3634,7 @@ begin
         begin
 
           SetLength(ArNFEmissao, Length(ArNFEmissao)+1);
-          ArNFEmissao[Length(ArNFEmissao)-1] := ArrData[Y,1];
+          ArNFEmissao[Length(ArNFEmissao)-1] := ArrData[Y,4];
           Writeln(FormatDateTime('dd/mm/yyyy', ArNFEmissao[Length(ArNFEmissao)-1]));
 
         end;
@@ -3597,7 +3678,7 @@ begin
         Sheet := XLApp.WorkSheets[1];
 
         Writeln('Aplicando filtro');
-        Sheet.Cells.AutoFilter(1, '<>'+FormatDateTime( 'dd/mm/yyyy', ArNFEmissao[I] ), $00000001 );
+        Sheet.Cells.AutoFilter(4, '<>'+FormatDateTime( 'dd/mm/yyyy', ArNFEmissao[I] ), $00000001 );
         //alterei de mm/dd/yyyy para dd/mm/yyyy para rodar o mes de outubro completo em 01/11/2017
 
         Writeln('Apagando linhas');
@@ -5850,8 +5931,8 @@ var
       varACBrMail.From := 'suportebrasil@bradycorp.com';
       varACBrMail.FromName := 'SUPORTE BRASIL';
       varACBrMail.AddAddress('isabella_ares@bradycorp.com', 'Isabella Ares');
-     // varACBrMail.AddAddress('LEANDRO_LOPES@BRADYCORP.COM', 'LEANDRO LOPES');
-      //varACBrMail.AddAddress('LUCIANA_PONTIERI@BRADYCORP.COM', 'LUCIANA PONTIERI');
+      varACBrMail.AddAddress('LEANDRO_LOPES@BRADYCORP.COM', 'LEANDRO LOPES');
+      varACBrMail.AddAddress('LUCIANA_PONTIERI@BRADYCORP.COM', 'LUCIANA PONTIERI');
       varACBrMail.AddAddress('marcos.jesus.external@k2partnering.com', 'Marcos');
 
       varACBrMail.Subject := '[PRODUTO JÁ CADASTRADO] IMPORT TABELA NOVOS PRODUTOS TMKT ' + FormatDateTime( 'dd/mm/yyyy', Now );
@@ -6219,6 +6300,9 @@ begin
 
       FreeAndNil(varStringList);
 
+      Writeln('Apagando arquivo local. ', MyDocumentsPath+'\'+FSearchRecord.Name );
+      DeleteFile( PWideChar('C:\Brady\Files\SOP\TMKT\'+FSearchRecord.Name));
+
     end;
 
   finally
@@ -6340,6 +6424,7 @@ begin
 
   Writeln('Copiando arquivo local. ', MyDocumentsPath+'\'+FSearchRecord.Name );
   CopyFile( PWideChar('C:\Brady\Files\SOP\TMKT\'+FSearchRecord.Name), PWideChar(MyDocumentsPath+'\'+FSearchRecord.Name), True );
+
 
   dxSpreadSheet := TdxSpreadSheet.Create(nil);
   try
@@ -6611,6 +6696,9 @@ begin
       FreeAndNil(Fr_Dados);
 
       FreeAndNil(varStringList);
+
+      Writeln('Apagando arquivo local. ', 'C:\Brady\Files\SOP\TMKT\'+FSearchRecord.Name );
+      DeleteFile( PWideChar('C:\Brady\Files\SOP\TMKT\'+FSearchRecord.Name));
 
     end;
 
@@ -12427,7 +12515,8 @@ end;
 procedure IntegraSetonMagento;
 begin
   Writeln( 'Conectando no Web Service Magento...' );
-  varMagento           := GetMage_Api_Model_Server_V2_HandlerPortType(False, '', HTTPRIO1);
+  //varMagento           := GetMage_Api_Model_Server_V2_HandlerPortType(False, '', HTTPRIO1);
+  varMagento           := GetPortType(False, '', HTTPRIO1);
   varSessionIDMagento  := varMagento.login('sap_user','!user_sap*@32');
 
   Try
@@ -12444,6 +12533,263 @@ begin
 end;
 
 
+
+procedure EmailMarketing(varOpcao : Integer);
+var
+  varACBrNFe: TACBrNFe;
+  varACBrMail: TACBrMail;
+  varMensagem: TStringList;
+  varCC: TStringList;
+
+  varTSOP_CAMPANHA_ID : smallint;
+  varTSOP_ANEXO        : string;
+  varTSOP_CAMINHO     : string;
+  varTSOP_ARQUIVO     : String;
+  varTSOP_TITULO      : String;
+  varTSOP_BuyerFirstName : String;
+  varTSOP_DocNum  : String;
+  varTSOP_SurveyMonkeyLink : String;
+
+  emSMTP : TIdSMTP;
+  emMessage : TIdMessage;
+  SSLHandler: TIdSSLIOHandlerSocketOpenSSL;
+  I : Integer;
+  bEnvio : Boolean;
+
+begin
+
+  Fr_Dados := TFr_Dados.Create(nil);
+
+  Try
+    with Fr_Dados do
+    begin
+
+      Writeln('Config FDConnection');
+      FDConnection.Params.LoadFromFile( MyDocumentsPath + '\DB.ini' );
+
+      Writeln( 'Open FDConnection' );
+      FDConnection.Open;
+
+      FDQueryEmailTemplate.Close;
+      FDQueryEmailTemplate.SQL.Clear;
+      FDQueryEmailTemplate.SQL.Add(' SELECT TSOP_TITULO, TSOP_CAMPANHA_ID, TSOP_ANEXO, TSOP_CAMINHO, TSOP_ARQUIVO ');
+      FDQueryEmailTemplate.SQL.Add(' FROM TSOP_MKT_TEMPLATE WHERE TSOP_ATIVO = ''S'' ');
+      FDQueryEmailTemplate.SQL.Add(' and TSOP_ANEXO = ''N''  ORDER BY TSOP_CAMPANHA_ID, TSOP_ANEXO ');
+      FDQueryEmailTemplate.Open;
+
+      FDQueryEmailAux.Close;
+      FDQueryEmailAux.SQL.Clear;
+      FDQueryEmailAux.SQL.Add('SELECT TSOP_MKT_VALOR FROM TSOP_MKT_PARAM WHERE TSOP_MKT_CHAVE = ''SURVEYMONKEY'' ');
+      FDQueryEmailAux.Open;
+      varTSOP_SurveyMonkeyLink := FDQueryEmailAux.FieldByName('TSOP_MKT_VALOR').AsString;
+
+      if not FDQueryEmailTemplate.IsEmpty then
+      begin
+
+          while not FDQueryEmailTemplate.Eof  do
+          begin
+
+              varTSOP_CAMPANHA_ID   := FDQueryEmailTemplate.FieldByName('TSOP_CAMPANHA_ID').AsInteger;
+              varTSOP_ANEXO         := FDQueryEmailTemplate.FieldByName('TSOP_ANEXO').AsString;
+              varTSOP_CAMINHO       := FDQueryEmailTemplate.FieldByName('TSOP_CAMINHO').AsString;
+              varTSOP_ARQUIVO       := FDQueryEmailTemplate.FieldByName('TSOP_ARQUIVO').AsString;
+              varTSOP_TITULO        := FDQueryEmailTemplate.FieldByName('TSOP_TITULO').AsString;
+               // É uma Trigger da tabela TSOP_OrderBilling que gera informações na tabela  TSOP_MKT_CLIENTE
+              FDQueryEmailMarketing.Close;
+              FDQueryEmailMarketing.SQL.Clear;
+              FDQueryEmailMarketing.SQL.Add('SELECT ');
+              FDQueryEmailMarketing.SQL.Add('    MIN(TSOP_ORDBILCOD) AS TSOP_ORDBILCOD, ');
+              FDQueryEmailMarketing.SQL.Add('	TSOP_ORICOD, ');
+              FDQueryEmailMarketing.SQL.Add('	TSOP_ORDBILSITNOM, ');
+              FDQueryEmailMarketing.SQL.Add('	TSOP_ORDBILCANNOM, ');
+              FDQueryEmailMarketing.SQL.Add('	TSOP_ORDBILDATDOC, ');
+              FDQueryEmailMarketing.SQL.Add('	TSOP_ORDBILNRODOC, ');
+              FDQueryEmailMarketing.SQL.Add('	TSOP_ORDBILTIPDOC,  ');
+              FDQueryEmailMarketing.SQL.Add('	TSOP_ORDBILNRODOCREF, ');
+              FDQueryEmailMarketing.SQL.Add('	TSOP_ORDBILDATDOCREQ,');
+              FDQueryEmailMarketing.SQL.Add('	TSOP_ORDBILCLICOD,  ');
+              FDQueryEmailMarketing.SQL.Add(' TSOP_ORDBILCLINOM,  ');
+              FDQueryEmailMarketing.SQL.Add('	TSOP_ORDBILGRUCLINOM,  ');
+              FDQueryEmailMarketing.SQL.Add('	TSOP_ORDBILBUYERCONTACT, ');
+              FDQueryEmailMarketing.SQL.Add('	TSOP_ORDBILBUYERCONTACTEMAIL, ');
+              FDQueryEmailMarketing.SQL.Add('	TSOP_ORDBILBUYERCONTACTFIRSTNAME, ');
+              FDQueryEmailMarketing.SQL.Add('	TSOP_ORDBILDAYOFWEEK  ');
+              FDQueryEmailMarketing.SQL.Add(' FROM TSOP_MKT_CLIENTE  ');
+              if varOpcao = 0 then
+              begin
+                FDQueryEmailMarketing.SQL.Add(' WHERE TSOP_ENVIADO = ''N'' and TSOP_ORDBILCANNOM = ''4110'' and TSOP_ORDBILTIPDOC = ''Billing'' ');
+                FDQueryEmailMarketing.SQL.Add(' and CONVERT(VARCHAR, DATEADD(DAY, -5,  GETDATE()),103) >=  CONVERT(VARCHAR, TSOP_ORDBILDATDOC,103) ');
+              end
+              else
+              begin
+                FDQueryEmailMarketing.SQL.Add(' WHERE TSOP_ENVIADO = ''X'' and TSOP_ORDBILCANNOM = ''4110'' and TSOP_ORDBILTIPDOC = ''Billing'' ');
+                FDQueryEmailMarketing.SQL.Add(' And  TSOP_MKT_OBSERVACAO is not null ' );
+              end;
+
+              FDQueryEmailMarketing.SQL.Add(' GROUP BY ');
+              FDQueryEmailMarketing.SQL.Add('	TSOP_ORICOD,  ');
+              FDQueryEmailMarketing.SQL.Add('	TSOP_ORDBILSITNOM,  ');
+              FDQueryEmailMarketing.SQL.Add('	TSOP_ORDBILCANNOM, ');
+              FDQueryEmailMarketing.SQL.Add('	TSOP_ORDBILDATDOC, ');
+              FDQueryEmailMarketing.SQL.Add('	TSOP_ORDBILNRODOC, ');
+              FDQueryEmailMarketing.SQL.Add('	TSOP_ORDBILTIPDOC,  ');
+              FDQueryEmailMarketing.SQL.Add('	TSOP_ORDBILNRODOCREF, ');
+              FDQueryEmailMarketing.SQL.Add('	TSOP_ORDBILDATDOCREQ, ');
+              FDQueryEmailMarketing.SQL.Add('	TSOP_ORDBILCLICOD,  ');
+              FDQueryEmailMarketing.SQL.Add('	TSOP_ORDBILCLINOM, ');
+              FDQueryEmailMarketing.SQL.Add('	TSOP_ORDBILGRUCLINOM, ');
+              FDQueryEmailMarketing.SQL.Add('	TSOP_ORDBILBUYERCONTACT, ');
+              FDQueryEmailMarketing.SQL.Add('	TSOP_ORDBILBUYERCONTACTEMAIL, ');
+              FDQueryEmailMarketing.SQL.Add('	TSOP_ORDBILBUYERCONTACTFIRSTNAME,  ');
+              FDQueryEmailMarketing.SQL.Add('	TSOP_ORDBILDAYOFWEEK ');
+              FDQueryEmailMarketing.Open;
+              while not FDQueryEmailMarketing.eof do
+              begin
+
+                varMensagem     := TStringList.Create;
+                if varTSOP_ANEXO = 'N' then
+                  varMensagem.LoadFromFile(varTSOP_CAMINHO+varTSOP_ARQUIVO);
+
+                varTSOP_BuyerFirstName := FDQueryEmailMarketing.FieldByName('TSOP_ORDBILBUYERCONTACTFIRSTNAME').AsString;
+                varTSOP_DocNum         := FDQueryEmailMarketing.FieldByName('TSOP_ORDBILNRODOCREF').AsString;
+               //varTSOP_SurveyMonkeyLink :=  'https://pt.surveymonkey.com/r/CVQGL5Y';
+
+                varMensagem.Text := StringReplace(varMensagem.Text,'buyer_contact_first_name',varTSOP_BuyerFirstName,[rfReplaceAll]);
+                varMensagem.Text := StringReplace(varMensagem.Text,'Billing_Document',varTSOP_DocNum,[rfReplaceAll]);
+                varMensagem.Text := StringReplace(varMensagem.Text,'Link_Botao',varTSOP_SurveyMonkeyLink,[rfReplaceAll]);
+
+                emSMTP    := TIdSMTP.Create;
+                emMessage := TIdMessage.Create;
+
+                SSLHandler := TIdSSLIOHandlerSocketOpenSSL.Create(nil);
+                SSLHandler.MaxLineAction          := maException;
+                SSLHandler.SSLOptions.Method      := sslvTLSv1;
+                SSLHandler.SSLOptions.Mode        := sslmUnassigned;
+                SSLHandler.SSLOptions.VerifyMode  := [];
+                SSLHandler.SSLOptions.VerifyDepth := 0;
+
+
+                emSMTP.IOHandler := SSLHandler;
+                emSMTP.Host      := 'smtp.gmail.com';
+                emSMTP.Port      := 465;
+                emSMTP.Username  := 'seton@seton.com.br';
+                emSMTP.Password  := 'hs2fGbtD5yK9';
+                emSMTP.UseTLS    := utUseImplicitTLS;
+
+
+
+                emSMTP.Connect;
+                Try
+                    if emSMTP.Connected then
+                    begin
+                       with emMessage do
+                       begin
+                         Clear;
+                         Body.Clear;
+                         Recipients.Clear;
+                         Subject                := varTSOP_TITULO;
+                         From.Address           := 'seton@seton.com.br';
+                         From.Name              := 'Seton';
+                         Recipients.Add.Address := FDQueryEmailMarketing.FieldByName('TSOP_ORDBILBUYERCONTACTEMAIL').AsString;
+                         ContentType            := 'multipart/alternative';
+                         ContentDisposition     := 'inline';
+                         Encoding               := meMIME;
+                       end;
+
+                       with TIdText.Create(emMessage.MessageParts) do
+                       begin
+                          Body.Text       := 'This message contains HTML and images.';
+                          ContentTransfer := '7bit';
+                          ContentType     := 'text/plain';
+                       end;
+
+                       with TIdText.Create(emMessage.MessageParts) do
+                       begin
+                          ContentType     := 'multipart/related';
+                          Body.Clear;
+                       end;
+
+                       with TIdText.Create(emMessage.MessageParts) do
+                       begin
+                         Body.Clear;
+                         Body.Text       := varMensagem.Text;
+                         ContentTransfer := '7bit';
+                         ContentType     := 'text/html';
+                         ParentPart      := 1;
+                       end;
+
+                       FDQueryEmailAux.Close;
+                       FDQueryEmailAux.SQL.Clear;
+                       FDQueryEmailAux.SQL.Add('SELECT TSOP_MKT_TEMPLATE_ID, TSOP_TITULO,  TSOP_ANEXO, TSOP_CAMINHO, TSOP_ARQUIVO FROM TSOP_MKT_TEMPLATE WHERE TSOP_CAMPANHA_ID = :TSOP_CAMPANHA_ID and TSOP_ANEXO = ''S'' order by TSOP_MKT_TEMPLATE_ID ');
+                       FDQueryEmailAux.Params.ParamByName('TSOP_CAMPANHA_ID').AsInteger :=  varTSOP_CAMPANHA_ID;
+                       FDQueryEmailAux.Open;
+                       while not FDQueryEmailAux.eof do
+                       begin
+                         with TIdAttachmentFile.Create(emMessage.MessageParts, FDQueryEmailAux.FieldByName('TSOP_CAMINHO').AsString + FDQueryEmailAux.FieldByName('TSOP_ARQUIVO').AsString) do
+                         begin
+                           ContentType        := 'image/jpeg';
+                           ContentDisposition := 'inline';
+                           ContentTransfer    := 'base64';
+                           ContentID          := '<' + FDQueryEmailAux.FieldByName('TSOP_ARQUIVO').AsString + '>';
+                           ParentPart         := 1;
+                         end;
+                         FDQueryEmailAux.Next;
+                       end;
+
+                       bEnvio := False;
+                       try
+                           emSMTP.Send(emMessage);
+                           bEnvio := True;
+                       except
+                           on e: exception do
+                             begin
+                               Writeln( 'Erro ao Enviar: ', FDQueryEmailMarketing.FieldByName('TSOP_ORDBILBUYERCONTACTEMAIL').AsString);
+                               FDQueryEmailAux.Close;
+                               FDQueryEmailAux.SQL.Clear;
+                               FDQueryEmailAux.SQL.Add('Update TSOP_MKT_CLIENTE Set TSOP_ENVIADO = ''X'' WHERE  TSOP_ORDBILCOD = :TSOP_ORDBILCOD and TSOP_MKT_OBSERVACAO = :TSOP_MKT_OBSERVACAO');
+                               FDQueryEmailAux.Params.ParamByName('TSOP_ORDBILCOD').AsString      := FDQueryEmailMarketing.FieldByName('TSOP_ORDBILCOD').AsString;
+                               FDQueryEmailAux.Params.ParamByName('TSOP_MKT_OBSERVACAO').AsString := e.Message;
+                               FDQueryEmailAux.ExecSQL;
+                               bEnvio := False;
+                             end;
+                       end;
+
+                       if bEnvio  then
+                       begin
+                         FDQueryEmailAux.Close;
+                         FDQueryEmailAux.SQL.Clear;
+                         FDQueryEmailAux.SQL.Add('Update TSOP_MKT_CLIENTE Set TSOP_ENVIADO = ''S'' , TSOP_DATA_ENVIO = :TSOP_DATA_ENVIO  and TSOP_MKT_OBSERVACAO = :TSOP_MKT_OBSERVACAO WHERE  TSOP_ORDBILCOD = :TSOP_ORDBILCOD');
+                         FDQueryEmailAux.Params.ParamByName('TSOP_ORDBILCOD').AsString      := FDQueryEmailMarketing.FieldByName('TSOP_ORDBILCOD').AsString;
+                         FDQueryEmailAux.Params.ParamByName('TSOP_MKT_OBSERVACAO').AsString := EmptyStr;
+                         FDQueryEmailAux.Params.ParamByName('TSOP_DATA_ENVIO').AsDateTime   := Now;
+
+                         FDQueryEmailAux.ExecSQL;
+                         Writeln('Enviado OK: ',FDQueryEmailMarketing.FieldByName('TSOP_ORDBILBUYERCONTACTEMAIL').AsString);
+                       end;
+
+                    end;
+                Finally
+                   emSMTP.Disconnect;
+                   FreeAndNil(varMensagem);
+                   freeAndNil(emMessage);
+                   FreeAndNil(emSMTP);
+                   FreeAndNil(SSLHandler);
+                End;
+
+
+
+              FDQueryEmailMarketing.Next;
+              end;
+
+          FDQueryEmailTemplate.Next;
+          end;
+      end;
+      FDConnection.Close;
+    end;
+  Finally
+    FreeAndNil(Fr_Dados);
+  End;
+end;
 
 
 
@@ -14340,7 +14686,52 @@ begin
       end;
 
     end;
+  end
+  else
+  if ParamStr(1).Equals('-emailmarketing') then
+  begin
+
+    try
+
+      EmailMarketing(0);
+
+    except
+
+      on E: Exception do
+      begin
+
+        Writeln(E.ClassName, ' : ', E.Message);
+        Sleep(60000);
+
+      end;
+
+    end;
+
+
+  end
+  else
+  if ParamStr(1).Equals('-emailmarketing_err') then
+  begin
+
+    try
+
+      EmailMarketing(1);
+
+    except
+
+      on E: Exception do
+      begin
+
+        Writeln(E.ClassName, ' : ', E.Message);
+        Sleep(60000);
+
+      end;
+
+    end;
+
+
   end;
+
 
 
 

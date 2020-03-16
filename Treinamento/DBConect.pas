@@ -188,10 +188,10 @@ begin
    //occurs error
  GetLocaleFormatSettings(ALocaleID, AFormatSettings);
 
- AFormatSettings.ShortDateFormat:='DD-MM-YYYY';
+ AFormatSettings.ShortDateFormat:='YYYY-MM-DD';
  DataLocal := DataValue[9]+DataValue[10]+'/'+DataValue[6]+DataValue[7]+'/'+DataValue[1]+DataValue[2]+DataValue[3]+DataValue[4];
  DateTym:=StrToDate(DataLocal, AFormatSettings);
- AFormatSettings.ShortDateFormat:='dd/mm/yyyy';
+ AFormatSettings.ShortDateFormat:='yyyy/mm/dd';
  //AFormatSettings.ShortDateFormat:='MM-DD-YYYY'; //can be also used
  DataValue:=FormatDateTime(AFormatSettings.ShortDateFormat,DateTym);
  Result :=  StrToDate(DataValue);

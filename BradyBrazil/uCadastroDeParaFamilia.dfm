@@ -3042,11 +3042,11 @@ object Fr_CadastroDeParaFamilia: TFr_CadastroDeParaFamilia
   end
   object FDConnection: TFDConnection
     Params.Strings = (
-      'SERVER=SIGAPME-RAFAEL\SQL2012'
-      'User_Name=sa'
-      'Password=Ciel-123'
+      'SERVER=GHOS2023'
+      'User_Name=AppSOP'
+      'Password=SOPApp1!'
       'ApplicationName=Brady'
-      'Database=AppSOP'
+      'DATABASE=AppSOP'
       'MARS=yes'
       'DriverID=MSSQL')
     Left = 472

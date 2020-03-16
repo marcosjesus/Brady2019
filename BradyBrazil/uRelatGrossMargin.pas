@@ -287,6 +287,7 @@ type
     cxbtnProcessarGM: TcxButton;
     FDStoredGavaHistoricoGM: TFDStoredProc;
     dttaxaHora: TcxDateEdit;
+    cxBtnLiberarConsultaGM: TcxButton;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure cxButtonEditPathClick(Sender: TObject);
     procedure ButExcelClick(Sender: TObject);
@@ -296,6 +297,7 @@ type
     procedure cxPageControlChange(Sender: TObject);
     procedure cxbtnProcessarGMClick(Sender: TObject);
     procedure cxDateEditTSOP_ORDBILDATDOCFIMExit(Sender: TObject);
+    procedure cxBtnLiberarConsultaGMClick(Sender: TObject);
   private
     { Private declarations }
     pNivel : smallint;
@@ -375,7 +377,7 @@ begin
 
 
     // data em que os dados foram exportados do SAP
-    FDStoredProcGet.ParamByName( '@DATA' ).AsString          := FormatDateTime('yyyy-mm-dd 00:00:00', DtRefBOM.Date);
+    FDStoredProcGet.ParamByName( '@DATA' ).AsString          := FormatDateTime('yyyy-mm-dd 00:00:00',  System.DateUtils.StartOfTheMonth(DtRefBOM.Date));
 
     if System.DateUtils.StartOfTheMonth(DtRefBOM.Date) =  System.DateUtils.StartOfTheMonth(dttaxaHora.Date) then
     begin
@@ -1370,6 +1372,86 @@ begin
       Inc(X);
 
       FDQueryRouting.Next;
+  end;
+
+end;
+
+procedure TFr_RelatGrossMargin.cxBtnLiberarConsultaGMClick(Sender: TObject);
+var
+  varLiberar : Integer;
+begin
+
+  if FDQueryVSOP_OrderBilling00.IsEmpty then
+     raise Exception.Create('Realizar a consulta na tela para liberar');
+  
+
+  varLiberar := -1;
+
+  FDQueryAux.Close;
+  FDQueryAux.SQL.Clear;
+  FDQueryAux.SQL.Add('Select * From TSOP_LiberarConsGM Where DataProcessamento = :DataProcessamento');
+  FDQueryAux.Params.ParamByName('DataProcessamento').AsDate := DtRefBOM.Date;
+  FDQueryAux.Open;
+  if not FDQueryAux.IsEmpty then
+    varLiberar :=  FDQueryAux.FieldByName('Liberar').AsInteger;
+
+  if varLiberar <> -1 then
+  begin
+     if  varLiberar = 1 then
+     begin
+         if messagedlg(pChar('Deseja Bloquear a Consulta do GM da Data: ' + DateToStr(DtRefBOM.Date)  + ' ?'),mtConfirmation,[mbyes,mbno],0) = mrYes then
+         begin
+            FDQueryAux.Close;
+            FDQueryAux.SQL.Clear;
+            FDQueryAux.SQL.Add('Update TSOP_LiberarConsGM ');
+            FDQueryAux.SQL.Add(' Set Liberar = 0');
+            FDQueryAux.SQL.Add(' Where DataProcessamento = :DataProcessamento');
+            FDQueryAux.Params.ParamByName('DataProcessamento').AsDate := DtRefBOM.Date;
+            Try
+              try
+                 FDQueryAux.ExecSQL;
+              finally
+                 MessageDlg( 'Consulta bloqueada com sucesso!' + #13 + #13 , mtInformation, [ mbOk ], 0 );
+              end;
+            except
+               on E: Exception do
+                begin
+                   MessageDlg( 'Erro ao tentar bloquear consulta do GM.' + #13 + #13 +E.Message, mtError, [ mbOk ], 0 );
+                end;
+            End;
+
+         end;
+
+     end
+     else if varLiberar = 0 then
+     begin
+         if messagedlg(pChar('Deseja Liberar a Consulta do GM da Data: ' + DateToStr(DtRefBOM.Date)  + ' ?'),mtConfirmation,[mbyes,mbno],0) = mrYes then
+         begin
+            FDQueryAux.Close;
+            FDQueryAux.SQL.Clear;
+            FDQueryAux.SQL.Add('Update TSOP_LiberarConsGM ');
+            FDQueryAux.SQL.Add(' Set Liberar = 1');
+            FDQueryAux.SQL.Add(' Where DataProcessamento = :DataProcessamento');
+            FDQueryAux.Params.ParamByName('DataProcessamento').AsDate := DtRefBOM.Date;
+            Try
+              try
+                 FDQueryAux.ExecSQL;
+              finally
+                 MessageDlg( 'Consulta liberada com sucesso!' + #13 + #13 , mtInformation, [ mbOk ], 0 );
+              end;
+            except
+               on E: Exception do
+                begin
+                   MessageDlg( 'Erro ao tentar liberar consulta do GM.' + #13 + #13 +E.Message, mtError, [ mbOk ], 0 );
+                end;
+            End;
+         end;
+     end;
+
+  end
+  else
+  begin
+    MessageDlg( 'Consulta do GM não encontrada para liberação.' + #13 + #13, mtInformation, [ mbOk ], 0 );
   end;
 
 end;
