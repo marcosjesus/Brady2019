@@ -2079,7 +2079,9 @@ object Fr_Dados: TFr_Dados
     OnNewRecord = FDQueryTSOP_OrderBillingNewRecord
     Connection = FDConnection
     SQL.Strings = (
-      'SELECT B01.TSOP_ORDBILREPNOM'
+      
+        'SELECT REPLACE(B01.TSOP_ORDBILREPNOM,'#39'-'#39','#39#39') AS  TSOP_ORDBILREPN' +
+        'OM                                       '
       '      ,B01.TSOP_ORDBILGRUCLINOM'
       '      ,B01.TSOP_ORDBILCANNOM'
       '      ,B01.TSOP_ORDBILSITNOM'
@@ -2136,7 +2138,7 @@ object Fr_Dados: TFr_Dados
       '&WHERE1'
       '  AND A01.YEARDOC = :YEARDOC'
       '  AND A01.MONTHDOC = :MONTHDOC'
-      'GROUP BY B01.TSOP_ORDBILREPNOM'
+      'GROUP BY REPLACE(B01.TSOP_ORDBILREPNOM,'#39'-'#39','#39#39')'
       '        ,B01.TSOP_ORDBILGRUCLINOM'
       '        ,B01.TSOP_ORDBILCANNOM'
       '        ,B01.TSOP_ORDBILSITNOM'
@@ -2149,7 +2151,9 @@ object Fr_Dados: TFr_Dados
         'Mar'#231'o'#39' WHEN 9 THEN '#39'Abril'#39' WHEN 10 THEN '#39'Maio'#39' WHEN 11 THEN '#39'Jun' +
         'ho'#39' WHEN 12 THEN '#39'Julho'#39' END'
       'UNION ALL'
-      'SELECT B01.TSOP_ORDBILREPNOM'
+      
+        'SELECT REPLACE(B01.TSOP_ORDBILREPNOM,'#39'-'#39','#39#39') AS  TSOP_ORDBILREPN' +
+        'OM'
       '      ,B01.TSOP_ORDBILGRUCLINOM'
       '      ,B01.TSOP_ORDBILCANNOM'
       '      ,B01.TSOP_ORDBILSITNOM'
@@ -2202,7 +2206,7 @@ object Fr_Dados: TFr_Dados
       '&WHERE1'
       '  AND A01.YEARDOC = :YEARDOC'
       '  AND A01.MONTHDOC = :MONTHDOC'
-      'GROUP BY B01.TSOP_ORDBILREPNOM'
+      'GROUP BY REPLACE(B01.TSOP_ORDBILREPNOM,'#39'-'#39','#39#39')'
       '        ,B01.TSOP_ORDBILGRUCLINOM'
       '        ,B01.TSOP_ORDBILCANNOM'
       '        ,B01.TSOP_ORDBILSITNOM'
@@ -2215,7 +2219,9 @@ object Fr_Dados: TFr_Dados
         'Mar'#231'o'#39' WHEN 9 THEN '#39'Abril'#39' WHEN 10 THEN '#39'Maio'#39' WHEN 11 THEN '#39'Jun' +
         'ho'#39' WHEN 12 THEN '#39'Julho'#39' END'
       'UNION ALL'
-      'SELECT B01.TSOP_ORDBILREPNOM'
+      
+        'SELECT REPLACE(B01.TSOP_ORDBILREPNOM,'#39'-'#39','#39#39') AS  TSOP_ORDBILREPN' +
+        'OM'
       '      ,B01.TSOP_ORDBILGRUCLINOM'
       '      ,B01.TSOP_ORDBILCANNOM'
       '      ,B01.TSOP_ORDBILSITNOM'
@@ -2269,8 +2275,7 @@ object Fr_Dados: TFr_Dados
       '&WHERE1'
       '  AND A01.YEARDOC = :YEARDOC'
       '  AND A01.MONTHDOC = :MONTHDOC'
-      ''
-      'GROUP BY B01.TSOP_ORDBILREPNOM'
+      'GROUP BY REPLACE(B01.TSOP_ORDBILREPNOM,'#39'-'#39','#39#39')'
       '        ,B01.TSOP_ORDBILGRUCLINOM'
       '        ,B01.TSOP_ORDBILCANNOM'
       '        ,B01.TSOP_ORDBILSITNOM'
@@ -2283,7 +2288,9 @@ object Fr_Dados: TFr_Dados
         'Mar'#231'o'#39' WHEN 9 THEN '#39'Abril'#39' WHEN 10 THEN '#39'Maio'#39' WHEN 11 THEN '#39'Jun' +
         'ho'#39' WHEN 12 THEN '#39'Julho'#39' END'
       'UNION ALL'
-      'SELECT B01.TSOP_ORDBILREPNOM'
+      
+        'SELECT REPLACE(B01.TSOP_ORDBILREPNOM,'#39'-'#39','#39#39') AS  TSOP_ORDBILREPN' +
+        'OM'
       '      ,B01.TSOP_ORDBILGRUCLINOM'
       '      ,B01.TSOP_ORDBILCANNOM'
       '      ,B01.TSOP_ORDBILSITNOM'
@@ -2381,7 +2388,7 @@ object Fr_Dados: TFr_Dados
       '  AND A01.YEARDOC = :YEARDOC'
       '  AND A01.MONTHDOC = :MONTHDOC'
       '  AND C01.TSOP_BUDFAM IS NULL'
-      'GROUP BY B01.TSOP_ORDBILREPNOM'
+      'GROUP BY REPLACE(B01.TSOP_ORDBILREPNOM,'#39'-'#39','#39#39')'
       '        ,B01.TSOP_ORDBILGRUCLINOM'
       '        ,B01.TSOP_ORDBILCANNOM'
       '        ,B01.TSOP_ORDBILSITNOM'
@@ -2394,7 +2401,9 @@ object Fr_Dados: TFr_Dados
         'Mar'#231'o'#39' WHEN 9 THEN '#39'Abril'#39' WHEN 10 THEN '#39'Maio'#39' WHEN 11 THEN '#39'Jun' +
         'ho'#39' WHEN 12 THEN '#39'Julho'#39' END'
       'UNION ALL'
-      'SELECT B01.TSOP_ORDBILREPNOM'
+      
+        'SELECT REPLACE(B01.TSOP_ORDBILREPNOM,'#39'-'#39','#39#39') AS  TSOP_ORDBILREPN' +
+        'OM'
       '      ,B01.TSOP_ORDBILGRUCLINOM'
       '      ,B01.TSOP_ORDBILCANNOM'
       '      ,B01.TSOP_ORDBILSITNOM'
@@ -2473,8 +2482,7 @@ object Fr_Dados: TFr_Dados
       '&WHERE1'
       '  AND A01.YEARDOC = :YEARDOC'
       '  AND A01.MONTHDOC = :MONTHDOC'
-      ''
-      'GROUP BY B01.TSOP_ORDBILREPNOM'
+      'GROUP BY REPLACE(B01.TSOP_ORDBILREPNOM,'#39'-'#39','#39#39')'
       '        ,B01.TSOP_ORDBILGRUCLINOM'
       '        ,B01.TSOP_ORDBILCANNOM'
       '        ,B01.TSOP_ORDBILSITNOM'
@@ -2488,8 +2496,8 @@ object Fr_Dados: TFr_Dados
         'ho'#39' WHEN 12 THEN '#39'Julho'#39' END'
       ''
       'ORDER BY 4,3,5,1,2,6,9,7')
-    Left = 936
-    Top = 66
+    Left = 888
+    Top = 74
     ParamData = <
       item
         Name = 'SALESREP'
@@ -3033,8 +3041,8 @@ object Fr_Dados: TFr_Dados
         'WHEN 9 THEN '#39'Abril'#39' WHEN 10 THEN '#39'Maio'#39' WHEN 11 THEN '#39'Junho'#39' WHE' +
         'N 12 THEN '#39'Julho'#39' END'
       'ORDER BY 3,2,1,4')
-    Left = 968
-    Top = 138
+    Left = 1024
+    Top = 194
     ParamData = <
       item
         Name = 'REPNOM'
@@ -3092,8 +3100,8 @@ object Fr_Dados: TFr_Dados
       'WHERE A01.TSOP_ORDBILREPNOM = :SALES_REP'
       'ORDER BY A01.TSOP_ORDBILGRUCLINOM'
       '        ,A01.TSOP_ORDBILCLICOD')
-    Left = 1000
-    Top = 194
+    Left = 960
+    Top = 234
     ParamData = <
       item
         Name = 'SALES_REP'
@@ -3371,7 +3379,7 @@ object Fr_Dados: TFr_Dados
   end
   object FDQueryConsultaPreco: TFDQuery
     Connection = FDConnection
-    Left = 848
+    Left = 840
     Top = 16
   end
   object FDQueryGravaPreco: TFDQuery
@@ -3489,5 +3497,656 @@ object Fr_Dados: TFr_Dados
     Connection = FDConnection
     Left = 680
     Top = 72
+  end
+  object FDQueryVSOP_OrderBillingPedidosGrupo: TFDQuery
+    Connection = FDConnection
+    SQL.Strings = (
+      ''
+      ''
+      
+        'SELECT REPLACE(RP.TSOP_REPNOM,'#39'-'#39','#39#39') AS  TSOP_ORDBILREPNOM     ' +
+        '                                  '
+      '      ,B01.TSOP_ORDBILGRUCLINOM'
+      '      ,B01.TSOP_ORDBILCANNOM'
+      '      ,B01.TSOP_ORDBILSITNOM'
+      '      ,TSOP_ORDBILORI = CASE :SALESREP'
+      
+        '                          WHEN MAX(B01.TSOP_ORDBILREPNOM) THEN '#39 +
+        'ACC OWNER'#39
+      
+        '                          --WHEN MAX(B01.TSOP_REPNOMINT) THEN '#39'R' +
+        'EGION OWNER'#39
+      
+        '                          --WHEN MAX(B01.TSOP_REPMKT) THEN '#39'MARK' +
+        'ET MNG'#39
+      '                          ELSE '#39'N/A'#39
+      '                        END'
+      
+        '      ,TSOP_ORDBILDAT = '#39'FY'#39'+RIGHT(CAST(A01.YEARDOC AS VARCHAR(M' +
+        'AX)),2) + '#39' - '#39' + CASE A01.MONTHDOC WHEN 1 THEN '#39'Agosto'#39' WHEN 2 ' +
+        'THEN '#39'Setembro'#39' WHEN 3 THEN '#39'Outubro'#39' WHEN 4 THEN '#39'Novembro'#39' WHE' +
+        'N 5 THEN '#39'Dezembro'#39' WHEN 6 THEN '#39'Janeiro'#39' WHEN 7 THEN '#39'Fevereiro' +
+        #39' WHEN 8 THEN '#39'Mar'#231'o'#39' WHEN 9 THEN '#39'Abril'#39' WHEN 10 THEN '#39'Maio'#39' WH' +
+        'EN 11 THEN '#39'Junho'#39' WHEN 12 THEN '#39'Julho'#39' END'
+      '      ,TSOP_ORDBILTYP = CAST('#39'Actual'#39' AS VARCHAR(255))'
+      
+        '      ,TSOP_ORDBILVALLIQ = CAST(SUM(ISNULL(C01.TSOP_ORDBILVALLIQ' +
+        ',0.00)) AS NUMERIC(15,02))'
+      '      ,B01.TSOP_REPACCTYP'
+      
+        'FROM dbo.VSOP_Months A01 with (nolock)  CROSS JOIN VSOP_ClienteB' +
+        'ySalesRepFull B01 with (nolock)'
+      
+        '                         inner join TSOP_REPRESENTANTE_GRUPO RP ' +
+        'ON RP.TSOP_REPCLICOD =  B01.TSOP_ORDBILCLICOD'
+      
+        '                         LEFT  JOIN VSOP_ORDERBILLINGFULL C01 WI' +
+        'TH (NOLOCK)  ON ( B01.TSOP_ORDBILCLICOD     = RP.TSOP_REPCLICOD'
+      
+        '                                                                ' +
+        '              AND B01.TSOP_ORDBILCANNOM     = C01.TSOP_ORDBILCAN' +
+        'NOM'
+      
+        '                                                                ' +
+        '              AND B01.TSOP_ORDBILSITNOM     = C01.TSOP_ORDBILSIT' +
+        'NOM'
+      ''
+      
+        '                                                                ' +
+        '    AND A01.YEARDOC               = C01.TSOP_ORDBILYEADOCREQ'
+      
+        '                                                                ' +
+        '    AND A01.MONTHDOC              = C01.TSOP_ORDBILMONDOCREQ'
+      
+        '                                                                ' +
+        '    AND C01.TSOP_ORDBILDATDOCREQ >= :MES_INI'
+      
+        '                                                                ' +
+        '    AND C01.TSOP_ORDBILDATDOCREQ <= :MES_FIM )'
+      ''
+      #9#9#9#9#9#9#9#9#9#9#9#9#9#9#9#9#9
+      'WHERE 1 = 1'
+      '  &WHERE1'
+      '  AND A01.YEARDOC = :YEARDOC'
+      '  AND A01.MONTHDOC = :MONTHDOC'
+      'GROUP BY REPLACE(RP.TSOP_REPNOM,'#39'-'#39','#39#39')'
+      '        ,B01.TSOP_ORDBILGRUCLINOM'
+      '        ,B01.TSOP_ORDBILCANNOM'
+      '        ,B01.TSOP_ORDBILSITNOM'
+      '        ,B01.TSOP_REPACCTYP'
+      
+        '        ,'#39'FY'#39'+RIGHT(CAST(A01.YEARDOC AS VARCHAR(MAX)),2) + '#39' - '#39 +
+        ' + CASE A01.MONTHDOC WHEN 1 THEN '#39'Agosto'#39' WHEN 2 THEN '#39'Setembro'#39 +
+        ' WHEN 3 THEN '#39'Outubro'#39' WHEN 4 THEN '#39'Novembro'#39' WHEN 5 THEN '#39'Dezem' +
+        'bro'#39' WHEN 6 THEN '#39'Janeiro'#39' WHEN 7 THEN '#39'Fevereiro'#39' WHEN 8 THEN '#39 +
+        'Mar'#231'o'#39' WHEN 9 THEN '#39'Abril'#39' WHEN 10 THEN '#39'Maio'#39' WHEN 11 THEN '#39'Jun' +
+        'ho'#39' WHEN 12 THEN '#39'Julho'#39' END'
+      ''
+      'UNION ALL'
+      
+        'SELECT  REPLACE(RP.TSOP_REPNOM,'#39'-'#39','#39#39') AS  TSOP_ORDBILREPNOM    ' +
+        ' '
+      '      ,B01.TSOP_ORDBILGRUCLINOM'
+      '      ,B01.TSOP_ORDBILCANNOM'
+      '      ,B01.TSOP_ORDBILSITNOM'
+      '      ,TSOP_ORDBILORI = CASE :SALESREP'
+      
+        '                          WHEN MAX(B01.TSOP_ORDBILREPNOM) THEN '#39 +
+        'ACC OWNER'#39
+      
+        '                          --WHEN MAX(B01.TSOP_REPNOMINT) THEN '#39'R' +
+        'EGION OWNER'#39
+      
+        '                          --WHEN MAX(B01.TSOP_REPMKT) THEN '#39'MARK' +
+        'ET MNG'#39
+      '                          ELSE '#39'N/A'#39
+      '                        END'
+      
+        '      ,TSOP_ORDBILDAT = '#39'FY'#39'+RIGHT(CAST(A01.YEARDOC AS VARCHAR(M' +
+        'AX)),2) + '#39' - '#39' + CASE A01.MONTHDOC WHEN 1 THEN '#39'Agosto'#39' WHEN 2 ' +
+        'THEN '#39'Setembro'#39' WHEN 3 THEN '#39'Outubro'#39' WHEN 4 THEN '#39'Novembro'#39' WHE' +
+        'N 5 THEN '#39'Dezembro'#39' WHEN 6 THEN '#39'Janeiro'#39' WHEN 7 THEN '#39'Fevereiro' +
+        #39' WHEN 8 THEN '#39'Mar'#231'o'#39' WHEN 9 THEN '#39'Abril'#39' WHEN 10 THEN '#39'Maio'#39' WH' +
+        'EN 11 THEN '#39'Junho'#39' WHEN 12 THEN '#39'Julho'#39' END'
+      '      ,TSOP_ORDBILTYP = CAST('#39'Billing'#39' AS VARCHAR(255))'
+      
+        '      ,TSOP_ORDBILVALLIQ = CAST(SUM(ISNULL(C01.TSOP_ORDBILVALLIQ' +
+        ',0.00)) AS NUMERIC(15,02))'
+      '      ,B01.TSOP_REPACCTYP'
+      
+        'FROM dbo.VSOP_Months A01 with (nolock)  CROSS JOIN VSOP_ClienteB' +
+        'ySalesRepFull B01 with (nolock)'
+      
+        '                         inner join TSOP_REPRESENTANTE_GRUPO RP ' +
+        'ON RP.TSOP_REPCLICOD =  B01.TSOP_ORDBILCLICOD'
+      
+        '                         LEFT  JOIN VSOP_OrderBillingFull C01 wi' +
+        'th (nolock)  ON ( B01.TSOP_ORDBILCLICOD  = RP.TSOP_REPCLICOD'
+      
+        '                                                                ' +
+        '    AND B01.TSOP_ORDBILCANNOM  = C01.TSOP_ORDBILCANNOM'
+      
+        '                                                                ' +
+        '    AND B01.TSOP_ORDBILSITNOM  = C01.TSOP_ORDBILSITNOM'
+      
+        '                                                                ' +
+        '    AND A01.YEARDOC            = C01.TSOP_ORDBILYEADOC'
+      
+        '                                                                ' +
+        '    AND A01.MONTHDOC           = C01.TSOP_ORDBILMONDOC'
+      
+        '                                                                ' +
+        '    AND C01.TSOP_ORDBILTIPDOC  IN ('#39'Billing'#39','#39'Return'#39') )'
+      #9#9#9#9#9#9#9#9#9#9#9#9#9#9#9
+      'WHERE 1 = 1'
+      '  &WHERE1'
+      '  AND A01.YEARDOC = :YEARDOC'
+      '  AND A01.MONTHDOC = :MONTHDOC'
+      'GROUP BY REPLACE(RP.TSOP_REPNOM,'#39'-'#39','#39#39')'
+      '        ,B01.TSOP_ORDBILGRUCLINOM'
+      '        ,B01.TSOP_ORDBILCANNOM'
+      '        ,B01.TSOP_ORDBILSITNOM'
+      '        ,B01.TSOP_REPACCTYP'
+      
+        '        ,'#39'FY'#39'+RIGHT(CAST(A01.YEARDOC AS VARCHAR(MAX)),2) + '#39' - '#39 +
+        ' + CASE A01.MONTHDOC WHEN 1 THEN '#39'Agosto'#39' WHEN 2 THEN '#39'Setembro'#39 +
+        ' WHEN 3 THEN '#39'Outubro'#39' WHEN 4 THEN '#39'Novembro'#39' WHEN 5 THEN '#39'Dezem' +
+        'bro'#39' WHEN 6 THEN '#39'Janeiro'#39' WHEN 7 THEN '#39'Fevereiro'#39' WHEN 8 THEN '#39 +
+        'Mar'#231'o'#39' WHEN 9 THEN '#39'Abril'#39' WHEN 10 THEN '#39'Maio'#39' WHEN 11 THEN '#39'Jun' +
+        'ho'#39' WHEN 12 THEN '#39'Julho'#39' END'
+      ''
+      'UNION ALL'
+      
+        'SELECT  REPLACE(RP.TSOP_REPNOM,'#39'-'#39','#39#39') AS  TSOP_ORDBILREPNOM    ' +
+        ' '
+      '      ,B01.TSOP_ORDBILGRUCLINOM'
+      '      ,B01.TSOP_ORDBILCANNOM'
+      '      ,B01.TSOP_ORDBILSITNOM'
+      '     '
+      '      ,TSOP_ORDBILORI = CASE :SALESREP'
+      
+        '                          WHEN MAX(B01.TSOP_ORDBILREPNOM) THEN '#39 +
+        'ACC OWNER'#39
+      
+        '                          --WHEN MAX(B01.TSOP_REPNOMINT) THEN '#39'R' +
+        'EGION OWNER'#39
+      
+        '                          --WHEN MAX(B01.TSOP_REPMKT) THEN '#39'MARK' +
+        'ET MNG'#39
+      '                          ELSE '#39'N/A'#39
+      '                        END'
+      
+        '      ,TSOP_ORDBILDAT = '#39'FY'#39'+RIGHT(CAST(A01.YEARDOC AS VARCHAR(M' +
+        'AX)),2) + '#39' - '#39' + CASE A01.MONTHDOC WHEN 1 THEN '#39'Agosto'#39' WHEN 2 ' +
+        'THEN '#39'Setembro'#39' WHEN 3 THEN '#39'Outubro'#39' WHEN 4 THEN '#39'Novembro'#39' WHE' +
+        'N 5 THEN '#39'Dezembro'#39' WHEN 6 THEN '#39'Janeiro'#39' WHEN 7 THEN '#39'Fevereiro' +
+        #39' WHEN 8 THEN '#39'Mar'#231'o'#39' WHEN 9 THEN '#39'Abril'#39' WHEN 10 THEN '#39'Maio'#39' WH' +
+        'EN 11 THEN '#39'Junho'#39' WHEN 12 THEN '#39'Julho'#39' END'
+      '      ,TSOP_ORDBILTYP = CAST('#39'Backlog'#39' AS VARCHAR(255))'
+      
+        '      ,TSOP_ORDBILVALLIQ = CAST(SUM(ISNULL(C01.TSOP_ORDBILVALLIQ' +
+        ',0.00)) AS NUMERIC(15,02))'
+      '      ,B01.TSOP_REPACCTYP'
+      
+        'FROM dbo.VSOP_Months A01 with (nolock)  CROSS JOIN VSOP_ClienteB' +
+        'ySalesRepFull B01 with (nolock)'
+      
+        '                         inner join TSOP_REPRESENTANTE_GRUPO RP ' +
+        'ON RP.TSOP_REPCLICOD =  B01.TSOP_ORDBILCLICOD'
+      
+        '                         LEFT  JOIN VSOP_OrderBillingFull C01 wi' +
+        'th (nolock)  ON (RP.TSOP_REPCLICOD  = C01.TSOP_ORDBILCLICOD'
+      
+        '                                                                ' +
+        '    AND B01.TSOP_ORDBILCANNOM  = C01.TSOP_ORDBILCANNOM'
+      
+        '                                                                ' +
+        '    AND B01.TSOP_ORDBILSITNOM  = C01.TSOP_ORDBILSITNOM'
+      
+        '                                                                ' +
+        '    AND C01.TSOP_ORDBILTIPDOC  = '#39'Order'#39' '
+      
+        '                                                                ' +
+        '    AND C01.TSOP_ORDBILDATDOCREQ <= :MES_FIM '
+      
+        '                                                                ' +
+        '    )'
+      #9#9#9#9#9#9#9#9#9#9#9#9#9#9#9#9
+      'WHERE 1 = 1'
+      '  &WHERE1'
+      '  AND A01.YEARDOC = :YEARDOC'
+      '  AND A01.MONTHDOC = :MONTHDOC'
+      'GROUP BY REPLACE(RP.TSOP_REPNOM,'#39'-'#39','#39#39')'
+      '        ,B01.TSOP_ORDBILGRUCLINOM'
+      '        ,B01.TSOP_ORDBILCANNOM'
+      '        ,B01.TSOP_ORDBILSITNOM'
+      '        ,B01.TSOP_REPACCTYP'
+      
+        '        ,'#39'FY'#39'+RIGHT(CAST(A01.YEARDOC AS VARCHAR(MAX)),2) + '#39' - '#39 +
+        ' + CASE A01.MONTHDOC WHEN 1 THEN '#39'Agosto'#39' WHEN 2 THEN '#39'Setembro'#39 +
+        ' WHEN 3 THEN '#39'Outubro'#39' WHEN 4 THEN '#39'Novembro'#39' WHEN 5 THEN '#39'Dezem' +
+        'bro'#39' WHEN 6 THEN '#39'Janeiro'#39' WHEN 7 THEN '#39'Fevereiro'#39' WHEN 8 THEN '#39 +
+        'Mar'#231'o'#39' WHEN 9 THEN '#39'Abril'#39' WHEN 10 THEN '#39'Maio'#39' WHEN 11 THEN '#39'Jun' +
+        'ho'#39' WHEN 12 THEN '#39'Julho'#39' END'
+      'UNION ALL'
+      'SELECT REPLACE(RP.TSOP_REPNOM,'#39'-'#39','#39#39') AS  TSOP_ORDBILREPNOM     '
+      '      ,B01.TSOP_ORDBILGRUCLINOM'
+      '      ,B01.TSOP_ORDBILCANNOM'
+      '      ,B01.TSOP_ORDBILSITNOM'
+      '      ,TSOP_ORDBILORI = CASE :SALESREP'
+      
+        #9'                        WHEN MAX(B01.TSOP_ORDBILREPNOM) THEN '#39'A' +
+        'CC OWNER'#39
+      
+        #9'                        --WHEN MAX(B01.TSOP_REPNOMINT) THEN '#39'RE' +
+        'GION OWNER'#39
+      
+        #9'                        --WHEN MAX(B01.TSOP_REPMKT) THEN '#39'MARKE' +
+        'T MNG'#39
+      #9'                        ELSE '#39'N/A'#39
+      #9'                      END'
+      
+        '      ,TSOP_ORDBILDAT = '#39'FY'#39'+RIGHT(CAST(A01.YEARDOC AS VARCHAR(M' +
+        'AX)),2) + '#39' - '#39' + CASE A01.MONTHDOC WHEN 1 THEN '#39'Agosto'#39' WHEN 2 ' +
+        'THEN '#39'Setembro'#39' WHEN 3 THEN '#39'Outubro'#39' WHEN 4 THEN '#39'Novembro'#39' WHE' +
+        'N 5 THEN '#39'Dezembro'#39' WHEN 6 THEN '#39'Janeiro'#39' WHEN 7 THEN '#39'Fevereiro' +
+        #39' WHEN 8 THEN '#39'Mar'#231'o'#39' WHEN 9 THEN '#39'Abril'#39' WHEN 10 THEN '#39'Maio'#39' WH' +
+        'EN 11 THEN '#39'Junho'#39' WHEN 12 THEN '#39'Julho'#39' END'
+      '      ,TSOP_ORDBILTYP = CAST('#39'Sales FCST'#39' AS VARCHAR(255))'
+      
+        '      ,TSOP_ORDBILVALLIQ = CAST( SUM(ISNULL(C01.TSOP_BUDVLF,0.00' +
+        ')) AS NUMERIC(15,02))'
+      '      ,B01.TSOP_REPACCTYP'
+      
+        'FROM dbo.VSOP_Months A01 with (nolock)  CROSS JOIN VSOP_ClienteB' +
+        'ySalesRepFull B01 with (nolock)'
+      
+        '                         inner join TSOP_REPRESENTANTE_GRUPO RP ' +
+        'ON RP.TSOP_REPCLICOD =  B01.TSOP_ORDBILCLICOD'
+      
+        '                         LEFT  JOIN dbo.VSOP_ClienteBySalesRep B' +
+        '02 with (nolock)  ON ( RP.TSOP_REPCLICOD    = B02.TSOP_ORDBILCLI' +
+        'COD'
+      
+        '            '#9#9#9#9#9#9'                                              ' +
+        '    AND B01.TSOP_ORDBILCANNOM     = B02.TSOP_ORDBILCANNOM'
+      
+        #9#9#9#9#9#9'                                                          ' +
+        '    AND B01.TSOP_ORDBILSITNOM     = B02.TSOP_ORDBILSITNOM '
+      
+        '                                                                ' +
+        '                                            )'
+      
+        '                         LEFT  JOIN TSOP_Budget                 ' +
+        '     C01 with (nolock)  ON ( B02.TSOP_ORDBILSITNOM  = C01.TSOP_O' +
+        'RDBILSITNOM '
+      
+        '                                                                ' +
+        '                         AND B02.TSOP_ORDBILCLICOD  = C01.TSOP_B' +
+        'UDCLICOD'
+      
+        '                                                                ' +
+        '          AND A01.YEARDOC               = CASE WHEN MONTH(C01.TS' +
+        'OP_BUDDAT) >= 8 THEN  1 ELSE 0 END +  YEAR(C01.TSOP_BUDDAT)'
+      
+        '                                                                ' +
+        '          AND A01.MONTHDOC              = CASE WHEN MONTH(C01.TS' +
+        'OP_BUDDAT) >= 8 THEN -7 ELSE 5 END + MONTH(C01.TSOP_BUDDAT)'
+      
+        '                                                                ' +
+        '          AND C01.TSOP_BUDTIP           = '#39'SF'#39
+      
+        '                                                                ' +
+        '          AND C01.TSOP_BUDDATREF        = :MES_ANT'
+      
+        '                                                                ' +
+        '          AND C01.TSOP_BUDDAT          >= :MES_INI'
+      
+        '                                                                ' +
+        '          AND C01.TSOP_BUDDAT          <= :MES_FIM'
+      
+        '                                                                ' +
+        '          AND C01.TSOP_BUDFAM IS NULL )'
+      #9#9#9#9#9#9#9#9#9#9#9#9#9#9#9#9#9#9' '
+      
+        #9'LEFT OUTER JOIN ( select x.tsop_budclicod, x.tsop_ordbilsitnom,' +
+        '  x.tsop_buddat, Max(x.tsop_budcod) as max_codigo    '
+      #9'             from tsop_budget x     '
+      #9'             where x.tsop_budtip = '#39'SF'#39'    '
+      #9'               and x.TSOP_BUDDATREF = :MES_ANT  '
+      '                       AND x.TSOP_BUDFAM IS NULL '
+      
+        #9#9#9' group by  x.tsop_budclicod, x.tsop_ordbilsitnom, x.tsop_budd' +
+        'at ) J01    '
+      #9' on    (   J01.tsop_budclicod = c01.tsop_budclicod   '
+      #9'       and J01.tsop_ordbilsitnom = c01.tsop_ordbilsitnom    '
+      
+        #9'     and J01.tsop_buddat >= :MES_INI and J01.tsop_buddat <= :ME' +
+        'S_FIM'
+      #9#9'     and J01.max_codigo = c01.tsop_budcod )     '
+      ''
+      ''
+      'WHERE 1 = 1'
+      '  &WHERE1'
+      '  AND A01.YEARDOC = :YEARDOC'
+      '  AND A01.MONTHDOC = :MONTHDOC'
+      '  AND C01.TSOP_BUDFAM IS NULL'
+      'GROUP BY REPLACE(RP.TSOP_REPNOM,'#39'-'#39','#39#39')'
+      '        ,B01.TSOP_ORDBILGRUCLINOM'
+      '        ,B01.TSOP_ORDBILCANNOM'
+      '        ,B01.TSOP_ORDBILSITNOM'
+      '        ,B01.TSOP_REPACCTYP'
+      
+        '        ,'#39'FY'#39'+RIGHT(CAST(A01.YEARDOC AS VARCHAR(MAX)),2) + '#39' - '#39 +
+        ' + CASE A01.MONTHDOC WHEN 1 THEN '#39'Agosto'#39' WHEN 2 THEN '#39'Setembro'#39 +
+        ' WHEN 3 THEN '#39'Outubro'#39' WHEN 4 THEN '#39'Novembro'#39' WHEN 5 THEN '#39'Dezem' +
+        'bro'#39' WHEN 6 THEN '#39'Janeiro'#39' WHEN 7 THEN '#39'Fevereiro'#39' WHEN 8 THEN '#39 +
+        'Mar'#231'o'#39' WHEN 9 THEN '#39'Abril'#39' WHEN 10 THEN '#39'Maio'#39' WHEN 11 THEN '#39'Jun' +
+        'ho'#39' WHEN 12 THEN '#39'Julho'#39' END'
+      'UNION ALL'
+      
+        'SELECT  REPLACE(RP.TSOP_REPNOM,'#39'-'#39','#39#39') AS  TSOP_ORDBILREPNOM    ' +
+        ' '
+      '      ,B01.TSOP_ORDBILGRUCLINOM'
+      '      ,B01.TSOP_ORDBILCANNOM'
+      '      ,B01.TSOP_ORDBILSITNOM'
+      '      ,TSOP_ORDBILORI = CASE :SALESREP'
+      
+        #9'                        WHEN MAX(B01.TSOP_ORDBILREPNOM) THEN '#39'A' +
+        'CC OWNER'#39
+      
+        #9'                        --WHEN MAX(B01.TSOP_REPNOMINT) THEN '#39'RE' +
+        'GION OWNER'#39
+      
+        #9'                        --WHEN MAX(B01.TSOP_REPMKT) THEN '#39'MARKE' +
+        'T MNG'#39
+      #9'                        ELSE '#39'N/A'#39
+      #9'                      END'
+      
+        '      ,TSOP_ORDBILDAT = '#39'FY'#39'+RIGHT(CAST(A01.YEARDOC AS VARCHAR(M' +
+        'AX)),2) + '#39' - '#39' + CASE A01.MONTHDOC WHEN 1 THEN '#39'Agosto'#39' WHEN 2 ' +
+        'THEN '#39'Setembro'#39' WHEN 3 THEN '#39'Outubro'#39' WHEN 4 THEN '#39'Novembro'#39' WHE' +
+        'N 5 THEN '#39'Dezembro'#39' WHEN 6 THEN '#39'Janeiro'#39' WHEN 7 THEN '#39'Fevereiro' +
+        #39' WHEN 8 THEN '#39'Mar'#231'o'#39' WHEN 9 THEN '#39'Abril'#39' WHEN 10 THEN '#39'Maio'#39' WH' +
+        'EN 11 THEN '#39'Junho'#39' WHEN 12 THEN '#39'Julho'#39' END'
+      '      ,TSOP_ORDBILTYP = CAST('#39'Gross Margin'#39' AS VARCHAR(255))'
+      
+        '      ,TSOP_ORDBILVALLIQ = CAST( SUM(ISNULL(C01.TSOP_BUDVLF,0.00' +
+        ')) AS NUMERIC(15,02))'
+      '      ,B01.TSOP_REPACCTYP'
+      
+        'FROM dbo.VSOP_Months A01 with (nolock)  CROSS JOIN VSOP_ClienteB' +
+        'ySalesRepFull B01 with (nolock)'
+      
+        '                         inner join TSOP_REPRESENTANTE_GRUPO RP ' +
+        'ON RP.TSOP_REPCLICOD =  B01.TSOP_ORDBILCLICOD'
+      
+        '                         LEFT  JOIN dbo.VSOP_ClienteBySalesRep B' +
+        '02 with (nolock)  ON ( RP.TSOP_REPCLICOD     = B02.TSOP_ORDBILCL' +
+        'ICOD'
+      
+        '            '#9#9#9#9#9#9'                                              ' +
+        '    AND B01.TSOP_ORDBILCANNOM     = B02.TSOP_ORDBILCANNOM'
+      
+        #9#9#9#9#9#9'                                                          ' +
+        'AND B01.TSOP_ORDBILSITNOM     = B02.TSOP_ORDBILSITNOM '
+      
+        '                                                                ' +
+        '                                        )'
+      
+        '                         LEFT  JOIN TSOP_Budget                 ' +
+        '     C01 with (nolock)  ON (  B02.TSOP_ORDBILSITNOM  = C01.TSOP_' +
+        'ORDBILSITNOM '
+      
+        '                                                                ' +
+        '                          AND B02.TSOP_ORDBILCLICOD     = C01.TS' +
+        'OP_BUDCLICOD'
+      
+        '                                                                ' +
+        '          AND A01.YEARDOC               = CASE WHEN MONTH(C01.TS' +
+        'OP_BUDDAT) >= 8 THEN  1 ELSE 0 END +  YEAR(C01.TSOP_BUDDAT)'
+      
+        '                                                                ' +
+        '          AND A01.MONTHDOC              = CASE WHEN MONTH(C01.TS' +
+        'OP_BUDDAT) >= 8 THEN -7 ELSE 5 END + MONTH(C01.TSOP_BUDDAT)'
+      
+        '                                                                ' +
+        '          AND C01.TSOP_BUDTIP           = '#39'GM'#39
+      
+        '                                                                ' +
+        '          AND 1 = 2'
+      
+        '                                                                ' +
+        '          AND C01.TSOP_BUDDATREF        = :MES_INI'
+      
+        '                                                                ' +
+        '          AND C01.TSOP_BUDDAT          >= :MES_INI'
+      
+        '                                                                ' +
+        '          AND C01.TSOP_BUDDAT          <= :MES_FIM )'
+      #9#9#9#9#9#9#9#9#9#9#9#9#9#9#9#9#9#9'  '
+      'WHERE 1 = 1'
+      '  &WHERE1'
+      '  AND A01.YEARDOC = :YEARDOC'
+      '  AND A01.MONTHDOC = :MONTHDOC'
+      'GROUP BY REPLACE(RP.TSOP_REPNOM,'#39'-'#39','#39#39')'
+      '        ,B01.TSOP_ORDBILGRUCLINOM'
+      '        ,B01.TSOP_ORDBILCANNOM'
+      '        ,B01.TSOP_ORDBILSITNOM'
+      '        ,B01.TSOP_REPACCTYP'
+      
+        '        ,'#39'FY'#39'+RIGHT(CAST(A01.YEARDOC AS VARCHAR(MAX)),2) + '#39' - '#39 +
+        ' + CASE A01.MONTHDOC WHEN 1 THEN '#39'Agosto'#39' WHEN 2 THEN '#39'Setembro'#39 +
+        ' WHEN 3 THEN '#39'Outubro'#39' WHEN 4 THEN '#39'Novembro'#39' WHEN 5 THEN '#39'Dezem' +
+        'bro'#39' WHEN 6 THEN '#39'Janeiro'#39' WHEN 7 THEN '#39'Fevereiro'#39' WHEN 8 THEN '#39 +
+        'Mar'#231'o'#39' WHEN 9 THEN '#39'Abril'#39' WHEN 10 THEN '#39'Maio'#39' WHEN 11 THEN '#39'Jun' +
+        'ho'#39' WHEN 12 THEN '#39'Julho'#39' END'
+      ''
+      'ORDER BY 4,3,5,1,2,6,9,7')
+    Left = 1024
+    Top = 72
+    ParamData = <
+      item
+        Name = 'SALESREP'
+        DataType = ftString
+        ParamType = ptInput
+        Value = 'PAULA GAGLIARDO'
+      end
+      item
+        Name = 'MES_INI'
+        DataType = ftDateTime
+        ParamType = ptInput
+        Value = 43922d
+      end
+      item
+        Name = 'MES_FIM'
+        DataType = ftDateTime
+        ParamType = ptInput
+        Value = 43951d
+      end
+      item
+        Name = 'YEARDOC'
+        DataType = ftInteger
+        ParamType = ptInput
+        Value = 2020
+      end
+      item
+        Name = 'MONTHDOC'
+        DataType = ftInteger
+        ParamType = ptInput
+        Value = 9
+      end
+      item
+        Name = 'MES_ANT'
+        DataType = ftDateTime
+        ParamType = ptInput
+        Value = 43922d
+      end>
+    MacroData = <
+      item
+        Value = Null
+        Name = 'WHERE1'
+      end>
+    object FDQueryVSOP_OrderBillingPedidosGrupoTSOP_ORDBILREPNOM: TStringField
+      FieldName = 'TSOP_ORDBILREPNOM'
+      Origin = 'TSOP_ORDBILREPNOM'
+      ReadOnly = True
+      Size = 8000
+    end
+    object FDQueryVSOP_OrderBillingPedidosGrupoTSOP_ORDBILGRUCLINOM: TStringField
+      FieldName = 'TSOP_ORDBILGRUCLINOM'
+      Origin = 'TSOP_ORDBILGRUCLINOM'
+      ReadOnly = True
+      Size = 255
+    end
+    object FDQueryVSOP_OrderBillingPedidosGrupoTSOP_ORDBILCANNOM: TStringField
+      FieldName = 'TSOP_ORDBILCANNOM'
+      Origin = 'TSOP_ORDBILCANNOM'
+      ReadOnly = True
+      Size = 255
+    end
+    object FDQueryVSOP_OrderBillingPedidosGrupoTSOP_ORDBILSITNOM: TStringField
+      FieldName = 'TSOP_ORDBILSITNOM'
+      Origin = 'TSOP_ORDBILSITNOM'
+      ReadOnly = True
+      Size = 255
+    end
+    object FDQueryVSOP_OrderBillingPedidosGrupoTSOP_ORDBILORI: TStringField
+      FieldName = 'TSOP_ORDBILORI'
+      Origin = 'TSOP_ORDBILORI'
+      ReadOnly = True
+      Required = True
+      Size = 9
+    end
+    object FDQueryVSOP_OrderBillingPedidosGrupoTSOP_ORDBILDAT: TMemoField
+      FieldName = 'TSOP_ORDBILDAT'
+      Origin = 'TSOP_ORDBILDAT'
+      ReadOnly = True
+      BlobType = ftMemo
+      Size = 2147483647
+    end
+    object FDQueryVSOP_OrderBillingPedidosGrupoTSOP_ORDBILTYP: TStringField
+      FieldName = 'TSOP_ORDBILTYP'
+      Origin = 'TSOP_ORDBILTYP'
+      ReadOnly = True
+      Size = 255
+    end
+    object FDQueryVSOP_OrderBillingPedidosGrupoTSOP_ORDBILVALLIQ: TBCDField
+      FieldName = 'TSOP_ORDBILVALLIQ'
+      Origin = 'TSOP_ORDBILVALLIQ'
+      ReadOnly = True
+      Precision = 15
+      Size = 2
+    end
+    object FDQueryVSOP_OrderBillingPedidosGrupoTSOP_REPACCTYP: TStringField
+      FieldName = 'TSOP_REPACCTYP'
+      Origin = 'TSOP_REPACCTYP'
+      ReadOnly = True
+      Size = 10
+    end
+  end
+  object FDQuerySalesRepGrupo: TFDQuery
+    Connection = FDConnection
+    SQL.Strings = (
+      
+        'SELECT TSIS_USUNOM = COALESCE(A01.TSIS_USUNOM, B01.TSOP_ORDBILRE' +
+        'PNOM)'
+      
+        '      ,TSIS_USUEML = COALESCE(A01.TSIS_USUEML,'#39'marcos.jesus.exte' +
+        'rnal@k2partnering.com'#39')'
+      'FROM ('
+      '       SELECT A01.TSIS_USUNOM'
+      #9#9#9' ,A01.TSIS_USUEML'
+      #9'   FROM TSIS_Usuario A01'
+      #9'   WHERE A01.TSIS_USUATI = '#39'S'#39
+      '         AND A01.TSIS_USUSREP = '#39'S'#39
+      #9'              ) A01 RIGHT JOIN ('
+      ''
+      #9#9#9#9#9#9#9#9#9#9'SELECT B01.TSOP_ORDBILREPNOM'
+      
+        #9#9#9#9#9#9#9#9#9#9'FROM dbo.VSOP_Months A01 CROSS JOIN dbo.VSOP_ClienteBy' +
+        'SalesRepGrupo B01'
+      
+        #9#9#9#9#9#9#9#9#9#9#9#9#9#9#9#9' LEFT  JOIN dbo.VSOP_OrderBilling      C01 ON ( ' +
+        'B01.TSOP_ORDBILCLICOD     = C01.TSOP_ORDBILCLICOD'
+      
+        #9#9#9#9#9#9#9#9#9#9#9#9#9#9#9#9#9#9#9#9#9#9#9#9#9#9#9'AND B01.TSOP_ORDBILCANNOM     = C01.T' +
+        'SOP_ORDBILCANNOM'
+      
+        #9#9#9#9#9#9#9#9#9#9#9#9#9#9#9#9#9#9#9#9#9#9#9#9#9#9#9'AND A01.YEARDOC               = C01.T' +
+        'SOP_ORDBILYEADOCREQ'
+      
+        #9#9#9#9#9#9#9#9#9#9#9#9#9#9#9#9#9#9#9#9#9#9#9#9#9#9#9'AND A01.MONTHDOC              = C01.T' +
+        'SOP_ORDBILMONDOCREQ'
+      
+        #9#9#9#9#9#9#9#9#9#9#9#9#9#9#9#9#9#9#9#9#9#9#9#9#9#9#9'AND C01.TSOP_ORDBILDATDOCREQ >= :MES_' +
+        'INI'
+      
+        #9#9#9#9#9#9#9#9#9#9#9#9#9#9#9#9#9#9#9#9#9#9#9#9#9#9#9'AND C01.TSOP_ORDBILDATDOCREQ <= :MES_' +
+        'FIM )'
+      #9#9#9#9#9#9#9#9#9#9'WHERE 1 = 1'
+      #9#9#9#9#9#9#9#9#9#9'  AND A01.YEARDOC = :YEARDOC'
+      #9#9#9#9#9#9#9#9#9#9'  AND A01.MONTHDOC = :MONTHDOC'
+      #9#9#9#9#9#9#9#9#9#9'GROUP BY B01.TSOP_ORDBILREPNOM'
+      ''
+      
+        '                                                                ' +
+        '        ) B01 ON ( A01.TSIS_USUNOM = B01.TSOP_ORDBILREPNOM )')
+    Left = 1000
+    Top = 128
+    ParamData = <
+      item
+        Name = 'MES_INI'
+        DataType = ftDateTime
+        ParamType = ptInput
+        Value = 43922d
+      end
+      item
+        Name = 'MES_FIM'
+        DataType = ftDateTime
+        ParamType = ptInput
+        Value = 43951d
+      end
+      item
+        Name = 'YEARDOC'
+        DataType = ftInteger
+        ParamType = ptInput
+        Value = 2020
+      end
+      item
+        Name = 'MONTHDOC'
+        DataType = ftInteger
+        ParamType = ptInput
+        Value = 9
+      end>
+    object FDQuerySalesRepGrupoTSIS_USUNOM: TStringField
+      FieldName = 'TSIS_USUNOM'
+      Origin = 'TSIS_USUNOM'
+      ReadOnly = True
+      Size = 255
+    end
+    object FDQuerySalesRepGrupoTSIS_USUEML: TStringField
+      FieldName = 'TSIS_USUEML'
+      Origin = 'TSIS_USUEML'
+      ReadOnly = True
+      Size = 255
+    end
+  end
+  object FDQueryTSOP_RepresentanteCanalGrupo: TFDQuery
+    Connection = FDConnection
+    SQL.Strings = (
+      
+        '  select  DISTINCT  UPPER(RP.TSOP_REPNOM) as TSOP_REPNOM, UPPER(' +
+        'TSOP_PLANTA) as TSOP_PLANTA, UPPER(TSOP_CANAL) as TSOP_CANAL '
+      
+        'from TSOP_RepresentanteCanal CROSS JOIN TSOP_REPRESENTANTE_GRUPO' +
+        ' RP WITH ( NOLOCK )')
+    Left = 1000
+    Top = 528
+  end
+  object FDQueryConsultaChamada: TFDQuery
+    Connection = FDConnection
+    Left = 760
+    Top = 16
   end
 end

@@ -66,6 +66,7 @@ begin
     CaixaTexto.bs_Fields.Add('QUERY;Nome da Query;;' + inttostr(WIDTH_NOME));
     CaixaTexto.bs_Fields.Add('VARIANTE;Variant;;' + inttostr(WIDTH_DOCUMENTO));
     CaixaTexto.bs_Fields.Add('ANo;Ano;;' + inttostr(WIDTH_CODIGO));
+    CaixaTexto.bs_Fields.Add('ANO_FISCAL;ANO_FISCAL;;' + inttostr(WIDTH_CODIGO));
 
     CaixaTexto.bs_TextResult := 'ECF_CONSULTA_ID';
     CaixaTexto.bs_KeyField   := 'ECF_CONSULTA_ID';

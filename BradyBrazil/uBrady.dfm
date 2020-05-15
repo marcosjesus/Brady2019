@@ -1406,7 +1406,7 @@ object Fr_Brady: TFr_Brady
           ItemName = 'dxBarLargeEditorEmail'
         end>
       OneOnRow = False
-      Row = 1
+      Row = 0
       UseOwnFont = False
       Visible = True
       WholeRow = False
@@ -1426,7 +1426,7 @@ object Fr_Brady: TFr_Brady
           ItemName = 'dxBarLargeButtonMKTConfig'
         end>
       OneOnRow = False
-      Row = 1
+      Row = 0
       UseOwnFont = False
       Visible = True
       WholeRow = False
@@ -1446,7 +1446,7 @@ object Fr_Brady: TFr_Brady
           ItemName = 'dxBarLargeButtonMKTLista'
         end>
       OneOnRow = False
-      Row = 1
+      Row = 0
       UseOwnFont = False
       Visible = True
       WholeRow = False
@@ -1465,7 +1465,7 @@ object Fr_Brady: TFr_Brady
           Visible = True
           ItemName = 'dxBarLargeButtonUploadDistribuidores'
         end>
-      OneOnRow = True
+      OneOnRow = False
       Row = 0
       UseOwnFont = False
       Visible = True

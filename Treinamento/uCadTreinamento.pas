@@ -1535,7 +1535,11 @@ begin
                 DB_Conect.sqlFunc.SQL.Add('  ,:FUN_SEXO ');
                 DB_Conect.sqlFunc.SQL.Add('  ,:FUN_DTNASC ');
                 DB_Conect.sqlFunc.SQL.Add('  ,:FUN_DTADM ');
-                DB_Conect.sqlFunc.SQL.Add('  ,:FUN_DTDESL ');
+                if (varDataDemissao = 0)  then
+                  DB_Conect.sqlFunc.SQL.Add('  ,null ')
+                else
+                  DB_Conect.sqlFunc.SQL.Add('  ,:FUN_DTDESL ');
+
                 DB_Conect.sqlFunc.SQL.Add('  ,:TRE_CARGO_ID ');
                 DB_Conect.sqlFunc.SQL.Add('  ,:TRE_CENTROCENTRO ');
                 DB_Conect.sqlFunc.SQL.Add('  ,:FUN_ATIVO) ');
@@ -1552,12 +1556,11 @@ begin
                 else  DB_Conect.sqlFunc.Params.ParamByName('FUN_DTNASC').AsDateTime   := varDataNascimento;
 
                 if (varDataAdmissao = 0) then
-                  DB_Conect.sqlFunc.Params.ParamByName('FUN_DTADM').AsDateTime        := 0
+                  DB_Conect.sqlFunc.Params.ParamByName('FUN_DTADM').IsNull
                 else  DB_Conect.sqlFunc.Params.ParamByName('FUN_DTADM').AsDateTime    := varDataAdmissao;
 
-                if (varDataDemissao = 0)  then
-                  DB_Conect.sqlFunc.Params.ParamByName('FUN_DTDESL').AsDateTime       := 0
-                else DB_Conect.sqlFunc.Params.ParamByName('FUN_DTDESL').AsDateTime    := varDataDemissao;
+                if (varDataDemissao <> 0)  then
+                 DB_Conect.sqlFunc.Params.ParamByName('FUN_DTDESL').AsDateTime    := varDataDemissao;
 
 
                 DB_Conect.sqlFunc.Params.ParamByName('TRE_CARGO_ID').AsInteger        := varCargoID;

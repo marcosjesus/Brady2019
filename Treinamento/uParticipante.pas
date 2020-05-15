@@ -340,7 +340,17 @@ end;
 
 procedure TFrmCadParticipante.Search;
 begin
+   editxtDtDesligamento.Clear;
+   ediFilial.Clear;
+   EdiDatDesligamento.Clear;
+   ediCentroCusto.Clear;
+   ediCargo.Clear;
+   varFilialAnt := '';
+   varCentroCustoAnt := '';
+   varCodCargoAnt := '';
    inherited;
+
+
    if ediFilial.AsString <> '' then
    begin
      EditBuscaFilial.SetValue('CodFilial = ' +  ediFilial.AsString );
@@ -359,8 +369,10 @@ begin
     varCodCargoAnt :=  ediCargo.AsString;
    end;
 
-   EdiDatDesligamento.Text :=  editxtDtDesligamento.Text;
+   if editxtDtDesligamento.asdatetime  <>  36524  then
+     EdiDatDesligamento.Date :=  editxtDtDesligamento.AsDateTime;
 
+   editxtDtDesligamento.ValidateData;
 
    AtualizaHistorico;
 

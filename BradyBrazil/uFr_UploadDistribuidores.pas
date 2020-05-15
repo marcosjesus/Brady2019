@@ -19,7 +19,11 @@ uses
   dxSkinscxPCPainter, dxBarBuiltInMenu, cxGraphics, cxControls, cxLookAndFeels,
   cxLookAndFeelPainters, cxContainer, cxEdit, Vcl.Menus, Vcl.StdCtrls,
   cxButtons, cxTextEdit, cxMaskEdit, cxButtonEdit, cxLabel, Vcl.ExtCtrls,
-  cxGroupBox, cxPC, dxGDIPlusClasses;
+  cxGroupBox, cxPC, dxGDIPlusClasses, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf, FireDAC.Stan.Def,
+  FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Stan.Param,
+  FireDAC.DatS, FireDAC.DApt.Intf, FireDAC.DApt, Data.DB, FireDAC.Comp.DataSet,
+  FireDAC.Comp.Client;
 
 type
   TFr_UploadDistribuidores = class(TForm)
@@ -38,6 +42,9 @@ type
     PanelSQLSplashScreen: TPanel;
     ImageSQLSplashScreen: TImage;
     cxLabelMensagem: TcxLabel;
+    FDConnection: TFDConnection;
+    FDQueryConsultaPreco: TFDQuery;
+    FDQueryGravaPreco: TFDQuery;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure cxButtonEditPathPrecoClick(Sender: TObject);
     procedure cxButtonProcessarClick(Sender: TObject);
@@ -761,12 +768,9 @@ begin
       WritelnMail( 'Coluna (Tabela_D) não foi encontrada' );
 
     Mensagem( 'Criando DataModule' );
-    Fr_Dados := TFr_Dados.Create(nil);
     varStringList := TStringList.Create;
     try
 
-      with Fr_Dados do
-      begin
 
         Mensagem('Config FDConnection');
         FDConnection.Params.LoadFromFile( MyDocumentsPath + '\DB-MySQL.ini' );
@@ -931,16 +935,14 @@ begin
 
         end;
 
-      end;
 
     finally
 
-      FreeAndNil(Fr_Dados);
 
       FreeAndNil(varStringList);
 
-      Mensagem('Apagando arquivo local. ' +  MyDocumentsPath+'\'+ExtractFileName(cxButtonEditPathPreco.Text));
-      DeleteFile( PWideChar( MyDocumentsPath+'\'+ExtractFileName(cxButtonEditPathPreco.Text)));
+    // Mensagem('Apagando arquivo local. ' +  MyDocumentsPath+'\'+ExtractFileName(cxButtonEditPathPreco.Text));
+    //  DeleteFile( PWideChar( MyDocumentsPath+'\'+ExtractFileName(cxButtonEditPathPreco.Text)));
 
     end;
 

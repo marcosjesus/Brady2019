@@ -87,9 +87,9 @@
         <Debugger_RunParams>-sop_dailysalesmail</Debugger_RunParams>
         <VerInfo_Release>1</VerInfo_Release>
         <VerInfo_MinorVer>2</VerInfo_MinorVer>
-        <VerInfo_Keys>CompanyName=CIEL Soluções em TI;FileDescription=Brady;FileVersion=1.2.1.252;InternalName=Brady;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=Brady;ProductVersion=1.0.0.0;Comments=Rafael Petrella</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=CIEL Soluções em TI;FileDescription=Brady;FileVersion=1.2.1.253;InternalName=Brady;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=Brady;ProductVersion=1.0.0.0;Comments=Rafael Petrella</VerInfo_Keys>
         <DCC_BplOutput>C:\Brady\Projetos\BradyBrazil\Win32\Debug</DCC_BplOutput>
-        <VerInfo_Build>252</VerInfo_Build>
+        <VerInfo_Build>253</VerInfo_Build>
         <VerInfo_AutoIncVersion>true</VerInfo_AutoIncVersion>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>1033</VerInfo_Locale>

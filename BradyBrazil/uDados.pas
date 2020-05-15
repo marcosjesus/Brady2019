@@ -357,6 +357,21 @@ type
     FDQueryEmailMarketing: TFDQuery;
     FDQueryEmailTemplate: TFDQuery;
     FDQueryEmailAux: TFDQuery;
+    FDQueryVSOP_OrderBillingPedidosGrupo: TFDQuery;
+    FDQueryVSOP_OrderBillingPedidosGrupoTSOP_ORDBILREPNOM: TStringField;
+    FDQueryVSOP_OrderBillingPedidosGrupoTSOP_ORDBILGRUCLINOM: TStringField;
+    FDQueryVSOP_OrderBillingPedidosGrupoTSOP_ORDBILCANNOM: TStringField;
+    FDQueryVSOP_OrderBillingPedidosGrupoTSOP_ORDBILSITNOM: TStringField;
+    FDQueryVSOP_OrderBillingPedidosGrupoTSOP_ORDBILORI: TStringField;
+    FDQueryVSOP_OrderBillingPedidosGrupoTSOP_ORDBILDAT: TMemoField;
+    FDQueryVSOP_OrderBillingPedidosGrupoTSOP_ORDBILTYP: TStringField;
+    FDQueryVSOP_OrderBillingPedidosGrupoTSOP_ORDBILVALLIQ: TBCDField;
+    FDQueryVSOP_OrderBillingPedidosGrupoTSOP_REPACCTYP: TStringField;
+    FDQuerySalesRepGrupo: TFDQuery;
+    FDQuerySalesRepGrupoTSIS_USUNOM: TStringField;
+    FDQuerySalesRepGrupoTSIS_USUEML: TStringField;
+    FDQueryTSOP_RepresentanteCanalGrupo: TFDQuery;
+    FDQueryConsultaChamada: TFDQuery;
     procedure FDQueryTSOP_OrderBillingNewRecord(DataSet: TDataSet);
   private
     { Private declarations }

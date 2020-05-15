@@ -5502,15 +5502,26 @@ object frmImportarSAP: TfrmImportarSAP
   object FDQueryConsultaSAP: TFDQuery
     Connection = DB_Conect.FDConnection
     SQL.Strings = (
-      'SELECT * FROM ECF_CONSULTA WHERE ANO = :ANO OR '
-      '(QUERY = :GL_BALANCE AND ANO = :ANO_ANTERIOR) OR  '
-      '(QUERY = :GL_BALANCE5 AND ANO = :ANO_POSTERIOR)  '
+      
+        'SELECT * FROM ECF_CONSULTA WHERE ANO = :ANO and ANO_FISCAL = :AN' +
+        'O_FISCAL OR '
+      
+        '(QUERY = :GL_BALANCE AND ANO = :ANO_ANTERIOR and ANO_FISCAL = :A' +
+        'NO) OR  '
+      
+        '(QUERY = :GL_BALANCE5 AND ANO = :ANO_POSTERIOR and ANO_FISCAL = ' +
+        ':ANO)  '
       'ORDER BY  ANO, QUERY ')
     Left = 344
     Top = 161
     ParamData = <
       item
         Name = 'ANO'
+        DataType = ftString
+        ParamType = ptInput
+      end
+      item
+        Name = 'ANO_FISCAL'
         DataType = ftString
         ParamType = ptInput
       end
@@ -5600,7 +5611,7 @@ object frmImportarSAP: TfrmImportarSAP
     Left = 598
     Top = 240
     Bitmap = {
-      494C010126002700700410001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010126002700800410001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000A0000000010020000000000000A0
       000000000000000000000000000000000000000000000000000096675E009F6F
       60009F6F60009F6F60009F6F60009F6F60009F6F60009F6F60009F6F60009F6F

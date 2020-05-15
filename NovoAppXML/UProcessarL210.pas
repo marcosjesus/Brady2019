@@ -746,13 +746,16 @@ begin
                     Style.Brush.BackgroundColor := varCor2;
                     Style.DataFormat.FormatCode := '#,##0.00';
 
-
+                  {
                     if varbFirst then
                       SetText('=SUM('+ varCelulas[I] + IntToStr( 11 ) + ':' + varCelulas[I] + IntToStr(13)+')', True)
                     else
                       SetText('=' + varCelulas[I-1] + IntToStr(X+1) + '+' + 'SUM('+ varCelulas[I] + IntToStr( 11 ) + ':' + varCelulas[I] + IntToStr(13)+')', True);
+                   }
 
                     varbFirst := False;
+
+                    SetText('=SUM('+ varCelulas[I] + IntToStr( 11 ) + ':' + varCelulas[I] + IntToStr(13)+')', True);
 
                     if varSubtotal[I].IsEmpty then
                       varSubtotal[I] := '=' + varCelulas[I] + IntToStr(X+1)
@@ -1038,14 +1041,14 @@ begin
                     Style.Brush.BackgroundColor := varCor2;
                     Style.DataFormat.FormatCode := '#,##0.00';
 
-                     {
+                    {
                     if varbFirst then
-                      SetText('=SUM('+ varCelulas[I] + IntToStr( 11 ) + ':' + varCelulas[I] + IntToStr(13)+')', True)
+                      SetText('=SUM('+ varCelulas[I] + IntToStr( 18 ) + ':' + varCelulas[I] + IntToStr(21)+')', True)
                     else
-                      SetText('=' + varCelulas[I-1] + IntToStr(X+1) + '+' + 'SUM('+ varCelulas[I] + IntToStr( 11 ) + ':' + varCelulas[I] + IntToStr(13)+')', True);
+                      SetText('=' + varCelulas[I-1] + IntToStr(X+1) + '+' + 'SUM('+ varCelulas[I] + IntToStr( 18 ) + ':' + varCelulas[I] + IntToStr(21)+')', True);
 
                     varbFirst := False;
-                    }
+                     }
 
                     SetText('=SUM('+ varCelulas[I] + IntToStr( 18 ) + ':' + varCelulas[I] + IntToStr(21)+')', True);
 
@@ -1109,8 +1112,61 @@ begin
             FDQueryGrid.Next;
 
 
+
+
             if FDQueryGrid.Eof  then
             begin
+
+                if FDQueryGridCODIGO_LINHA.AsString = '997' then
+                begin
+                   with dxSpreadSheet.ActiveSheetAsTable.CreateCell(X,0) do
+                   begin
+
+                     Style.Brush.BackgroundColor := varCor1;
+                     AsVariant :=  '998'
+
+                   end;
+
+                   with dxSpreadSheet.ActiveSheetAsTable.CreateCell(X,1) do
+                   begin
+
+                     Style.Brush.BackgroundColor := varCor1;
+                     AsVariant :=  'Conversion'
+
+                   end;
+                   varbFirst := True;
+                   for I := 2 to 13 do
+                   begin
+
+                     with dxSpreadSheet.ActiveSheetAsTable.CreateCell(X,I) do
+                     begin
+
+                       Style.Font.Style := Style.Font.Style + [fsBold];
+                       Style.Brush.BackgroundColor := varCor2;
+                       Style.DataFormat.FormatCode := '#,##0.00';
+                       SetText('=SUM('+ varCelulas[I] + IntToStr( 5 )  + '+' +
+                                        varCelulas[I] + IntToStr( 6 )  + '+' +
+                                        varCelulas[I] + IntToStr( 7 )  + '+' +
+                                        varCelulas[I] + IntToStr( 8 )  + '+' +
+                                        varCelulas[I] + IntToStr( 9 )  + '+' +
+                                        varCelulas[I] + IntToStr( 10 ) + '+' +
+                                        varCelulas[I] + IntToStr( 11 ) + '+' +
+                                        varCelulas[I] + IntToStr( 13 ) + '+' +
+                                        varCelulas[I] + IntToStr( 15 ) +  ')', True);
+
+                       if varSubtotal[I].IsEmpty then
+                         varSubtotal[I] := '=' + varCelulas[I] + IntToStr(X+1)
+                       else
+                         varSubtotal[I] := varSubtotal[I] + '+' + varCelulas[I] + IntToStr(X+1);
+
+
+                     end;
+
+                   end;
+
+                   Inc(X);
+                   LastX := X;
+                end;
 
 
                 with dxSpreadSheet.ActiveSheetAsTable.CreateCell(X,0) do
@@ -1129,6 +1185,7 @@ begin
 
                 end;
 
+                varbFirst := True;
                 for I := 2 to 13 do
                 begin
 
@@ -1138,7 +1195,15 @@ begin
                     Style.Font.Style := Style.Font.Style + [fsBold];
                     Style.Brush.BackgroundColor := varCor2;
                     Style.DataFormat.FormatCode := '#,##0.00';
-                    SetText('=SUM('+ varCelulas[I] + IntToStr( 23 ) + '-(' + varCelulas[I] + IntToStr(24) + '+' +  varCelulas[I] + IntToStr(25) +  '))*-1', True);
+
+                    if varbFirst then
+
+                      SetText('=SUM('+ varCelulas[I] + IntToStr( 23 ) + '-(' + varCelulas[I] + IntToStr(24) + '+' +  varCelulas[I] + IntToStr(25) +  '))*-1', True)
+                    else
+                      SetText('=' + varCelulas[I-1] + IntToStr(X+1) + '+' + 'SUM('+ varCelulas[I] + IntToStr( 23 ) + '-(' + varCelulas[I] + IntToStr(24) + '+' +  varCelulas[I] + IntToStr(25) +  '))*-1', True);
+
+                    varbFirst := False;
+                   // SetText('=SUM('+ varCelulas[I] + IntToStr( 23 ) + '-(' + varCelulas[I] + IntToStr(24) + '+' +  varCelulas[I] + IntToStr(25) +  '))*-1', True);
 
 
                     if varSubtotal[I].IsEmpty then
@@ -1896,17 +1961,17 @@ begin
         (FDQueryGridCODIGO_LINHA.AsString = '29C')) Then
         begin
           varSaldoTempJan := varSaldoTempJan + FDQueryGridJANEIRO.AsCurrency;
-          varSaldoTempFev := varSaldoTempFev + FDQueryGridFEVEREIRO.AsCurrency;
-          varSaldoTempMar := varSaldoTempMar + FDQueryGridMARCO.AsCurrency;
-          varSaldoTempAbr := varSaldoTempAbr + FDQueryGridABRIL.AsCurrency;
-          varSaldoTempMai := varSaldoTempMai + FDQueryGridMAIO.AsCurrency;
-          varSaldoTempJun := varSaldoTempJun + FDQueryGridJUNHO.AsCurrency;
-          varSaldoTempJul := varSaldoTempJul + FDQueryGridJULHO.AsCurrency;
-          varSaldoTempAgo := varSaldoTempAgo + FDQueryGridAGOSTO.AsCurrency;
-          varSaldoTempSep := varSaldoTempSep + FDQueryGridSETEMBRO.AsCurrency;
-          varSaldoTempOtu := varSaldoTempOtu + FDQueryGridOUTUBRO.AsCurrency;
-          varSaldoTempNov := varSaldoTempNov + FDQueryGridNOVEMBRO.AsCurrency;
-          varSaldoTempDez := varSaldoTempDez + FDQueryGridDEZEMBRO.AsCurrency;
+          varSaldoTempFev := varSaldoTempJan + varSaldoTempFev + FDQueryGridFEVEREIRO.AsCurrency;
+          varSaldoTempMar := varSaldoTempJan + varSaldoTempFev + varSaldoTempMar + FDQueryGridMARCO.AsCurrency;
+          varSaldoTempAbr := varSaldoTempJan + varSaldoTempFev + varSaldoTempMar + varSaldoTempAbr + FDQueryGridABRIL.AsCurrency;
+          varSaldoTempMai := varSaldoTempJan + varSaldoTempFev + varSaldoTempMar + varSaldoTempAbr + varSaldoTempMai + FDQueryGridMAIO.AsCurrency;
+          varSaldoTempJun := varSaldoTempJan + varSaldoTempFev + varSaldoTempMar + varSaldoTempAbr + varSaldoTempMai + varSaldoTempJun + FDQueryGridJUNHO.AsCurrency;
+          varSaldoTempJul := varSaldoTempJan + varSaldoTempFev + varSaldoTempMar + varSaldoTempAbr + varSaldoTempMai + varSaldoTempJun + varSaldoTempJul + FDQueryGridJULHO.AsCurrency;
+          varSaldoTempAgo := varSaldoTempJan + varSaldoTempFev + varSaldoTempMar + varSaldoTempAbr + varSaldoTempMai + varSaldoTempJun + varSaldoTempJul + varSaldoTempAgo + FDQueryGridAGOSTO.AsCurrency;
+          varSaldoTempSep := varSaldoTempJan + varSaldoTempFev + varSaldoTempMar + varSaldoTempAbr + varSaldoTempMai + varSaldoTempJun + varSaldoTempJul + varSaldoTempAgo + varSaldoTempSep + FDQueryGridSETEMBRO.AsCurrency;
+          varSaldoTempOtu := varSaldoTempJan + varSaldoTempFev + varSaldoTempMar + varSaldoTempAbr + varSaldoTempMai + varSaldoTempJun + varSaldoTempJul + varSaldoTempAgo + varSaldoTempSep + varSaldoTempOtu + FDQueryGridOUTUBRO.AsCurrency;
+          varSaldoTempNov := varSaldoTempJan + varSaldoTempFev + varSaldoTempMar + varSaldoTempAbr + varSaldoTempMai + varSaldoTempJun + varSaldoTempJul + varSaldoTempAgo + varSaldoTempSep + varSaldoTempOtu  + varSaldoTempNov + FDQueryGridNOVEMBRO.AsCurrency;
+          varSaldoTempDez := varSaldoTempJan + varSaldoTempFev + varSaldoTempMar + varSaldoTempAbr + varSaldoTempMai + varSaldoTempJun + varSaldoTempJul + varSaldoTempAgo + varSaldoTempSep + varSaldoTempOtu  + varSaldoTempNov + varSaldoTempDez + FDQueryGridDEZEMBRO.AsCurrency;
         end;
 
         FDQueryGrid.Next;
@@ -1959,6 +2024,20 @@ begin
 
         begin
           varSaldoTempJan := varSaldoTempJan + FDQueryGridJANEIRO.AsCurrency;
+          varSaldoTempFev := varSaldoTempJan + varSaldoTempFev + FDQueryGridFEVEREIRO.AsCurrency;
+          varSaldoTempMar := varSaldoTempJan + varSaldoTempFev + varSaldoTempMar + FDQueryGridMARCO.AsCurrency;
+          varSaldoTempAbr := varSaldoTempJan + varSaldoTempFev + varSaldoTempMar + varSaldoTempAbr + FDQueryGridABRIL.AsCurrency;
+          varSaldoTempMai := varSaldoTempJan + varSaldoTempFev + varSaldoTempMar + varSaldoTempAbr + varSaldoTempMai + FDQueryGridMAIO.AsCurrency;
+          varSaldoTempJun := varSaldoTempJan + varSaldoTempFev + varSaldoTempMar + varSaldoTempAbr + varSaldoTempMai + varSaldoTempJun + FDQueryGridJUNHO.AsCurrency;
+          varSaldoTempJul := varSaldoTempJan + varSaldoTempFev + varSaldoTempMar + varSaldoTempAbr + varSaldoTempMai + varSaldoTempJun + varSaldoTempJul + FDQueryGridJULHO.AsCurrency;
+          varSaldoTempAgo := varSaldoTempJan + varSaldoTempFev + varSaldoTempMar + varSaldoTempAbr + varSaldoTempMai + varSaldoTempJun + varSaldoTempJul + varSaldoTempAgo + FDQueryGridAGOSTO.AsCurrency;
+          varSaldoTempSep := varSaldoTempJan + varSaldoTempFev + varSaldoTempMar + varSaldoTempAbr + varSaldoTempMai + varSaldoTempJun + varSaldoTempJul + varSaldoTempAgo + varSaldoTempSep + FDQueryGridSETEMBRO.AsCurrency;
+          varSaldoTempOtu := varSaldoTempJan + varSaldoTempFev + varSaldoTempMar + varSaldoTempAbr + varSaldoTempMai + varSaldoTempJun + varSaldoTempJul + varSaldoTempAgo + varSaldoTempSep + varSaldoTempOtu + FDQueryGridOUTUBRO.AsCurrency;
+          varSaldoTempNov := varSaldoTempJan + varSaldoTempFev + varSaldoTempMar + varSaldoTempAbr + varSaldoTempMai + varSaldoTempJun + varSaldoTempJul + varSaldoTempAgo + varSaldoTempSep + varSaldoTempOtu  + varSaldoTempNov + FDQueryGridNOVEMBRO.AsCurrency;
+          varSaldoTempDez := varSaldoTempJan + varSaldoTempFev + varSaldoTempMar + varSaldoTempAbr + varSaldoTempMai + varSaldoTempJun + varSaldoTempJul + varSaldoTempAgo + varSaldoTempSep + varSaldoTempOtu  + varSaldoTempNov + varSaldoTempDez + FDQueryGridDEZEMBRO.AsCurrency;
+
+        {
+          varSaldoTempJan := varSaldoTempJan + FDQueryGridJANEIRO.AsCurrency;
           varSaldoTempFev := varSaldoTempFev + FDQueryGridFEVEREIRO.AsCurrency;
           varSaldoTempMar := varSaldoTempMar + FDQueryGridMARCO.AsCurrency;
           varSaldoTempAbr := varSaldoTempAbr + FDQueryGridABRIL.AsCurrency;
@@ -1970,6 +2049,7 @@ begin
           varSaldoTempOtu := varSaldoTempOtu + FDQueryGridOUTUBRO.AsCurrency;
           varSaldoTempNov := varSaldoTempNov + FDQueryGridNOVEMBRO.AsCurrency;
           varSaldoTempDez := varSaldoTempDez + FDQueryGridDEZEMBRO.AsCurrency;
+          }
         end;
 
         FDQueryGrid.Next;

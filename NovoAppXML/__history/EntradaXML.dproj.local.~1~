@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2018/05/05 07:33:03.000.005,C:\Users\K2-User\CIEL-IT-PROJECTS\NovoAppXML\udmDados.dfm=C:\Users\K2-User\CIEL-IT-PROJECTS\NovoAppXML\DBConect.dfm</Transaction>
+    <Transaction>2018/05/05 07:33:03.000.005,C:\Users\K2-User\CIEL-IT-PROJECTS\NovoAppXML\udmDados.pas=C:\Users\K2-User\CIEL-IT-PROJECTS\NovoAppXML\DBConect.pas</Transaction>
+    <Transaction>2018/05/07 09:00:32.000.378,=C:\Users\K2-User\CIEL-IT-PROJECTS\NovoAppXML\FCadastro.pas</Transaction>
+    <Transaction>2018/05/07 09:00:32.000.508,=C:\Users\K2-User\CIEL-IT-PROJECTS\NovoAppXML\FGrid.pas</Transaction>
+    <Transaction>2018/05/07 09:00:32.000.619,=C:\Users\K2-User\CIEL-IT-PROJECTS\NovoAppXML\FrmPrBs.pas</Transaction>
+    <Transaction>2018/05/07 09:04:56.000.036,=C:\Users\K2-User\CIEL-IT-PROJECTS\NovoAppXML\Unit2.pas</Transaction>
+    <Transaction>2018/05/07 09:05:50.000.032,C:\Users\K2-User\CIEL-IT-PROJECTS\NovoAppXML\Unit2.dfm=C:\Users\K2-User\CIEL-IT-PROJECTS\NovoAppXML\uCadCFOPCC.dfm</Transaction>
+    <Transaction>2018/05/07 09:05:50.000.032,C:\Users\K2-User\CIEL-IT-PROJECTS\NovoAppXML\Unit2.pas=C:\Users\K2-User\CIEL-IT-PROJECTS\NovoAppXML\uCadCFOPCC.pas</Transaction>
+    <Transaction>2018/09/14 09:45:06.000.845,=C:\Users\aluga.com\Brady2018\NovoAppXML\Unit2.pas</Transaction>
+    <Transaction>2018/09/14 09:45:47.000.876,C:\Users\aluga.com\Brady2018\NovoAppXML\uECFCadConta.pas=C:\Users\aluga.com\Brady2018\NovoAppXML\Unit2.pas</Transaction>
+    <Transaction>2018/09/14 09:45:47.000.876,C:\Users\aluga.com\Brady2018\NovoAppXML\uECFCadConta.dfm=C:\Users\aluga.com\Brady2018\NovoAppXML\Unit2.dfm</Transaction>
+    <Transaction>2018/09/14 09:45:54.000.209,=C:\Users\aluga.com\Brady2018\NovoAppXML\Unit2.pas</Transaction>
+    <Transaction>2018/09/14 09:46:28.000.094,C:\Users\aluga.com\Brady2018\NovoAppXML\uECFCentroCusto.pas=C:\Users\aluga.com\Brady2018\NovoAppXML\Unit2.pas</Transaction>
+    <Transaction>2018/09/14 09:46:28.000.094,C:\Users\aluga.com\Brady2018\NovoAppXML\uECFCentroCusto.dfm=C:\Users\aluga.com\Brady2018\NovoAppXML\Unit2.dfm</Transaction>
+    <Transaction>2018/09/14 09:46:33.000.351,=C:\Users\aluga.com\Brady2018\NovoAppXML\Unit2.pas</Transaction>
+    <Transaction>2018/09/14 09:47:08.000.264,C:\Users\aluga.com\Brady2018\NovoAppXML\uECFVinculoContaCentro.dfm=C:\Users\aluga.com\Brady2018\NovoAppXML\Unit2.dfm</Transaction>
+    <Transaction>2018/09/14 09:47:08.000.264,C:\Users\aluga.com\Brady2018\NovoAppXML\uECFVinculoContaCentro.pas=C:\Users\aluga.com\Brady2018\NovoAppXML\Unit2.pas</Transaction>
+    <Transaction>2019/01/30 10:22:58.000.439,=C:\Users\aluga.com\Brady2018\NovoAppXML\Unit2.pas</Transaction>
+    <Transaction>2019/01/31 08:53:24.000.138,C:\Users\aluga.com\Brady2018\NovoAppXML\Unit2.dfm=C:\Users\aluga.com\Brady2018\NovoAppXML\uContaSaldo.dfm</Transaction>
+    <Transaction>2019/01/31 08:53:24.000.138,C:\Users\aluga.com\Brady2018\NovoAppXML\Unit2.pas=C:\Users\aluga.com\Brady2018\NovoAppXML\uContaSaldo.pas</Transaction>
+    <Transaction>2019/02/20 12:55:50.000.401,=C:\Users\aluga.com\Brady2018\NovoAppXML\Unit2.pas</Transaction>
+    <Transaction>2019/02/20 12:56:16.000.927,C:\Users\aluga.com\Brady2018\NovoAppXML\Unit2.dfm=C:\Users\aluga.com\Brady2018\NovoAppXML\UProcessarL210.dfm</Transaction>
+    <Transaction>2019/02/20 12:56:16.000.927,C:\Users\aluga.com\Brady2018\NovoAppXML\Unit2.pas=C:\Users\aluga.com\Brady2018\NovoAppXML\UProcessarL210.pas</Transaction>
+    <Transaction>2019/03/18 14:19:42.000.633,=C:\Users\aluga.com\Brady2018\BradyBrazil\uUtils.pas</Transaction>
+    <Transaction>2019/03/18 14:21:30.000.127,C:\Users\aluga.com\Brady2018\BradyBrazil\uUtils.pas=</Transaction>
+    <Transaction>2019/03/25 08:20:05.000.988,=C:\Users\aluga.com\Brady2018\NovoAppXML\Unit2.pas</Transaction>
+    <Transaction>2019/03/25 08:22:54.000.336,C:\Users\aluga.com\Brady2018\NovoAppXML\Unit2.pas=C:\Users\aluga.com\Brady2018\NovoAppXML\uImportarSAP.pas</Transaction>
+    <Transaction>2019/03/25 08:22:54.000.336,C:\Users\aluga.com\Brady2018\NovoAppXML\Unit2.dfm=C:\Users\aluga.com\Brady2018\NovoAppXML\uImportarSAP.dfm</Transaction>
+    <Transaction>2019/05/15 08:08:13.000.023,=C:\Users\aluga.com\Brady2018\NovoAppXML\Unit2.pas</Transaction>
+    <Transaction>2019/05/15 08:09:25.000.730,C:\Users\aluga.com\Brady2018\NovoAppXML\uCadConsultasSAP.dfm=C:\Users\aluga.com\Brady2018\NovoAppXML\Unit2.dfm</Transaction>
+    <Transaction>2019/05/15 08:09:25.000.730,C:\Users\aluga.com\Brady2018\NovoAppXML\uCadConsultasSAP.pas=C:\Users\aluga.com\Brady2018\NovoAppXML\Unit2.pas</Transaction>
+  </Transactions>
+	<ProjectSortOrder AutoSort="0" SortType="0">
+    <File Path="DBConect.pas"/>
+    <File Path="DBConect.dfm"/>
+    <File Path="FCadastro.pas"/>
+    <File Path="FCadastro.dfm"/>
+    <File Path="FGrid.pas"/>
+    <File Path="FGrid.dfm"/>
+    <File Path="FrmPrBs.pas"/>
+    <File Path="FrmPrBs.dfm"/>
+    <File Path="Login.pas"/>
+    <File Path="Login.dfm"/>
+    <File Path="uConsultaDocumento.pas"/>
+    <File Path="uConsultaDocumento.dfm"/>
+    <File Path="uECFCadConta.pas"/>
+    <File Path="uECFCadConta.dfm"/>
+    <File Path="uECFCentroCusto.pas"/>
+    <File Path="uECFCentroCusto.dfm"/>
+    <File Path="uECFVinculoContaCentro.pas"/>
+    <File Path="uECFVinculoContaCentro.dfm"/>
+    <File Path="uPrincipal.pas"/>
+    <File Path="uPrincipal.dfm"/>
+    <File Path="uUsuario.pas"/>
+    <File Path="uUsuario.dfm"/>
+    <File Path="uContaSaldo.pas"/>
+    <File Path="uContaSaldo.dfm"/>
+    <File Path="uImportarSAP.pas"/>
+    <File Path="uImportarSAP.dfm"/>
+  </ProjectSortOrder>
+</BorlandProject>

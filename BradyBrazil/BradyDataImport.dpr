@@ -5859,6 +5859,175 @@ begin
 
 end;
 
+procedure Importar_Chamadas_Vendas;
+var
+    varStringList        : TStringList;
+    varOrigem, varChamadas, varTempoReal, varStatus : String;
+
+  procedure WritelnMail( varStr: String );
+  var
+    varACBrNFe: TACBrNFe;
+    varACBrMail: TACBrMail;
+    varMensagem: TStringList;
+    varCC: TStringList;
+
+  begin
+
+    Writeln( varStr );
+
+    varCC := TStringList.Create;
+    varMensagem := TStringList.Create;
+    varACBrNFe := TACBrNFe.Create(nil);
+    varACBrMail := TACBrMail.Create(nil);
+    varACBrNFe.MAIL := varACBrMail;
+    try
+
+
+      varMensagem.Add( varStr );
+
+      varACBrMail.Clear;
+      varACBrMail.Host := 'smtp.gmail.com';
+      varACBrMail.Port := '465';
+      varACBrMail.SetSSL := True;
+      varACBrMail.SetTLS := False;
+
+      varACBrMail.Username := 'suportebrasil@bradycorp.com';
+      varACBrMail.Password := 'spUhurebRuF5';
+
+      varACBrMail.From := 'suportebrasil@bradycorp.com';
+      varACBrMail.FromName := 'SUPORTE BRASIL';
+
+      with Fr_Dados do
+      begin
+            FDConnection.Close;
+            FDConnection.Params.LoadFromFile( MyDocumentsPath + '\DB.ini' );
+
+            FDConnection.Open;
+
+            FDQueryTSOP_EMAIL.Close;
+            FDQueryTSOP_EMAIL.SQL.Clear;
+            FDQueryTSOP_EMAIL.SQL.Add('Select TSOP_EMAIL From TSOP_EMAIL where TSOP_ATIVO = ''S'' AND');
+            FDQueryTSOP_EMAIL.SQL.Add(' TSOP_PROGRAMA = ''SOP_CHAMADA_FILA900''');
+            FDQueryTSOP_EMAIL.Open;
+            FDQueryTSOP_EMAIL.First;
+            while not FDQueryTSOP_EMAIL.eof do
+            begin
+              varACBrMail.AddAddress(FDQueryTSOP_EMAIL.FieldByName('TSOP_EMAIL').AsString);
+              FDQueryTSOP_EMAIL.Next;
+            end;
+            FDQueryTSOP_EMAIL.Close;
+
+
+      end;
+
+      varACBrMail.Subject := '[ Ligações realizadas fila 900 ] ' + FormatDateTime( 'dd/mm/yyyy', Now );
+      varACBrMail.IsHTML := True;
+      varACBrMail.AltBody.Text := varMensagem.Text;
+
+      try
+
+        varACBrMail.Send;
+
+      except
+
+        on E: Exception do
+        begin
+
+          Writeln( E.Message );
+
+        end;
+
+      end;
+
+    finally
+
+      FreeAndNil(varACBrNFe);
+      FreeAndNil(varACBrMail);
+      FreeAndNil(varMensagem);
+      FreeAndNil(varCC);
+
+    end;
+
+  end;
+begin
+
+    Writeln( 'Criando DataModule' );
+    Fr_Dados := TFr_Dados.Create(nil);
+    varStringList := TStringList.Create;
+    try
+
+      with Fr_Dados do
+      begin
+
+        Writeln('Config FDConnection');
+        FDConnection.Params.LoadFromFile( MyDocumentsPath + '\DB_Call-MySQL.ini' );
+
+        Writeln('Open FDConnection');
+        FDConnection.Open;
+        try
+
+          FDQueryConsultaChamada.Close;
+          FDQueryConsultaChamada.SQL.Clear;
+          FDQueryConsultaChamada.SQL.Add('SELECT  ');
+          FDQueryConsultaChamada.SQL.Add('origem, ');
+          FDQueryConsultaChamada.SQL.Add('COUNT(origem) qtd_chamadas,  ');
+          FDQueryConsultaChamada.SQL.Add('status,  ');
+          FDQueryConsultaChamada.SQL.Add('COALESCE(SEC_TO_TIME(SUM(tempo_total)),''00:00:00'') tempo_total  ');
+          FDQueryConsultaChamada.SQL.Add('FROM  ');
+          FDQueryConsultaChamada.SQL.Add('ipix.cdr  ');
+          FDQueryConsultaChamada.SQL.Add('WHERE   ');
+          FDQueryConsultaChamada.SQL.Add('origem IN (''1218'', ''1512'', ''1515'', ''1545'', ''7073'', ''7074'') AND ');
+          FDQueryConsultaChamada.SQL.Add('tipo = ''realizadas'' AND   ');
+          FDQueryConsultaChamada.SQL.Add(' hora_inicio >= :hora1 and hora_inicio <= :hora2 GROUP BY origem, status order by origem; ');
+          FDQueryConsultaChamada.Params.ParamByName('hora1').AsString :=  FormatDateTime('yyyy-mm-dd 00:00:01', Now);
+          FDQueryConsultaChamada.Params.ParamByName('hora2').AsString :=  FormatDateTime('yyyy-mm-dd 23:59:59', Now);
+
+
+          FDQueryConsultaChamada.Open;
+
+          varStringList.Clear;
+          varStringList.Add('Data: ' + DateTimeToStr(Now));
+          varStringList.Add('');
+          varStringList.Add('Origem            | Chamadas         | Tempo Real      |Status ');
+          varStringList.Add('______________________________________________________');
+
+
+          FDQueryConsultaChamada.First;
+          while not FDQueryConsultaChamada.Eof do
+          begin
+              varOrigem    := FDQueryConsultaChamada.FieldByName('origem').AsString;
+              varChamadas  := FDQueryConsultaChamada.FieldByName('qtd_chamadas').AsString;
+              varChamadas  := FormatFloat('00',StrToFloat(varChamadas));
+              varTempoReal := FDQueryConsultaChamada.FieldByName('tempo_total').AsString;
+              varStatus    := FDQueryConsultaChamada.FieldByName('status').AsString;
+
+              varStringList.Add(varOrigem.PadRight(20) + '|' + varChamadas.PadRight(25) + '|' + varTempoReal.PadRight(20) + '|'  + UpperCase(varStatus.PadRight(30)) );
+
+              FDQueryConsultaChamada.Next;
+          end;
+
+
+          if varStringList.Count > 0 then
+             WritelnMail(varStringList.Text);
+
+        finally
+
+          FDConnection.Close;
+
+        end;
+
+      end;
+
+    finally
+
+      FreeAndNil(Fr_Dados);
+
+      FreeAndNil(varStringList);
+
+
+    end;
+end;
+
 procedure Importar_NovosProdutos;
 var
   I: Integer;
@@ -8599,6 +8768,8 @@ var
   varOrigem: String;
   varCanalDM : Boolean;
 
+  varRepNomTemp : string;
+
  // varBloqueado : String;
   varPercentual, varActual, varForecast, varBilling, varBacklog, varGrossMargin, varBlock, varLate, varMonth: Extended;
 
@@ -8885,7 +9056,9 @@ begin
              (UpperCase(FDQuerySalesRepTSIS_USUNOM.AsString) = 'LEONARDO SCARPARO') or
              (UpperCase(FDQuerySalesRepTSIS_USUNOM.AsString) = 'VANESSA MENDES') or
              (UpperCase(FDQuerySalesRepTSIS_USUNOM.AsString) = 'NEIRIVAL MENDES') or
-             (UpperCase(FDQuerySalesRepTSIS_USUNOM.AsString) = 'RUBEN SANTANA')) Then
+             (UpperCase(FDQuerySalesRepTSIS_USUNOM.AsString) = 'RUBEN SANTANA') or
+             (UpperCase(FDQuerySalesRepTSIS_USUNOM.AsString) = '-') or
+             (UpperCase(FDQuerySalesRepTSIS_USUNOM.AsString) = '')) Then
              begin
                 FDQuerySalesRep.Next;
                 Continue;
@@ -8921,6 +9094,7 @@ begin
 
           while not FDQueryVSOP_OrderBillingPedidos.Eof do
           begin
+
             varCanalDM             := False;
             varBody.Clear;
             varActualSalesRep      := 0.00;
@@ -8961,6 +9135,7 @@ begin
               begin
 
                 varCanal := FDQueryVSOP_OrderBillingPedidosTSOP_ORDBILCANNOM.AsString;
+
 
                 varActualCanal      := 0.00;
                 varForecastCanal    := 0.00;
@@ -9428,12 +9603,13 @@ begin
             varACBrMail.From := 'suportebrasil@bradycorp.com';
             varACBrMail.FromName := 'Suporte Brasil';
 
+            Writeln('Sistema Enviando Email para : ' + FDQuerySalesRepTSIS_USUEML.AsString);
 
-
-            varACBrMail.AddAddress(FDQuerySalesRepTSIS_USUEML.AsString, FDQuerySalesRepTSIS_USUNOM.AsString);
-           // varACBrMail.AddAddress('marcos.jesus.external@k2partnering.com', 'Marcos');
-           // varACBrMail.AddAddress('LUCIANA_PONTIERI@BRADYCORP.com', 'Luciana');
-
+           // varACBrMail.AddAddress(FDQuerySalesRepTSIS_USUEML.AsString, FDQuerySalesRepTSIS_USUNOM.AsString);
+            varACBrMail.AddAddress('marcos.jesus.external@k2partnering.com', 'Marcos');
+            //varACBrMail.AddAddress('LUCIANA_PONTIERI@BRADYCORP.com', 'Luciana');
+            varACBrMail.AddAddress('leandro_lopes@bradycorp.com', 'Leandro');
+            // varACBrMail.AddAddress('alessandra_gocalo@bradycorp.com', 'Alessandra');
 
             varACBrMail.Subject := varAssunto;
             varACBrMail.IsHTML := True;
@@ -9622,7 +9798,7 @@ begin
                                               .Replace('%mont-tot-geral%', FormatFloat('#,##0', varMonthTAMPID));
 
 
-
+         {
         if varForecastPID_KA = 0.00 then
           varPercentualPID_KA := 0.00
         else
@@ -9672,7 +9848,1390 @@ begin
                                               .Replace('%act-ordb-geral%', FormatFloat('#,##0', varBlockMROKA))
                                               .Replace('%mont-tot-geral%', FormatFloat('#,##0', varMonthMROKA));
 
+         }
+        varBodyTotal.Add( varBody04.Text );
 
+        varBodyTotal.AddStrings(varBodyTotal2);      // teste do marcos.. voltar essa linha
+
+        varCC.Clear;
+
+
+            if Monthly then
+              varAssunto := 'Monthly S&OP - ' + FormatDateTime( 'mmmm yyyy', varNow )
+            else
+              varAssunto := 'Daily S&OP';
+
+            Writeln('Enviando Email: ' + varAssunto);
+
+            varACBrMail.Clear;
+            varACBrMail.Host := 'smtp.gmail.com';
+            varACBrMail.Port := '465';
+            varACBrMail.SetSSL := True;
+            varACBrMail.SetTLS := False;
+
+            varACBrMail.Username := 'suportebrasil@bradycorp.com';
+            varACBrMail.Password := 'spUhurebRuF5';
+
+            varACBrMail.From := 'suportebrasil@bradycorp.com';
+            varACBrMail.FromName := 'Suporte Brasil';
+
+
+            varACBrMail.AddAddress('marcos.jesus.external@k2partnering.com', 'Marcos');
+           // varACBrMail.AddAddress('LUCIANA_PONTIERI@BRADYCORP.com', 'Luciana');
+            varACBrMail.AddAddress('leandro_lopes@bradycorp.com', 'Leandro');
+          //  varACBrMail.AddAddress('alessandra_gocalo@bradycorp.com', 'Alessandra');
+
+     //       varACBrMail.AddAddress( 'suportebrasil@bradycorp.com', 'Suporte Brasil' );
+
+           {
+            FDQueryTSOP_EMAIL.Close;
+            FDQueryTSOP_EMAIL.SQL.Clear;
+            FDQueryTSOP_EMAIL.SQL.Add('Select TSOP_EMAIL From TSOP_EMAIL where TSOP_ATIVO = ''S'' AND');
+            FDQueryTSOP_EMAIL.SQL.Add(' TSOP_PROGRAMA = ''SOP_DAILYSALESMAIL''');
+            FDQueryTSOP_EMAIL.Open;
+            FDQueryTSOP_EMAIL.First;
+            while not FDQueryTSOP_EMAIL.eof do
+            begin
+               varACBrMail.AddAddress(FDQueryTSOP_EMAIL.FieldByName('TSOP_EMAIL').AsString);
+               FDQueryTSOP_EMAIL.Next;
+            end;
+            FDQueryTSOP_EMAIL.Close;
+            }
+
+            varACBrMail.Subject := varAssunto;
+            varACBrMail.IsHTML := True;
+            varACBrMail.Body.Assign(varBodyTotal);
+
+            try
+
+              varACBrMail.Send;
+
+            except
+
+              on E: Exception do
+              begin
+
+                Writeln( E.Message );
+
+              end;
+
+            end;
+
+       // varSalvar.SaveToFile('c:\brady\emaildiario_prod_MRO.txt');
+
+        FreeAndNil(varSalvar);
+
+        // NAO ENVIAR NO TESTE
+
+        varBody01.LoadFromFile( 'C:\Brady\AccOwner-01.html' );
+        varBody02.LoadFromFile( 'C:\Brady\AccOwner-02.html' );
+        varBody03.LoadFromFile( 'C:\Brady\AccOwner-03.html' );
+
+        varBodyAccOwner.Clear;
+        varBodyAccOwner.AddStrings( varBody01 );
+        FDQueryAccOwner.Open;
+        try
+
+          while not FDQueryAccOwner.Eof do
+          begin
+
+            varBodyAccOwner.Add( varBody02.Text.Replace( '%codigo%', FDQueryAccOwnerTSOP_ORDBILCLICOD.AsString ).Replace( '%cliente%', FDQueryAccOwnerTSOP_ORDBILCLINOM.AsString ) );
+
+            FDQueryAccOwner.Next;
+
+          end;
+
+          varBodyAccOwner.AddStrings( varBody03 );
+
+          varCC.Clear;
+
+          if DayOfTheWeek(Now) = DayFriday then
+          begin
+
+            varACBrMail.Clear;
+            varACBrMail.Host := 'smtp.gmail.com';
+            varACBrMail.Port := '465';
+            varACBrMail.SetSSL := True;
+            varACBrMail.SetTLS := False;
+
+            varACBrMail.Username := 'suportebrasil@bradycorp.com';
+            varACBrMail.Password := 'spUhurebRuF5'; // 'Rsp1984#$%asd';
+
+            varACBrMail.From := 'suportebrasil@bradycorp.com';
+            varACBrMail.FromName := 'Suporte Brasil';
+
+            FDQueryTSOP_EMAIL.Close;
+            FDQueryTSOP_EMAIL.SQL.Clear;
+            FDQueryTSOP_EMAIL.SQL.Add('Select TSOP_EMAIL From TSOP_EMAIL where TSOP_ATIVO = ''S'' AND');
+            FDQueryTSOP_EMAIL.SQL.Add(' TSOP_PROGRAMA = ''SOP_DAILYSALESMAIL_SEMREP''');
+            FDQueryTSOP_EMAIL.Open;
+            FDQueryTSOP_EMAIL.First;
+            // voltar depois de testar """"""""""""""""""""""
+            while not FDQueryTSOP_EMAIL.eof do
+            begin
+              // varACBrMail.AddAddress(FDQueryTSOP_EMAIL.FieldByName('TSOP_EMAIL').AsString);
+               FDQueryTSOP_EMAIL.Next;
+            end;
+            FDQueryTSOP_EMAIL.Close;
+
+//            varACBrMail.AddAddress( 'suportebrasil@bradycorp.com', 'Suporte Brasil' );
+          {  varACBrMail.AddAddress('EMERSON_ZAIDAN@BRADYCORP.COM');
+            varACBrMail.AddAddress('MARCIO_TANADA@BRADYCORP.COM');
+            varACBrMail.AddAddress('LILIAN_IWATA@BRADYCORP.COM');
+            varACBrMail.AddAddress('LEANDRO_LOPES@BRADYCORP.COM');
+            varACBrMail.AddAddress('LUCIANA_PONTIERI@BRADYCORP.COM');
+               }
+            varACBrMail.Subject := 'S&OP - SEM REPRESENTANTE';
+            varACBrMail.IsHTML := True;
+            varACBrMail.Body.Assign(varBodyAccOwner);
+
+            Writeln('Enviando Email: S&OP - SEM REPRESENTANTE');
+            try
+
+              varACBrMail.Send;
+
+            except
+
+              on E: Exception do
+              begin
+
+                Writeln( E.Message );
+
+              end;
+
+            end;
+
+          end;
+
+        finally
+
+          FDQueryAccOwner.Close;
+
+        end;
+
+        varBody01.LoadFromFile( 'C:\Brady\AccOwner-01.html' );
+        varBody02.LoadFromFile( 'C:\Brady\AccOwner-02.html' );
+        varBody03.LoadFromFile( 'C:\Brady\AccOwner-03.html' );
+
+        varBodyGrupoCliente.Clear;
+        varBodyGrupoCliente.AddStrings( varBody01 );
+        FDQueryGrupoCliente.Open;
+        try
+
+          while not FDQueryGrupoCliente.Eof do
+          begin
+
+            varBodyGrupoCliente.Add( varBody02.Text.Replace( '%codigo%', FDQueryGrupoClienteTSOP_ORDBILCLICOD.AsString ).Replace( '%cliente%', FDQueryGrupoClienteTSOP_ORDBILCLINOM.AsString ) );
+
+            FDQueryGrupoCliente.Next;
+
+          end;
+
+          varBodyGrupoCliente.AddStrings( varBody03 );
+
+          varCC.Clear;
+
+          Writeln('Enviando Email');
+          if DayOfWeek(Now) = DayFriday then
+          begin
+
+            varACBrMail.Clear;
+            varACBrMail.Host := 'smtp.gmail.com';
+            varACBrMail.Port := '465';
+            varACBrMail.SetSSL := True;
+            varACBrMail.SetTLS := False;
+
+            varACBrMail.Username := 'suportebrasil@bradycorp.com';
+            varACBrMail.Password := 'spUhurebRuF5'; // 'Rsp1984#$%asd';
+
+            varACBrMail.From := 'suportebrasil@bradycorp.com';
+            varACBrMail.FromName := 'Suporte Brasil';
+
+            FDQueryTSOP_EMAIL.Close;
+            FDQueryTSOP_EMAIL.SQL.Clear;
+            FDQueryTSOP_EMAIL.SQL.Add('Select TSOP_EMAIL From TSOP_EMAIL where TSOP_ATIVO = ''S'' AND');
+            FDQueryTSOP_EMAIL.SQL.Add(' TSOP_PROGRAMA = ''SOP_DAILYSALESMAIL_SEMGRUCLI''');
+            FDQueryTSOP_EMAIL.Open;
+            FDQueryTSOP_EMAIL.First;
+            // voltar depois de testar """""""""""""""""""
+            while not FDQueryTSOP_EMAIL.eof do
+            begin
+            //   varACBrMail.AddAddress(FDQueryTSOP_EMAIL.FieldByName('TSOP_EMAIL').AsString);
+               FDQueryTSOP_EMAIL.Next;
+            end;
+            FDQueryTSOP_EMAIL.Close;
+            {
+
+//            varACBrMail.AddAddress( 'suportebrasil@bradycorp.com', 'Suporte Brasil' );
+            varACBrMail.AddAddress('EMERSON_ZAIDAN@BRADYCORP.COM');
+            varACBrMail.AddAddress('MARCIO_TANADA@BRADYCORP.COM');
+            varACBrMail.AddAddress('LILIAN_IWATA@BRADYCORP.COM');
+            varACBrMail.AddAddress('LEANDRO_LOPES@BRADYCORP.COM');
+            varACBrMail.AddAddress('LUCIANA_PONTIERI@BRADYCORP.COM');
+                  }
+            varACBrMail.Subject := 'S&OP - SEM GRUPO DE CLIENTE';
+            varACBrMail.IsHTML := True;
+            varACBrMail.Body.Assign(varBodyGrupoCliente);
+
+            Writeln('Enviando Email: S&OP - SEM GRUPO DE CLIENTE');
+            try
+
+              varACBrMail.Send;
+
+            except
+
+              on E: Exception do
+              begin
+
+                Writeln( E.Message );
+
+              end;
+
+            end;
+
+          end;
+
+        finally
+
+          FDQueryGrupoCliente.Close;
+
+        end;
+
+      finally
+
+        FDQuerySalesRep.Close;
+        FDConnection.Close;
+
+      end;
+
+    end;
+
+  finally
+
+    FreeAndNil(Fr_Dados);
+    FreeAndNil(varACBrNFe);
+    FreeAndNil(varACBrMail);
+    FreeAndNil(varBodyTotal);
+    FreeAndNil(varBodyAccOwner);
+    FreeAndNil(varBodyGrupoCliente);
+    FreeAndNil(varBody);
+    FreeAndNil(varCC);
+    FreeAndNil(varBody01);
+    FreeAndNil(varBody02);
+    FreeAndNil(varBody03);
+    FreeAndNil(varBody04);
+    FreeAndNil(varBody05);
+    FreeAndNil(varBody06);
+    FreeAndNil(varBody07);
+    FreeAndNil(varBody08);
+    FreeAndNil(varBody09);
+    FreeAndNil(varBodyAux);
+
+
+
+  end;
+
+
+  Writeln('Fim: ','EnviarEmailValores');
+
+end;
+
+
+procedure SendDailySalesMailGroup( Monthly: Boolean = False );
+var
+  varACBrNFe: TACBrNFe;
+  varACBrMail: TACBrMail;
+  varBodyAccOwner, varBodyGrupoCliente, varBodyTotal, varBodyTotal2, varBody, varBody01, varBody02, varBody03, varBody04, varBody05, varBody06, varBody07, varBody08, varBodyAux, varBody09: TStringList;
+  varCC: TStringList;
+  varAno: Integer;
+  varSite: String;
+  varCanal: String;
+  varOrigem: String;
+  varCanalDM : Boolean;
+
+  varRepNomTemp : string;
+
+ // varBloqueado : String;
+  varPercentual, varActual, varForecast, varBilling, varBacklog, varGrossMargin, varBlock, varLate, varMonth: Extended;
+
+  varPercentualOrigem, varActualOrigem, varForecastOrigem, varBillingOrigem, varBacklogOrigem, varGrossMarginOrigem, varBlockOrigem,varLateOrigem, varMonthOrigem: Extended;
+  varPercentualSite, varActualSite, varForecastSite, varBillingSite, varBacklogSite, varGrossMarginSite, varBlockSite,varLateSite, varMonthSite: Extended;
+  varPercentualCanal, varActualCanal, varForecastCanal, varBillingCanal, varBacklogCanal, varGrossMarginCanal, varBlockCanal,varLateCanal, varMonthCanal: Extended;
+  varPercentualSalesRep, varActualSalesRep, varForecastSalesRep, varBillingSalesRep, varBacklogSalesRep, varGrossMarginSalesRep, varBlockSalesRep,varLateSalesRep, varMonthSalesRep: Extended;
+
+  varPercentualBrazil, varActualBrazil, varForecastBrazil, varBillingBrazil, varBacklogBrazil, varGrossMarginBrazil, varBlockBrazil,varLateBrazil, varMonthBrazil: Extended;
+
+  varPercentualMANMRO, varActualMANMRO, varForecastMANMRO, varBillingMANMRO, varBacklogMANMRO, varGrossMarginMANMRO, varBlockMANMRO,varLateMANMRO, varMonthMANMRO: Extended;
+  varPercentualTAMMRO, varActualTAMMRO, varForecastTAMMRO, varBillingTAMMRO, varBacklogTAMMRO, varGrossMarginTAMMRO, varBlockTAMMRO,varLateTAMMRO, varMonthTAMMRO: Extended;
+  varPercentualMANPID, varActualMANPID, varForecastMANPID, varBillingMANPID, varBacklogMANPID, varGrossMarginMANPID, varBlockMANPID,varLateMANPID, varMonthMANPID: Extended;
+  varPercentualTAMPID, varActualTAMPID, varForecastTAMPID, varBillingTAMPID, varBacklogTAMPID, varGrossMarginTAMPID, varBlockTAMPID,varLateTAMPID, varMonthTAMPID: Extended;
+  varPercentualTOTPID, varActualTOTPID, varForecastTOTPID, varBillingTOTPID, varBacklogTOTPID, varGrossMarginTOTPID, varBlockTOTPID,varLateTOTPID, varMonthTOTPID: Extended;
+
+  varPercentualMRO, varActualMRO, varForecastMRO, varBillingMRO, varBacklogMRO, varGrossMarginMRO, varBlockMRO,varLateMRO, varMonthMRO: Extended;
+
+  varPercentualPID_KA, varActualPID_KA, varForecastPID_KA, varBillingPID_KA, varBacklogPID_KA, varGrossMarginPID_KA, varBlockPID_KA,varLatePID_KA, varMonthPID_KA: Extended;
+  varPercentualPID_KAReg, varActualPID_KAReg, varForecastPID_KAReg, varBillingPID_KAReg, varBacklogPID_KAReg, varGrossMarginPID_KAReg, varBlockPID_KAReg,varLatePID_KAReg, varMonthPID_KAReg: Extended;
+  varPercentualPID_Reg, varActualPID_Reg, varForecastPID_Reg, varBillingPID_Reg, varBacklogPID_Reg, varGrossMarginPID_Reg, varBlockPID_Reg,varLatePID_Reg, varMonthPID_Reg: Extended;
+
+  varPercentualMROKA, varActualMROKA, varForecastMROKA, varBillingMROKA, varBacklogMROKA, varGrossMarginMROKA, varBlockMROKA,varLateMROKA, varMonthMROKA: Extended;
+  varPercentualDM, varActualDM, varForecastDM, varBillingDM, varBacklogDM, varGrossMarginDM, varBlockDM, varLateDM, varMonthDM: Extended;
+
+
+  I: Integer;
+  varNow: TDateTime;
+  varAssunto: String;
+  iAtual : Integer;
+
+  varSalvar : TStringList;
+
+begin
+
+  if Monthly then
+    Writeln('Inicio: ','Enviar Monthly Sales EMail')
+  else
+    Writeln('Inicio: ','Enviar Daily Sales EMail');
+
+  varACBrNFe := TACBrNFe.Create(nil);
+  varACBrMail := TACBrMail.Create(nil);
+  varACBrNFe.MAIL := varACBrMail;
+  varBody := TStringList.Create;
+  varBodyTotal := TStringList.Create;
+  varBodyTotal2 := TStringList.Create;
+  varBodyAccOwner := TStringList.Create;
+  varBodyGrupoCliente := TStringList.Create;
+  varBody01 := TStringList.Create;
+  varBody02 := TStringList.Create;
+  varBody03 := TStringList.Create;
+  varBody04 := TStringList.Create;
+  varBody05 := TStringList.Create;
+  varBody06 := TStringList.Create;
+  varBody07 := TStringList.Create;
+  varBody08 := TStringList.Create;
+  varBodyAux := TStringList.Create;
+  varBody09  := TStringList.Create;
+  varCC := TStringList.Create;
+
+  varSalvar := TStringList.Create;
+  varSalvar.Add('Vendedor;Grupo;Canal;Atual;Forecast;Billing;Backlog;');
+
+  if Monthly then
+  begin
+
+    varBody01.LoadFromFile( 'C:\Brady\MonthlySalesMail-01.html' );
+    varBody02.LoadFromFile( 'C:\Brady\MonthlySalesMail-02.html' );
+    varBody03.LoadFromFile( 'C:\Brady\MonthlySalesMail-03.html' );
+    varBody04.LoadFromFile( 'C:\Brady\MonthlySalesMail-04.html' );
+    varBody05.LoadFromFile( 'C:\Brady\MonthlySalesMail-05.html' );
+    varBody06.LoadFromFile( 'C:\Brady\MonthlySalesMail-06.html' );
+    varBody07.LoadFromFile( 'C:\Brady\MonthlySalesMail-07.html' );
+    varBody08.LoadFromFile( 'C:\Brady\MonthlySalesMail-08.html' );
+    varBody09.LoadFromFile( 'C:\Brady\MonthlySalesMail-09.html' );
+
+  end
+  else
+  begin
+
+    varBody01.LoadFromFile( 'C:\Brady\DailySalesMail-01.html' );
+    varBody02.LoadFromFile( 'C:\Brady\DailySalesMail-02.html' );
+    varBody03.LoadFromFile( 'C:\Brady\DailySalesMail-03.html' );
+    varBody04.LoadFromFile( 'C:\Brady\DailySalesMail-04.html' );
+    varBody05.LoadFromFile( 'C:\Brady\DailySalesMail-05.html' );
+    varBody06.LoadFromFile( 'C:\Brady\DailySalesMail-06.html' );
+    varBody07.LoadFromFile( 'C:\Brady\DailySalesMail-07.html' );
+    varBody08.LoadFromFile( 'C:\Brady\DailySalesMail-08.html' );
+    varBody09.LoadFromFile( 'C:\Brady\DailySalesMail-09.html' );
+
+  end;
+
+  Writeln( 'Criando DataModule' );
+  Fr_Dados := TFr_Dados.Create(nil);
+  try
+
+    with Fr_Dados do
+    begin
+
+
+      varAno := YearOf(Now);
+      if MonthOf(Now) >= 8 then
+        varAno := varAno + 1;
+
+      Writeln('Config FDConnection');
+      FDConnection.Params.LoadFromFile( MyDocumentsPath + '\DB.ini' );
+
+      Writeln('Open FDConnection');
+      FDConnection.Open;
+      try
+
+        if Monthly then
+        begin
+
+          varNow := System.DateUtils.EndOfTheMonth(System.DateUtils.StartOfTheMonth(Now)-1);
+
+        end
+        else
+        begin
+
+          varNow := Now;
+
+        end;
+
+        if not ParamStr(2).IsEmpty then
+        begin
+
+          varNow := EncodeDate( StrToInt(ParamStr(2).Replace( '-', '' ).Split(['/'])[0]),
+                                StrToInt(ParamStr(2).Replace( '-', '' ).Split(['/'])[1]),
+                                StrToInt(ParamStr(2).Replace( '-', '' ).Split(['/'])[2]) );
+
+        end;
+
+        //StrToDateTime('01/03/2019 00:00:00'); StrToDateTime('31/03/2019 00:00:00');
+        FDQueryTSOP_SETONFORECAST.Close;
+        FDQueryTSOP_SETONFORECAST.Params.ParamByName('TSOP_PERIODO').AsDateTime    :=  System.DateUtils.StartOfTheMonth(varNow);
+        FDQueryTSOP_SETONFORECAST.Params.ParamByName('TSOP_DPACANTXTDEP').AsString :=  'DM';
+        FDQueryTSOP_SETONFORECAST.Open;
+
+        FDQuerySalesRepGrupo.ParamByName( 'MES_INI' ).AsDateTime :=  System.DateUtils.StartOfTheMonth(varNow);
+        FDQuerySalesRepGrupo.ParamByName( 'MES_FIM' ).AsDateTime :=  System.DateUtils.EndOfTheMonth(varNow);
+
+        if System.DateUtils.MonthOf(varNow) >= 8 then
+          FDQuerySalesRepGrupo.ParamByName( 'YEARDOC' ).AsInteger := System.DateUtils.YearOf(varNow) + 1
+        else
+          FDQuerySalesRepGrupo.ParamByName( 'YEARDOC' ).AsInteger := System.DateUtils.YearOf(varNow);
+
+        if System.DateUtils.MonthOf(varNow) >= 8 then
+          FDQuerySalesRepGrupo.ParamByName( 'MONTHDOC' ).AsInteger := System.DateUtils.MonthOf(varNow) - 7
+        else
+          FDQuerySalesRepGrupo.ParamByName( 'MONTHDOC' ).AsInteger := System.DateUtils.MonthOf(varNow) + 5;
+
+        FDQuerySalesRepGrupo.Close;
+        FDQuerySalesRepGrupo.Open;
+        varBodyTotal.Clear;
+
+        varPercentualBrazil   := 0.00;
+        varActualBrazil       := 0.00;
+        varForecastBrazil     := 0.00;
+        varBillingBrazil      := 0.00;
+        varBacklogBrazil      := 0.00;
+        varGrossMarginBrazil  := 0.00;
+        varBlockBrazil        := 0.00;
+        varLateBrazil         := 0.00;
+        varMonthBrazil        := 0.00;
+
+
+
+        varActualMANMRO      := 0.00;
+        varForecastMANMRO    := 0.00;
+        varBillingMANMRO     := 0.00;
+        varBacklogMANMRO     := 0.00;
+        varGrossMarginMANMRO := 0.00;
+        varBlockMANMRO       := 0.00;
+        varLateMANMRO        := 0.00;
+        varMonthMANMRO       := 0.00;
+
+        varActualTAMMRO      := 0.00;
+        varForecastTAMMRO    := 0.00;
+        varBillingTAMMRO     := 0.00;
+        varBacklogTAMMRO     := 0.00;
+        varGrossMarginTAMMRO := 0.00;
+        varBlockTAMMRO       := 0.00;
+        varLateTAMMRO        := 0.00;
+        varMonthTAMMRO       := 0.00;
+
+        varActualMANPID      := 0.00;
+        varForecastMANPID    := 0.00;
+        varBillingMANPID     := 0.00;
+        varBacklogMANPID     := 0.00;
+        varGrossMarginMANPID := 0.00;
+        varBlockMANPID       := 0.00;
+        varLateMANPID        := 0.00;
+        varMonthMANPID       := 0.00;
+
+        varActualTAMPID      := 0.00;
+        varForecastTAMPID    := 0.00;
+        varBillingTAMPID     := 0.00;
+        varBacklogTAMPID     := 0.00;
+        varGrossMarginTAMPID := 0.00;
+        varBlockTAMPID       := 0.00;
+        varLateTAMPID        := 0.00;
+        varMonthTAMPID       := 0.00;
+
+        varActualMRO      := 0.00;
+        varForecastMRO    := 0.00;
+        varBillingMRO     := 0.00;
+        varBacklogMRO     := 0.00;
+        varGrossMarginMRO := 0.00;
+        varBlockMRO       := 0.00;
+        varLateMRO        := 0.00;
+        varMonthMRO       := 0.00;
+
+        varActualPID_KA      := 0.00;
+        varForecastPID_KA    := 0.00;
+        varBillingPID_KA     := 0.00;
+        varBacklogPID_KA     := 0.00;
+        varGrossMarginPID_KA := 0.00;
+        varBlockPID_KA       := 0.00;
+        varLatePID_KA        := 0.00;
+        varMonthPID_KA       := 0.00;
+
+        varActualPID_KAReg      := 0.00;
+        varForecastPID_KAReg    := 0.00;
+        varBillingPID_KAReg     := 0.00;
+        varBacklogPID_KAReg     := 0.00;
+        varGrossMarginPID_KAReg := 0.00;
+        varBlockPID_KAReg       := 0.00;
+        varLatePID_KAReg        := 0.00;
+        varMonthPID_KAReg       := 0.00;
+
+        varActualPID_Reg      := 0.00;
+        varForecastPID_Reg    := 0.00;
+        varBillingPID_Reg     := 0.00;
+        varBacklogPID_Reg     := 0.00;
+        varGrossMarginPID_Reg := 0.00;
+        varBlockPID_Reg       := 0.00;
+        varLatePID_Reg        := 0.00;
+        varMonthPID_Reg       := 0.00;
+
+        varPercentualMROKA  := 0.00;
+        varActualMROKA      := 0.00;
+        varForecastMROKA    := 0.00;
+        varBillingMROKA     := 0.00;
+        varBacklogMROKA     := 0.00;
+        varGrossMarginMROKA := 0.00;
+        varBlockMROKA       := 0.00;
+        varLateMROKA        := 0.00;
+        varMonthMROKA       := 0.00;
+
+        varPercentualDM  := 0.00;
+        varActualDM      := 0.00;
+        varForecastDM    := 0.00;
+        varBillingDM     := 0.00;
+        varBacklogDM     := 0.00;
+        varGrossMarginDM := 0.00;
+        varBlockDM       := 0.00;
+        varLateDM        := 0.00;
+        varMonthDM       := 0.00;
+
+        varPercentualTOTPID  := 0.00;
+        varActualTOTPID      := 0.00;
+        varForecastTOTPID    := 0.00;
+        varBillingTOTPID     := 0.00;
+        varBacklogTOTPID     := 0.00;
+        varGrossMarginTOTPID := 0.00;
+        varBlockTOTPID       := 0.00;
+        varLateTOTPID        := 0.00;
+        varMonthTOTPID       := 0.00;
+
+
+        iAtual := 0;
+
+        FDQueryTSOP_RepresentanteCanalGrupo.Close;
+        FDQueryTSOP_RepresentanteCanalGrupo.Open;
+
+        while not FDQuerySalesRepGrupo.Eof do
+        begin
+
+
+         if ((UpperCase(FDQuerySalesRepGrupoTSIS_USUNOM.AsString) = 'LIBIA ROCHA') or
+             (UpperCase(FDQuerySalesRepGrupoTSIS_USUNOM.AsString) = 'ANDRE DANTAS') or
+             (UpperCase(FDQuerySalesRepGrupoTSIS_USUNOM.AsString) = 'CLAUDIO BECHER') or
+             (UpperCase(FDQuerySalesRepGrupoTSIS_USUNOM.AsString) = 'LEONARDO SCARPARO') or
+             (UpperCase(FDQuerySalesRepGrupoTSIS_USUNOM.AsString) = 'VANESSA MENDES') or
+             (UpperCase(FDQuerySalesRepGrupoTSIS_USUNOM.AsString) = 'NEIRIVAL MENDES') or
+             (UpperCase(FDQuerySalesRepGrupoTSIS_USUNOM.AsString) = 'RUBEN SANTANA') or
+             (UpperCase(FDQuerySalesRepGrupoTSIS_USUNOM.AsString) = '-') or
+             (UpperCase(FDQuerySalesRepGrupoTSIS_USUNOM.AsString) = '')) Then
+             begin
+                FDQuerySalesRepGrupo.Next;
+                Continue;
+             end;
+
+          Writeln('Set FDQuery');
+          FDQueryVSOP_OrderBillingPedidosGrupo.ParamByName( 'MES_INI' ).AsDateTime :=  System.DateUtils.StartOfTheMonth(varNow);
+          FDQueryVSOP_OrderBillingPedidosGrupo.ParamByName( 'MES_FIM' ).AsDateTime := System.DateUtils.EndOfTheMonth(varNow);
+          FDQueryVSOP_OrderBillingPedidosGrupo.ParamByName( 'MES_ANT' ).AsDateTime := System.DateUtils.StartOfTheMonth(System.DateUtils.StartOfTheMonth(varNow)-1);
+          //FDQueryVSOP_OrderBillingPedidosGrupo.ParamByName( 'MES_ANT' ).AsDateTime := System.DateUtils.StartOfTheMonth(System.DateUtils.StartOfTheMonth(varNow));
+          FDQueryVSOP_OrderBillingPedidosGrupo.ParamByName( 'SALESREP' ).AsString := FDQuerySalesRepGrupoTSIS_USUNOM.AsString;
+
+          if System.DateUtils.MonthOf(varNow) >= 8 then
+            FDQueryVSOP_OrderBillingPedidosGrupo.ParamByName( 'YEARDOC' ).AsInteger := System.DateUtils.YearOf(varNow) + 1
+          else
+            FDQueryVSOP_OrderBillingPedidosGrupo.ParamByName( 'YEARDOC' ).AsInteger :=  System.DateUtils.YearOf(varNow);
+
+          if System.DateUtils.MonthOf(varNow) >= 8 then
+            FDQueryVSOP_OrderBillingPedidosGrupo.ParamByName( 'MONTHDOC' ).AsInteger := System.DateUtils.MonthOf(varNow) - 7
+          else
+            FDQueryVSOP_OrderBillingPedidosGrupo.ParamByName( 'MONTHDOC' ).AsInteger := System.DateUtils.MonthOf(varNow) + 5;
+
+          if FDQuerySalesRepGrupoTSIS_USUNOM.AsString.Trim.IsEmpty or FDQuerySalesRepGrupoTSIS_USUNOM.AsString.Trim.Equals('N/A') or FDQuerySalesRepGrupoTSIS_USUNOM.AsString.Trim.Equals('INTERCOMPANY') then
+            FDQueryVSOP_OrderBillingPedidosGrupo.MacroByName( 'WHERE1' ).AsRaw := 'AND (RP.TSOP_REPNOM = ' + QuotedStr(FDQuerySalesRepGrupoTSIS_USUNOM.AsString) + ')'
+          else
+            FDQueryVSOP_OrderBillingPedidosGrupo.MacroByName( 'WHERE1' ).AsRaw := 'AND (RP.TSOP_REPNOM = ' + QuotedStr(FDQuerySalesRepGrupoTSIS_USUNOM.AsString) + ' OR B01.TSOP_REPMKT = ' + QuotedStr(FDQuerySalesRepGrupoTSIS_USUNOM.AsString) + ' OR B01.TSOP_REPNOMINT = ' + QuotedStr(FDQuerySalesRepGrupoTSIS_USUNOM.AsString) + ')';
+
+          Writeln('Open FDQuery');
+          FDQueryVSOP_OrderBillingPedidosGrupo.Close;
+          FDQueryVSOP_OrderBillingPedidosGrupo.Open;
+
+
+
+          while not FDQueryVSOP_OrderBillingPedidosGrupo.Eof do
+          begin
+
+            varCanalDM             := False;
+            varBody.Clear;
+            varActualSalesRep      := 0.00;
+            varForecastSalesRep    := 0.00;
+            varBillingSalesRep     := 0.00;
+            varBacklogSalesRep     := 0.00;
+            varGrossMarginSalesRep := 0.00;
+
+            varBody.Add( varBody01.Text.Replace('%FY%', FDQueryVSOP_OrderBillingPedidosGrupoTSOP_ORDBILDAT.AsString ).Replace( '%SalesRep%', FDQuerySalesRepGrupoTSIS_USUNOM.AsString.ToUpper.Trim ) );
+
+            while not FDQueryVSOP_OrderBillingPedidosGrupo.Eof do
+            begin
+
+              varSite      := FDQueryVSOP_OrderBillingPedidosGrupoTSOP_ORDBILSITNOM.AsString.ToUpper.Trim;
+            //  varBloqueado := FDQueryVSOP_OrderBillingPedidosTSOP_ORDBILBLOCK.AsString.ToUpper.Trim;
+              varBlockSalesRep   := 0.00;
+              varLateSalesRep    := 0.00;
+              varMonthSalesRep   := 0.00;
+
+              varActualSite      := 0.00;
+              varForecastSite    := 0.00;
+              varBillingSite     := 0.00;
+              varBacklogSite     := 0.00;
+              varGrossMarginSite := 0.00;
+              varBlockSite       := 0.00;
+              varLateSite        := 0.00;
+              varMonthSite       := 0.00;
+
+
+              // em desenvolvimento. 05/04/2018
+              if FDQueryTSOP_RepresentanteCanalGrupo.Locate('TSOP_REPNOM;TSOP_PLANTA' ,
+                                                VarArrayOf([FDQuerySalesRepGrupoTSIS_USUNOM.AsString.ToUpper.Trim ,
+                                                            FDQueryVSOP_OrderBillingPedidosGrupoTSOP_ORDBILSITNOM.AsString.ToUpper.Trim]),[])  Then
+
+              varBody.Add( varBody06.Text.Replace( '%Site%', FDQueryVSOP_OrderBillingPedidosGrupoTSOP_ORDBILSITNOM.AsString.ToUpper.Trim ) );
+
+              while not FDQueryVSOP_OrderBillingPedidosGrupo.Eof do
+              begin
+
+                varCanal := FDQueryVSOP_OrderBillingPedidosGrupoTSOP_ORDBILCANNOM.AsString;
+
+
+                varActualCanal      := 0.00;
+                varForecastCanal    := 0.00;
+                varBillingCanal     := 0.00;
+                varBacklogCanal     := 0.00;
+                varGrossMarginCanal := 0.00;
+                varBlockCanal       := 0.00;
+                varLateCanal        := 0.00;
+                varMonthCanal       := 0.00;
+
+
+               // em desenvolvimento. 05/04/2018
+               if FDQueryTSOP_RepresentanteCanalGrupo.Locate('TSOP_REPNOM;TSOP_CANAL' ,
+                                                 VarArrayOf([   FDQuerySalesRepGrupoTSIS_USUNOM.AsString.ToUpper.Trim ,
+                                                                FDQueryVSOP_OrderBillingPedidosGrupoTSOP_ORDBILCANNOM.AsString.ToUpper.Trim]),[])  Then
+
+                varBody.Add( varBody02.Text.Replace( '%Canal%', FDQueryVSOP_OrderBillingPedidosGrupoTSOP_ORDBILCANNOM.AsString ) );
+
+                while not FDQueryVSOP_OrderBillingPedidosGrupo.Eof do
+                begin
+
+                  varOrigem := FDQueryVSOP_OrderBillingPedidosGrupoTSOP_ORDBILORI.AsString;
+
+                  varActualOrigem      := 0.00;
+                  varForecastOrigem    := 0.00;
+                  varBillingOrigem     := 0.00;
+                  varBacklogOrigem     := 0.00;
+                  varGrossMarginOrigem := 0.00;
+                  varBlockOrigem       := 0.00;
+                  varLateOrigem        := 0.00;
+                  varMonthOrigem       := 0.00;
+
+                  varBody.Add( varBody05.Text.Replace( '%Origem%', FDQueryVSOP_OrderBillingPedidosGrupoTSOP_ORDBILORI.AsString ) );
+
+                  while not FDQueryVSOP_OrderBillingPedidosGrupo.Eof do
+                  begin
+
+                    varActual       := 0.00;
+                    varBacklog      := 0.00;
+                    varBilling      := 0.00;
+                    varGrossMargin  := 0.00;
+                    varForecast     := 0.00;
+                    varBlock        := 0.00;
+                    varLate         := 0.00;
+                    varMonth        := 0.00;
+
+                    varActual := FDQueryVSOP_OrderBillingPedidosGrupoTSOP_ORDBILVALLIQ.AsFloat;
+
+                    FDQueryVSOP_OrderBillingPedidosGrupo.Next;
+                    varBacklog := FDQueryVSOP_OrderBillingPedidosGrupoTSOP_ORDBILVALLIQ.AsFloat;
+
+                    FDQueryVSOP_OrderBillingPedidosGrupo.Next;
+                    varBilling := FDQueryVSOP_OrderBillingPedidosGrupoTSOP_ORDBILVALLIQ.AsFloat;
+
+                    FDQueryVSOP_OrderBillingPedidosGrupo.Next;
+                    varGrossMargin := FDQueryVSOP_OrderBillingPedidosGrupoTSOP_ORDBILVALLIQ.AsFloat;
+
+                  {  FDQueryVSOP_OrderBillingPedidosGrupo.Next;
+                    varLate := FDQueryVSOP_OrderBillingPedidosTSOP_ORDBILVALLIQ.AsFloat;
+
+                    FDQueryVSOP_OrderBillingPedidosGrupo.Next;
+                    varMonth := FDQueryVSOP_OrderBillingPedidosTSOP_ORDBILVALLIQ.AsFloat;
+
+                    FDQueryVSOP_OrderBillingPedidosGrupo.Next;
+                    varBlock  := FDQueryVSOP_OrderBillingPedidosTSOP_ORDBILVALLIQ.AsFloat;
+                   }
+                    FDQueryVSOP_OrderBillingPedidosGrupo.Next;
+                    varForecast := FDQueryVSOP_OrderBillingPedidosGrupoTSOP_ORDBILVALLIQ.AsFloat;
+
+                    if varForecast = 0.00 then
+                      varPercentual := 0.00
+                    else
+                      varPercentual := varActual/varForecast*100.00;
+
+
+                    if (varActual <> 0.00) or
+                       (varBacklog <> 0.00) or
+                       (varGrossMargin <> 0.00) or
+                       (varBilling <> 0.00) or
+                       (varForecast <> 0.00)  Then
+                    //   or
+                    //   (varBlock <> 0.00) or
+                     //  (varLate <> 0.00) or
+                      // (varMonth <> 0.00) then
+                    begin
+                                                                                                                                                                                                                                                                                                               // era varLate para o novo email
+
+                      varBodyAux.Add( '<!-- ' + FormatFloat( '0,000,000.00', (varActual-varForecast)+1000000 ) + ' -->' + varBody03.Text.Replace( '%GrupoCliente%', FDQueryVSOP_OrderBillingPedidosGrupoTSOP_ORDBILGRUCLINOM.AsString )
+                                                .Replace( '%act-tot%', FormatFloat('#,##0', varActual) )
+                                                .Replace( '%back-tot%', FormatFloat('#,##0', varBacklog) )
+                                                .Replace( '%gm-tot%', FormatFloat('#,##0', varGrossMargin) )
+                                                .Replace( '%bill-tot%', FormatFloat('#,##0', varBilling) )
+                                                .Replace( '%fct-tot%', FormatFloat('#,##0', varForecast) )
+                                                .Replace( '%act-fct%', FormatFloat('#,##0', varActual-varForecast) )
+                                                .Replace( '%act/fct%', FormatFloat('#,##0', varPercentual)+'%' )
+                                                .Replace('%act-ordb%', FormatFloat('#,##0', varBlock))
+                                                .Replace('%mont-tot%', FormatFloat('#,##0', varMonth)) );
+
+
+                      if varCanal.ToUpper.Trim.Equals('DISTRIBUTORS') then
+                      begin
+
+                          if (FDQueryVSOP_OrderBillingPedidosGrupoTSOP_REPACCTYP.AsString.ToUpper.Trim.Equals('KA'))  Then  // Marcos
+                          begin
+                            varActualMROKA      := varActualMROKA + varActual;
+                            varBacklogMROKA     := varBacklogMROKA + varBacklog;
+                            varGrossMarginMROKA := varGrossMarginMROKA + varGrossMargin;
+                            varBillingMROKA     := varBillingMROKA + varBilling;
+                            varForecastMROKA    := varForecastMROKA + varForecast;
+                            varBlockMROKA       := varBlockMROKA + varBlock;
+                            varLateMROKA        := varLateMROKA + varLate;
+                            varMonthMROKA       := varMonthMROKA + varMonth;
+                          end;
+
+                          varActualMRO        := varActualMRO + varActual;
+                          varBacklogMRO       := varBacklogMRO + varBacklog;
+                          varGrossMarginMRO   := varGrossMarginMRO + varGrossMargin;
+                          varBillingMRO       := varBillingMRO + varBilling;
+                          varForecastMRO      := varForecastMRO + varForecast;
+                          varBlockMRO         := varBlockMRO + varBlock;
+                          varLateMRO          := varLateMRO + varLate;
+                          varMonthMRO         := varMonthMRO + varMonth;
+
+                          if varOrigem.ToUpper.Trim.Equals( 'ACC OWNER' ) then
+                          begin
+
+                            if varSite.ToUpper.Trim.Equals('MANAUS') then     // Marcos
+                            begin
+
+                              varActualMANMRO := varActualMANMRO + varActual;
+                              varBacklogMANMRO := varBacklogMANMRO + varBacklog;
+                              varGrossMarginMANMRO := varGrossMarginMANMRO + varGrossMargin;
+                              varBillingMANMRO := varBillingMANMRO + varBilling;
+                              varForecastMANMRO := varForecastMANMRO + varForecast;
+                              varBlockMANMRO := varBlockMANMRO + varBlock;
+                              varLateMANMRO := varLateMANMRO + varLate;
+                              varMonthMANMRO := varMonthMANMRO + varMonth;
+
+                            end
+                            else
+                            begin
+
+                              varActualTAMMRO      := varActualTAMMRO + varActual;
+                              varBacklogTAMMRO     := varBacklogTAMMRO + varBacklog;
+                              varGrossMarginTAMMRO := varGrossMarginTAMMRO + varGrossMargin;
+                              varBillingTAMMRO     := varBillingTAMMRO + varBilling;
+                              varForecastTAMMRO    := varForecastTAMMRO + varForecast;
+                              varBlockTAMMRO       := varBlockTAMMRO + varBlock;
+                              varLateTAMMRO        := varLateTAMMRO + varLate;
+                              varMonthTAMMRO       := varMonthTAMMRO + varMonth;
+
+                            end;
+
+                        end;
+                        {
+                        varSalvar.Add(FDQuerySalesRepTSIS_USUNOM.AsString.ToUpper.Trim + ';' +
+                                        FDQueryVSOP_OrderBillingPedidosTSOP_ORDBILGRUCLINOM.AsString + ';' +
+                                        FDQueryVSOP_OrderBillingPedidosTSOP_ORDBILCANNOM.AsString.ToUpper.Trim + ';' +
+                                        FloatToStr(varActual) + ';'  +
+                                        FloatToStr(varForecast) + ';' +
+                                        FloatToStr(varBilling) + ';' +
+                                        FloatToStr(varBacklog) );
+                                        }
+                      end;
+
+                      if varCanal.ToUpper.Trim.Equals('DM') then  //Seton - Marcos
+                      begin
+                           varActualDM      := varActualDM  + varActual;
+                           varBacklogDM     := varBacklogDM  + varBacklog;
+                           varGrossMarginDM := varGrossMarginDM   + varGrossMargin;
+                           varBillingDM     := varBillingDM  + varBilling;
+                           varForecast      := FDQueryTSOP_SETONFORECASTTSOP_VALOR_FORECAST.asFloat;
+                           varForecastDM    := varForecastDM + varForecast;
+                           varBlockDM       := varBlockDM + varBlock;
+                           varLateDM        := varLateDM + varLate;
+                           varMonthDM       := varMonthDM + varMonth;
+                           varCanalDM       := True;
+
+                      end;
+
+
+                      if varCanal.ToUpper.Trim.Equals('PID') then
+                      begin
+
+                        if varOrigem.ToUpper.Trim.Equals( 'ACC OWNER' ) then
+                        begin
+
+                          if (FDQueryVSOP_OrderBillingPedidosGrupoTSOP_REPACCTYP.AsString.ToUpper.Trim.Equals('KA'))  Then
+                         // if (FDQuerySalesRepTSIS_USUNOM.AsString.ToUpper.Trim.Equals( 'HERIVELTO FELIPPI' )) Then
+                            //  FDQuerySalesRepTSIS_USUNOM.AsString.ToUpper.Trim.Equals( 'GUILHERME COUTO' ) or
+                            //  FDQuerySalesRepTSIS_USUNOM.AsString.ToUpper.Trim.Equals( 'ERIC FURUYA' )) then
+                          begin
+
+                            varActualPID_KA      := varActualPID_KA + varActual;
+                            varBacklogPID_KA     := varBacklogPID_KA + varBacklog;
+                            varGrossMarginPID_KA := varGrossMarginPID_KA + varGrossMargin;
+                            varBillingPID_KA     := varBillingPID_KA + varBilling;
+                            varForecastPID_KA    := varForecastPID_KA + varForecast;
+                            varBlockPID_KA       := varBlockPID_KA + varBlock;
+                            varLatePID_KA        := varLatePID_KA + varLate;
+                            varMonthPID_KA       := varMonthPID_KA + varMonth;
+
+                          end
+                          else
+                          begin
+
+                            varActualPID_Reg      := varActualPID_Reg + varActual;
+                            varBacklogPID_Reg     := varBacklogPID_Reg + varBacklog;
+                            varGrossMarginPID_Reg := varGrossMarginPID_Reg + varGrossMargin;
+                            varBillingPID_Reg     := varBillingPID_Reg + varBilling;
+                            varForecastPID_Reg    := varForecastPID_Reg + varForecast;
+                            varBlockPID_Reg       := varBlockPID_Reg + varBlock;
+                            varLatePID_Reg        := varLatePID_Reg + varLate;
+                            varMonthPID_Reg       := varMonthPID_Reg + varMonth;
+                          end;
+
+                        end;
+                       { else
+                        if varOrigem.ToUpper.Trim.Equals( 'REGION OWNER' ) then
+                        begin
+
+                          varActualPID_KAReg := varActualPID_KAReg + varActual;
+                          varBacklogPID_KAReg := varBacklogPID_KAReg + varBacklog;
+                          varGrossMarginPID_KAReg := varGrossMarginPID_KAReg + varGrossMargin;
+                          varBillingPID_KAReg := varBillingPID_KAReg + varBilling;
+                          varForecastPID_KAReg := varForecastPID_KAReg + varForecast;
+
+                        end;
+                        }
+                        if varOrigem.ToUpper.Trim.Equals( 'ACC OWNER' ) then
+                        begin
+
+                          if varSite.ToUpper.Trim.Equals('MANAUS') then
+                          begin
+
+                            varActualMANPID      := varActualMANPID + varActual;
+                            varBacklogMANPID     := varBacklogMANPID + varBacklog;
+                            varGrossMarginMANPID := varGrossMarginMANPID + varGrossMargin;
+                            varBillingMANPID     := varBillingMANPID + varBilling;
+                            varForecastMANPID    := varForecastMANPID + varForecast;
+                            varBlockMANPID       := varBlockMANPID + varBlock;
+                            varLateMANPID        := varLateMANPID + varLate;
+                            varMonthMANPID       := varMonthMANPID + varMonth;
+                          end
+                          else
+                          begin
+
+                            varActualTAMPID      := varActualTAMPID + varActual;
+                            varBacklogTAMPID     := varBacklogTAMPID + varBacklog;
+                            varGrossMarginTAMPID := varGrossMarginTAMPID + varGrossMargin;
+                            varBillingTAMPID     := varBillingTAMPID + varBilling;
+                            varForecastTAMPID    := varForecastTAMPID + varForecast;
+                            varBlockTAMPID       := varBlockTAMPID + varBlock;
+                            varLateTAMPID        := varLateTAMPID + varLate;
+                            varMonthTAMPID       := varMonthTAMPID + varMonth;
+
+                          end;
+
+
+                        {
+                          varSalvar.Add(FDQuerySalesRepTSIS_USUNOM.AsString.ToUpper.Trim + ';' +
+                                        FDQueryVSOP_OrderBillingPedidosTSOP_ORDBILGRUCLINOM.AsString + ';' +
+                                        FDQueryVSOP_OrderBillingPedidosTSOP_ORDBILCANNOM.AsString.ToUpper.Trim + ';' +
+                                        FloatToStr(varActual) + ';'  +
+                                        FloatToStr(varForecast) + ';' +
+                                        FloatToStr(varBilling) + ';' +
+                                        FloatToStr(varBacklog) );
+
+                          }
+                          varActualTOTPID      := varActualTOTPID      + varActual;
+                          varForecastTOTPID    := varForecastTOTPID    + varForecast;
+                          varBillingTOTPID     := varBillingTOTPID     + varBilling;
+                          varBacklogTOTPID     := varBacklogTOTPID     + varBacklog;
+                          varGrossMarginTOTPID := varGrossMarginTOTPID + varGrossMargin;
+                          varBlockTOTPID       := varBlockTOTPID       + varBlock;
+                          varLateTOTPID        := varLateTOTPID        + varLate;
+                          varMonthTOTPID       := varMonthTOTPID       + varMonth;
+
+
+                        end;
+
+                      end;
+
+                    end;
+
+
+                    varActualOrigem      := varActualOrigem + varActual;
+                    varBacklogOrigem     := varBacklogOrigem + varBacklog;
+                    varGrossMarginOrigem := varGrossMarginOrigem + varGrossMargin;
+                    varBillingOrigem     := varBillingOrigem + varBilling;
+                    varForecastOrigem    := varForecastOrigem + varForecast;
+                    varBlockOrigem       := varBlockOrigem + varBlock;
+                    varLateOrigem        := varLateOrigem + varLate;
+                    varMonthOrigem       := varMonthOrigem + varMonth;
+
+                    varActualCanal := varActualCanal + varActual;
+                    varBacklogCanal := varBacklogCanal + varBacklog;
+                    varGrossMarginCanal := varGrossMarginCanal + varGrossMargin;
+                    varBillingCanal := varBillingCanal + varBilling;
+                    varForecastCanal := varForecastCanal + varForecast;
+                    varBlockCanal :=  varBlockCanal + varBlock;
+                    varLateCanal  := varLateCanal + varLate;
+                    varMonthCanal := varMonthCanal + varMonth;
+
+                    varActualSite := varActualSite + varActual;
+                    varBacklogSite := varBacklogSite + varBacklog;
+                    varGrossMarginSite := varGrossMarginSite + varGrossMargin;
+                    varBillingSite := varBillingSite + varBilling;
+                    varForecastSite := varForecastSite + varForecast;
+                    varBlockSite := varBlockSite + varBlock;
+                    varLateSite := varLateSite + varLate;
+                    varMonthSite := varMonthSite + varMonth;
+
+                    varActualSalesRep := varActualSalesRep + varActual;
+                    varBacklogSalesRep := varBacklogSalesRep + varBacklog;
+                    varGrossMarginSalesRep := varGrossMarginSalesRep + varGrossMargin;
+                    varBillingSalesRep := varBillingSalesRep + varBilling;
+                    varForecastSalesRep := varForecastSalesRep + varForecast;
+                    varBlockSalesRep  :=  varBlockSalesRep + varBlock;
+                    varLateSalesRep := varLateSalesRep + varLate;
+                    varMonthSalesRep := varMonthSalesRep + varMonth;
+
+                    FDQueryVSOP_OrderBillingPedidosGrupo.Next;
+
+                    if varOrigem <> FDQueryVSOP_OrderBillingPedidosGrupoTSOP_ORDBILORI.AsString then
+                      Break;
+
+                    if varCanal <> FDQueryVSOP_OrderBillingPedidosGrupoTSOP_ORDBILCANNOM.AsString then
+                      Break;
+
+                    if varSite <> FDQueryVSOP_OrderBillingPedidosGrupoTSOP_ORDBILSITNOM.AsString.ToUpper.Trim then
+                      Break;
+
+                  end;
+
+
+                  if varBodyAux.Count = 0 then
+                      varBody.Delete(varBody.Count-1);
+
+
+                  varBodyAux.Sort;
+                  varBody.AddStrings(varBodyAux);
+                  varBodyAux.Clear;
+
+                 // varBody.SaveToFile('c:\temp\marcoshtml.html');
+
+                  if varForecastOrigem = 0.00 then
+                    varPercentualOrigem := 0.00
+                  else
+                    varPercentualOrigem := varActualOrigem/varForecastOrigem*100.00;
+
+                // nova versao do email ->   varBody.Text := varBody.Text.Replace( '%back-tot-origem%', FormatFloat('#,##0', varLateOrigem) ).Replace( '%gm-tot-origem%', FormatFloat('#,##0', varGrossMarginOrigem) ).Replace( '%bill-tot-origem%', FormatFloat('#,##0', varBillingOrigem) ).Replace( '%act-tot-origem%', FormatFloat('#,##0', varActualOrigem) ).Replace( '%fct-tot-origem%', FormatFloat('#,##0', varForecastOrigem) ).Replace( '%act-fct-origem%', FormatFloat('#,##0', varActualOrigem-varForecastOrigem) ).Replace( '%act/fct-origem%', FormatFloat('#,##0', varPercentualOrigem)+'%' ).Replace('%act-ordb-origem%', FormatFloat('#,##0', varBlockOrigem)).Replace('%mont-tot-origem%', FormatFloat('#,##0', varMonthOrigem))  ;
+
+                   varBody.Text := varBody.Text.Replace( '%back-tot-origem%', FormatFloat('#,##0', varBacklogOrigem) )
+                                               .Replace( '%gm-tot-origem%', FormatFloat('#,##0', varGrossMarginOrigem) )
+                                               .Replace( '%bill-tot-origem%', FormatFloat('#,##0', varBillingOrigem) )
+                                               .Replace( '%act-tot-origem%', FormatFloat('#,##0', varActualOrigem) )
+                                               .Replace( '%fct-tot-origem%', FormatFloat('#,##0', varForecastOrigem) )
+                                               .Replace( '%act-fct-origem%', FormatFloat('#,##0', varActualOrigem-varForecastOrigem) )
+                                               .Replace( '%act/fct-origem%', FormatFloat('#,##0', varPercentualOrigem)+'%' );
+
+
+                  if varCanal <> FDQueryVSOP_OrderBillingPedidosGrupoTSOP_ORDBILCANNOM.AsString then
+                    Break;
+
+                  if varSite <> FDQueryVSOP_OrderBillingPedidosGrupoTSOP_ORDBILSITNOM.AsString.ToUpper.Trim then
+                    Break;
+
+                end;
+
+
+
+                if varForecastCanal = 0.00 then
+                  varPercentualCanal := 0.00
+                else
+                  varPercentualCanal := varActualCanal/varForecastCanal*100.00;
+
+                if (varForecastCanal+varPercentualCanal+varActualCanal) = 0.00 then
+                    varBody.Delete(varBody.Count-1);
+
+                  // varBody.SaveToFile('c:\temp\marcoshtml2.html');
+
+                // nova versao do email -> varBody.Text := varBody.Text.Replace( '%back-tot-canal%', FormatFloat('#,##0', varLateCanal) ).Replace( '%gm-tot-canal%', FormatFloat('#,##0', varGrossMarginCanal) ).Replace( '%bill-tot-canal%', FormatFloat('#,##0', varBillingCanal) ).Replace( '%act-tot-canal%', FormatFloat('#,##0', varActualCanal) ).Replace( '%fct-tot-canal%', FormatFloat('#,##0', varForecastCanal) ).Replace( '%act-fct-canal%', FormatFloat('#,##0', varActualCanal-varForecastCanal) ).Replace( '%act/fct-canal%', FormatFloat('#,##0', varPercentualCanal)+'%' ).Replace('%act-ordb-canal%', FormatFloat('#,##0', varBlockCanal)).Replace('%mont-tot-canal%', FormatFloat('#,##0', varMonthCanal));
+
+                   varBody.Text := varBody.Text.Replace( '%back-tot-canal%', FormatFloat('#,##0', varBacklogCanal) )
+                                               .Replace( '%gm-tot-canal%', FormatFloat('#,##0', varGrossMarginCanal) )
+                                               .Replace( '%bill-tot-canal%', FormatFloat('#,##0', varBillingCanal) )
+                                               .Replace( '%act-tot-canal%', FormatFloat('#,##0', varActualCanal) )
+                                               .Replace( '%fct-tot-canal%', FormatFloat('#,##0', varForecastCanal) )
+                                               .Replace( '%act-fct-canal%', FormatFloat('#,##0', varActualCanal-varForecastCanal) )
+                                               .Replace( '%act/fct-canal%', FormatFloat('#,##0', varPercentualCanal)+'%' );
+
+
+                if varSite <> FDQueryVSOP_OrderBillingPedidosGrupoTSOP_ORDBILSITNOM.AsString.ToUpper.Trim then
+                  Break;
+
+              end;
+
+
+
+              if varForecastSite = 0.00 then
+                varPercentualSite := 0.00
+              else
+                varPercentualSite := varActualSite/varForecastSite*100.00;
+
+              if (varForecastSite+varPercentualSite+varActualSite) = 0.00 then
+                  varBody.Delete(varBody.Count-1);
+
+              // nova versao do email ->  varBody.Text := varBody.Text.Replace( '%back-tot-site%', FormatFloat('#,##0', varLateSite) ).Replace( '%gm-tot-site%', FormatFloat('#,##0', varGrossMarginSite) ).Replace( '%bill-tot-site%', FormatFloat('#,##0', varBillingSite) ).Replace( '%act-tot-site%', FormatFloat('#,##0', varActualSite) ).Replace( '%fct-tot-site%', FormatFloat('#,##0', varForecastSite) ).Replace( '%act-fct-site%', FormatFloat('#,##0', varActualSite-varForecastSite) ).Replace( '%act/fct-site%', FormatFloat('#,##0', varPercentualSite)+'%' ).Replace('%act-ordb-site%', FormatFloat('#,##0', varBlockSite)).Replace('%mont-tot-site%', FormatFloat('#,##0', varMonthSite));
+
+              varBody.Text := varBody.Text.Replace( '%back-tot-site%', FormatFloat('#,##0', varBacklogSite) )
+                                          .Replace( '%gm-tot-site%', FormatFloat('#,##0', varGrossMarginSite) )
+                                          .Replace( '%bill-tot-site%', FormatFloat('#,##0', varBillingSite) )
+                                          .Replace( '%act-tot-site%', FormatFloat('#,##0', varActualSite) )
+                                          .Replace( '%fct-tot-site%', FormatFloat('#,##0', varForecastSite) )
+                                          .Replace( '%act-fct-site%', FormatFloat('#,##0', varActualSite-varForecastSite) )
+                                          .Replace( '%act/fct-site%', FormatFloat('#,##0', varPercentualSite)+'%' );
+
+
+            end;
+
+
+
+
+            if varForecastSalesRep = 0.00 then
+              varPercentualSalesRep := 0.00
+            else
+              varPercentualSalesRep := varActualSalesRep/varForecastSalesRep*100.00;
+
+
+           // nova versao do email ->  varBody.Text := varBody.Text.Replace( '%back-tot-salesrep%', FormatFloat('#,##0', varLateSalesRep ) ).Replace( '%gm-tot-salesrep%', FormatFloat('#,##0', varGrossMarginSalesRep) ).Replace( '%bill-tot-salesrep%', FormatFloat('#,##0', varBillingSalesRep) ).Replace( '%act-tot-salesrep%', FormatFloat('#,##0', varActualSalesRep) ).Replace( '%fct-tot-salesrep%', FormatFloat('#,##0', varForecastSalesRep) ).Replace( '%act-fct-salesrep%', FormatFloat('#,##0', varActualSalesRep-varForecastSalesRep) ).Replace( '%act/fct-salesrep%', FormatFloat('#,##0', varPercentualSalesRep)+'%' ).Replace('%act-ordb-salesrep%', FormatFloat('#,##0', varBlockSalesRep)).Replace('%mont-tot-salesrep%', FormatFloat('#,##0', varMonthSalesRep));
+            varBody.Text := varBody.Text.Replace( '%back-tot-salesrep%', FormatFloat('#,##0', varBacklogSalesRep) )
+                                        .Replace( '%gm-tot-salesrep%', FormatFloat('#,##0', varGrossMarginSalesRep) )
+                                        .Replace( '%bill-tot-salesrep%', FormatFloat('#,##0', varBillingSalesRep) )
+                                        .Replace( '%act-tot-salesrep%', FormatFloat('#,##0', varActualSalesRep) )
+                                        .Replace( '%fct-tot-salesrep%', FormatFloat('#,##0', varForecastSalesRep) )
+                                        .Replace( '%act-fct-salesrep%', FormatFloat('#,##0', varActualSalesRep-varForecastSalesRep) )
+                                        .Replace( '%act/fct-salesrep%', FormatFloat('#,##0', varPercentualSalesRep)+'%' );
+
+
+            varBody.Add( varBody04.Text );
+
+            //if ((UpperCase(FDQuerySalesRepTSIS_USUNOM.AsString) <> '') and
+             //    (UpperCase(FDQuerySalesRepTSIS_USUNOM.AsString) <> '-')) Then
+              varBodyTotal.Add( varBody.Text );
+
+          //  varBody.SaveToFile('c:\temp\marcoshtml3.html');
+
+            if Monthly then
+              varAssunto := 'Monthly S&OP - ' + FormatDateTime('mmmm yyyy', varNow) + ' - ' + FDQuerySalesRepGrupoTSIS_USUNOM.AsString
+            else
+              varAssunto := 'Daily S&OP - ' + FDQuerySalesRepGrupoTSIS_USUNOM.AsString;
+
+            Writeln('Enviando Email: ' + varAssunto);
+
+            varACBrMail.Clear;
+
+            varACBrMail.Clear;
+            varACBrMail.Host := 'smtp.gmail.com';
+            varACBrMail.Port := '465';
+            varACBrMail.SetSSL := True;
+            varACBrMail.SetTLS := false;
+            varACBrMail.Username := 'suportebrasil@bradycorp.com';
+            varACBrMail.Password := 'spUhurebRuF5';
+            varACBrMail.From := 'suportebrasil@bradycorp.com';
+            varACBrMail.FromName := 'Suporte Brasil';
+
+
+            Writeln('Email Cadastrado: ' + FDQuerySalesRepGrupoTSIS_USUEML.AsString);
+           // varACBrMail.AddAddress(FDQuerySalesRepGrupoTSIS_USUEML.AsString, FDQuerySalesRepGrupoTSIS_USUNOM.AsString);
+            varACBrMail.AddAddress('marcos.jesus.external@k2partnering.com', 'Marcos');
+            varACBrMail.AddAddress('LUCIANA_PONTIERI@BRADYCORP.com', 'Luciana');
+            varACBrMail.AddAddress('leandro_lopes@bradycorp.com', 'Leandro');
+
+
+            varACBrMail.Subject := varAssunto;
+            varACBrMail.IsHTML := True;
+            varACBrMail.Body.Assign(varBody);
+
+            try
+             // if ((UpperCase(FDQuerySalesRepGrupoTSIS_USUNOM.AsString) <> '') and
+               //   (UpperCase(FDQuerySalesRepGrupoTSIS_USUNOM.AsString) <> '-')) Then
+                   varACBrMail.Send;
+
+            except
+
+              on E: Exception do
+              begin
+
+                Writeln( E.Message );
+
+              end;
+
+            end;
+
+          end;
+
+          FDQuerySalesRepGrupo.Next;
+
+        end;
+
+        varBodyTotal2.Clear;
+        varBodyTotal2.AddStrings(varBodyTotal);
+        varBodyTotal.Clear;
+
+        varBodyTotal.Add( varBody08.Text.Replace('%FY%', FDQueryVSOP_OrderBillingPedidosGrupoTSOP_ORDBILDAT.AsString ) );
+
+        {if varForecastMANMRO = 0.00 then
+          varPercentualMANMRO := 0.00
+        else
+          varPercentualMANMRO := varActualMANMRO/varForecastMANMRO*100.00;
+
+        varBodyTotal.Add( varBody07.Text.Replace( '%Geral%', 'MANAUS - MRO' ) );
+        varBodyTotal.Text := varBodyTotal.Text.Replace( '%back-tot-geral%', FormatFloat('#,##0', varBacklogMANMRO) ).Replace( '%gm-tot-geral%', FormatFloat('#,##0', varGrossMarginMANMRO) ).Replace( '%bill-tot-geral%', FormatFloat('#,##0', varBillingMANMRO) ).Replace( '%act-tot-geral%', FormatFloat('#,##0', varActualMANMRO) ).Replace( '%fct-tot-geral%', FormatFloat('#,##0', varForecastMANMRO) ).Replace( '%act-fct-geral%', FormatFloat('#,##0', varActualMANMRO-varForecastMANMRO) ).Replace( '%act/fct-geral%', FormatFloat('#,##0', varPercentualMANMRO)+'%' );
+
+        if varForecastTAMMRO = 0.00 then
+          varPercentualTAMMRO := 0.00
+        else
+          varPercentualTAMMRO := varActualTAMMRO/varForecastTAMMRO*100.00;
+
+        varBodyTotal.Add( varBody07.Text.Replace( '%Geral%', 'TAMBORÉ - MRO' ) );
+        varBodyTotal.Text := varBodyTotal.Text.Replace( '%back-tot-geral%', FormatFloat('#,##0', varBacklogTAMMRO) ).Replace( '%gm-tot-geral%', FormatFloat('#,##0', varGrossMarginTAMMRO) ).Replace( '%bill-tot-geral%', FormatFloat('#,##0', varBillingTAMMRO) ).Replace( '%act-tot-geral%', FormatFloat('#,##0', varActualTAMMRO) ).Replace( '%fct-tot-geral%', FormatFloat('#,##0', varForecastTAMMRO) ).Replace( '%act-fct-geral%', FormatFloat('#,##0', varActualTAMMRO-varForecastTAMMRO) ).Replace( '%act/fct-geral%', FormatFloat('#,##0', varPercentualTAMMRO)+'%' );
+          }
+       // if varForecastMANPID = 0.00 then
+       //   varPercentualMANPID := 0.00
+       // else
+        //  varPercentualMANPID := varActualMANPID/varForecastMANPID*100.00;
+
+      //  varBodyTotal.Add( varBody07.Text.Replace( '%Geral%', 'MANAUS - PID' ) );
+      //  varBodyTotal.Text := varBodyTotal.Text.Replace( '%back-tot-geral%', FormatFloat('#,##0', varBacklogMANPID) ).Replace( '%gm-tot-geral%', FormatFloat('#,##0', varGrossMarginMANPID) ).Replace( '%bill-tot-geral%', FormatFloat('#,##0', varBillingMANPID) ).Replace( '%act-tot-geral%', FormatFloat('#,##0', varActualMANPID) ).Replace( '%fct-tot-geral%', FormatFloat('#,##0', varForecastMANPID) ).Replace( '%act-fct-geral%', FormatFloat('#,##0', varActualMANPID-varForecastMANPID) ).Replace( '%act/fct-geral%', FormatFloat('#,##0', varPercentualMANPID)+'%' );
+
+
+        varPercentualBrazil   := 0.00;
+        if (((varActualTOTPID <> 0) or (varActualTAMMRO <> 0) or (varActualDM <> 0)) and
+         ((varForecastTOTPID <> 0) or (varForecastTAMMRO <> 0) or (varForecastDM <> 0)))  then
+          varPercentualBrazil   := (( varActualTOTPID + varActualTAMMRO  + varActualDM ) /  (varForecastTOTPID + varForecastTAMMRO + varForecastDM))*100.00;
+
+        varActualBrazil       := varActualTOTPID      + varActualTAMMRO      + varActualDM;
+        varForecastBrazil     := varForecastTOTPID    + varForecastTAMMRO    + varForecastDM;
+        varBillingBrazil      := varBillingTOTPID     + varBillingTAMMRO     + varBillingDM;
+        varBacklogBrazil      := varBacklogTOTPID     + varBacklogTAMMRO     + varBacklogDM;
+        varGrossMarginBrazil  := varGrossMarginTOTPID + varGrossMarginTAMMRO + varGrossMarginDM;
+        varBlockBrazil        := varBlockTOTPID       + varBlockTAMMRO       + varBlockDM;
+        varLateBrazil         := varLateTOTPID        + varLateTAMMRO        + varLateDM;
+        varMonthBrazil        := varMonthTOTPID       + varMonthTAMMRO       + varMonthDM;
+
+        varBodyTotal.Add( varBody09.Text.Replace( '%Geral%', 'Brazil' ) );
+
+        varBodyTotal.Text := varBodyTotal.Text.Replace( '%back-tot-geral%', FormatFloat('#,##0', varBacklogBrazil) )
+                                              .Replace( '%gm-tot-geral%', FormatFloat('#,##0', varGrossMarginBrazil) )
+                                              .Replace( '%bill-tot-geral%', FormatFloat('#,##0', varBillingBrazil) )
+                                              .Replace( '%act-tot-geral%', FormatFloat('#,##0', varActualBrazil) )
+                                              .Replace( '%fct-tot-geral%', FormatFloat('#,##0', varForecastBrazil) )
+                                              .Replace( '%act-fct-geral%', FormatFloat('#,##0', varActualBrazil-varForecastBrazil) )
+                                              .Replace( '%act/fct-geral%', FormatFloat('#,##0', varPercentualBrazil)+'%' )
+                                              .Replace('%act-ordb-geral%', FormatFloat('#,##0', varBlockBrazil))
+                                              .Replace('%mont-tot-geral%', FormatFloat('#,##0', varMonthBrazil));
+
+
+
+        if varForecastTOTPID = 0.00 then
+          varPercentualTOTPID := 0.00
+        else
+          varPercentualTOTPID := varActualTOTPID/varForecastTOTPID*100.00;
+
+        varBodyTotal.Add( varBody09.Text.Replace( '%Geral%', 'PID' ) );
+
+        varBodyTotal.Text := varBodyTotal.Text.Replace( '%back-tot-geral%', FormatFloat('#,##0', varBacklogTOTPID) )
+                                              .Replace( '%gm-tot-geral%', FormatFloat('#,##0', varGrossMarginTOTPID) )
+                                              .Replace( '%bill-tot-geral%', FormatFloat('#,##0', varBillingTOTPID) )
+                                              .Replace( '%act-tot-geral%', FormatFloat('#,##0', varActualTOTPID) )
+                                              .Replace( '%fct-tot-geral%', FormatFloat('#,##0', varForecastTOTPID) )
+                                              .Replace( '%act-fct-geral%', FormatFloat('#,##0', varActualTOTPID-varForecastTOTPID) )
+                                              .Replace( '%act/fct-geral%', FormatFloat('#,##0', varPercentualTOTPID)+'%' )
+                                              .Replace('%act-ordb-geral%', FormatFloat('#,##0', varBlockTOTPID))
+                                              .Replace('%mont-tot-geral%', FormatFloat('#,##0', varMonthTOTPID));
+
+
+
+      //  varBodyTotal.Text := varBodyTotal.Text.Replace( '%back-tot-geral%', FormatFloat('#,##0', varBacklogMANMRO) ).Replace( '%gm-tot-geral%', FormatFloat('#,##0', varGrossMarginMANMRO) ).Replace( '%bill-tot-geral%', FormatFloat('#,##0', varBillingMANMRO) ).Replace( '%act-tot-geral%', FormatFloat('#,##0', varActualMANMRO) ).Replace( '%fct-tot-geral%', FormatFloat('#,##0', varForecastMANMRO) ).Replace( '%act-fct-geral%', FormatFloat('#,##0', varActualMANMRO-varForecastMANMRO) ).Replace( '%act/fct-geral%', FormatFloat('#,##0', varPercentualMANMRO)+'%' );
+
+        if varForecastTAMMRO = 0.00 then
+          varPercentualTAMMRO := 0.00
+        else
+          varPercentualTAMMRO := varActualTAMMRO/varForecastTAMMRO*100.00;
+
+        varBodyTotal.Add( varBody09.Text.Replace( '%Geral%', 'MRO' ) );
+       {  nova versao do email ->  varBodyTotal.Text := varBodyTotal.Text.Replace( '%back-tot-geral%', FormatFloat('#,##0', varLateMRO) ).
+                                                                           Replace( '%gm-tot-geral%', FormatFloat('#,##0', varGrossMarginMRO) ).
+                                                                           Replace( '%bill-tot-geral%', FormatFloat('#,##0', varBillingMRO) ).
+                                                                           Replace( '%act-tot-geral%', FormatFloat('#,##0', varActualMRO) ).
+                                                                           Replace( '%fct-tot-geral%', FormatFloat('#,##0', varForecastMRO) ).
+                                                                           Replace( '%act-fct-geral%', FormatFloat('#,##0', varActualMRO-varForecastMRO) ).
+                                                                           Replace( '%act/fct-geral%', FormatFloat('#,##0', varPercentualMRO)+'%' ).
+                                                                           Replace('%act-ordb-geral%', FormatFloat('#,##0', varBlockMRO)).
+                                                                           Replace('%mont-tot-geral%', FormatFloat('#,##0', varMonthMRO));      }
+
+
+        varBodyTotal.Text := varBodyTotal.Text.Replace( '%back-tot-geral%', FormatFloat('#,##0', varBacklogTAMMRO) )
+                                              .Replace( '%gm-tot-geral%', FormatFloat('#,##0', varGrossMarginTAMMRO) )
+                                              .Replace( '%bill-tot-geral%', FormatFloat('#,##0', varBillingTAMMRO) )
+                                              .Replace( '%act-tot-geral%', FormatFloat('#,##0', varActualTAMMRO) )
+                                              .Replace( '%fct-tot-geral%', FormatFloat('#,##0', varForecastTAMMRO) )
+                                              .Replace( '%act-fct-geral%', FormatFloat('#,##0', varActualTAMMRO-varForecastTAMMRO) )
+                                              .Replace( '%act/fct-geral%', FormatFloat('#,##0', varPercentualTAMMRO)+'%' );
+
+
+
+
+        if varForecastDM = 0.00 then
+          varPercentualDM := 0.00
+        else
+          varPercentualDM := varActualDM/varForecastDM*100.00;
+
+        varBodyTotal.Add( varBody09.Text.Replace( '%Geral%', 'SETON' ) );
+
+        //varBodyTotal.Text := varBodyTotal.Text.Replace( '%back-tot-geral%', FormatFloat('#,##0', varLateDM) ).Replace( '%gm-tot-geral%', FormatFloat('#,##0', varGrossMarginDM) ).Replace( '%bill-tot-geral%', FormatFloat('#,##0', varBillingDM) ).Replace( '%act-tot-geral%', FormatFloat('#,##0', varActualDM) ).Replace( '%fct-tot-geral%', FormatFloat('#,##0', varForecastDM) ).Replace( '%act-fct-geral%', FormatFloat('#,##0', varActualDM-varForecastDM) ).Replace( '%act/fct-geral%', FormatFloat('#,##0', varPercentualDM)+'%' ).Replace('%act-ordb-geral%', FormatFloat('#,##0', varBlockDM)).Replace('%mont-tot-geral%', FormatFloat('#,##0', varMonthDM));
+        varBodyTotal.Text := varBodyTotal.Text.Replace( '%back-tot-geral%', FormatFloat('#,##0', varBacklogDM) )
+                                              .Replace( '%gm-tot-geral%', FormatFloat('#,##0', varGrossMarginDM) )
+                                              .Replace( '%bill-tot-geral%', FormatFloat('#,##0', varBillingDM) )
+                                              .Replace( '%act-tot-geral%', FormatFloat('#,##0', varActualDM) )
+                                              .Replace( '%fct-tot-geral%', FormatFloat('#,##0', varForecastDM) )
+                                              .Replace( '%act-fct-geral%', FormatFloat('#,##0', varActualDM-varForecastDM) )
+                                              .Replace( '%act/fct-geral%', FormatFloat('#,##0', varPercentualDM)+'%' )
+                                              .Replace('%act-ordb-geral%', FormatFloat('#,##0', varBlockDM))
+                                              .Replace('%mont-tot-geral%', FormatFloat('#,##0', varMonthDM));
+
+
+
+        if varForecastMANPID = 0.00 then
+          varPercentualMANPID := 0.00
+        else
+          varPercentualMANPID := varActualMANPID/varForecastMANPID*100.00;
+
+        varBodyTotal.Add( varBody07.Text.Replace( '%Geral%', 'MANAUS - PID' ) );
+        varBodyTotal.Text := varBodyTotal.Text.Replace( '%back-tot-geral%', FormatFloat('#,##0', varBacklogMANPID) )
+                                              .Replace( '%gm-tot-geral%', FormatFloat('#,##0', varGrossMarginMANPID) )
+                                              .Replace( '%bill-tot-geral%', FormatFloat('#,##0', varBillingMANPID) )
+                                              .Replace( '%act-tot-geral%', FormatFloat('#,##0', varActualMANPID) )
+                                              .Replace( '%fct-tot-geral%', FormatFloat('#,##0', varForecastMANPID) )
+                                              .Replace( '%act-fct-geral%', FormatFloat('#,##0', varActualMANPID-varForecastMANPID) )
+                                              .Replace( '%act/fct-geral%', FormatFloat('#,##0', varPercentualMANPID)+'%' )
+                                              .Replace('%act-ordb-geral%', FormatFloat('#,##0', varBlockMANPID))
+                                              .Replace('%mont-tot-geral%', FormatFloat('#,##0', varMonthMANPID));
+
+
+
+        if varForecastTAMPID = 0.00 then
+          varPercentualTAMPID := 0.00
+        else
+          varPercentualTAMPID := varActualTAMPID/varForecastTAMPID*100.00;
+
+        varBodyTotal.Add( varBody07.Text.Replace( '%Geral%', 'TAMBORÉ - PID' ) );
+        varBodyTotal.Text := varBodyTotal.Text.Replace( '%back-tot-geral%', FormatFloat('#,##0', varBacklogTAMPID) )
+                                              .Replace( '%gm-tot-geral%', FormatFloat('#,##0', varGrossMarginTAMPID) )
+                                              .Replace( '%bill-tot-geral%', FormatFloat('#,##0', varBillingTAMPID) )
+                                              .Replace( '%act-tot-geral%', FormatFloat('#,##0', varActualTAMPID) )
+                                              .Replace( '%fct-tot-geral%', FormatFloat('#,##0', varForecastTAMPID) )
+                                              .Replace( '%act-fct-geral%', FormatFloat('#,##0', varActualTAMPID-varForecastTAMPID) )
+                                              .Replace( '%act/fct-geral%', FormatFloat('#,##0', varPercentualTAMPID)+'%' )
+                                              .Replace('%act-ordb-geral%', FormatFloat('#,##0', varBlockTAMPID))
+                                              .Replace('%mont-tot-geral%', FormatFloat('#,##0', varMonthTAMPID));
+
+
+         {
+        if varForecastPID_KA = 0.00 then
+          varPercentualPID_KA := 0.00
+        else
+          varPercentualPID_KA := varActualPID_KA/varForecastPID_KA*100.00;
+
+        varBodyTotal.Add( varBody07.Text.Replace( '%Geral%', 'PID - KA' ) );
+        varBodyTotal.Text := varBodyTotal.Text.Replace( '%back-tot-geral%', FormatFloat('#,##0', varBacklogPID_KA) )
+                                              .Replace( '%gm-tot-geral%', FormatFloat('#,##0', varGrossMarginPID_KA) )
+                                              .Replace( '%bill-tot-geral%', FormatFloat('#,##0', varBillingPID_KA) )
+                                              .Replace( '%act-tot-geral%', FormatFloat('#,##0', varActualPID_KA) )
+                                              .Replace( '%fct-tot-geral%', FormatFloat('#,##0', varForecastPID_KA) )
+                                              .Replace( '%act-fct-geral%', FormatFloat('#,##0', varActualPID_KA-varForecastPID_KA) )
+                                              .Replace( '%act/fct-geral%', FormatFloat('#,##0', varPercentualPID_KA)+'%' )
+                                              .Replace('%act-ordb-geral%', FormatFloat('#,##0', varBlockPID_KA))
+                                              .Replace('%mont-tot-geral%', FormatFloat('#,##0', varMonthPID_KA));
+
+
+        if varForecastPID_Reg = 0.00 then
+          varPercentualPID_Reg := 0.00
+        else
+          varPercentualPID_Reg := varActualPID_Reg/varForecastPID_Reg*100.00;
+
+        varBodyTotal.Add( varBody07.Text.Replace( '%Geral%', 'PID - REG' ) );
+        varBodyTotal.Text := varBodyTotal.Text.Replace( '%back-tot-geral%', FormatFloat('#,##0', varBacklogPID_Reg) )
+                                              .Replace( '%gm-tot-geral%', FormatFloat('#,##0', varGrossMarginPID_Reg) )
+                                              .Replace( '%bill-tot-geral%', FormatFloat('#,##0', varBillingPID_Reg) )
+                                              .Replace( '%act-tot-geral%', FormatFloat('#,##0', varActualPID_Reg) )
+                                              .Replace( '%fct-tot-geral%', FormatFloat('#,##0', varForecastPID_Reg) )
+                                              .Replace( '%act-fct-geral%', FormatFloat('#,##0', varActualPID_Reg-varForecastPID_Reg) )
+                                              .Replace( '%act/fct-geral%', FormatFloat('#,##0', varPercentualPID_Reg)+'%' )
+                                              .Replace('%act-ordb-geral%', FormatFloat('#,##0', varBlockPID_Reg))
+                                              .Replace('%mont-tot-geral%', FormatFloat('#,##0', varMonthPID_Reg));
+
+        if varForecastMROKA = 0.00 then
+          varPercentualMROKA := 0.00
+        else
+          varPercentualMROKA := varActualMROKA/varForecastMROKA*100.00;
+
+        varBodyTotal.Add( varBody07.Text.Replace( '%Geral%', 'MRO - KA' ) );
+        varBodyTotal.Text := varBodyTotal.Text.Replace( '%back-tot-geral%', FormatFloat('#,##0', varBacklogMROKA) )
+                                              .Replace( '%gm-tot-geral%', FormatFloat('#,##0', varGrossMarginMROKA) )
+                                              .Replace( '%bill-tot-geral%', FormatFloat('#,##0', varBillingMROKA) )
+                                              .Replace( '%act-tot-geral%', FormatFloat('#,##0', varActualMROKA) )
+                                              .Replace( '%fct-tot-geral%', FormatFloat('#,##0', varForecastMROKA) )
+                                              .Replace( '%act-fct-geral%', FormatFloat('#,##0', varActualMROKA-varForecastMROKA) )
+                                              .Replace( '%act/fct-geral%', FormatFloat('#,##0', varPercentualMROKA)+'%' )
+                                              .Replace('%act-ordb-geral%', FormatFloat('#,##0', varBlockMROKA))
+                                              .Replace('%mont-tot-geral%', FormatFloat('#,##0', varMonthMROKA));
+
+         }
         varBodyTotal.Add( varBody04.Text );
 
         varBodyTotal.AddStrings(varBodyTotal2);      // teste do marcos.. voltar essa linha
@@ -9704,7 +11263,7 @@ begin
 
      //       varACBrMail.AddAddress( 'suportebrasil@bradycorp.com', 'Suporte Brasil' );
 
-
+           {
             FDQueryTSOP_EMAIL.Close;
             FDQueryTSOP_EMAIL.SQL.Clear;
             FDQueryTSOP_EMAIL.SQL.Add('Select TSOP_EMAIL From TSOP_EMAIL where TSOP_ATIVO = ''S'' AND');
@@ -9717,7 +11276,7 @@ begin
                FDQueryTSOP_EMAIL.Next;
             end;
             FDQueryTSOP_EMAIL.Close;
-
+            }
 
             varACBrMail.Subject := varAssunto;
             varACBrMail.IsHTML := True;
@@ -9743,6 +11302,7 @@ begin
         FreeAndNil(varSalvar);
 
         // NAO ENVIAR NO TESTE
+        {
         varBody01.LoadFromFile( 'C:\Brady\AccOwner-01.html' );
         varBody02.LoadFromFile( 'C:\Brady\AccOwner-02.html' );
         varBody03.LoadFromFile( 'C:\Brady\AccOwner-03.html' );
@@ -9799,7 +11359,7 @@ begin
             varACBrMail.AddAddress('LILIAN_IWATA@BRADYCORP.COM');
             varACBrMail.AddAddress('LEANDRO_LOPES@BRADYCORP.COM');
             varACBrMail.AddAddress('LUCIANA_PONTIERI@BRADYCORP.COM');
-               }
+
             varACBrMail.Subject := 'S&OP - SEM REPRESENTANTE';
             varACBrMail.IsHTML := True;
             varACBrMail.Body.Assign(varBodyAccOwner);
@@ -9886,7 +11446,7 @@ begin
             varACBrMail.AddAddress('LILIAN_IWATA@BRADYCORP.COM');
             varACBrMail.AddAddress('LEANDRO_LOPES@BRADYCORP.COM');
             varACBrMail.AddAddress('LUCIANA_PONTIERI@BRADYCORP.COM');
-                  }
+
             varACBrMail.Subject := 'S&OP - SEM GRUPO DE CLIENTE';
             varACBrMail.IsHTML := True;
             varACBrMail.Body.Assign(varBodyGrupoCliente);
@@ -9914,10 +11474,10 @@ begin
           FDQueryGrupoCliente.Close;
 
         end;
-
+             }
       finally
 
-        FDQuerySalesRep.Close;
+        FDQuerySalesRepGrupo.Close;
         FDConnection.Close;
 
       end;
@@ -9950,7 +11510,7 @@ begin
   end;
 
 
-  Writeln('Fim: ','EnviarEmailValores');
+  Writeln('Fim: ','Enviados com Sucesso!');
 
 end;
 
@@ -13775,6 +15335,10 @@ begin
   if not System.IOUtils.TFile.Exists( MyDocumentsPath + '\DB-MySQL.ini' ) then
     System.IOUtils.TFile.Copy( ExtractFileDir(ParamStr(0)) + '\DB-MySQL.ini', MyDocumentsPath + '\DB-MySQL.ini' );
 
+  if not System.IOUtils.TFile.Exists( MyDocumentsPath + '\DB_Call-MySQL.ini' ) then
+    System.IOUtils.TFile.Copy( ExtractFileDir(ParamStr(0)) + '\DB_Call-MySQL.ini', MyDocumentsPath + '\DB_Call-MySQL.ini' );
+
+
   varArqLogSetonMagento := '';
 
   if ParamStr(1).IsEmpty then
@@ -14398,6 +15962,11 @@ begin
       if SegundoDiaUtil then
         SendDailySalesMail(True);
 
+    {  SendDailySalesMailGroup;
+
+      if SegundoDiaUtil then
+        SendDailySalesMailGroup(True);
+     }
     except
 
       on E: Exception do
@@ -14730,7 +16299,30 @@ begin
     end;
 
 
+  end
+   else
+  if ParamStr(1).Equals('-Importar_Chamadas_Vendas') then
+  begin
+
+    try
+
+      Importar_Chamadas_Vendas;
+
+    except
+
+      on E: Exception do
+      begin
+
+        Writeln(E.ClassName, ' : ', E.Message);
+        Sleep(60000);
+
+      end;
+
+    end;
+
+
   end;
+
 
 
 

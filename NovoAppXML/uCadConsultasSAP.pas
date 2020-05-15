@@ -41,6 +41,8 @@ type
     Panel6: TPanel;
     editAno: TrsSuperEdit;
     QryAux: TFDQuery;
+    Panel7: TPanel;
+    rsSuperEdit1: TrsSuperEdit;
     procedure FormShow(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure EditBuscaConsultaClick(Sender: TObject);
@@ -137,10 +139,12 @@ begin
    begin
        QryAux.Close;
        QryAux.SQL.Clear;
-       QryAux.SQL.Add('Select * From ECF_CONSULTA Where QUERY = :QUERY and VARIANTE = :VARIANTE and ANO = :ANO' );
+       QryAux.SQL.Add('Select * From ECF_CONSULTA Where QUERY = :QUERY and VARIANTE = :VARIANTE and ANO = :ANO and ANO_FISCAL = :ANO_FISCAL ' );
        QryAux.Params.ParamByName('QUERY').AsString    :=  ediQuery.Text;
        QryAux.Params.ParamByName('VARIANTE').AsString :=  editVariant.Text;
        QryAux.Params.ParamByName('ANO').AsString      :=  editAno.Text;
+       QryAux.Params.ParamByName('ANO_FISCAL').AsString  :=  editAno.Text;
+
 
        QryAux.Open;
        if not QryAux.IsEmpty then
@@ -159,6 +163,10 @@ end;
 
 procedure TfrmCadConsultasSAP.EditBuscaConsultaClick(Sender: TObject);
 begin
+   if EditBuscaConsulta.Text <> '' then
+    EditBuscaConsulta.bs_Filter := ' and ANO_FISCAL = ' + QuotedStr(EditBuscaConsulta.Text);
+
+
   inherited;
   if ((EditBuscaConsulta.Text <> '') and (EditBuscaConsulta.bs_KeyValues.Count > 0)) then
   begin

@@ -576,6 +576,7 @@ var
 
   varAnoAtual, varAnoAnterior, varAnoAtualShort, varAnoAnteriorShort, varAnoPosterior : String;
 
+  varCentroCustoPos10 : String;
   //Path, PathLocal, PathRede : String;
 
 begin
@@ -611,8 +612,10 @@ begin
   FDQueryAux2.Close;
   FDQueryAux2.SQL.Clear;
   FDQueryAux2.SQL.Add('SELECT * FROM ECF_CONSULTA WHERE ');
-  FDQueryAux2.SQL.Add('(QUERY = ''GL_BALANCE'' AND ANO = :ANO ) ');
+  FDQueryAux2.SQL.Add('(QUERY = ''GL_BALANCE'' AND ANO = :ANO and ANO_FISCAL = :ANO_FISCAL ) ');
   FDQueryAux2.Params.ParamByName('ANO').AsString           := varAnoAtual;
+  FDQueryAux2.Params.ParamByName('ANO_FISCAL').AsString    := varAnoAtual;
+
   FDQueryAux2.Open;
   FDQueryAux2.First;
   I := 0;
@@ -629,10 +632,11 @@ begin
 
   FDQueryAux2.Close;
   FDQueryAux2.SQL.Clear;
-  FDQueryAux2.SQL.Add('SELECT * FROM ECF_CONSULTA WHERE ');
-  FDQueryAux2.SQL.Add('(QUERY = ''L210-KE5Z'' AND ANO = :ANO) OR ');
-  FDQueryAux2.SQL.Add('(QUERY = ''KE5Z-8'' AND ANO = :ANO)');
+  FDQueryAux2.SQL.Add('SELECT * FROM ECF_CONSULTA WHERE ANO_FISCAL = :ANO_FISCAL and ');
+  FDQueryAux2.SQL.Add('(QUERY = ''L210-KE5Z'' AND ANO = :ANO and ANO_FISCAL = :ANO_FISCAL) OR ');
+  FDQueryAux2.SQL.Add('(QUERY = ''KE5Z-8'' AND ANO = :ANO and ANO_FISCAL = :ANO_FISCAL)');
   FDQueryAux2.SQL.Add('ORDER BY QUERY DESC ');
+  FDQueryAux2.Params.ParamByName('ANO_FISCAL').AsString :=  varAnoAtual;
   FDQueryAux2.Params.ParamByName('ANO').AsString :=  varAnoAtual;
   FDQueryAux2.Open;
   FDQueryAux2.First;
@@ -650,9 +654,10 @@ begin
 
   FDQueryAux2.Close;
   FDQueryAux2.SQL.Clear;
-  FDQueryAux2.SQL.Add('SELECT * FROM ECF_CONSULTA WHERE ');
-  FDQueryAux2.SQL.Add('(QUERY = ''FBL3N'' AND ANO = :ANO) ') ;
+  FDQueryAux2.SQL.Add('SELECT * FROM ECF_CONSULTA WHERE ANO_FISCAL = :ANO_FISCAL AND ');
+  FDQueryAux2.SQL.Add('(QUERY = ''FBL3N'' AND ANO = :ANO and ANO_FISCAL = :ANO_FISCAL) ') ;
   FDQueryAux2.Params.ParamByName('ANO').AsString :=  varAnoAtual;
+  FDQueryAux2.Params.ParamByName('ANO_FISCAL').AsString :=  varAnoAtual;
   FDQueryAux2.Open;
   FDQueryAux2.First;
   while not FDQueryAux2.Eof do
@@ -667,11 +672,12 @@ begin
 
   FDQueryAux2.Close;
   FDQueryAux2.SQL.Clear;
-  FDQueryAux2.SQL.Add('SELECT * FROM ECF_CONSULTA WHERE ');
-  FDQueryAux2.SQL.Add('(QUERY = ''GL_BALANCE5'' AND ANO = :ANO)  OR ');
-  FDQueryAux2.SQL.Add('(QUERY = ''GL_BALANCE5'' AND ANO = :ANO_POSTERIOR) ');
+  FDQueryAux2.SQL.Add('SELECT * FROM ECF_CONSULTA WHERE ANO_FISCAL = :ANO_FISCAL AND ');
+  FDQueryAux2.SQL.Add('(QUERY = ''GL_BALANCE5'' AND ANO = :ANO and ANO_FISCAL = :ANO_FISCAL)  OR ');
+  FDQueryAux2.SQL.Add('(QUERY = ''GL_BALANCE5'' AND ANO = :ANO_POSTERIOR and ANO_FISCAL = :ANO_FISCAL) ');
   FDQueryAux2.SQL.Add('ORDER BY  ANO') ;
   FDQueryAux2.Params.ParamByName('ANO').AsString           := varAnoAtual;
+  FDQueryAux2.Params.ParamByName('ANO_FISCAL').AsString    := varAnoAtual;
   FDQueryAux2.Params.ParamByName('ANO_POSTERIOR').AsString := varAnoPosterior;
   FDQueryAux2.Open;
   FDQueryAux2.First;
@@ -890,7 +896,7 @@ begin
                       on E: Exception do
                       begin
 
-                        Mensagem( 'Erro: ' + IntToStr( X ) + E.Message );
+                        Mensagem( 'Erro_1: ' + IntToStr( X ) + E.Message );
 
                       end;
 
@@ -959,6 +965,7 @@ begin
 
                         if I < 4 then
                         begin
+                         try
                           varPlant               := varArquivo[X].Split(['|'])[1].Trim;
                           varDC                  := varArquivo[X].Split(['|'])[2].Trim;
                           varACC_NUMBER          := varArquivo[X].Split(['|'])[3].Trim;
@@ -973,9 +980,20 @@ begin
                           varMOEDA               := varArquivo[X].Split(['|'])[10].Trim;
 
                           varPAIS                := varArquivo[X].Split(['|'])[11].Trim;
+                                 except
+
+                          on E: Exception do
+                          begin
+
+                            Mensagem( 'Erro 5: ' + E.Message );
+
+                          end;
+
+                        end;
                         end
                         else
                         begin
+                         try
                           varPlant               := varArquivo[X].Split(['|'])[1].Trim;
                           varDC                  := varArquivo[X].Split(['|'])[2].Trim;
                           varACC_NUMBER          := varArquivo[X].Split(['|'])[3].Trim;
@@ -988,8 +1006,21 @@ begin
                           varFISCAL_YEAR         := varArquivo[X].Split(['|'])[7].Trim;
                           varAMOUNT              := StrToFloat(TransformaNegativo(varArquivo[X].Split(['|'])[8].Trim.Replace( ',', '', [rfReplaceAll] ).Replace( '.', FormatSettings.DecimalSeparator, [rfReplaceAll] )));
                           varMOEDA               := varArquivo[X].Split(['|'])[9].Trim;
-                          varCENTRO_CUSTO        := varArquivo[X].Split(['|'])[10].Trim;
+
+                          if not varArquivo[X].Split(['|'])[10].IsEmpty then
+                            varCENTRO_CUSTO        := varArquivo[X].Split(['|'])[10].Trim;
+
                           varPAIS                := '';
+                        except
+
+                          on E: Exception do
+                          begin
+
+                            Mensagem( 'Erro_4: ' + varArquivo[X] + '-' + IntToStr(X) );
+
+                          end;
+
+                        end;
                         end;
 
                         FDQuery_Insert_KE5Z.Append;
@@ -1050,7 +1081,7 @@ begin
                         on E: Exception do
                         begin
 
-                          Mensagem( 'Erro: ' + IntToStr( X ) + E.Message );
+                          Mensagem( 'Erro_2: ' + IntToStr( X ) + E.Message );
                           MessageDlg(E.Message ,mtInformation,[mbOk],0);
 
                         end;
@@ -1323,7 +1354,7 @@ begin
                       on E: Exception do
                       begin
 
-                        Mensagem( 'Erro: ' + IntToStr( X ) + E.Message );
+                        Mensagem( 'Erro_3: ' + IntToStr( X ) + E.Message );
 
                       end;
 
@@ -1511,9 +1542,13 @@ begin
 
   iResultado := 0;
   FDQueryConsultaSAP.Close;
+
   FDQueryConsultaSAP.Params.ParamByName('ANO').AsString           := cxAno.Text;
+  FDQueryConsultaSAP.Params.ParamByName('ANO_FISCAL').AsString    := cxAno.Text;
+
   FDQueryConsultaSAP.Params.ParamByName('ANO_ANTERIOR').AsString  := IntToStr(StrToInt(cxAno.Text)-1);
   FDQueryConsultaSAP.Params.ParamByName('ANO_POSTERIOR').AsString := IntToStr(StrToInt(cxAno.Text)+1);
+
   FDQueryConsultaSAP.Params.ParamByName('GL_BALANCE').AsString    := 'GL_BALANCE';
   FDQueryConsultaSAP.Params.ParamByName('GL_BALANCE5').AsString   := 'GL_BALANCE5';
 
