@@ -91,6 +91,7 @@ object Fr_Brady: TFr_Brady
       Index = 4
     end
     object dxRibbonTabCS: TdxRibbonTab
+      Active = True
       Caption = 'CS'
       Groups = <
         item
@@ -150,7 +151,6 @@ object Fr_Brady: TFr_Brady
       Index = 9
     end
     object dxRibbonTabMarketing: TdxRibbonTab
-      Active = True
       Caption = 'Marketing'
       Groups = <
         item
@@ -1464,6 +1464,10 @@ object Fr_Brady: TFr_Brady
         item
           Visible = True
           ItemName = 'dxBarLargeButtonUploadDistribuidores'
+        end
+        item
+          Visible = True
+          ItemName = 'dxBarLargeButtonVerPrecoSite'
         end>
       OneOnRow = False
       Row = 0
@@ -1774,6 +1778,22 @@ object Fr_Brady: TFr_Brady
       Visible = ivAlways
       LargeImageIndex = 46
       OnClick = dxBarLargeButtonUploadDistribuidoresClick
+    end
+    object dxBarButton9: TdxBarButton
+      Caption = 'Consulta Pre'#231'o'
+      Category = 0
+      Hint = 'Consulta Pre'#231'o'
+      Visible = ivAlways
+      ImageIndex = 7
+      LargeImageIndex = 7
+    end
+    object dxBarLargeButtonVerPrecoSite: TdxBarLargeButton
+      Caption = ' Ver Pre'#231'o                 '
+      Category = 0
+      Hint = 'Ver Pre'#231'o '
+      Visible = ivAlways
+      LargeImageIndex = 7
+      OnClick = dxBarLargeButtonVerPrecoSiteClick
     end
     object dxBarButtonBarraAcessoRapidoSalvar: TdxBarButton
       Caption = 'Salvar'
@@ -12008,7 +12028,7 @@ object Fr_Brady: TFr_Brady
     Images = cxSmallImages
     Ribbon = dxRibbon
     UseOwnFont = False
-    Left = 888
+    Left = 1104
     Top = 56
   end
   object SaveDialogExportGridExcel: TSaveDialog

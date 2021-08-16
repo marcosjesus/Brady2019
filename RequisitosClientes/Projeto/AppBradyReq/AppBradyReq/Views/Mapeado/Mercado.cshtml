@@ -1,0 +1,30 @@
+﻿@model IEnumerable<AppBradyReq.Models.MercadoModel>
+
+@{
+    ViewBag.Title = "Mercado";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Mercado</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nome)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nome)
+        </td>
+        <td>
+            @Html.ActionLink("Clientes", "Clientes", new {  id=item.Mercado_ID }) |
+        </td>
+    </tr>
+}
+
+</table>

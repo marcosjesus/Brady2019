@@ -38,10 +38,10 @@ inherited FrmECFCentroCusto: TFrmECFCentroCusto
         Alignment = taRightJustify
         TagName = 'ECF_CENTRO_CUSTO_ID'
         CT_Titulo = 'Localizar Cargo'
-        CT_TableName = 'TRE_CARGO'
+        CT_TableName = 'ECF_CENTRO_CUSTO'
         CT_NumFields = 3
-        CT_ColTit = 'C'#243'digo;Cargo'
-        CT_ColField = 'TRE_CARGO_ID;DESCRICAO'
+        CT_ColTit = 'C'#243'digo;Titulo'
+        CT_ColField = 'TRE_CARGO_ID;TITULO'
         CT_RetField1 = 0
         CT_RetControl1 = EdiCodigo
         CT_RetField2 = 2

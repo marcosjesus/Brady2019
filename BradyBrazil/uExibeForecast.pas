@@ -346,7 +346,11 @@ begin
    MesAbrev := StringReplace(MesAbrev,'mai','May',[rfReplaceAll, rfIgnoreCase]);
    MesAbrev := StringReplace(MesAbrev,'out','Oct',[rfReplaceAll, rfIgnoreCase]);
    MesAbrev := StringReplace(MesAbrev,'fev','Feb',[rfReplaceAll, rfIgnoreCase]);
-
+   MesAbrev := StringReplace(MesAbrev,'nov','Nov',[rfReplaceAll, rfIgnoreCase]);
+   MesAbrev := StringReplace(MesAbrev,'jan','Jan',[rfReplaceAll, rfIgnoreCase]);
+   MesAbrev := StringReplace(MesAbrev,'mar','Mar',[rfReplaceAll, rfIgnoreCase]);
+   MesAbrev := StringReplace(MesAbrev,'jun','Jun',[rfReplaceAll, rfIgnoreCase]);
+   MesAbrev := StringReplace(MesAbrev,'jul','Jul',[rfReplaceAll, rfIgnoreCase]);
    strFormatDate :=  '[' + MesAbrev  + ' ' + IntToStr(Ano)  +  ']';
 
 
@@ -446,15 +450,17 @@ begin
         if FDQueryForecast.IsEmpty then
             raise Exception.Create('Não há dados para serem exportados ao Excel');
 
-        SaveDialog.InitialDir := GetCurrentDir;
-
+      //  SaveDialog.InitialDir := GetCurrentDir;
+        Mensagem('Aguarde, Salvando Planilha...');
         if SaveDialog.Execute then
         begin
+           Screen.Cursor := crHourGlass;
            ExportGridToExcel(SaveDialog.FileName, cxGrid1, True, True);
            MessageDlg( pChar( 'Planilha exportada em  ' + ExtractFilePath(SaveDialog.FileName) )  , mtInformation, [ mbOk ], 0 );
 
         end;
-
+        Screen.Cursor := crDefault;
+        Mensagem( EmptyStr );
   end;
 end;
 
@@ -2506,7 +2512,7 @@ begin
        }
 
 
-   //FDQueryForecast.SQL.SaveToFile('C:\Brady\forecast1Set_2019.sql');
+    //FDQueryForecast.SQL.SaveToFile('C:\Brady\forecast1AGO_2020.sql');
     FDQueryForecast.Open;
 
     AddColumn;

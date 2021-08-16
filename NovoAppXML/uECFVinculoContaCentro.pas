@@ -51,8 +51,6 @@ type
     edi_CENTRO_CUSTO_ID: TrsSuperEdit;
     EditBuscaCCPrincipal: TEditBusca;
     Panel5: TPanel;
-    editxtDtRealizacao: TrsSuperEdit;
-    EdiDtExercicioFiscal: TcxDateEdit;
     Panel6: TPanel;
     ediPercentual: TrsSuperEdit;
     EditExercicio: TrsSuperEdit;
@@ -64,6 +62,9 @@ type
     sqlCC: TFDQuery;
     sqlGrupo: TFDQuery;
     btnImportar: TBitBtn;
+    editxtDtRealizacao: TrsSuperEdit;
+    rsSuperEdit1: TrsSuperEdit;
+    rsSuperEdit2: TrsSuperEdit;
     procedure FormShow(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure EditBuscaVinculoClick(Sender: TObject);
@@ -74,6 +75,7 @@ type
     procedure EditBuscaContaClick(Sender: TObject);
     procedure EditBuscaCCEnter(Sender: TObject);
     procedure btnImportarClick(Sender: TObject);
+    procedure ButCancelarClick(Sender: TObject);
   private
     { Private declarations }
 
@@ -131,6 +133,10 @@ var
 
 begin
   inherited;
+
+
+
+
   if not OpenDialog.Execute then
     exit;
    // Layout do Arquivo REGRAS RATEIO 2017 e INV L210.xlsx Original Gerado Pela Regina.
@@ -216,11 +222,11 @@ begin
 
                 // Periodo
                 ArrayCentroCusto[4] := dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[11].AsString;
-                ConfiguraAnoFiscal(ArrayCentroCusto[4]);
+               // ConfiguraAnoFiscal(ArrayCentroCusto[4]);
                 //Exercicio
-                ArrayCentroCusto[5] :=  EditExercicio.Text;
+               // ArrayCentroCusto[5] :=  EditExercicio.Text;
                 //Periodo Fiscal
-                ArrayCentroCusto[6] :=  EditPeriodoFiscal.Text;
+               // ArrayCentroCusto[6] :=  EditPeriodoFiscal.Text;
 
                 var2642    := dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[2].AsFloat;
                 if var2642 <> 0 then
@@ -366,6 +372,12 @@ begin
 
 end;
 
+procedure TFrmECFVinculoContaCentro.ButCancelarClick(Sender: TObject);
+begin
+  inherited;
+  btnImportar.Enabled := False;
+end;
+
 procedure TFrmECFVinculoContaCentro.ButExcluirClick(Sender: TObject);
 begin
   inherited;
@@ -387,6 +399,7 @@ begin
   ediCCFilho.Clear;
   EditBuscaConta.Clear;
   ediPercentual.Clear;
+  btnImportar.Enabled := True;
 
   EditBuscaVinculo.Text := EdiCodigo.AsString;
   EditBuscaConta.SetFocus; // foco no campo de Codigo.
@@ -443,7 +456,7 @@ begin
 	 End ;
 
    ediCCFilho.AsInteger := EditBuscaCC.bs_KeyValue;
-
+  {
    if EdiDtExercicioFiscal.Text = '' then
    begin
        Mens_MensInf('É necessário informar o Exercício Fiscal !') ;
@@ -456,7 +469,7 @@ begin
      editxtDtRealizacao.Text :=  EdiDtExercicioFiscal.Text;
      editxtDtRealizacao.ValidateData;
    end;
-
+   }
    If ( Test_IsEmptyStr(ediPercentual.Text) ) Then
 	 Begin
 			 Mens_MensInf('É necessário informar a Percentual !') ;        //EdiApelido
@@ -476,11 +489,11 @@ begin
        end;
 
    end;
-  }
+
 
    ConfiguraAnoFiscal( editxtDtRealizacao.AsDateTime );
 
-   {
+
    if VarOperacao = OPE_INCLUSAO then
    begin
 
@@ -574,6 +587,8 @@ begin
   FormCtrlFocus     := 'EditBuscaVinculo' ;
   FormDataFocus     := 'EditBuscaCC' ;
 
+  btnImportar.Enabled := False;
+
   SetParametros(EditBuscaVinculo, TipoECFVinculo);
   SetParametros(EditBuscaConta, TipoECFConta);
 
@@ -626,32 +641,63 @@ end;
 
 
 procedure TFrmECFVinculoContaCentro.GravaVinculoCentroCusto;
+var
+ varExercicioFiscal, varExercicio, I, Y : Integer;
+ Ano, Mes, Dia: Word;
+ MesFiscal : String;
+ Data : TDateTime;
+
 begin
-   sqlAux.Close;
-   sqlAux.SQL.Clear;
-   sqlAux.SQL.Add('INSERT INTO ECF_VINCULO(GRUPO, ECF_CENTRO_CUSTO_ID, ECF_CENTRO_CUSTO_FILHO, PERCENTUAL, DT_EXERCICIOFISCAL, EXERCICIO, PERIODO_FISCAL) ');
-   sqlAux.SQL.Add('VALUES (:GRUPO, :ECF_CENTRO_CUSTO_ID, :ECF_CENTRO_CUSTO_FILHO, :PERCENTUAL, :DT_EXERCICIOFISCAL, :EXERCICIO, :PERIODO_FISCAL) ');
-   sqlAux.Params.ParamByName('GRUPO').AsInteger                  :=  ArrayCentroCusto[0];
-   sqlAux.Params.ParamByName('ECF_CENTRO_CUSTO_ID').AsInteger    :=  ArrayCentroCusto[1];
-   sqlAux.Params.ParamByName('ECF_CENTRO_CUSTO_FILHO').AsInteger :=  ArrayCentroCusto[2];
-   sqlAux.Params.ParamByName('PERCENTUAL').AsFloat               :=  ArrayCentroCusto[3];
-   sqlAux.Params.ParamByName('DT_EXERCICIOFISCAL').asDateTime    :=  ArrayCentroCusto[4];
-   sqlAux.Params.ParamByName('EXERCICIO').AsString               :=  ArrayCentroCusto[5];
-   sqlAux.Params.ParamByName('PERIODO_FISCAL').AsString          :=  ArrayCentroCusto[6];
+   Data := now;
+   DecodeDate(Data, Ano, Mes, Dia);
 
-    try
+   varExercicio := Ano-1;
 
-      sqlAux.ExecSQL;
-    except
+   if ArrayCentroCusto[4] = 2 Then
+   begin
+     varExercicioFiscal  := Ano - 2;
+     Y := 5;
+   end
+   else
+   begin
+     varExercicioFiscal  := varExercicio;
+     Y := 7;
+   end;
 
-      on E: Exception do
-      begin
 
-        Mensagem( 'Erro ao Gravar:  ' + E.Message );
+
+   for I := 1 to Y do
+   begin
+
+     sqlAux.Close;
+     sqlAux.SQL.Clear;
+     sqlAux.SQL.Add('INSERT INTO ECF_VINCULO(GRUPO, ECF_CENTRO_CUSTO_ID, ECF_CENTRO_CUSTO_FILHO, PERCENTUAL, DT_EXERCICIOFISCAL, EXERCICIO, PERIODO_FISCAL, PERIODO) ');
+     sqlAux.SQL.Add('VALUES (:GRUPO, :ECF_CENTRO_CUSTO_ID, :ECF_CENTRO_CUSTO_FILHO, :PERCENTUAL, :DT_EXERCICIOFISCAL, :EXERCICIO, :PERIODO_FISCAL, :PERIODO) ');
+     sqlAux.Params.ParamByName('GRUPO').AsInteger                  :=  ArrayCentroCusto[0];
+     sqlAux.Params.ParamByName('ECF_CENTRO_CUSTO_ID').AsInteger    :=  ArrayCentroCusto[1];
+     sqlAux.Params.ParamByName('ECF_CENTRO_CUSTO_FILHO').AsInteger :=  ArrayCentroCusto[2];
+     sqlAux.Params.ParamByName('PERCENTUAL').AsFloat               :=  ArrayCentroCusto[3] * 100;
+     sqlAux.Params.ParamByName('DT_EXERCICIOFISCAL').AsInteger     :=  varExercicioFiscal;
+     sqlAux.Params.ParamByName('EXERCICIO').AsInteger              :=  3000; //varExercicio;
+     sqlAux.Params.ParamByName('PERIODO_FISCAL').AsInteger         :=  I;
+     sqlAux.Params.ParamByName('PERIODO').AsInteger                :=  ArrayCentroCusto[4];
+
+
+
+      try
+
+        sqlAux.ExecSQL;
+      except
+
+        on E: Exception do
+        begin
+
+          Mensagem( 'Erro ao Gravar:  ' + E.Message );
+
+        end;
 
       end;
-
-    end;
+   end;
 
 end;
 
@@ -663,7 +709,7 @@ begin
 
   EditBuscaConta.SetValue('ECF_CONTA_ID=' + QuotedStr(EdiConta.AsString));
 
-  EdiDtExercicioFiscal.Date := editxtDtRealizacao.AsDateTime;
+  //EdiDtExercicioFiscal.Date := editxtDtRealizacao.AsDateTime;
 
 
 

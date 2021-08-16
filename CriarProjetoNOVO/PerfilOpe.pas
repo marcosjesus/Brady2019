@@ -16,7 +16,13 @@ uses
   FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf, FireDAC.Stan.Def,
   FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Stan.Param,
   FireDAC.DatS, FireDAC.DApt.Intf, FireDAC.DApt, FireDAC.Comp.DataSet,
-  FireDAC.Comp.Client;
+  FireDAC.Comp.Client, dxSkinCaramel, dxSkinCoffee, dxSkinDarkRoom,
+  dxSkinDarkSide, dxSkinFoggy, dxSkinGlassOceans, dxSkiniMaginary, dxSkinLilian,
+  dxSkinLiquidSky, dxSkinLondonLiquidSky, dxSkinMcSkin, dxSkinOffice2007Green,
+  dxSkinOffice2007Pink, dxSkinOffice2007Silver, dxSkinOffice2010Silver,
+  dxSkinPumpkin, dxSkinSeven, dxSkinSharp, dxSkinSilver, dxSkinSpringTime,
+  dxSkinStardust, dxSkinSummer2008, dxSkinsDefaultPainters, dxSkinValentine,
+  dxSkinXmas2008Blue;
 
 type
   TFrmPerfilOpe = class(TForm)
@@ -87,9 +93,9 @@ end;
 
 procedure TFrmPerfilOpe.FormShow(Sender: TObject);
 begin
-   If ( Not Tab.OpenTable('Perfil_Operacao') ) Then
+   If ( Not Tab.OpenTable('perfil_operacao') ) Then
        Mens_MensErro(Tab.GetMensErro) ;
-   If ( Not Tab.SetFieldKey('CodPerfil') ) Then
+   If ( Not Tab.SetFieldKey('codperfil') ) Then
    Begin
        Mens_MensErro(Tab.GetMensErro) ;
    End ;
@@ -123,12 +129,12 @@ Var
    QManut : TFDQuery ;
 begin
 
-   ComPerfilCod.ItemIndex := ComPerfilDes.ItemIndex ;
+     ComPerfilCod.ItemIndex := ComPerfilDes.ItemIndex ;
    CodPer := Str_LRTrim(ComPerfilCod.Text) ;
-   Obj_FillList(ListOpePer,'Select CodOperacao From Perfil_Operacao ' +
-                           'Where CodPerfil =  ''' + CodPer + ''' Order by CodOperacao') ;
-   Obj_FillList(TListBox(ListPerOpe),'Select Descricao From Operacao order by Grupo, ItemGrupo') ;
-   Obj_FillList(ListCodOpe,'Select CodOperacao, Descricao From Operacao order by Grupo, ItemGrupo') ;
+   Obj_FillList(ListOpePer,'Select codoperacao From perfil_operacao ' +
+                           'Where codperfil =  ''' + CodPer + ''' Order by codoperacao') ;
+   Obj_FillList(TListBox(ListPerOpe),'Select descricao From operacao order by grupo, itemgrupo') ;
+   Obj_FillList(ListCodOpe,'Select codoperacao, descricao From operacao order by grupo, itemgrupo') ;
 
    For i:=0 To ListPerOpe.Items.Count-1 Do
    Begin

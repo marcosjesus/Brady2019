@@ -67,7 +67,7 @@ Const
 Constructor TParFinanc.Create ( DBType : Integer = -1 ; DBName : String = '' ) ;
 Begin
    FTable := TSQLTableClass.Create ;
-   FTable.OpenTable('Parametros') ;
+   FTable.OpenTable('parametros') ;
    FQuery := TFDQuery.Create(Self) ;
    FQuery.Connection := DB_Conect.SQLConnection ;
 //   FQuery.DatabaseName := SqlTable_GetDBName() ;

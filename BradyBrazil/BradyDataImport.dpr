@@ -82,6 +82,7 @@ var
   PastaSERVIDORNFE_LIDO    : String;
   PastaSERVIDORCTE_LIDO    : String;
   PastaLOG                 : String;
+  PastaERROR               : String; // Armazena xml com erro
 
   //Integração Seton x Magento
   //varMagento : Mage_Api_Model_Server_V2_HandlerPortType;
@@ -105,7 +106,7 @@ begin
    if FileExists(lPath + varArquivo) Then
      loLista.LoadFromFile(lPath + varArquivo);
 
-     loLista.Add(timetostr(now) + ':' + Msg);
+     loLista.Add(timetostr(now) + ';' + Msg);
    except
     on e: exception do
       loLista.add(timetostr(now) + ': Erro ' + E.Message);
@@ -1236,7 +1237,7 @@ var
       varACBrMail.From := 'suportebrasil@bradycorp.com';
       varACBrMail.FromName := 'SUPORTE BRASIL';
 
-      varACBrMail.AddAddress('LEANDRO_LOPES@BRADYCORP.COM', 'LEANDRO LOPES');
+
       varACBrMail.AddAddress('LUCIANA_PONTIERI@BRADYCORP.COM', 'LUCIANA PONTIERI');
 
       varACBrMail.Subject := 'S&OP XLS BACKLOG ERRO ' + FormatDateTime( 'dd/mm/yyyy', Now );
@@ -1321,6 +1322,9 @@ begin
 
 
       if UpperCase(dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString) = 'CREATED ON' then
+        varColumnCalendarDay := I;
+
+      if UpperCase(dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString) = 'ON' then
         varColumnCalendarDay := I;
 
       if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = 'Sales Doc.' then
@@ -2616,7 +2620,42 @@ begin
       if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2021 Dec Quantity' then
         varColumnBilledQty := I;
 
+       //2022
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2022 Jan Quantity' then
+        varColumnBilledQty := I;
 
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2022 Feb Quantity' then
+        varColumnBilledQty := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2022 Mar Quantity' then
+        varColumnBilledQty := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2022 Apr Quantity' then
+        varColumnBilledQty := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2022 May Quantity' then
+        varColumnBilledQty := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2022 Jun Quantity' then
+        varColumnBilledQty := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2022 Jul Quantity' then
+        varColumnBilledQty := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2022 Aug Quantity' then
+        varColumnBilledQty := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2022 Sep Quantity' then
+        varColumnBilledQty := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2022 Oct Quantity' then
+        varColumnBilledQty := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2022 Nov Quantity' then
+        varColumnBilledQty := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2022 Dec Quantity' then
+        varColumnBilledQty := I;
 
 
 
@@ -2813,6 +2852,43 @@ begin
         varColumnBillqtyinSKU := I;
 
 
+         //  2022
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2022 Jan Quantity in SKU' then
+        varColumnBillqtyinSKU := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2022 Feb Quantity in SKU' then
+        varColumnBillqtyinSKU := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2022 Mar Quantity in SKU' then
+        varColumnBillqtyinSKU := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2022 Apr Quantity in SKU' then
+        varColumnBillqtyinSKU := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2022 May Quantity in SKU' then
+        varColumnBillqtyinSKU := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2022 Jun Quantity in SKU' then
+        varColumnBillqtyinSKU := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2022 Jul Quantity in SKU' then
+        varColumnBillqtyinSKU := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2022 Aug Quantity in SKU' then
+        varColumnBillqtyinSKU := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2022 Sep Quantity in SKU' then
+        varColumnBillqtyinSKU := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2022 Oct Quantity in SKU' then
+        varColumnBillqtyinSKU := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2022 Nov Quantity in SKU' then
+        varColumnBillqtyinSKU := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2022 Dec Quantity in SKU' then
+        varColumnBillqtyinSKU := I;
 
 
       //varColumnNetValue
@@ -2993,6 +3069,44 @@ begin
       if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2021 Dec  Customer Sales' then
         varColumnNetValue := I;
 
+          // 2021
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2022 Jan  Customer Sales' then
+        varColumnNetValue := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2022 Feb  Customer Sales' then
+        varColumnNetValue := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2022 Mar  Customer Sales' then
+        varColumnNetValue := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2022 Apr  Customer Sales' then
+        varColumnNetValue := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2022 May  Customer Sales' then
+        varColumnNetValue := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2022 Jun  Customer Sales' then
+        varColumnNetValue := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2022 Jul  Customer Sales' then
+        varColumnNetValue := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2022 Aug  Customer Sales' then
+        varColumnNetValue := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2022 Sep  Customer Sales' then
+        varColumnNetValue := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2022 Oct  Customer Sales' then
+        varColumnNetValue := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2022 Nov  Customer Sales' then
+        varColumnNetValue := I;
+
+      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = '2022 Dec  Customer Sales' then
+        varColumnNetValue := I;
+
 
 //      if dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString = 'Net Value - Seton' then
 //        varColumnNetValueSeton := I;
@@ -3075,13 +3189,13 @@ begin
 	    raise Exception.Create('Prod Hier 5 não encontrado.');
 
     if varColumnBilledQty = -1 then
-	    raise Exception.Create('2020 Q1/2/3/4 TD Qty não encontrado.');
+	    raise Exception.Create('2022 Q1/2/3/4 TD Qty não encontrado.');
 
     if varColumnBillqtyinSKU = -1 then
 	    raise Exception.Create('Bill.qty in SKU não encontrado.');
 
     if varColumnNetValue = -1 then
-	    raise Exception.Create('2020 Q1/2/3/4 TD Cust Sales não encontrado.');
+	    raise Exception.Create('2022 Q1/2/3/4 TD Cust Sales não encontrado.');
 
          {
 
@@ -4021,7 +4135,7 @@ begin
     varACBrMail.From := 'suportebrasil@bradycorp.com';
     varACBrMail.FromName := 'Suporte Brasil';
 
-    varACBrMail.AddAddress('LEANDRO_LOPES@BRADYCORP.COM', 'LEANDRO LOPES');
+
     varACBrMail.AddAddress('LUCIANA_PONTIERI@BRADYCORP.COM', 'LUCIANA PONTIERI');
 
     varACBrMail.Subject := 'S&OP XLS ' + FormatDateTime( 'dd/mm/yyyy', Now );
@@ -4183,7 +4297,7 @@ begin
       varACBrMail.From := 'suportebrasil@bradycorp.com';
       varACBrMail.FromName := 'Suporte Brasil';
 
-      varACBrMail.AddAddress('LEANDRO_LOPES@BRADYCORP.COM', 'LEANDRO LOPES');
+
       varACBrMail.AddAddress('LUCIANA_PONTIERI@BRADYCORP.COM', 'LUCIANA PONTIERI');
 
       varACBrMail.Subject := 'S&OP R$ ' + FormatDateTime( 'dd/mm/yyyy', Now );
@@ -4393,7 +4507,6 @@ begin
       varACBrMail.AddAddress('ANA_SILVA@BRADYCORP.COM'       , 'ANA SILVA');
       varACBrMail.AddAddress('ALINE_HOFFMANN@BRADYCORP.COM'  , 'ALINE HOFFMANN');
       varACBrMail.AddAddress('CINTIA_SANTOS@BRADYCORP.COM'   , 'CINTIA SANTOS');
-      varACBrMail.AddAddress('LEANDRO_LOPES@BRADYCORP.COM'   , 'LEANDRO LOPES');
       varACBrMail.AddAddress('LUCIANA_PONTIERI@BRADYCORP.COM', 'LUCIANA PONTIERI');
       varACBrMail.AddAddress('LEANDRO_LIMA@BRADYCORP.COM'    , 'LEANDRO LIMA');
       varACBrMail.AddAddress('GUSTAVO_COUTINHO@BRADYCORP.COM', 'GUSTAVO COUTINHO');
@@ -6065,6 +6178,34 @@ var
   varTabela_D          : Extended;
   varImagem            : String;
 
+
+
+
+  varColumnAutorizado        : Integer;
+  varColumnOuro              : Integer;
+  varColumnPrata             : Integer;
+  varColumnBronze            : Integer;
+  varColumnPlatino           : Integer;
+  varColumnPrata_PEI_Bronze  : Integer;
+  varColumnOuro_PEI_Bronze   : Integer;
+  varColumnPrata_PEI_Ouro    : Integer;
+  varColumnOuro_PEI_Prata    : Integer;
+
+
+  varAutorizado        : Extended;
+  varOuro              : Extended;
+  varPrata             : Extended;
+  varBronze            : Extended;
+  varPlatino           : Extended;
+  varPrata_PEI_Bronze  : Extended;
+  varOuro_PEI_Bronze   : Extended;
+  varPrata_PEI_Ouro    : Extended;
+  varOuro_PEI_Prata    : Extended;
+
+
+
+
+
   varUltimaColuna      : Integer;
 
   procedure WritelnMail( varStr: String );
@@ -6099,8 +6240,7 @@ var
 
       varACBrMail.From := 'suportebrasil@bradycorp.com';
       varACBrMail.FromName := 'SUPORTE BRASIL';
-      varACBrMail.AddAddress('isabella_ares@bradycorp.com', 'Isabella Ares');
-      varACBrMail.AddAddress('LEANDRO_LOPES@BRADYCORP.COM', 'LEANDRO LOPES');
+      varACBrMail.AddAddress('paula_chaves@bradycorp.com', 'Paula Chaves');
       varACBrMail.AddAddress('LUCIANA_PONTIERI@BRADYCORP.COM', 'LUCIANA PONTIERI');
       varACBrMail.AddAddress('marcos.jesus.external@k2partnering.com', 'Marcos');
 
@@ -6163,7 +6303,19 @@ begin
     VarColumnImagem      := -1;
 
 
-    varUltimaColuna := 12;
+    varColumnAutorizado         := -1;
+    varColumnOuro               := -1;
+    varColumnPrata              := -1;
+    varColumnBronze             := -1;
+    varColumnPlatino            := -1;
+    varColumnPrata_PEI_Bronze   := -1;
+    varColumnOuro_PEI_Bronze    := -1;
+    varColumnPrata_PEI_Ouro     := -1;
+    varColumnOuro_PEI_Prata     := -1;
+
+
+
+    varUltimaColuna := 17;
     Writeln('Descobrindo Colunas');
     for I := dxSpreadSheet.ActiveSheetAsTable.Columns.FirstIndex to varUltimaColuna do
     begin
@@ -6194,7 +6346,7 @@ begin
 
       if UpperCase(dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString) = 'SUG_VENDAS' then
         varColumnSug_Venda := I;
-
+      {
       if UpperCase(dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString) = 'TABELA_A' then
         varColumnTabela_A := I;
 
@@ -6206,9 +6358,38 @@ begin
 
       if UpperCase(dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString) = 'TABELA_D' then
         varColumnTabela_D := I;
-
+      }
       if UpperCase(dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString) = 'IMAGEM' then
         VarColumnImagem := I;
+
+
+      if UpperCase(dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString) = 'AUTORIZADO' then
+        varColumnAutorizado := I;
+
+      if UpperCase(dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString) = 'OURO' then
+        varColumnOuro := I;
+
+      if UpperCase(dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString) = 'PRATA' then
+        varColumnPrata := I;
+
+      if UpperCase(dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString) = 'BRONZE' then
+        varColumnBronze := I;
+
+       if UpperCase(dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString) = 'PLATINO' then
+        varColumnPlatino := I;
+
+      if UpperCase(dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString) = 'PRATA_PEI-BRONZE' then
+        varColumnPrata_PEI_Bronze := I;
+
+      if UpperCase(dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString) = 'OURO_PEI-BRONZE' then
+        varColumnOuro_PEI_Bronze := I;
+
+      if UpperCase(dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString) = 'PRATA_PEI-OURO' then
+        varColumnPrata_PEI_Ouro := I;
+
+      if UpperCase(dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString) = 'OURO_PEI-PRATA' then
+        varColumnOuro_PEI_Prata := I;
+
 
     end;
 
@@ -6228,6 +6409,7 @@ begin
       WritelnMail( 'Coluna (Descricao) não foi encontrada' );
     if varColumnSug_Venda = -1 then
       WritelnMail( 'Coluna (Sug_Venda) não foi encontrada' );
+ {
     if varColumnTabela_A = -1 then
       WritelnMail( 'Coluna (Tabela_A) não foi encontrada' );
     if varColumnTabela_B = -1 then
@@ -6236,8 +6418,30 @@ begin
       WritelnMail( 'Coluna (Tabela_C) não foi encontrada' );
     if varColumnTabela_D = -1 then
       WritelnMail( 'Coluna (Tabela_D) não foi encontrada' );
+ }
     if VarColumnImagem = -1 then
       WritelnMail( 'Coluna (Imagem) não foi encontrada' );
+
+
+    if varColumnAutorizado = -1 then
+      WritelnMail( 'Coluna (Autorizado) não foi encontrada' );
+    if varColumnOuro = -1 then
+      WritelnMail( 'Coluna (Ouro) não foi encontrada' );
+    if varColumnPrata = -1 then
+      WritelnMail( 'Coluna (Prata) não foi encontrada' );
+    if varColumnBronze = -1 then
+      WritelnMail( 'Coluna (Bronze) não foi encontrada' );
+    if varColumnPlatino = -1 then
+      WritelnMail( 'Coluna (Platino) não foi encontrada' );
+    if varColumnPrata_PEI_Bronze = -1 then
+      WritelnMail( 'Coluna (Prata_PEI-Bronze) não foi encontrada' );
+    if varColumnOuro_PEI_Bronze = -1 then
+      WritelnMail( 'Coluna (Ouro_PEI-Bronze) não foi encontrada' );
+    if varColumnPrata_PEI_Ouro = -1 then
+      WritelnMail( 'Coluna (Prata_PEI-Ouro) não foi encontrada' );
+    if varColumnOuro_PEI_Prata = -1 then
+      WritelnMail( 'Coluna (Ouro_PEI-Prata) não foi encontrada' );
+
 
     Writeln( 'Criando DataModule' );
     Fr_Dados := TFr_Dados.Create(nil);
@@ -6253,6 +6457,7 @@ begin
         Writeln('Open FDConnection');
         FDConnection.Open;
         try
+
 
 
             varStringList.Clear;
@@ -6275,11 +6480,26 @@ begin
               varDescricao   := Trim(dxSpreadSheet.ActiveSheetAsTable.Rows[I].Cells[varColumnDescricao].AsString);
 
               varSug_Venda   := RoundTo(dxSpreadSheet.ActiveSheetAsTable.Rows[I].Cells[varColumnSug_Venda].AsFloat,-2);
-              varTabela_A    := RoundTo(dxSpreadSheet.ActiveSheetAsTable.Rows[I].Cells[varColumnTabela_A].AsFloat,-2);
+             { varTabela_A    := RoundTo(dxSpreadSheet.ActiveSheetAsTable.Rows[I].Cells[varColumnTabela_A].AsFloat,-2);
               varTabela_B    := RoundTo(dxSpreadSheet.ActiveSheetAsTable.Rows[I].Cells[varColumnTabela_B].AsFloat,-2);
               varTabela_C    := RoundTo(dxSpreadSheet.ActiveSheetAsTable.Rows[I].Cells[varColumnTabela_C].AsFloat,-2);
               varTabela_D    := RoundTo(dxSpreadSheet.ActiveSheetAsTable.Rows[I].Cells[varColumnTabela_D].AsFloat,-2);
+             }
               varImagem      := Trim(dxSpreadSheet.ActiveSheetAsTable.Rows[I].Cells[VarColumnImagem].AsString);
+
+              varAutorizado   := RoundTo(dxSpreadSheet.ActiveSheetAsTable.Rows[I].Cells[varColumnAutorizado].AsFloat,-2);
+              varOuro         := RoundTo(dxSpreadSheet.ActiveSheetAsTable.Rows[I].Cells[varColumnOuro].AsFloat,-2);
+              varPrata        := RoundTo(dxSpreadSheet.ActiveSheetAsTable.Rows[I].Cells[varColumnPrata].AsFloat,-2);
+              varBronze       := RoundTo(dxSpreadSheet.ActiveSheetAsTable.Rows[I].Cells[varColumnBronze].AsFloat,-2);
+              varPlatino      := RoundTo(dxSpreadSheet.ActiveSheetAsTable.Rows[I].Cells[varColumnPlatino].AsFloat,-2);
+
+              varPrata_PEI_Bronze   := RoundTo(dxSpreadSheet.ActiveSheetAsTable.Rows[I].Cells[varColumnPrata_PEI_Bronze].AsFloat,-2);
+              varOuro_PEI_Bronze    := RoundTo(dxSpreadSheet.ActiveSheetAsTable.Rows[I].Cells[varColumnOuro_PEI_Bronze].AsFloat,-2);
+              varPrata_PEI_Ouro     := RoundTo(dxSpreadSheet.ActiveSheetAsTable.Rows[I].Cells[varColumnPrata_PEI_Ouro].AsFloat,-2);
+              varOuro_PEI_Prata     := RoundTo(dxSpreadSheet.ActiveSheetAsTable.Rows[I].Cells[varColumnOuro_PEI_Prata].AsFloat,-2);
+
+
+
 
               varTMKT_PROCOD := -1;
               FDQueryConsultaPreco.Close;
@@ -6325,7 +6545,7 @@ begin
                           end;
                      End;
 
-
+                     { layout anterior
                      FDQueryConsultaPreco.Close;
                      FDQueryConsultaPreco.SQL.Clear;
                      FDQueryConsultaPreco.SQL.Add('SELECT MAX(TMKT_PRECOD)+1 AS TMKT_PRECOD  FROM TMKT_PRECO');
@@ -6439,6 +6659,261 @@ begin
 
                           end;
                      End;
+
+                     }
+
+                     FDQueryConsultaPreco.Close;
+                     FDQueryConsultaPreco.SQL.Clear;
+                     FDQueryConsultaPreco.SQL.Add('SELECT MAX(COALESCE(TMKT_PRECOD ,0))+1 AS TMKT_PRECOD  FROM TMKT_PRECO');
+                     FDQueryConsultaPreco.Open;
+                     varTMKT_PRECOD :=  FDQueryConsultaPreco.FieldByName('TMKT_PRECOD').AsInteger;
+
+                     if varTMKT_PRECOD = 0 then
+                         varTMKT_PRECOD := 1;
+
+                     FDQueryGravaPreco.Close;
+                     FDQueryGravaPreco.SQL.Clear;
+                     FDQueryGravaPreco.SQL.Add('Insert Into TMKT_PRECO(TMKT_PRECOD,TMKT_PROCOD, TMKT_PRECAT, TMKT_PRELIQCOM, TMKT_PRESUGVEN, TMKT_PREQTDMIN) ');
+                     FDQueryGravaPreco.SQL.Add('Values (:TMKT_PRECOD,:TMKT_PROCOD, :TMKT_PRECAT,  :TMKT_PRELIQCOM, :TMKT_PRESUGVEN, :TMKT_PREQTDMIN) ');
+                     FDQueryGravaPreco.Params.ParamByName('TMKT_PRECOD').AsInteger    := varTMKT_PRECOD;
+                     FDQueryGravaPreco.Params.ParamByName('TMKT_PROCOD').AsInteger    := varTMKT_PROCOD;
+                     FDQueryGravaPreco.Params.ParamByName('TMKT_PRECAT').AsString     := 'Platino';
+                     FDQueryGravaPreco.Params.ParamByName('TMKT_PRELIQCOM').AsFloat   := varPlatino;
+                     FDQueryGravaPreco.Params.ParamByName('TMKT_PRESUGVEN').AsFloat   := varSug_Venda;
+                     FDQueryGravaPreco.Params.ParamByName('TMKT_PREQTDMIN').AsInteger := 1;
+                     Try
+                       FDQueryGravaPreco.ExecSQL;
+                     except
+                        on E: Exception do
+                          begin
+
+                            Writeln( 'Salvar Preço: ', E.Message );
+
+                          end;
+                     End;
+
+
+                     FDQueryConsultaPreco.Close;
+                     FDQueryConsultaPreco.SQL.Clear;
+                     FDQueryConsultaPreco.SQL.Add('SELECT MAX(TMKT_PRECOD)+1 AS TMKT_PRECOD  FROM TMKT_PRECO');
+                     FDQueryConsultaPreco.Open;
+                     varTMKT_PRECOD :=  FDQueryConsultaPreco.FieldByName('TMKT_PRECOD').AsInteger;
+
+                     FDQueryGravaPreco.Close;
+                     FDQueryGravaPreco.SQL.Clear;
+                     FDQueryGravaPreco.SQL.Add('Insert Into TMKT_PRECO(TMKT_PRECOD,TMKT_PROCOD, TMKT_PRECAT, TMKT_PRELIQCOM, TMKT_PRESUGVEN, TMKT_PREQTDMIN) ');
+                     FDQueryGravaPreco.SQL.Add('Values (:TMKT_PRECOD,:TMKT_PROCOD, :TMKT_PRECAT,  :TMKT_PRELIQCOM, :TMKT_PRESUGVEN, :TMKT_PREQTDMIN) ');
+                     FDQueryGravaPreco.Params.ParamByName('TMKT_PRECOD').AsInteger    := varTMKT_PRECOD;
+                     FDQueryGravaPreco.Params.ParamByName('TMKT_PROCOD').AsInteger    := varTMKT_PROCOD;
+                     FDQueryGravaPreco.Params.ParamByName('TMKT_PRECAT').AsString     := 'Autorizado';
+                     FDQueryGravaPreco.Params.ParamByName('TMKT_PRELIQCOM').AsFloat   := varAutorizado;
+                     FDQueryGravaPreco.Params.ParamByName('TMKT_PRESUGVEN').AsFloat   := varSug_Venda;
+                     FDQueryGravaPreco.Params.ParamByName('TMKT_PREQTDMIN').AsInteger := 1;
+                     Try
+                       FDQueryGravaPreco.ExecSQL;
+                     except
+                        on E: Exception do
+                          begin
+
+                            Writeln( 'Salvar Preço: ', E.Message );
+
+                          end;
+                     End;
+
+
+
+                     FDQueryConsultaPreco.Close;
+                     FDQueryConsultaPreco.SQL.Clear;
+                     FDQueryConsultaPreco.SQL.Add('SELECT MAX(TMKT_PRECOD)+1 AS TMKT_PRECOD  FROM TMKT_PRECO');
+                     FDQueryConsultaPreco.Open;
+                     varTMKT_PRECOD :=  FDQueryConsultaPreco.FieldByName('TMKT_PRECOD').AsInteger;
+
+                     FDQueryGravaPreco.Close;
+                     FDQueryGravaPreco.SQL.Clear;
+                     FDQueryGravaPreco.SQL.Add('Insert Into TMKT_PRECO(TMKT_PRECOD,TMKT_PROCOD, TMKT_PRECAT, TMKT_PRELIQCOM, TMKT_PRESUGVEN, TMKT_PREQTDMIN) ');
+                     FDQueryGravaPreco.SQL.Add('Values (:TMKT_PRECOD,:TMKT_PROCOD, :TMKT_PRECAT,  :TMKT_PRELIQCOM, :TMKT_PRESUGVEN, :TMKT_PREQTDMIN) ');
+                     FDQueryGravaPreco.Params.ParamByName('TMKT_PRECOD').AsInteger    := varTMKT_PRECOD;
+                     FDQueryGravaPreco.Params.ParamByName('TMKT_PROCOD').AsInteger    := varTMKT_PROCOD;
+                     FDQueryGravaPreco.Params.ParamByName('TMKT_PRECAT').AsString     := 'Bronze';
+                     FDQueryGravaPreco.Params.ParamByName('TMKT_PRELIQCOM').AsFloat   := varBronze;
+                     FDQueryGravaPreco.Params.ParamByName('TMKT_PRESUGVEN').AsFloat   := varSug_Venda;
+                     FDQueryGravaPreco.Params.ParamByName('TMKT_PREQTDMIN').AsInteger := 1;
+                     Try
+                       FDQueryGravaPreco.ExecSQL;
+                     except
+                        on E: Exception do
+                          begin
+
+                            Writeln( 'Salvar Preço: ', E.Message );
+
+                          end;
+                     End;
+
+                     FDQueryConsultaPreco.Close;
+                     FDQueryConsultaPreco.SQL.Clear;
+                     FDQueryConsultaPreco.SQL.Add('SELECT MAX(TMKT_PRECOD)+1 AS TMKT_PRECOD  FROM TMKT_PRECO');
+                     FDQueryConsultaPreco.Open;
+                     varTMKT_PRECOD :=  FDQueryConsultaPreco.FieldByName('TMKT_PRECOD').AsInteger;
+
+                     FDQueryGravaPreco.Close;
+                     FDQueryGravaPreco.SQL.Clear;
+                     FDQueryGravaPreco.SQL.Add('Insert Into TMKT_PRECO(TMKT_PRECOD,TMKT_PROCOD, TMKT_PRECAT, TMKT_PRELIQCOM, TMKT_PRESUGVEN, TMKT_PREQTDMIN) ');
+                     FDQueryGravaPreco.SQL.Add('Values (:TMKT_PRECOD,:TMKT_PROCOD, :TMKT_PRECAT,  :TMKT_PRELIQCOM, :TMKT_PRESUGVEN, :TMKT_PREQTDMIN) ');
+                     FDQueryGravaPreco.Params.ParamByName('TMKT_PRECOD').AsInteger    := varTMKT_PRECOD;
+                     FDQueryGravaPreco.Params.ParamByName('TMKT_PROCOD').AsInteger    := varTMKT_PROCOD;
+                     FDQueryGravaPreco.Params.ParamByName('TMKT_PRECAT').AsString     := 'Prata';
+                     FDQueryGravaPreco.Params.ParamByName('TMKT_PRELIQCOM').AsFloat   := varPrata;
+                     FDQueryGravaPreco.Params.ParamByName('TMKT_PRESUGVEN').AsFloat   := varSug_Venda;
+                     FDQueryGravaPreco.Params.ParamByName('TMKT_PREQTDMIN').AsInteger := 1;
+                     Try
+                       FDQueryGravaPreco.ExecSQL;
+                     except
+                        on E: Exception do
+                          begin
+
+                            Writeln( 'Salvar Preço: ', E.Message );
+
+                          end;
+                     End;
+
+                     FDQueryConsultaPreco.Close;
+                     FDQueryConsultaPreco.SQL.Clear;
+                     FDQueryConsultaPreco.SQL.Add('SELECT MAX(TMKT_PRECOD)+1 AS TMKT_PRECOD  FROM TMKT_PRECO');
+                     FDQueryConsultaPreco.Open;
+                     varTMKT_PRECOD :=  FDQueryConsultaPreco.FieldByName('TMKT_PRECOD').AsInteger;
+
+                     FDQueryGravaPreco.Close;
+                     FDQueryGravaPreco.SQL.Clear;
+                     FDQueryGravaPreco.SQL.Add('Insert Into TMKT_PRECO(TMKT_PRECOD,TMKT_PROCOD, TMKT_PRECAT, TMKT_PRELIQCOM, TMKT_PRESUGVEN, TMKT_PREQTDMIN) ');
+                     FDQueryGravaPreco.SQL.Add('Values (:TMKT_PRECOD,:TMKT_PROCOD, :TMKT_PRECAT,  :TMKT_PRELIQCOM, :TMKT_PRESUGVEN, :TMKT_PREQTDMIN) ');
+                     FDQueryGravaPreco.Params.ParamByName('TMKT_PRECOD').AsInteger    := varTMKT_PRECOD;
+                     FDQueryGravaPreco.Params.ParamByName('TMKT_PROCOD').AsInteger    := varTMKT_PROCOD;
+                     FDQueryGravaPreco.Params.ParamByName('TMKT_PRECAT').AsString     := 'Ouro';
+                     FDQueryGravaPreco.Params.ParamByName('TMKT_PRELIQCOM').AsFloat   := varOuro;
+                     FDQueryGravaPreco.Params.ParamByName('TMKT_PRESUGVEN').AsFloat   := varSug_Venda;
+                     FDQueryGravaPreco.Params.ParamByName('TMKT_PREQTDMIN').AsInteger := 1;
+                     Try
+                       FDQueryGravaPreco.ExecSQL;
+                     except
+                        on E: Exception do
+                          begin
+
+                            Writeln( 'Salvar Preço: ', E.Message );
+
+                          end;
+                     End;
+
+
+                     FDQueryConsultaPreco.Close;
+                     FDQueryConsultaPreco.SQL.Clear;
+                     FDQueryConsultaPreco.SQL.Add('SELECT MAX(TMKT_PRECOD)+1 AS TMKT_PRECOD  FROM TMKT_PRECO');
+                     FDQueryConsultaPreco.Open;
+                     varTMKT_PRECOD :=  FDQueryConsultaPreco.FieldByName('TMKT_PRECOD').AsInteger;
+
+                     FDQueryGravaPreco.Close;
+                     FDQueryGravaPreco.SQL.Clear;
+                     FDQueryGravaPreco.SQL.Add('Insert Into TMKT_PRECO(TMKT_PRECOD,TMKT_PROCOD, TMKT_PRECAT, TMKT_PRELIQCOM, TMKT_PRESUGVEN, TMKT_PREQTDMIN) ');
+                     FDQueryGravaPreco.SQL.Add('Values (:TMKT_PRECOD,:TMKT_PROCOD, :TMKT_PRECAT,  :TMKT_PRELIQCOM, :TMKT_PRESUGVEN, :TMKT_PREQTDMIN) ');
+                     FDQueryGravaPreco.Params.ParamByName('TMKT_PRECOD').AsInteger    := varTMKT_PRECOD;
+                     FDQueryGravaPreco.Params.ParamByName('TMKT_PROCOD').AsInteger    := varTMKT_PROCOD;
+                     FDQueryGravaPreco.Params.ParamByName('TMKT_PRECAT').AsString     := 'Ouro_PEI_Bronze';
+                     FDQueryGravaPreco.Params.ParamByName('TMKT_PRELIQCOM').AsFloat   := varOuro_PEI_Bronze;
+                     FDQueryGravaPreco.Params.ParamByName('TMKT_PRESUGVEN').AsFloat   := varSug_Venda;
+                     FDQueryGravaPreco.Params.ParamByName('TMKT_PREQTDMIN').AsInteger := 1;
+                     Try
+                       FDQueryGravaPreco.ExecSQL;
+                     except
+                        on E: Exception do
+                          begin
+
+                            Writeln( 'Salvar Preço: ', E.Message );
+
+                          end;
+                     End;
+
+
+                     FDQueryConsultaPreco.Close;
+                     FDQueryConsultaPreco.SQL.Clear;
+                     FDQueryConsultaPreco.SQL.Add('SELECT MAX(TMKT_PRECOD)+1 AS TMKT_PRECOD  FROM TMKT_PRECO');
+                     FDQueryConsultaPreco.Open;
+                     varTMKT_PRECOD :=  FDQueryConsultaPreco.FieldByName('TMKT_PRECOD').AsInteger;
+
+                     FDQueryGravaPreco.Close;
+                     FDQueryGravaPreco.SQL.Clear;
+                     FDQueryGravaPreco.SQL.Add('Insert Into TMKT_PRECO(TMKT_PRECOD,TMKT_PROCOD, TMKT_PRECAT, TMKT_PRELIQCOM, TMKT_PRESUGVEN, TMKT_PREQTDMIN) ');
+                     FDQueryGravaPreco.SQL.Add('Values (:TMKT_PRECOD,:TMKT_PROCOD, :TMKT_PRECAT,  :TMKT_PRELIQCOM, :TMKT_PRESUGVEN, :TMKT_PREQTDMIN) ');
+                     FDQueryGravaPreco.Params.ParamByName('TMKT_PRECOD').AsInteger    := varTMKT_PRECOD;
+                     FDQueryGravaPreco.Params.ParamByName('TMKT_PROCOD').AsInteger    := varTMKT_PROCOD;
+                     FDQueryGravaPreco.Params.ParamByName('TMKT_PRECAT').AsString     := 'Ouro_PEI_Prata';
+                     FDQueryGravaPreco.Params.ParamByName('TMKT_PRELIQCOM').AsFloat   := varOuro_PEI_Prata;
+                     FDQueryGravaPreco.Params.ParamByName('TMKT_PRESUGVEN').AsFloat   := varSug_Venda;
+                     FDQueryGravaPreco.Params.ParamByName('TMKT_PREQTDMIN').AsInteger := 1;
+                     Try
+                       FDQueryGravaPreco.ExecSQL;
+                     except
+                        on E: Exception do
+                          begin
+
+                            Writeln( 'Salvar Preço: ', E.Message );
+
+                          end;
+                     End;
+
+
+                     FDQueryConsultaPreco.Close;
+                     FDQueryConsultaPreco.SQL.Clear;
+                     FDQueryConsultaPreco.SQL.Add('SELECT MAX(TMKT_PRECOD)+1 AS TMKT_PRECOD  FROM TMKT_PRECO');
+                     FDQueryConsultaPreco.Open;
+                     varTMKT_PRECOD :=  FDQueryConsultaPreco.FieldByName('TMKT_PRECOD').AsInteger;
+
+                     FDQueryGravaPreco.Close;
+                     FDQueryGravaPreco.SQL.Clear;
+                     FDQueryGravaPreco.SQL.Add('Insert Into TMKT_PRECO(TMKT_PRECOD,TMKT_PROCOD, TMKT_PRECAT, TMKT_PRELIQCOM, TMKT_PRESUGVEN, TMKT_PREQTDMIN) ');
+                     FDQueryGravaPreco.SQL.Add('Values (:TMKT_PRECOD,:TMKT_PROCOD, :TMKT_PRECAT,  :TMKT_PRELIQCOM, :TMKT_PRESUGVEN, :TMKT_PREQTDMIN) ');
+                     FDQueryGravaPreco.Params.ParamByName('TMKT_PRECOD').AsInteger    := varTMKT_PRECOD;
+                     FDQueryGravaPreco.Params.ParamByName('TMKT_PROCOD').AsInteger    := varTMKT_PROCOD;
+                     FDQueryGravaPreco.Params.ParamByName('TMKT_PRECAT').AsString     := 'Prata_PEI_Bronze';
+                     FDQueryGravaPreco.Params.ParamByName('TMKT_PRELIQCOM').AsFloat   := varPrata_PEI_Bronze;
+                     FDQueryGravaPreco.Params.ParamByName('TMKT_PRESUGVEN').AsFloat   := varSug_Venda;
+                     FDQueryGravaPreco.Params.ParamByName('TMKT_PREQTDMIN').AsInteger := 1;
+                     Try
+                       FDQueryGravaPreco.ExecSQL;
+                     except
+                        on E: Exception do
+                          begin
+
+                            Writeln( 'Salvar Preço: ', E.Message );
+
+                          end;
+                     End;
+
+                     FDQueryConsultaPreco.Close;
+                     FDQueryConsultaPreco.SQL.Clear;
+                     FDQueryConsultaPreco.SQL.Add('SELECT MAX(TMKT_PRECOD)+1 AS TMKT_PRECOD  FROM TMKT_PRECO');
+                     FDQueryConsultaPreco.Open;
+                     varTMKT_PRECOD :=  FDQueryConsultaPreco.FieldByName('TMKT_PRECOD').AsInteger;
+
+                     FDQueryGravaPreco.Close;
+                     FDQueryGravaPreco.SQL.Clear;
+                     FDQueryGravaPreco.SQL.Add('Insert Into TMKT_PRECO(TMKT_PRECOD,TMKT_PROCOD, TMKT_PRECAT, TMKT_PRELIQCOM, TMKT_PRESUGVEN, TMKT_PREQTDMIN) ');
+                     FDQueryGravaPreco.SQL.Add('Values (:TMKT_PRECOD,:TMKT_PROCOD, :TMKT_PRECAT,  :TMKT_PRELIQCOM, :TMKT_PRESUGVEN, :TMKT_PREQTDMIN) ');
+                     FDQueryGravaPreco.Params.ParamByName('TMKT_PRECOD').AsInteger    := varTMKT_PRECOD;
+                     FDQueryGravaPreco.Params.ParamByName('TMKT_PROCOD').AsInteger    := varTMKT_PROCOD;
+                     FDQueryGravaPreco.Params.ParamByName('TMKT_PRECAT').AsString     := 'Prata_PEI_Ouro';
+                     FDQueryGravaPreco.Params.ParamByName('TMKT_PRELIQCOM').AsFloat   := varPrata_PEI_Ouro;
+                     FDQueryGravaPreco.Params.ParamByName('TMKT_PRESUGVEN').AsFloat   := varSug_Venda;
+                     FDQueryGravaPreco.Params.ParamByName('TMKT_PREQTDMIN').AsInteger := 1;
+                     Try
+                       FDQueryGravaPreco.ExecSQL;
+                     except
+                        on E: Exception do
+                          begin
+
+                            Writeln( 'Salvar Preço: ', E.Message );
+
+                          end;
+                     End;
+
                  end;
 
 
@@ -6502,7 +6977,22 @@ var
   varColumnTabela_C    : Integer;
   varColumnTabela_D    : Integer;
 
+
+  varColumnAutorizado        : Integer;
+  varColumnOuro              : Integer;
+  varColumnPrata             : Integer;
+  varColumnBronze            : Integer;
+  varColumnPlatino           : Integer;
+  varColumnPrata_PEI_Bronze  : Integer;
+  varColumnOuro_PEI_Bronze   : Integer;
+  varColumnPrata_PEI_Ouro    : Integer;
+  varColumnOuro_PEI_Prata    : Integer;
+
+
+
+
   varTMKT_PROCOD       : Integer;
+  varTMKT_PRECOD       : Integer;
   varYNumber           : String;
   varCatalogo          : String;
   varUN                : String;
@@ -6515,6 +7005,19 @@ var
   varTabela_B          : Extended;
   varTabela_C          : Extended;
   varTabela_D          : Extended;
+
+
+  varAutorizado        : Extended;
+  varOuro              : Extended;
+  varPrata             : Extended;
+  varBronze            : Extended;
+  varPlatino           : Extended;
+  varPrata_PEI_Bronze  : Extended;
+  varOuro_PEI_Bronze   : Extended;
+  varPrata_PEI_Ouro    : Extended;
+  varOuro_PEI_Prata    : Extended;
+
+
 
   varUltimaColuna      : Integer;
 
@@ -6551,7 +7054,6 @@ var
       varACBrMail.From := 'suportebrasil@bradycorp.com';
       varACBrMail.FromName := 'SUPORTE BRASIL';
 
-     // varACBrMail.AddAddress('LEANDRO_LOPES@BRADYCORP.COM', 'LEANDRO LOPES');
       varACBrMail.AddAddress('isabella_ares@bradycorp.com', 'Isabella Ares');
       varACBrMail.AddAddress('marcos.jesus.external@k2partnering.com', 'Marcos');
       varACBrMail.Subject := '[PRODUTO NÃO CADASTRADO] IMPORT TABELA PRECO TMKT ' + FormatDateTime( 'dd/mm/yyyy', Now );
@@ -6615,6 +7117,18 @@ begin
     varColumnTabela_D    := -1;
 
 
+
+    varColumnAutorizado         := -1;
+    varColumnOuro               := -1;
+    varColumnPrata              := -1;
+    varColumnBronze             := -1;
+    varColumnPlatino            := -1;
+    varColumnPrata_PEI_Bronze   := -1;
+    varColumnOuro_PEI_Bronze    := -1;
+    varColumnPrata_PEI_Ouro     := -1;
+    varColumnOuro_PEI_Prata     := -1;
+
+
     varUltimaColuna := 11;
     Writeln('Descobrindo Colunas');
     for I := dxSpreadSheet.ActiveSheetAsTable.Columns.FirstIndex to varUltimaColuna do
@@ -6646,7 +7160,7 @@ begin
 
       if UpperCase(dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString) = 'SUG_VENDAS' then
         varColumnSug_Venda := I;
-
+     {
       if UpperCase(dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString) = 'TABELA_A' then
         varColumnTabela_A := I;
 
@@ -6658,6 +7172,35 @@ begin
 
       if UpperCase(dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString) = 'TABELA_D' then
         varColumnTabela_D := I;
+      }
+
+      if UpperCase(dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString) = 'AUTORIZADO' then
+        varColumnAutorizado := I;
+
+      if UpperCase(dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString) = 'OURO' then
+        varColumnOuro := I;
+
+      if UpperCase(dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString) = 'PRATA' then
+        varColumnPrata := I;
+
+      if UpperCase(dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString) = 'BRONZE' then
+        varColumnBronze := I;
+
+       if UpperCase(dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString) = 'PLATINO' then
+        varColumnPlatino := I;
+
+      if UpperCase(dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString) = 'PRATA_PEI-BRONZE' then
+        varColumnPrata_PEI_Bronze := I;
+
+      if UpperCase(dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString) = 'OURO_PEI-BRONZE' then
+        varColumnOuro_PEI_Bronze := I;
+
+      if UpperCase(dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString) = 'PRATA_PEI-OURO' then
+        varColumnPrata_PEI_Ouro := I;
+
+      if UpperCase(dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString) = 'OURO_PEI-PRATA' then
+        varColumnOuro_PEI_Prata := I;
+
 
 
     end;
@@ -6678,6 +7221,7 @@ begin
       WritelnMail( 'Coluna (Descricao) não foi encontrada' );
     if varColumnSug_Venda = -1 then
       WritelnMail( 'Coluna (Sug_Venda) não foi encontrada' );
+   {
     if varColumnTabela_A = -1 then
       WritelnMail( 'Coluna (Tabela_A) não foi encontrada' );
     if varColumnTabela_B = -1 then
@@ -6686,6 +7230,28 @@ begin
       WritelnMail( 'Coluna (Tabela_C) não foi encontrada' );
     if varColumnTabela_D = -1 then
       WritelnMail( 'Coluna (Tabela_D) não foi encontrada' );
+    }
+
+    if varColumnAutorizado = -1 then
+      WritelnMail( 'Coluna (Autorizado) não foi encontrada' );
+    if varColumnOuro = -1 then
+      WritelnMail( 'Coluna (Ouro) não foi encontrada' );
+    if varColumnPrata = -1 then
+      WritelnMail( 'Coluna (Prata) não foi encontrada' );
+    if varColumnBronze = -1 then
+      WritelnMail( 'Coluna (Bronze) não foi encontrada' );
+    if varColumnPlatino = -1 then
+      WritelnMail( 'Coluna (Platino) não foi encontrada' );
+    if varColumnPrata_PEI_Bronze = -1 then
+      WritelnMail( 'Coluna (Prata_PEI_Bronze) não foi encontrada' );
+    if varColumnOuro_PEI_Bronze = -1 then
+      WritelnMail( 'Coluna (Ouro_PEI_Bronze) não foi encontrada' );
+    if varColumnPrata_PEI_Ouro = -1 then
+      WritelnMail( 'Coluna (Prata_PEI_Ouro) não foi encontrada' );
+    if varColumnOuro_PEI_Prata = -1 then
+      WritelnMail( 'Coluna (Ouro_PEI_Prata) não foi encontrada' );
+
+
 
     Writeln( 'Criando DataModule' );
     Fr_Dados := TFr_Dados.Create(nil);
@@ -6719,10 +7285,24 @@ begin
               varDescricao   := Trim(dxSpreadSheet.ActiveSheetAsTable.Rows[I].Cells[varColumnDescricao].AsString);
 
               varSug_Venda   := RoundTo(dxSpreadSheet.ActiveSheetAsTable.Rows[I].Cells[varColumnSug_Venda].AsFloat,-2);
+            {
               varTabela_A    := RoundTo(dxSpreadSheet.ActiveSheetAsTable.Rows[I].Cells[varColumnTabela_A].AsFloat,-2);
               varTabela_B    := RoundTo(dxSpreadSheet.ActiveSheetAsTable.Rows[I].Cells[varColumnTabela_B].AsFloat,-2);
               varTabela_C    := RoundTo(dxSpreadSheet.ActiveSheetAsTable.Rows[I].Cells[varColumnTabela_C].AsFloat,-2);
               varTabela_D    := RoundTo(dxSpreadSheet.ActiveSheetAsTable.Rows[I].Cells[varColumnTabela_D].AsFloat,-2);
+             }
+
+              varAutorizado   := RoundTo(dxSpreadSheet.ActiveSheetAsTable.Rows[I].Cells[varColumnAutorizado].AsFloat,-2);
+              varOuro         := RoundTo(dxSpreadSheet.ActiveSheetAsTable.Rows[I].Cells[varColumnOuro].AsFloat,-2);
+              varPrata        := RoundTo(dxSpreadSheet.ActiveSheetAsTable.Rows[I].Cells[varColumnPrata].AsFloat,-2);
+              varBronze       := RoundTo(dxSpreadSheet.ActiveSheetAsTable.Rows[I].Cells[varColumnBronze].AsFloat,-2);
+              varPlatino      := RoundTo(dxSpreadSheet.ActiveSheetAsTable.Rows[I].Cells[varColumnPlatino].AsFloat,-2);
+
+              varPrata_PEI_Bronze   := RoundTo(dxSpreadSheet.ActiveSheetAsTable.Rows[I].Cells[varColumnPrata_PEI_Bronze].AsFloat,-2);
+              varOuro_PEI_Bronze    := RoundTo(dxSpreadSheet.ActiveSheetAsTable.Rows[I].Cells[varColumnOuro_PEI_Bronze].AsFloat,-2);
+              varPrata_PEI_Ouro     := RoundTo(dxSpreadSheet.ActiveSheetAsTable.Rows[I].Cells[varColumnPrata_PEI_Ouro].AsFloat,-2);
+              varOuro_PEI_Prata     := RoundTo(dxSpreadSheet.ActiveSheetAsTable.Rows[I].Cells[varColumnOuro_PEI_Prata].AsFloat,-2);
+
 
               varTMKT_PROCOD := 0;
               FDQueryConsultaPreco.Close;
@@ -6753,7 +7333,7 @@ begin
 
                       end;
                  End;
-
+                 {
                  FDQueryGravaPreco.Close;
                  FDQueryGravaPreco.SQL.Clear;
                  FDQueryGravaPreco.SQL.Add('Update TMKT_PRECO');
@@ -6837,7 +7417,181 @@ begin
 
                       end;
                  End;
+                  }
 
+
+
+                 FDQueryGravaPreco.Close;
+                 FDQueryGravaPreco.SQL.Clear;
+                 FDQueryGravaPreco.SQL.Add('Update TMKT_PRECO');
+                 FDQueryGravaPreco.SQL.Add('Set TMKT_PRELIQCOM = :TMKT_PRELIQCOM, TMKT_PRESUGVEN = :TMKT_PRESUGVEN');
+                 FDQueryGravaPreco.SQL.Add('Where TMKT_PROCOD = :TMKT_PROCOD and TMKT_PRECAT = :TMKT_PRECAT');
+                 FDQueryGravaPreco.Params.ParamByName('TMKT_PROCOD').AsInteger  := varTMKT_PROCOD;
+                 FDQueryGravaPreco.Params.ParamByName('TMKT_PRECAT').AsString   := 'Ouro';
+                 FDQueryGravaPreco.Params.ParamByName('TMKT_PRELIQCOM').AsFloat := varOuro;
+                 FDQueryGravaPreco.Params.ParamByName('TMKT_PRESUGVEN').AsFloat := varSug_Venda;
+
+                 Try
+                   FDQueryGravaPreco.ExecSQL;
+                 except
+                    on E: Exception do
+                      begin
+
+                        Writeln( 'Salvar Preço: ', E.Message );
+
+                      end;
+                 End;
+
+
+                 FDQueryGravaPreco.Close;
+                 FDQueryGravaPreco.SQL.Clear;
+                 FDQueryGravaPreco.SQL.Add('Update TMKT_PRECO');
+                 FDQueryGravaPreco.SQL.Add('Set TMKT_PRELIQCOM = :TMKT_PRELIQCOM, TMKT_PRESUGVEN = :TMKT_PRESUGVEN');
+                 FDQueryGravaPreco.SQL.Add('Where TMKT_PROCOD = :TMKT_PROCOD and TMKT_PRECAT = :TMKT_PRECAT');
+                 FDQueryGravaPreco.Params.ParamByName('TMKT_PROCOD').AsInteger  := varTMKT_PROCOD;
+                 FDQueryGravaPreco.Params.ParamByName('TMKT_PRECAT').AsString   := 'Prata';
+                 FDQueryGravaPreco.Params.ParamByName('TMKT_PRELIQCOM').AsFloat := varPrata;
+                 FDQueryGravaPreco.Params.ParamByName('TMKT_PRESUGVEN').AsFloat := varSug_Venda;
+
+                 Try
+                   FDQueryGravaPreco.ExecSQL;
+                 except
+                    on E: Exception do
+                      begin
+
+                        Writeln( 'Salvar Preço: ', E.Message );
+
+                      end;
+                 End;
+
+                 FDQueryGravaPreco.Close;
+                 FDQueryGravaPreco.SQL.Clear;
+                 FDQueryGravaPreco.SQL.Add('Update TMKT_PRECO');
+                 FDQueryGravaPreco.SQL.Add('Set TMKT_PRELIQCOM = :TMKT_PRELIQCOM, TMKT_PRESUGVEN = :TMKT_PRESUGVEN');
+                 FDQueryGravaPreco.SQL.Add('Where TMKT_PROCOD = :TMKT_PROCOD and TMKT_PRECAT = :TMKT_PRECAT');
+                 FDQueryGravaPreco.Params.ParamByName('TMKT_PROCOD').AsInteger  := varTMKT_PROCOD;
+                 FDQueryGravaPreco.Params.ParamByName('TMKT_PRECAT').AsString   := 'Bronze';
+                 FDQueryGravaPreco.Params.ParamByName('TMKT_PRELIQCOM').AsFloat := varBronze;
+                 FDQueryGravaPreco.Params.ParamByName('TMKT_PRESUGVEN').AsFloat := varSug_Venda;
+
+                 Try
+                   FDQueryGravaPreco.ExecSQL;
+                 except
+                    on E: Exception do
+                      begin
+
+                        Writeln( 'Salvar Preço: ', E.Message );
+
+                      end;
+                 End;
+
+                 FDQueryGravaPreco.Close;
+                 FDQueryGravaPreco.SQL.Clear;
+                 FDQueryGravaPreco.SQL.Add('Update TMKT_PRECO');
+                 FDQueryGravaPreco.SQL.Add('Set TMKT_PRELIQCOM = :TMKT_PRELIQCOM, TMKT_PRESUGVEN = :TMKT_PRESUGVEN');
+                 FDQueryGravaPreco.SQL.Add('Where TMKT_PROCOD = :TMKT_PROCOD and TMKT_PRECAT = :TMKT_PRECAT');
+                 FDQueryGravaPreco.Params.ParamByName('TMKT_PROCOD').AsInteger  := varTMKT_PROCOD;
+                 FDQueryGravaPreco.Params.ParamByName('TMKT_PRECAT').AsString   := 'Platino';
+                 FDQueryGravaPreco.Params.ParamByName('TMKT_PRELIQCOM').AsFloat := varPlatino;
+                 FDQueryGravaPreco.Params.ParamByName('TMKT_PRESUGVEN').AsFloat := varSug_Venda;
+
+                 Try
+                   FDQueryGravaPreco.ExecSQL;
+                 except
+                    on E: Exception do
+                      begin
+
+                        Writeln( 'Salvar Preço: ', E.Message );
+
+                      end;
+                 End;
+
+
+                 FDQueryGravaPreco.Close;
+                 FDQueryGravaPreco.SQL.Clear;
+                 FDQueryGravaPreco.SQL.Add('Update TMKT_PRECO');
+                 FDQueryGravaPreco.SQL.Add('Set TMKT_PRELIQCOM = :TMKT_PRELIQCOM, TMKT_PRESUGVEN = :TMKT_PRESUGVEN');
+                 FDQueryGravaPreco.SQL.Add('Where TMKT_PROCOD = :TMKT_PROCOD and TMKT_PRECAT = :TMKT_PRECAT');
+                 FDQueryGravaPreco.Params.ParamByName('TMKT_PROCOD').AsInteger  := varTMKT_PROCOD;
+                 FDQueryGravaPreco.Params.ParamByName('TMKT_PRECAT').AsString   := 'Prata_PEI_Bronze';
+                 FDQueryGravaPreco.Params.ParamByName('TMKT_PRELIQCOM').AsFloat := varPrata_PEI_Bronze;
+                 FDQueryGravaPreco.Params.ParamByName('TMKT_PRESUGVEN').AsFloat := varSug_Venda;
+
+                 Try
+                   FDQueryGravaPreco.ExecSQL;
+                 except
+                    on E: Exception do
+                      begin
+
+                        Writeln( 'Salvar Preço: ', E.Message );
+
+                      end;
+                 End;
+
+                 FDQueryGravaPreco.Close;
+                 FDQueryGravaPreco.SQL.Clear;
+                 FDQueryGravaPreco.SQL.Add('Update TMKT_PRECO');
+                 FDQueryGravaPreco.SQL.Add('Set TMKT_PRELIQCOM = :TMKT_PRELIQCOM, TMKT_PRESUGVEN = :TMKT_PRESUGVEN');
+                 FDQueryGravaPreco.SQL.Add('Where TMKT_PROCOD = :TMKT_PROCOD and TMKT_PRECAT = :TMKT_PRECAT');
+                 FDQueryGravaPreco.Params.ParamByName('TMKT_PROCOD').AsInteger  := varTMKT_PROCOD;
+                 FDQueryGravaPreco.Params.ParamByName('TMKT_PRECAT').AsString   := 'Ouro_PEI_Bronze';
+                 FDQueryGravaPreco.Params.ParamByName('TMKT_PRELIQCOM').AsFloat := varOuro_PEI_Bronze;
+                 FDQueryGravaPreco.Params.ParamByName('TMKT_PRESUGVEN').AsFloat := varSug_Venda;
+
+                 Try
+                   FDQueryGravaPreco.ExecSQL;
+                 except
+                    on E: Exception do
+                      begin
+
+                        Writeln( 'Salvar Preço: ', E.Message );
+
+                      end;
+                 End;
+
+
+                 FDQueryGravaPreco.Close;
+                 FDQueryGravaPreco.SQL.Clear;
+                 FDQueryGravaPreco.SQL.Add('Update TMKT_PRECO');
+                 FDQueryGravaPreco.SQL.Add('Set TMKT_PRELIQCOM = :TMKT_PRELIQCOM, TMKT_PRESUGVEN = :TMKT_PRESUGVEN');
+                 FDQueryGravaPreco.SQL.Add('Where TMKT_PROCOD = :TMKT_PROCOD and TMKT_PRECAT = :TMKT_PRECAT');
+                 FDQueryGravaPreco.Params.ParamByName('TMKT_PROCOD').AsInteger  := varTMKT_PROCOD;
+                 FDQueryGravaPreco.Params.ParamByName('TMKT_PRECAT').AsString   := 'Prata_PEI_Ouro';
+                 FDQueryGravaPreco.Params.ParamByName('TMKT_PRELIQCOM').AsFloat := varPrata_PEI_Ouro;
+                 FDQueryGravaPreco.Params.ParamByName('TMKT_PRESUGVEN').AsFloat := varSug_Venda;
+
+                 Try
+                   FDQueryGravaPreco.ExecSQL;
+                 except
+                    on E: Exception do
+                      begin
+
+                        Writeln( 'Salvar Preço: ', E.Message );
+
+                      end;
+                 End;
+
+
+                 FDQueryGravaPreco.Close;
+                 FDQueryGravaPreco.SQL.Clear;
+                 FDQueryGravaPreco.SQL.Add('Update TMKT_PRECO');
+                 FDQueryGravaPreco.SQL.Add('Set TMKT_PRELIQCOM = :TMKT_PRELIQCOM, TMKT_PRESUGVEN = :TMKT_PRESUGVEN');
+                 FDQueryGravaPreco.SQL.Add('Where TMKT_PROCOD = :TMKT_PROCOD and TMKT_PRECAT = :TMKT_PRECAT');
+                 FDQueryGravaPreco.Params.ParamByName('TMKT_PROCOD').AsInteger  := varTMKT_PROCOD;
+                 FDQueryGravaPreco.Params.ParamByName('TMKT_PRECAT').AsString   := 'Ouro_PEI_Prata';
+                 FDQueryGravaPreco.Params.ParamByName('TMKT_PRELIQCOM').AsFloat := varOuro_PEI_Prata;
+                 FDQueryGravaPreco.Params.ParamByName('TMKT_PRESUGVEN').AsFloat := varSug_Venda;
+
+                 Try
+                   FDQueryGravaPreco.ExecSQL;
+                 except
+                    on E: Exception do
+                      begin
+
+                        Writeln( 'Salvar Preço: ', E.Message );
+
+                      end;
+                 End;
 
               end
               else
@@ -6884,6 +7638,7 @@ var
   varInicial, varFinal: Integer;
   varCMD: AnsiString;
   I: Integer;
+  meuIP, meuCaminho : String;
 
 begin
 
@@ -6901,6 +7656,10 @@ begin
 
       Writeln('Config FDConnection');
       FDConnection.Params.LoadFromFile( MyDocumentsPath + '\DB-MySQL.ini' );
+      meuIP      := FDConnection.Params.Values['Server'];
+      meuCaminho := MyDocumentsPath + '\DB-MySQL.ini';
+      Writeln (meuIP);
+      Writeln (meuCaminho);
 
       Writeln( 'Open FDConnection' );
       FDConnection.Open;
@@ -7145,10 +7904,17 @@ begin
 
       Writeln('Config FDConnection');
       FDConnection.Params.LoadFromFile( MyDocumentsPath + '\DB-MySQL.ini' );
+      doSaveLog('C:\Brady\Files\SOP\Estoque\', FDConnection.Params.Text );
+
+      doSaveLog('C:\Brady\Files\SOP\Estoque\', 'Caminho do Arquivo ' +  MyDocumentsPath + '\DB-MySQL.ini' );
+
 
       Writeln( 'Open FDConnection' );
+
       FDConnection.Open;
       try
+        if FDConnection.Connected then
+         doSaveLog('C:\Brady\Files\SOP\Estoque\', 'Conectou na Base de Dados do MYSQL' );
 
         try
 
@@ -7159,7 +7925,7 @@ begin
 
           on E: Exception do
           begin
-
+            doSaveLog('C:\Brady\Files\SOP\Estoque\',  E.Message );
             Writeln( 'CommitUpdates: ', E.Message );
 
           end;
@@ -7169,6 +7935,7 @@ begin
       finally
 
         FDConnection.Close;
+        doSaveLog('C:\Brady\Files\SOP\Estoque\', 'Fechou conexão com a Base de Dados do MYSQL' );
 
       end;
 
@@ -9056,9 +9823,9 @@ begin
              (UpperCase(FDQuerySalesRepTSIS_USUNOM.AsString) = 'LEONARDO SCARPARO') or
              (UpperCase(FDQuerySalesRepTSIS_USUNOM.AsString) = 'VANESSA MENDES') or
              (UpperCase(FDQuerySalesRepTSIS_USUNOM.AsString) = 'NEIRIVAL MENDES') or
-             (UpperCase(FDQuerySalesRepTSIS_USUNOM.AsString) = 'RUBEN SANTANA') or
-             (UpperCase(FDQuerySalesRepTSIS_USUNOM.AsString) = '-') or
-             (UpperCase(FDQuerySalesRepTSIS_USUNOM.AsString) = '')) Then
+             (UpperCase(FDQuerySalesRepTSIS_USUNOM.AsString) = 'RUBEN SANTANA')) Then
+            // (UpperCase(FDQuerySalesRepTSIS_USUNOM.AsString) = '-') or
+           //  (UpperCase(FDQuerySalesRepTSIS_USUNOM.AsString) = '')) Then
              begin
                 FDQuerySalesRep.Next;
                 Continue;
@@ -9087,6 +9854,8 @@ begin
             FDQueryVSOP_OrderBillingPedidos.MacroByName( 'WHERE1' ).AsRaw := 'AND (B01.TSOP_ORDBILREPNOM = ' + QuotedStr(FDQuerySalesRepTSIS_USUNOM.AsString) + ' OR B01.TSOP_REPMKT = ' + QuotedStr(FDQuerySalesRepTSIS_USUNOM.AsString) + ' OR B01.TSOP_REPNOMINT = ' + QuotedStr(FDQuerySalesRepTSIS_USUNOM.AsString) + ')';
 
           Writeln('Open FDQuery');
+
+          //FDQueryVSOP_OrderBillingPedidos.SQL.SaveToFile('c:\brady\email_diario_2020.sql');
           FDQueryVSOP_OrderBillingPedidos.Close;
           FDQueryVSOP_OrderBillingPedidos.Open;
 
@@ -9605,10 +10374,9 @@ begin
 
             Writeln('Sistema Enviando Email para : ' + FDQuerySalesRepTSIS_USUEML.AsString);
 
-           // varACBrMail.AddAddress(FDQuerySalesRepTSIS_USUEML.AsString, FDQuerySalesRepTSIS_USUNOM.AsString);
-            varACBrMail.AddAddress('marcos.jesus.external@k2partnering.com', 'Marcos');
-            //varACBrMail.AddAddress('LUCIANA_PONTIERI@BRADYCORP.com', 'Luciana');
-            varACBrMail.AddAddress('leandro_lopes@bradycorp.com', 'Leandro');
+            varACBrMail.AddAddress(FDQuerySalesRepTSIS_USUEML.AsString, FDQuerySalesRepTSIS_USUNOM.AsString);
+    //        varACBrMail.AddAddress('marcos.jesus.external@k2partnering.com', 'Marcos');
+           // varACBrMail.AddAddress('LUCIANA_PONTIERI@BRADYCORP.com', 'Luciana');
             // varACBrMail.AddAddress('alessandra_gocalo@bradycorp.com', 'Alessandra');
 
             varACBrMail.Subject := varAssunto;
@@ -9616,8 +10384,6 @@ begin
             varACBrMail.Body.Assign(varBody);
 
             try
-             // if ((UpperCase(FDQuerySalesRepTSIS_USUNOM.AsString) <> '') and
-               //   (UpperCase(FDQuerySalesRepTSIS_USUNOM.AsString) <> '-')) Then
                    varACBrMail.Send;
 
             except
@@ -9876,14 +10642,13 @@ begin
             varACBrMail.FromName := 'Suporte Brasil';
 
 
-            varACBrMail.AddAddress('marcos.jesus.external@k2partnering.com', 'Marcos');
-           // varACBrMail.AddAddress('LUCIANA_PONTIERI@BRADYCORP.com', 'Luciana');
-            varACBrMail.AddAddress('leandro_lopes@bradycorp.com', 'Leandro');
+       //     varACBrMail.AddAddress('marcos.jesus.external@k2partnering.com', 'Marcos');
+         //     varACBrMail.AddAddress('LUCIANA_PONTIERI@BRADYCORP.com', 'Luciana');
           //  varACBrMail.AddAddress('alessandra_gocalo@bradycorp.com', 'Alessandra');
 
      //       varACBrMail.AddAddress( 'suportebrasil@bradycorp.com', 'Suporte Brasil' );
 
-           {
+
             FDQueryTSOP_EMAIL.Close;
             FDQueryTSOP_EMAIL.SQL.Clear;
             FDQueryTSOP_EMAIL.SQL.Add('Select TSOP_EMAIL From TSOP_EMAIL where TSOP_ATIVO = ''S'' AND');
@@ -9896,7 +10661,7 @@ begin
                FDQueryTSOP_EMAIL.Next;
             end;
             FDQueryTSOP_EMAIL.Close;
-            }
+
 
             varACBrMail.Subject := varAssunto;
             varACBrMail.IsHTML := True;
@@ -9978,7 +10743,6 @@ begin
           {  varACBrMail.AddAddress('EMERSON_ZAIDAN@BRADYCORP.COM');
             varACBrMail.AddAddress('MARCIO_TANADA@BRADYCORP.COM');
             varACBrMail.AddAddress('LILIAN_IWATA@BRADYCORP.COM');
-            varACBrMail.AddAddress('LEANDRO_LOPES@BRADYCORP.COM');
             varACBrMail.AddAddress('LUCIANA_PONTIERI@BRADYCORP.COM');
                }
             varACBrMail.Subject := 'S&OP - SEM REPRESENTANTE';
@@ -10066,7 +10830,6 @@ begin
             varACBrMail.AddAddress('EMERSON_ZAIDAN@BRADYCORP.COM');
             varACBrMail.AddAddress('MARCIO_TANADA@BRADYCORP.COM');
             varACBrMail.AddAddress('LILIAN_IWATA@BRADYCORP.COM');
-            varACBrMail.AddAddress('LEANDRO_LOPES@BRADYCORP.COM');
             varACBrMail.AddAddress('LUCIANA_PONTIERI@BRADYCORP.COM');
                   }
             varACBrMail.Subject := 'S&OP - SEM GRUPO DE CLIENTE';
@@ -10989,7 +11752,7 @@ begin
            // varACBrMail.AddAddress(FDQuerySalesRepGrupoTSIS_USUEML.AsString, FDQuerySalesRepGrupoTSIS_USUNOM.AsString);
             varACBrMail.AddAddress('marcos.jesus.external@k2partnering.com', 'Marcos');
             varACBrMail.AddAddress('LUCIANA_PONTIERI@BRADYCORP.com', 'Luciana');
-            varACBrMail.AddAddress('leandro_lopes@bradycorp.com', 'Leandro');
+
 
 
             varACBrMail.Subject := varAssunto;
@@ -11357,7 +12120,6 @@ begin
           {  varACBrMail.AddAddress('EMERSON_ZAIDAN@BRADYCORP.COM');
             varACBrMail.AddAddress('MARCIO_TANADA@BRADYCORP.COM');
             varACBrMail.AddAddress('LILIAN_IWATA@BRADYCORP.COM');
-            varACBrMail.AddAddress('LEANDRO_LOPES@BRADYCORP.COM');
             varACBrMail.AddAddress('LUCIANA_PONTIERI@BRADYCORP.COM');
 
             varACBrMail.Subject := 'S&OP - SEM REPRESENTANTE';
@@ -11444,7 +12206,6 @@ begin
             varACBrMail.AddAddress('EMERSON_ZAIDAN@BRADYCORP.COM');
             varACBrMail.AddAddress('MARCIO_TANADA@BRADYCORP.COM');
             varACBrMail.AddAddress('LILIAN_IWATA@BRADYCORP.COM');
-            varACBrMail.AddAddress('LEANDRO_LOPES@BRADYCORP.COM');
             varACBrMail.AddAddress('LUCIANA_PONTIERI@BRADYCORP.COM');
 
             varACBrMail.Subject := 'S&OP - SEM GRUPO DE CLIENTE';
@@ -12194,12 +12955,15 @@ begin
            PastaSERVIDORNFE_LIDO    := varSMTP.Values['PastaSERVIDORNFE_LIDO'];
            PastaSERVIDORCTE_LIDO    := varSMTP.Values['PastaSERVIDORCTE_LIDO'];
            PastaLOG                 := varSMTP.Values['PastaLOG'];
+           PastaERROR               := varSMTP.Values['PastaERROR'];
 
            PastaSERVIDORNFE_ENTRADA := IncludeTrailingPathDelimiter( PastaSERVIDORNFE_ENTRADA );
            PastaSERVIDORCTE_ENTRADA := IncludeTrailingPathDelimiter( PastaSERVIDORCTE_ENTRADA );
            PastaSERVIDORNFE_LIDO    := IncludeTrailingPathDelimiter( PastaSERVIDORNFE_LIDO );
            PastaSERVIDORCTE_LIDO    := IncludeTrailingPathDelimiter( PastaSERVIDORCTE_LIDO );
            PastaLOG                 := IncludeTrailingPathDelimiter( PastaLOG );
+           PastaERROR               := IncludeTrailingPathDelimiter( PastaERROR );
+
 
       end
       else
@@ -12383,6 +13147,8 @@ begin
                                         Fr_Dados.FDConnection.RollBack;
                                         bLog := True;
                                         doSaveLog(PastaLOG, GetComando(FD_Insert_EntregaXML)  + ' - Falha ao incluir XML_PROTOCOLO.' + E.Message);
+                                        MoveFile( PWideChar(   PastaXML  +  sr.Name ) , PWideChar( PastaERROR +  sr.Name ) );
+                                        searchResult := FindNext(sr);
                                         Continue;
                                       end;
                                   end;
@@ -12525,6 +13291,8 @@ begin
                                         bLog := True;
                                         Writeln( 'Falha ao Inserir XML_CAPA: ' + E.Message );
                                         doSaveLog(PastaLOG, GetComando(FD_Insert_EntregaXML) + #13#10 + 'Falha ao incluir XML_CAPA.' + E.Message);
+                                        MoveFile( PWideChar(   PastaXML  +  sr.Name ) , PWideChar( PastaERROR +  sr.Name ) );
+                                        searchResult := FindNext(sr);
                                         Continue;
                                       end;
                                   end;
@@ -12547,17 +13315,19 @@ begin
                                         Writeln( 'Falha ao Inserir XML_CAPA: ' + E.Message );
                                         bLog := True;
                                         doSaveLog(PastaLOG, GetComando(FD_Insert_EntregaXML) + #13#10 + 'Falha ao incluir pegar chave da XML_CAPA.' + E.Message);
+                                        MoveFile( PWideChar(   PastaXML  +  sr.Name ) , PWideChar( PastaERROR +  sr.Name ) );
+                                        searchResult := FindNext(sr);
                                         Continue;
                                       end;
                                   end;
 
 
                                   varSQL := ' INSERT INTO [dbo].[XML_EMITENTE]( ';
-                                  varSQL := varSQL + ' cCT ';
-                                  varSQL := varSQL + ',XML_CAPA_ID ';
+                                  varSQL := varSQL + ' cCT';
+                                  varSQL := varSQL + ',XML_CAPA_ID';
                                   varSQL := varSQL + ',CNPJCPF';
                                   varSQL := varSQL + ',IE';
-                                  varSQL := varSQL + ',IEST';
+
                                   varSQL := varSQL + ',xNome';
                                   varSQL := varSQL + ',xFant';
                                   varSQL := varSQL + ',Fone';
@@ -12570,18 +13340,18 @@ begin
                                   varSQL := varSQL + ',CEP';
                                   varSQL := varSQL + ',UF)';
                                   varSQL := varSQL + ' VALUES ( ' ;
-                                  varSQL := varSQL + ':cCT ';
-                                  varSQL := varSQL + ',:XML_CAPA_ID ';
-                                  varSQL := varSQL +',:CNPJCPF ';
-                                  varSQL := varSQL +',:IE ';
-                                  varSQL := varSQL +',:IEST ';
-                                  varSQL := varSQL +',:xNome ';
-                                  varSQL := varSQL +',:xFant ';
-                                  varSQL := varSQL +',:Fone ';
-                                  varSQL := varSQL +',:xCpl ';
-                                  varSQL := varSQL +',:xLgr ';
-                                  varSQL := varSQL +',:nro ';
-                                  varSQL := varSQL +',:xBairro ';
+                                  varSQL := varSQL + ':cCT';
+                                  varSQL := varSQL + ',:XML_CAPA_ID';
+                                  varSQL := varSQL +',:CNPJCPF';
+                                  varSQL := varSQL +',:IE';
+
+                                  varSQL := varSQL +',:xNome';
+                                  varSQL := varSQL +',:xFant';
+                                  varSQL := varSQL +',:Fone';
+                                  varSQL := varSQL +',:xCpl';
+                                  varSQL := varSQL +',:xLgr';
+                                  varSQL := varSQL +',:nro';
+                                  varSQL := varSQL +',:xBairro';
                                   varSQL := varSQL +',:cMun';
                                   varSQL := varSQL +',:xMun';
                                   varSQL := varSQL +',:CEP';
@@ -12593,11 +13363,11 @@ begin
 
                                   FD_Insert_EntregaXML.ParamByName('cCT').AsInteger                    := ide.cCT;
                                   FD_Insert_EntregaXML.ParamByName('XML_CAPA_ID').AsInteger            := IDENTITY_ID;
-                                  FD_Insert_EntregaXML.ParamByName('CNPJCPF').AsString                 := Emit.CNPJ;
-                                  FD_Insert_EntregaXML.ParamByName('IE').AsString                      := Emit.IE;
-                                  FD_Insert_EntregaXML.ParamByName('IEST').AsString                    := Emit.IEST;
-                                  FD_Insert_EntregaXML.ParamByName('xNome').AsString                   := Emit.xNome;
-                                  FD_Insert_EntregaXML.ParamByName('xFant').AsString                   := Emit.xFant;
+                                  FD_Insert_EntregaXML.ParamByName('CNPJCPF').AsString                 := Trim(Emit.CNPJ);
+                                  FD_Insert_EntregaXML.ParamByName('IE').AsString                      := Trim(Emit.IE);
+
+                                  FD_Insert_EntregaXML.ParamByName('xNome').AsString                   := Trim(Emit.xNome);
+                                  FD_Insert_EntregaXML.ParamByName('xFant').AsString                   := Trim(Emit.xFant);
                                   FD_Insert_EntregaXML.ParamByName('Fone').AsString                    := Emit.EnderEmit.fone;
                                   FD_Insert_EntregaXML.ParamByName('xCpl').AsString                    := Emit.EnderEmit.xCpl;
                                   FD_Insert_EntregaXML.ParamByName('xLgr').AsString                    := Emit.EnderEmit.xLgr;
@@ -12618,6 +13388,8 @@ begin
                                         bLog := True;
                                         Writeln( 'Falha ao Inserir XML_EMITENTE: ' + E.Message );
                                         doSaveLog(PastaLOG, GetComando(FD_Insert_EntregaXML) + #13#10 + 'Falha ao incluir XML_EMITENTE.' + E.Message);
+                                        MoveFile( PWideChar(   PastaXML  +  sr.Name ) , PWideChar( PastaERROR +  sr.Name ) );
+                                        searchResult := FindNext(sr);
                                         Continue;
                                       end;
                                   end;
@@ -12688,7 +13460,9 @@ begin
                                          bLog := True;
                                          Writeln( 'Falha ao Inserir XML_Destinatario: ' + E.Message );
                                          doSaveLog(PastaLOG, GetComando(FD_Insert_EntregaXML) + #13#10 + 'Falha ao incluir XML_Destinatario.' + E.Message);
-                                        Continue;
+                                         MoveFile( PWideChar(   PastaXML  +  sr.Name ) , PWideChar( PastaERROR +  sr.Name ) );
+                                         searchResult := FindNext(sr);
+                                         Continue;
                                       end;
                                   end;
 
@@ -12768,6 +13542,8 @@ begin
                                         bLog := True;
                                         Writeln( 'Falha ao Inserir XML_Remetente: ' + E.Message );
                                         doSaveLog(PastaLOG, GetComando(FD_Insert_EntregaXML) + #13#10 + 'Falha ao incluir XML_Remetente.' + E.Message);
+                                        MoveFile( PWideChar(   PastaXML  +  sr.Name ) , PWideChar( PastaERROR +  sr.Name ) );
+                                        searchResult := FindNext(sr);
                                         Continue;
                                       end;
                                   end;
@@ -12890,7 +13666,7 @@ begin
                                      FD_Insert_EntregaXML.ParamByName('xNome').AsString                   := ide.toma4.xNome;
                           //           FD_Insert_EntregaXML.ParamByName('xFant').AsString                   := Dest.xFant;
                           //           FD_Insert_EntregaXML.ParamByName('Fone').AsString                    := Dest.enderDest.fone;
-                       //              FD_Insert_EntregaXML.ParamByName('xCpl').AsString                    := ide.toma4.enderToma.xCpl;
+                                     FD_Insert_EntregaXML.ParamByName('xCpl').AsString                    := '';
                                      FD_Insert_EntregaXML.ParamByName('xLgr').AsString                    := ide.toma4.enderToma.xLgr;
                                      FD_Insert_EntregaXML.ParamByName('nro').AsString                     := ide.toma4.enderToma.nro;
                                      FD_Insert_EntregaXML.ParamByName('xBairro').AsString                 := ide.toma4.enderToma.xBairro;
@@ -12910,7 +13686,9 @@ begin
                                         Fr_Dados.FDConnection.RollBack;
                                         bLog := True;
                                         Writeln( 'Falha ao Inserir XML_Tomador: ' + E.Message );
-                                        doSaveLog(PastaLOG, GetComando(FD_Insert_EntregaXML) + #13#10 + 'Falha ao incluir XML_Tomador.' + E.Message);
+                                        doSaveLog(PastaLOG  , 'Falha ao incluir XML_Tomador.' + E.Message);
+                                        MoveFile( PWideChar(   PastaXML  +  sr.Name ) , PWideChar( PastaERROR +  sr.Name ) );
+                                        searchResult := FindNext(sr);
                                         Continue;
                                       end;
                                   end;
@@ -12944,6 +13722,8 @@ begin
                                         bLog := True;
                                         Writeln( 'Falha ao Inserir XML_VPrest: ' + E.Message );
                                         doSaveLog(PastaLOG, GetComando(FD_Insert_EntregaXML) + #13#10 + 'Falha ao incluir XML_VPrest.' + E.Message);
+                                        MoveFile( PWideChar(   PastaXML  +  sr.Name ) , PWideChar( PastaERROR +  sr.Name ) );
+                                        searchResult := FindNext(sr);
                                         Continue;
                                       end;
                                   end;
@@ -12977,6 +13757,8 @@ begin
                                           bLog := True;
                                           Writeln( 'Falha ao Inserir XML_IMPORTADA: ' + E.Message );
                                           doSaveLog(PastaLOG, GetComando(FD_Insert_EntregaXML) + ' ' +  'Falha ao incluir XML.' + E.Message);
+                                          MoveFile( PWideChar(   PastaXML  +  sr.Name ) , PWideChar( PastaERROR +  sr.Name ) );
+                                          searchResult := FindNext(sr);
                                         end;
                                     end;
 
@@ -12989,6 +13771,8 @@ begin
                           except
                             bLog := True;
                             doSaveLog(PastaLOG, ' Arquivo ' + PWideChar(  PastaXML +  sr.Name ));
+                            MoveFile( PWideChar(   PastaXML  +  sr.Name ) , PWideChar( PastaERROR +  sr.Name ) );
+                            searchResult := FindNext(sr);
                             Continue;
                           end;
 
@@ -13095,6 +13879,8 @@ begin
                                        bLog := True;
                                        Writeln( 'Falha ao incluir XML_PROTOCOLO.: ' +  PWideChar(  PastaXML_LIDO +  sr.Name ) );
                                        doSaveLog(PastaLOG, GetComando(FD_Insert_EntregaXML)  + ' - Falha ao incluir XML_PROTOCOLO.' + E.Message);
+                                       MoveFile( PWideChar(   PastaXML  +  sr.Name ) , PWideChar( PastaERROR +  sr.Name ) );
+                                       searchResult := FindNext(sr);
                                        Continue;
                                      end;
                                  end;
@@ -13235,6 +14021,8 @@ begin
                                        Fr_Dados.FDConnection.RollBack;
                                        Writeln( 'Falha ao incluir XML_CAPA.: ' +  PWideChar(  PastaXML_LIDO +  sr.Name ) );
                                        doSaveLog(PastaLOG, GetComando(FD_Insert_EntregaXML) + #13#10 + 'Falha ao incluir XML_CAPA.' + E.Message);
+                                       MoveFile( PWideChar(   PastaXML  +  sr.Name ) , PWideChar( PastaERROR +  sr.Name ) );
+                                       searchResult := FindNext(sr);
                                        Continue;
                                      end;
                                  end;
@@ -13257,6 +14045,8 @@ begin
                                         bLog := True;
                                         Writeln( 'Falha ao pegar Chave XML_CAPA.: ' +  PWideChar(  PastaXML_LIDO +  sr.Name ) );
                                         doSaveLog(PastaLOG, GetComando(FD_Insert_EntregaXML) + #13#10 + 'Falha ao pegar chave da XML_CAPA.' + E.Message);
+                                        MoveFile( PWideChar(   PastaXML  +  sr.Name ) , PWideChar( PastaERROR +  sr.Name ) );
+                                        searchResult := FindNext(sr);
                                         Continue;
                                       end;
                                  end;
@@ -13327,6 +14117,8 @@ begin
                                        bLog := True;
                                        Writeln( 'Falha ao incluir XML_EMITENTE: ' +  PWideChar(  PastaXML_LIDO +  sr.Name ) );
                                        doSaveLog(PastaLOG, GetComando(FD_Insert_EntregaXML) + #13#10 + 'Falha ao incluir XML_EMITENTE.' + E.Message);
+                                       MoveFile( PWideChar(   PastaXML  +  sr.Name ) , PWideChar( PastaERROR +  sr.Name ) );
+                                       searchResult := FindNext(sr);
                                        Continue;
                                      end;
                                  end;
@@ -13398,6 +14190,8 @@ begin
                                        bLog := True;
                                        Writeln( 'Falha ao incluir XML_Destinatario: ' +  PWideChar(  PastaXML_LIDO +  sr.Name ) );
                                        doSaveLog(PastaLOG, GetComando(FD_Insert_EntregaXML) + #13#10 + 'Falha ao incluir XML_Destinatario.' + E.Message);
+                                       MoveFile( PWideChar(   PastaXML  +  sr.Name ) , PWideChar( PastaERROR +  sr.Name ) );
+                                       searchResult := FindNext(sr);
                                        Continue;
                                      end;
                                  end;
@@ -13475,6 +14269,8 @@ begin
                                        bLog := True;
                                        Writeln( 'Falha ao incluir XML_Remetente: ' +  PWideChar(  PastaXML_LIDO +  sr.Name ) );
                                        doSaveLog(PastaLOG, GetComando(FD_Insert_EntregaXML) + #13#10 + 'Falha ao incluir XML_Remetente.' + E.Message);
+                                       MoveFile( PWideChar(   PastaXML  +  sr.Name ) , PWideChar( PastaERROR +  sr.Name ) );
+                                       searchResult := FindNext(sr);
                                        Continue;
                                      end;
                                  end;
@@ -13508,6 +14304,8 @@ begin
                                        bLog := True;
                                        Writeln( 'Falha ao incluir XML_VPrest: ' +  PWideChar(  PastaXML_LIDO +  sr.Name ) );
                                        doSaveLog(PastaLOG, GetComando(FD_Insert_EntregaXML) + #13#10 + 'Falha ao incluir XML_VPrest.' + E.Message);
+                                       MoveFile( PWideChar(   PastaXML  +  sr.Name ) , PWideChar( PastaERROR +  sr.Name ) );
+                                       searchResult := FindNext(sr);
                                        Continue;
                                      end;
                                  end;
@@ -13543,6 +14341,8 @@ begin
                                         bLog := True;
                                         doSaveLog(PastaLOG, GetComando(FD_Insert_EntregaXML) + ' ' +  'Falha ao incluir XML_IMPORTADA.' + E.Message);
                                         Writeln( 'Falha ao incluir XML_IMPORTADA: ' +  PWideChar(  PastaXML_LIDO +  sr.Name ) );
+                                        MoveFile( PWideChar(   PastaXML  +  sr.Name ) , PWideChar( PastaERROR +  sr.Name ) );
+                                        searchResult := FindNext(sr);
                                        end;
                                    end;
 
@@ -13643,9 +14443,10 @@ begin
                                   except
                                       doSaveLog(PastaLOG, 'Arquivo Inválido ' +  PWideChar(  PastaXML_LIDO +  sr.Name ));
                                        Writeln( 'Arquivo Invalido II: ' +  PWideChar(  PastaXML_LIDO +  sr.Name ) );
-                                      DeleteFile(PastaXML  +  sr.Name);
-                                      searchResult := FindNext(sr);
-                                      Continue;
+                                       DeleteFile(PastaXML  +  sr.Name);
+                                       searchResult := FindNext(sr);
+                                       MoveFile( PWideChar(   PastaXML  +  sr.Name ) , PWideChar( PastaERROR +  sr.Name ) );
+                                       Continue;
                                   End;
                             End;
                             try
@@ -13702,6 +14503,7 @@ begin
                                           bLog := True;
                                           Writeln( 'Falha ao Inserir XML_IMPORTADA: ' + E.Message );
                                           doSaveLog(PastaLOG, GetComando(FD_Insert_EntregaXML) + ' ' +  'Falha ao incluir XML.' + E.Message);
+                                          MoveFile( PWideChar(   PastaXML  +  sr.Name ) , PWideChar( PastaERROR +  sr.Name ) );
                                         end;
                                     end;
 
@@ -13717,6 +14519,9 @@ begin
                                     bLog := True;
                                     doSaveLog(PastaLOG, GetComando(FD_Insert_EntregaXML) + ' ' +  'Falha ao incluir Outro Tipo de Nota.' + E.Message);
                                     Writeln( 'Falha ao incluir Outro Tipo de Nota: ' +  PWideChar(  PastaXML_LIDO +  sr.Name ) );
+                                    MoveFile( PWideChar(   PastaXML  +  sr.Name ) , PWideChar( PastaERROR +  sr.Name ) );
+                                    searchResult := FindNext(sr);
+                                    Continue;
                                    end;
                                end;
 
@@ -13970,13 +14775,15 @@ begin
                                          ' ;' + e.Message);
                            End;
 
+                           Sleep(10000);
+
                        end;
 
                      end
                      else
                            doSaveLog('C:\Brady\Files\SOP\Estoque\Log\' , 'AVISO; PRODUTO YNUMBER NÃO ENCONTRADO NO MAGENTO; ' + varSETON_009[I].Split(['|'])[1].Trim +
                                                                 ';CODSETON: ' + varSETON_009[I].Split(['|'])[2].Trim +
-                                                                ';QTDE: ' +  FloatToStr(varNovoSaldo));
+                                                                ';QTDE ATUALIZARIA PARA: ' +  FloatToStr(varNovoSaldo));
 
                      Application.ProcessMessages;
                   except
@@ -14202,6 +15009,9 @@ begin
               FDQueryEmailMarketing.SQL.Add('	TSOP_ORDBILBUYERCONTACTEMAIL, ');
               FDQueryEmailMarketing.SQL.Add('	TSOP_ORDBILBUYERCONTACTFIRSTNAME,  ');
               FDQueryEmailMarketing.SQL.Add('	TSOP_ORDBILDAYOFWEEK ');
+
+              FDQueryEmailMarketing.SQL.Add(' ORDER BY CONVERT(VARCHAR, TSOP_ORDBILDATDOC,103) DESC ');
+             // FDQueryEmailMarketing.SQL.SaveToFile('c:\brady\emailmarketing.sql');
               FDQueryEmailMarketing.Open;
               while not FDQueryEmailMarketing.eof do
               begin
@@ -14303,14 +15113,26 @@ begin
                        except
                            on e: exception do
                              begin
-                               Writeln( 'Erro ao Enviar: ', FDQueryEmailMarketing.FieldByName('TSOP_ORDBILBUYERCONTACTEMAIL').AsString);
+                               Writeln( 'Erro ao Enviar: ', FDQueryEmailMarketing.FieldByName('TSOP_ORDBILBUYERCONTACTEMAIL').AsString + #13#10 + E.Message );
                                FDQueryEmailAux.Close;
                                FDQueryEmailAux.SQL.Clear;
-                               FDQueryEmailAux.SQL.Add('Update TSOP_MKT_CLIENTE Set TSOP_ENVIADO = ''X'' WHERE  TSOP_ORDBILCOD = :TSOP_ORDBILCOD and TSOP_MKT_OBSERVACAO = :TSOP_MKT_OBSERVACAO');
-                               FDQueryEmailAux.Params.ParamByName('TSOP_ORDBILCOD').AsString      := FDQueryEmailMarketing.FieldByName('TSOP_ORDBILCOD').AsString;
+                               FDQueryEmailAux.SQL.Add('Update TSOP_MKT_CLIENTE Set TSOP_ENVIADO = ''X'', TSOP_MKT_OBSERVACAO = :TSOP_MKT_OBSERVACAO, TSOP_DATA_ERRO = :TSOP_DATA_ERRO WHERE  TSOP_ORDBILNRODOC = :TSOP_ORDBILNRODOC ');
+                               FDQueryEmailAux.Params.ParamByName('TSOP_ORDBILNRODOC').AsString   := FDQueryEmailMarketing.FieldByName('TSOP_ORDBILNRODOC').AsString;
                                FDQueryEmailAux.Params.ParamByName('TSOP_MKT_OBSERVACAO').AsString := e.Message;
-                               FDQueryEmailAux.ExecSQL;
-                               bEnvio := False;
+                               FDQueryEmailAux.Params.ParamByName('TSOP_DATA_ERRO').AsDateTime    := Now;
+                               Try
+                                 FDQueryEmailAux.ExecSQL;
+                                 bEnvio := False;
+                              except
+
+                                 on E: Exception do
+                                 begin
+
+                                   Writeln( E.Message );
+
+                                 end;
+
+                               end;
                              end;
                        end;
 
@@ -14318,13 +15140,25 @@ begin
                        begin
                          FDQueryEmailAux.Close;
                          FDQueryEmailAux.SQL.Clear;
-                         FDQueryEmailAux.SQL.Add('Update TSOP_MKT_CLIENTE Set TSOP_ENVIADO = ''S'' , TSOP_DATA_ENVIO = :TSOP_DATA_ENVIO  and TSOP_MKT_OBSERVACAO = :TSOP_MKT_OBSERVACAO WHERE  TSOP_ORDBILCOD = :TSOP_ORDBILCOD');
-                         FDQueryEmailAux.Params.ParamByName('TSOP_ORDBILCOD').AsString      := FDQueryEmailMarketing.FieldByName('TSOP_ORDBILCOD').AsString;
-                         FDQueryEmailAux.Params.ParamByName('TSOP_MKT_OBSERVACAO').AsString := EmptyStr;
-                         FDQueryEmailAux.Params.ParamByName('TSOP_DATA_ENVIO').AsDateTime   := Now;
+                         FDQueryEmailAux.SQL.Add('Update TSOP_MKT_CLIENTE Set TSOP_ENVIADO = ''S'' , TSOP_DATA_ENVIO = :TSOP_DATA_ENVIO, TSOP_MKT_OBSERVACAO = :TSOP_MKT_OBSERVACAO WHERE  TSOP_ORDBILNRODOC = :TSOP_ORDBILNRODOC');
+                         FDQueryEmailAux.Params.ParamByName('TSOP_ORDBILNRODOC').AsString      := FDQueryEmailMarketing.FieldByName('TSOP_ORDBILNRODOC').AsString;
+                         FDQueryEmailAux.Params.ParamByName('TSOP_MKT_OBSERVACAO').AsString    := 'Sucesso';
+                         FDQueryEmailAux.Params.ParamByName('TSOP_DATA_ENVIO').AsDateTime      := Now;
 
-                         FDQueryEmailAux.ExecSQL;
-                         Writeln('Enviado OK: ',FDQueryEmailMarketing.FieldByName('TSOP_ORDBILBUYERCONTACTEMAIL').AsString);
+                         try
+                            FDQueryEmailAux.ExecSQL;
+                            Writeln('Enviado OK: ',FDQueryEmailMarketing.FieldByName('TSOP_ORDBILBUYERCONTACTEMAIL').AsString);
+                         except
+
+                            on E: Exception do
+                            begin
+
+                              Writeln( E.Message );
+
+                            end;
+
+                         end;
+
                        end;
 
                     end;
@@ -15076,7 +15910,6 @@ begin
       //  varACBrMail.AddAddress('LILIAN_IWATA@BRADYCORP.COM');
        // varACBrMail.AddAddress('GUSTAVO_COUTINHO@BRADYCORP.COM');
       //  varACBrMail.AddAddress('LUIZ_FOLONI@BRADYCORP.COM');
-      //  varACBrMail.AddAddress('LEANDRO_LOPES@BRADYCORP.COM');
                              // versao OLD
         varACBrMail.AddAddress('marcos.jesus.external@k2partnering.com', 'Marcos');
         varACBrMail.AddAddress('LUCIANA_PONTIERI@BRADYCORP.com', 'Luciana');
@@ -15141,7 +15974,6 @@ begin
             varACBrMail.AddAddress('EMERSON_ZAIDAN@BRADYCORP.COM');
             varACBrMail.AddAddress('MARCIO_TANADA@BRADYCORP.COM');
             varACBrMail.AddAddress('LILIAN_IWATA@BRADYCORP.COM');
-            varACBrMail.AddAddress('LEANDRO_LOPES@BRADYCORP.COM');
             varACBrMail.AddAddress('LUCIANA_PONTIERI@BRADYCORP.COM');
 
             varACBrMail.Subject := 'S&OP - SEM REPRESENTANTE';
@@ -15214,7 +16046,6 @@ begin
             varACBrMail.AddAddress('EMERSON_ZAIDAN@BRADYCORP.COM');
             varACBrMail.AddAddress('MARCIO_TANADA@BRADYCORP.COM');
             varACBrMail.AddAddress('LILIAN_IWATA@BRADYCORP.COM');
-            varACBrMail.AddAddress('LEANDRO_LOPES@BRADYCORP.COM');
             varACBrMail.AddAddress('LUCIANA_PONTIERI@BRADYCORP.COM');
 
             varACBrMail.Subject := 'S&OP - SEM GRUPO DE CLIENTE';
@@ -15585,8 +16416,10 @@ begin
   begin
 
     try
-
+      doSaveLog('C:\Brady\Files\SOP\Estoque\', 'Chamando a Procedure de Ajustar SALDO ' );
       UpdateSaldoEstoque;
+      doSaveLog('C:\Brady\Files\SOP\Estoque\', 'Finalizando a Procedure de Ajustar SALDO ' );
+
 
     except
 
@@ -16318,8 +17151,207 @@ begin
 
       end;
 
+    end
+
+  end
+  else
+  if  ParamStr(1).Equals('-full_package') then
+  begin
+
+{
+1 - BradyDataImport - SOP - Excel
+2 - BradyDataImport - SOP - qv_invoice
+3 - BradyDataImport - SOP - sap_backlog
+4 - BradyDataImport - SOP - sap_firstdate
+5 - BradyDataImport - SOP - delivery
+6 - BradyDataImport - SOP - Email
+7 - BradyDataImport - SOP - Daily Sales Mail
+}
+
+    //1 - BradyDataImport - SOP - Excel
+    Writeln('1 - BradyDataImport - SOP - Excel' );
+    try
+      while FindFirst('C:\Brady\Files\SOP\Arquivos\BW_INVOICE_*.xls', faAnyFile-faDirectory, FSearchRecord) = 0 do
+      begin
+
+        CoInitialize(nil);
+        ConvertExcelFile;
+        SplitExcelFile;
+        CoUninitialize;
+
+      end;
+
+      while FindFirst('C:\Brady\Files\SOP\Arquivos\QV_INVOICE_*.xls', faAnyFile-faDirectory, FSearchRecord) = 0 do
+      begin
+
+        CoInitialize(nil);
+        ConvertExcelFile;
+        SplitExcelFileQV;
+        CoUninitialize;
+
+      end;
+
+      ProcessarArquivos;
+
+    except
+
+      on E: Exception do
+      begin
+
+        Writeln(E.ClassName, ' : ', E.Message);
+        Sleep(60000);
+
+      end;
+
     end;
 
+
+
+    //2 - BradyDataImport - SOP - qv_invoice
+    Writeln('2 - BradyDataImport - SOP - qv_invoice' );
+
+    try
+
+      while FindFirst('C:\Brady\Files\SOP\Arquivos\QV_INVOICE*.xls', faAnyFile-faDirectory, FSearchRecord) = 0 do
+      begin
+
+        ImportQlik_INVOICE;
+
+      end;
+
+    except
+
+      on E: Exception do
+      begin
+
+        Writeln(E.ClassName, ' : ', E.Message);
+        Sleep(60000);
+
+      end;
+
+    end;
+
+    //3 - BradyDataImport - SOP - sap_backlog
+    Writeln('3 - BradyDataImport - SOP - sap_backlog' );
+    try
+
+      while FindFirst('C:\Brady\Files\SOP\Arquivos\SAP_BACKLOG*.xls', faAnyFile-faDirectory, FSearchRecord) = 0 do
+      begin
+
+        ImportSAP_BACKLOG;
+
+      end;
+
+    except
+
+      on E: Exception do
+      begin
+
+        Writeln(E.ClassName, ' : ', E.Message);
+        Sleep(60000);
+
+      end;
+
+    end;
+
+    //4 - BradyDataImport - SOP - sap_firstdate
+    Writeln('4 - BradyDataImport - SOP - sap_firstdate' );
+    try
+
+      while FindFirst('C:\Brady\Files\SOP\Arquivos\firstdate*.txt', faAnyFile-faDirectory, FSearchRecord) = 0 do
+      begin
+
+        ImportSAP_FIRSTDATE;
+
+        Writeln('Copiando arquivo para backup. ', 'C:\Brady\Files\SOP\Arquivos\'+FSearchRecord.Name );
+        CopyFile( PWideChar('C:\Brady\Files\SOP\Arquivos\'+FSearchRecord.Name), PWideChar('C:\Brady\Files\SOP\Arquivos\Backup\'+FSearchRecord.Name), True );
+
+        Writeln('Apagando arquivo. ', MyDocumentsPath+'\'+FSearchRecord.Name );
+        DeleteFile( PWideChar('C:\Brady\Files\SOP\Arquivos\'+FSearchRecord.Name) );
+
+        Writeln('Apagando arquivo local. ', MyDocumentsPath+'\'+FSearchRecord.Name );
+        DeleteFile(PWideChar(MyDocumentsPath+'\'+FSearchRecord.Name));
+
+        Sleep(15000);
+
+      end;
+
+    except
+
+      on E: Exception do
+      begin
+
+        Writeln(E.ClassName, ' : ', E.Message);
+        Sleep(60000);
+
+      end;
+
+    end;
+
+    //5 - BradyDataImport - SOP - delivery
+     Writeln('5 - BradyDataImport - SOP - delivery' );
+     try
+
+      UploadTXTDelivery;
+
+    except
+
+      on E: Exception do
+      begin
+
+        Writeln(E.ClassName, ' : ', E.Message);
+        Sleep(60000);
+
+      end;
+
+    end;
+
+    //6 - BradyDataImport - SOP - Email
+     Writeln('6 - BradyDataImport - SOP - Email' );
+
+     try
+
+      EnviarEmailValores;
+      EnviarEmailQuantidade;
+
+    except
+
+      on E: Exception do
+      begin
+
+        Writeln(E.ClassName, ' : ', E.Message);
+        Sleep(60000);
+
+      end;
+
+    end;
+
+    //7 - BradyDataImport - SOP - Daily Sales Mail
+     Writeln('7 - BradyDataImport - SOP - Daily Sales Mail' );
+
+     try
+
+      SendDailySalesMail;
+
+      if SegundoDiaUtil then
+        SendDailySalesMail(True);
+
+    {  SendDailySalesMailGroup;
+
+      if SegundoDiaUtil then
+        SendDailySalesMailGroup(True);
+     }
+    except
+
+      on E: Exception do
+      begin
+
+        Writeln(E.ClassName, ' : ', E.Message);
+        Sleep(60000);
+
+      end;
+
+    end;
 
   end;
 
@@ -16328,5 +17360,7 @@ begin
 
 
 
+
 end.
+
 

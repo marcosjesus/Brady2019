@@ -335,6 +335,9 @@ type
     cxButton4: TcxButton;
     FDQueryConsultaSAPArquivo: TStringField;
     cxGrid6DBTableView1Arquivo: TcxGridDBColumn;
+    FDQueryFBL3NTIPO_SA: TStringField;
+    cdsFBL3NTIPO_SA: TStringField;
+    cxCheckBoxCopiar: TcxCheckBox;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure ButSairClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -353,6 +356,7 @@ type
     procedure btnProcessarClick(Sender: TObject);
     procedure btnSelecionaPathClick(Sender: TObject);
     procedure cxButton4Click(Sender: TObject);
+    procedure cxCheckBoxCopiarClick(Sender: TObject);
   private
     FSearchRecord: TSearchRec;
     ArrayCentroCusto : Variant;
@@ -377,6 +381,8 @@ type
     function  AtualizarGridConsulta(pSelecao : String) : Integer;
     procedure SalvarPath(Caminho: String);
     procedure BuscaPastaArquivosSAP;
+    procedure CriarConsulta;
+    function LastCodigo(Chave, Tab, Condicao: String): String;
     { Private declarations }
   public
     { Public declarations }
@@ -548,7 +554,7 @@ var
   varArquivosMov : Array [0..1] of String;
   vetArquivos    : Array [0..7] of String;
   varArquivosBalance5 : Array [0..1] of String;
-  vetArquivosFBL3N : String;
+  vetArquivosFBL3N, vetArquivosFBL3NSA : String;
 
   varPlant,
   varDC,
@@ -598,6 +604,7 @@ begin
   end;
 
   Mensagem( 'Aguarde...' );
+
   bCancelar := False;
   ButCancelar.Visible := True;
   varAnoAtualShort    := Copy(varAnoAtual,3,2);
@@ -655,7 +662,7 @@ begin
   FDQueryAux2.Close;
   FDQueryAux2.SQL.Clear;
   FDQueryAux2.SQL.Add('SELECT * FROM ECF_CONSULTA WHERE ANO_FISCAL = :ANO_FISCAL AND ');
-  FDQueryAux2.SQL.Add('(QUERY = ''FBL3N'' AND ANO = :ANO and ANO_FISCAL = :ANO_FISCAL) ') ;
+  FDQueryAux2.SQL.Add('(QUERY = ''FBL3N'' AND NOT VARIANTE like ''%_SA'' AND ANO = :ANO and ANO_FISCAL = :ANO_FISCAL) ') ;
   FDQueryAux2.Params.ParamByName('ANO').AsString :=  varAnoAtual;
   FDQueryAux2.Params.ParamByName('ANO_FISCAL').AsString :=  varAnoAtual;
   FDQueryAux2.Open;
@@ -667,6 +674,24 @@ begin
                                          FDQueryAux2.FieldByName('ANO').AsString+'.TXT';
      FDQueryAux2.Next;
   end;
+
+
+  FDQueryAux2.Close;
+  FDQueryAux2.SQL.Clear;
+  FDQueryAux2.SQL.Add('SELECT * FROM ECF_CONSULTA WHERE ANO_FISCAL = :ANO_FISCAL AND ');
+  FDQueryAux2.SQL.Add('(VARIANTE like ''%_SA'' AND ANO = :ANO and ANO_FISCAL = :ANO_FISCAL) ') ;
+  FDQueryAux2.Params.ParamByName('ANO').AsString :=  varAnoAtual;
+  FDQueryAux2.Params.ParamByName('ANO_FISCAL').AsString :=  varAnoAtual;
+  FDQueryAux2.Open;
+  FDQueryAux2.First;
+  while not FDQueryAux2.Eof do
+  begin
+     vetArquivosFBL3NSA := 'BR_L210_' + FDQueryAux2.FieldByName('QUERY').AsString + '_' +
+                           StringReplace(FDQueryAux2.FieldByName('VARIANTE').AsString,'/','_', [rfReplaceAll, rfIgnoreCase]) + '_' +
+                                         FDQueryAux2.FieldByName('ANO').AsString+'.TXT';
+     FDQueryAux2.Next;
+  end;
+
 
  //vetArquivosFBL3N := 'FBL3N_ANUAL_'+varAnoAtual+'.TXT';
 
@@ -756,6 +781,7 @@ begin
 
             end;
 
+
             FDQueryAux.Close;
             FDQueryAux.SQL.Clear;
             FDQueryAux.SQL.Add('Select ECF_CONTROLE_ID, ANO, ANO_ANTERIOR From ECF_CONTROLE where ANO = :ANO AND ANO_ANTERIOR = :ANO_ANTERIOR');
@@ -774,6 +800,11 @@ begin
 
               for I  := 0 to High(varArquivosMov) do
               begin
+
+                 if FileExists(sPath+varArquivosMov[I]) then
+                 begin
+
+
 
                   X := 0;
                   varArquivo.Clear;
@@ -911,6 +942,7 @@ begin
 
                   CopyFile( PWideChar(sPath+varArquivosMov[I]), PWideChar(sPath+ varAnoAtual + '_'+ varAnoAnterior +'\'+ varArquivosMov[I]), True );
                   DeleteFile(PWideChar(sPath+varArquivosMov[I]));
+                 end;
               end;
 
             finally
@@ -923,7 +955,10 @@ begin
 
             for I  := 0 to High(vetArquivos) do
             begin
-                varArquivo.Clear;
+              varArquivo.Clear;
+              if FileExists(sPath+vetArquivos[I]) then
+              begin
+
                 varArquivo.LoadFromFile(sPath+vetArquivos[I]);
                 FDQuery_Insert_KE5Z.Open;
                 Try
@@ -951,7 +986,7 @@ begin
                       try
                         if I < 4 then
                         begin
-                          if not (varArquivo[X].CountChar('|') = 12) then
+                          if not (varArquivo[X].CountChar('|') = 13) then
                              Continue;
 
                         end
@@ -1007,8 +1042,8 @@ begin
                           varAMOUNT              := StrToFloat(TransformaNegativo(varArquivo[X].Split(['|'])[8].Trim.Replace( ',', '', [rfReplaceAll] ).Replace( '.', FormatSettings.DecimalSeparator, [rfReplaceAll] )));
                           varMOEDA               := varArquivo[X].Split(['|'])[9].Trim;
 
-                          if not varArquivo[X].Split(['|'])[10].IsEmpty then
-                            varCENTRO_CUSTO        := varArquivo[X].Split(['|'])[10].Trim;
+                          if not varArquivo[X].Split(['|'])[10].Trim.IsEmpty then
+                            varCENTRO_CUSTO      := varArquivo[X].Split(['|'])[10].Trim;
 
                           varPAIS                := '';
                         except
@@ -1016,7 +1051,7 @@ begin
                           on E: Exception do
                           begin
 
-                            Mensagem( 'Erro_4: ' + varArquivo[X] + '-' + IntToStr(X) );
+                            Mensagem( 'Erro_4: ' + varArquivo[X] + '-' + IntToStr(X) + #13#10 + sPath+vetArquivos[I] );
 
                           end;
 
@@ -1103,7 +1138,7 @@ begin
                 CopyFile( PWideChar(sPath + vetArquivos[I]), PWideChar(sPath + varAnoAtual + '_'+ varAnoAnterior +'\'+ vetArquivos[I]), True );
                 DeleteFile(PWideChar(sPath + vetArquivos[I]));
 
-
+              end;
             end;
 
 
@@ -1113,7 +1148,9 @@ begin
             Try
                FDQuery_FBL3N.Open;
                Try
-                      varArquivo.Clear;
+                   varArquivo.Clear;
+                   if FileExists(sPath + vetArquivosFBL3N) then
+                   begin
                       varArquivo.LoadFromFile(sPath + vetArquivosFBL3N );
                       vaarCD := '';
                       varNUMERO_CONTA := '';
@@ -1213,7 +1250,130 @@ begin
                       CopyFile( PWideChar(sPath+vetArquivosFBL3N), PWideChar(sPath+ varAnoAtual + '_'+ varAnoAnterior +'\'+ vetArquivosFBL3N), True );
                       DeleteFile(PWideChar(sPath+vetArquivosFBL3N));
 
+                   end;
 
+               Finally
+                  FDQuery_FBL3N.Close;
+               End;
+
+            except
+                   on E: Exception do
+                   begin
+
+                     MessageDlg(E.Message ,mtInformation,[mbOk],0);
+                   end;
+
+            end;
+
+
+            //vetArquivosFBL3NSA
+            varArquivo.Clear;
+            Try
+               FDQuery_FBL3N.Open;
+               Try
+                  varArquivo.Clear;
+                  if FileExists(sPath + vetArquivosFBL3NSA) then
+                  begin
+                      varArquivo.LoadFromFile(sPath + vetArquivosFBL3NSA );
+                      vaarCD := '';
+                      varNUMERO_CONTA := '';
+                      varCENTRO_CUSTO := '';
+                      varVALORCONTABIL := 0;
+                      varDCCONTABIL := '';
+                      varDATA := 0;
+                      varMOEDACONTABIL := '';
+
+                      try
+                          X := 0;
+                          Mensagem( 'Lendo linhas do arquivo ' + vetArquivosFBL3NSA );
+                          while X <= varArquivo.Count-1 do
+                          begin
+
+                          //  Mensagem( 'Linha (" ' + IntToStr(X) + '/' + IntToStr(varArquivo.Count-1) + '") "' + Trim(varArquivo[X].Split(['|'])[1]) + '" ...' );
+
+                            if bCancelar then
+                            begin
+                               MessageDlg('Importação cancelada pelo Usuário!',mtInformation,[mbOk],0);
+                               Exit;
+                            end;
+
+                            vaarCD           := varArquivo[X].Split(['|'])[1].Trim;
+                            varNUMERO_CONTA  := varArquivo[X].Split(['|'])[2].Trim;
+                            varCENTRO_CUSTO  := varArquivo[X].Split(['|'])[3].Trim;
+                            varDATA          := EncodeDate( StrToInt(Copy(varArquivo[X].Split(['|'])[4],1,4)), StrToInt(Copy(varArquivo[X].Split(['|'])[4],5,2)), StrToInt(Copy(varArquivo[X].Split(['|'])[4],7,2)));
+                            varDCCONTABIL    := varArquivo[X].Split(['|'])[7].Trim;
+                            if varDCCONTABIL = 'H' then
+                             varVALORCONTABIL :=  StrToFloat(varArquivo[X].Split(['|'])[5].Trim.Replace( ',', '', [rfReplaceAll] ).Replace( '.', FormatSettings.DecimalSeparator, [rfReplaceAll] )) * -1
+                            else  varVALORCONTABIL := StrToFloat(varArquivo[X].Split(['|'])[5].Trim.Replace( ',', '', [rfReplaceAll] ).Replace( '.', FormatSettings.DecimalSeparator, [rfReplaceAll] ));
+
+                            varMOEDACONTABIL := varArquivo[X].Split(['|'])[6].Trim;
+
+
+                            FDQuery_FBL3N.Append;
+
+                            FDQuery_FBL3NCD.AsString           := vaarCD;
+                            FDQuery_FBL3NNUMERO_CONTA.AsString := varNUMERO_CONTA;
+                            FDQuery_FBL3NCENTRO_CUSTO.AsString := varCENTRO_CUSTO;
+                            FDQuery_FBL3NDATA.asDateTime       := varDATA;
+                            ConfiguraAnoFiscal(varData);
+                            FDQuery_FBL3NANO_FISCAL.AsString   := varExercicio_AnoFiscal;
+                            FDQuery_FBL3NMES_FISCAL.AsString   := varExercicio_MesFiscal;
+                            FDQuery_FBL3NVALOR.AsFloat         := varVALORCONTABIL;
+                            FDQuery_FBL3NMOEDA.AsString        := varMOEDACONTABIL;
+                            FDQuery_FBL3NDC.AsString           := varDCCONTABIL;
+                            FDQuery_FBL3NECF_CONTROLE_ID.AsInteger  := varControle_ID;
+                            FDQuery_FBL3NANO_BASE.AsString     := varAnoAtual;
+                            FDQuery_FBL3NTIPO_SA.AsString      := 'S';
+                            try
+
+                               FDQuery_FBL3N.Post;
+
+                             except
+
+                               on E: Exception do
+                               begin
+
+                                 MessageDlg(E.Message ,mtInformation,[mbOk],0);
+                                 FDQuery_FBL3N.Cancel;
+
+                               end;
+
+                            end;
+
+
+                            try
+                                FDQuery_FBL3N.ApplyUpdates;
+                                FDQuery_FBL3N.CommitUpdates;
+
+                            except
+
+                               on E: Exception do
+                               begin
+
+                               MessageDlg(E.Message ,mtInformation,[mbOk],0);
+                                end;
+                            end;
+                            Inc(X);
+
+                         end;
+                      except
+
+                          on E: Exception do
+                          begin
+
+                             MessageDlg(E.Message ,mtInformation,[mbOk],0);
+                          end;
+
+                      end;
+
+                      if not DirectoryExists(sPath+ varAnoAtual + '_'+ varAnoAnterior) then
+                        ForceDirectories(sPath + varAnoAtual + '_'+ varAnoAnterior);
+
+
+                      CopyFile( PWideChar(sPath+vetArquivosFBL3NSA), PWideChar(sPath+ varAnoAtual + '_'+ varAnoAnterior +'\'+ vetArquivosFBL3NSA), True );
+                      DeleteFile(PWideChar(sPath+vetArquivosFBL3NSA));
+
+                  end;
 
                Finally
                   FDQuery_FBL3N.Close;
@@ -1228,13 +1388,13 @@ begin
 
             end;
 
-
             FDQuery_Insert_F01.Open;
             Try
 
               for I  := 0 to High(varArquivosBalance5) do
               begin
-
+                if FileExists(sPath+varArquivosBalance5[I]) then
+                begin
 
                   X := 0;
                   varArquivo.Clear;
@@ -1369,7 +1529,7 @@ begin
 
                   CopyFile( PWideChar(sPath+varArquivosBalance5[I]), PWideChar(sPath+ varAnoAtual + '_'+ varAnoAnterior +'\'+ varArquivosBalance5[I]), True );
                   DeleteFile(PWideChar(sPath+varArquivosBalance5[I]));
-
+                end;
               end;
 
             finally
@@ -1565,6 +1725,96 @@ begin
     iResultado := FDQueryConsultaSAP.RecordCount;
   end;
   Result := iResultado;
+end;
+
+procedure  TfrmImportarSAP.CriarConsulta;
+var
+ varAno, varAnoAnterior, varAnoPosterior : Integer;
+begin
+
+  varAno           := StrToInt(cxAno.Text)-1;
+  varAnoAnterior   := varAno-1;
+  varAnoPosterior  := varAno+1;
+  FDQueryConsultaSAP.Close;
+
+  FDQueryConsultaSAP.Params.ParamByName('ANO').AsString           := IntToStr(varAno);
+  FDQueryConsultaSAP.Params.ParamByName('ANO_FISCAL').AsString    := IntToStr(varAno);
+
+  FDQueryConsultaSAP.Params.ParamByName('ANO_ANTERIOR').AsString  := IntToStr(varAnoAnterior);
+  FDQueryConsultaSAP.Params.ParamByName('ANO_POSTERIOR').AsString := IntToStr(varAnoPosterior);
+
+  FDQueryConsultaSAP.Params.ParamByName('GL_BALANCE').AsString    := 'GL_BALANCE';
+  FDQueryConsultaSAP.Params.ParamByName('GL_BALANCE5').AsString   := 'GL_BALANCE5';
+
+  FDQueryConsultaSAP.Open;
+
+   FDQueryConsultaSAP.First;
+   while not FDQueryConsultaSAP.eof do
+   begin
+       sqlAux.Close;
+       sqlAux.SQL.Clear;
+       sqlAux.SQL.Add('Insert into ECF_CONSULTA (ECF_CONSULTA_ID, NOME, USUARIO_SAP, QUERY, VARIANTE, ANO, ANO_FISCAL ) ');
+       sqlAux.SQL.Add('Values (:ECF_CONSULTA_ID, :NOME, :USUARIO_SAP, :QUERY, :VARIANTE, :ANO, :ANO_FISCAL )');
+       sqlAux.Params.ParamByName('ECF_CONSULTA_ID').AsInteger := StrToInt(LastCodigo('ECF_CONSULTA_ID', 'ECF_CONSULTA', ''));
+       sqlAux.Params.ParamByName('NOME').AsString        :=  FDQueryConsultaSAP.FieldByName('NOME').AsString;
+       sqlAux.Params.ParamByName('USUARIO_SAP').AsString :=  FDQueryConsultaSAP.FieldByName('USUARIO_SAP').AsString;
+       sqlAux.Params.ParamByName('QUERY').AsString       :=  FDQueryConsultaSAP.FieldByName('QUERY').AsString;
+       sqlAux.Params.ParamByName('VARIANTE').AsString    :=  FDQueryConsultaSAP.FieldByName('VARIANTE').AsString;
+
+       if (StrToInt(cxAno.Text) -  FDQueryConsultaSAP.FieldByName('ANO').AsInteger = 2) then
+         sqlAux.Params.ParamByName('ANO').AsInteger         :=  StrToInt(cxAno.Text) -1
+       else sqlAux.Params.ParamByName('ANO').AsInteger      := StrToInt(cxAno.Text);
+
+       sqlAux.Params.ParamByName('ANO_FISCAL').AsInteger  :=  StrToInt(cxAno.Text);
+       try
+
+          sqlAux.ExecSQL;
+
+        except
+
+          on E: Exception do
+          begin
+
+            Mensagem( 'Erro ao Criar Consulta: ' + E.Message );
+            sqlAux.Cancel;
+
+          end;
+
+       end;
+
+
+      FDQueryConsultaSAP.Next;
+   end;
+
+   FDQueryConsultaSAP.Close;
+end;
+
+
+function TfrmImportarSAP.LastCodigo(Chave, Tab, Condicao: String): String;
+var
+  QryAux : TFDQuery;
+begin
+ Result := '';
+
+ QryAux := TFDQuery.Create(Self);
+ QryAux.Connection := DB_Conect.FDConnection ;
+
+  With qryAux do begin
+
+    close;
+    Sql.Clear;
+    Sql.Add('select Max(' + Chave  +') from ' + Tab + ' '+ Condicao );    // condição usado pra gerar subcodigo
+    Open;
+
+    if not (Eof) and (Fields[0].AsString <> '') then
+      Result :=  IntToStr( StrToInt(Fields[0].AsString) + 1 )
+    else if Condicao <> '' then       // é um subcodigo
+      Result := '000001'
+    else
+      Result := '001';                // não é subcodigo
+  end;
+  qryAux.Close;
+ QryAux.Destroy;
 end;
 
 procedure TfrmImportarSAP.CriarSaldo(pAnoAnterior, pAno : String);
@@ -1768,6 +2018,38 @@ begin
 
  AtualizarGridConsulta('');
  FDQueryConsultaSAP.First;
+
+end;
+
+procedure TfrmImportarSAP.cxCheckBoxCopiarClick(Sender: TObject);
+begin
+   if cxAno.Text = EmptyStr then
+   begin
+     raise Exception.Create('Informe o ano no campo Período de Importação.');
+     cxCheckBoxCopiar.Checked := False;
+   end;
+
+  FDQueryConsultaSAP.Close;
+
+  FDQueryConsultaSAP.Params.ParamByName('ANO').AsString           := cxAno.Text;
+  FDQueryConsultaSAP.Params.ParamByName('ANO_FISCAL').AsString    := cxAno.Text;
+
+  FDQueryConsultaSAP.Params.ParamByName('ANO_ANTERIOR').AsString  := IntToStr(StrToInt(cxAno.Text)-1);
+  FDQueryConsultaSAP.Params.ParamByName('ANO_POSTERIOR').AsString := IntToStr(StrToInt(cxAno.Text)+1);
+
+  FDQueryConsultaSAP.Params.ParamByName('GL_BALANCE').AsString    := 'GL_BALANCE';
+  FDQueryConsultaSAP.Params.ParamByName('GL_BALANCE5').AsString   := 'GL_BALANCE5';
+
+  FDQueryConsultaSAP.Open;
+  if not FDQueryConsultaSAP.IsEmpty then
+  begin
+     raise Exception.Create('Consultas para o ano informado já foram criadas.');
+     cxCheckBoxCopiar.Checked := False;
+  end;
+
+  CriarConsulta;
+
+  Application.MessageBox('Consultas criadas com sucesso. Altere o Nome das Variantes.', 'L210', mb_iconinformation +  MB_OK);
 
 end;
 

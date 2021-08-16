@@ -178,15 +178,15 @@ begin
     QGrid.Sql.Add(' Where 1 = 1 ');
 
     if ((EdiDatIni.EditValue <> null)  and (EdiDatFim.EditValue = null)) Then
-        Parametros :=  ' and  T.TRE_DTREALIZACAO  = ' + QuotedStr(FormatDateTime('dd/mm/yyyy', EdiDatIni.Date))
+        Parametros :=  ' and  T.TRE_DTREALIZACAO  = ' + QuotedStr(FormatDateTime('yyyy/mm/dd', EdiDatIni.Date))
 
     else if ((EdiDatIni.EditValue = null)  and (EdiDatFim.EditValue <> null)) Then
-        Parametros :=  ' and  T.TRE_DTTERMINO  = ' + QuotedStr(FormatDateTime('dd/mm/yyyy', EdiDatFim.Date))
+        Parametros :=  ' and  T.TRE_DTTERMINO  = ' + QuotedStr(FormatDateTime('yyyy/mm/dd', EdiDatFim.Date))
 
     else if  ((EdiDatIni.EditValue <> null)  and (EdiDatFim.EditValue <> null)) Then
         Parametros :=  ' and  T.TRE_DTREALIZACAO  >= ' +
-                        QuotedStr(FormatDateTime('dd/mm/yyyy', EdiDatIni.Date)) +  ' and  T.TRE_DTTERMINO <= ' +
-                        QuotedStr(FormatDateTime('dd/mm/yyyy', EdiDatFim.Date));
+                        QuotedStr(FormatDateTime('yyyy/mm/dd', EdiDatIni.Date)) +  ' and  T.TRE_DTTERMINO <= ' +
+                        QuotedStr(FormatDateTime('yyyy/mm/dd', EdiDatFim.Date));
 
     if  ((EditBuscaParticipante.Text <> '') and (EditBuscaParticipante.bs_KeyValues.Count > 0)) Then
         Parametros := Parametros + ' and P.FUN_MATRICULA = ' + QuotedStr(VarToStr(EditBuscaParticipante.bs_KeyValue));

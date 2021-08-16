@@ -23,7 +23,12 @@ uses
   FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf, FireDAC.Stan.Def,
   FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Stan.Param,
   FireDAC.DatS, FireDAC.DApt.Intf, FireDAC.DApt, FireDAC.Comp.DataSet,
-  FireDAC.Comp.Client;
+  FireDAC.Comp.Client, dxSkinCaramel, dxSkinCoffee, dxSkinDarkRoom,
+  dxSkinDarkSide, dxSkinFoggy, dxSkinGlassOceans, dxSkiniMaginary, dxSkinLilian,
+  dxSkinLiquidSky, dxSkinLondonLiquidSky, dxSkinMcSkin, dxSkinOffice2007Green,
+  dxSkinOffice2007Pink, dxSkinOffice2007Silver, dxSkinOffice2010Silver,
+  dxSkinPumpkin, dxSkinSeven, dxSkinSharp, dxSkinSilver, dxSkinSpringTime,
+  dxSkinStardust, dxSkinSummer2008, dxSkinValentine, dxSkinXmas2008Blue;
 
 type
   TFormConsTab = class(TForm)
@@ -220,8 +225,9 @@ Begin
    FormConsTab.QCons.Connection := DB_Conect.SQLConnection ;
    FormConsTab.QCons.Close ;
    FormConsTab.QCons.Sql.Clear ;
-   FormConsTab.QCons.Sql.Add(VarSql) ;
-//   FormConsTab.QCons.Open ;
+   FormConsTab.QCons.Sql.Add(lowercase(VarSql)) ;
+   FormConsTab.QCons.Open ;
+   FormConsTab.cdsCons.Open;
 
 
  {
@@ -377,6 +383,7 @@ Begin
 
        cmbCampo.Properties.Items.Add(VarTitles[i]);
    End ;
+   TableView.DataController.DataSource := Ds;
 
 
    cmbCampo.ItemIndex := 0;

@@ -330,7 +330,7 @@ begin
         if UpperCase(dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString) = '45 - 59 DIAS' then
            varColumnFORDPO4660 := I;
 
-        if UpperCase(dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString) = 'ACIMA DE 60' then
+        if UpperCase(dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString) = 'ACIMA DE 60 DIAS' then
            varColumnFORDPO6190 := I;
 
         //if UpperCase(dxSpreadSheet.ActiveSheetAsTable.Columns[I].Cells[0].AsString) = 'DT DPO' then
@@ -674,9 +674,7 @@ begin
     end;
 
 
-    Mensagem( 'Importação Concluida...' );
-
-    Sleep(3000);
+    Application.MessageBox( 'Importação concluída com sucesso!!!', 'S&OP', MB_ICONINFORMATION );
 
     Mensagem( EmptyStr );
 

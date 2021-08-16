@@ -1,0 +1,2191 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="6/8/2020 2:25:13 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="DESKTOP-99M8LEG"
+  DTS:CreatorName="DESKTOP-99M8LEG\aluga.com"
+  DTS:DTSID="{338C328C-1833-4B01-AD0F-B33CA2321CD8}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.93"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="IQF_Package"
+  DTS:PackageType="5"
+  DTS:VersionBuild="4"
+  DTS:VersionGUID="{282766B0-7B53-47C1-B963-0A3850FB7A69}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[HOMOLOGACAO_GHOS2023.AppSOP_HOM.sa]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{BEA4B376-B4C5-473B-9905-DA7371B8461B}"
+      DTS:ObjectName="HOMOLOGACAO_GHOS2023.AppSOP_HOM.sa">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=GHOS2023;User ID=sa;Initial Catalog=AppSOP_HOM;Provider=SQLNCLI11.1;Persist Security Info=True;Auto Translate=False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAkB1MNhC530aodqcCZ7uzjwAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAACbQayNup/LHUvrQw2BK0vdt/AUZ631AJZKdZkIxDImnwAAAAAOgAAAAAIAACAAAACCtPloVSKeg4dSZO2zAOW4qUKAp5TFQ/htT21IwvdFsCAAAAD8vIdYSV1SBBQWyZhtIjG9e29nwqO3Y5vtFJRHW3QuJUAAAADUxp0tRKUL92Qu+R38BqioTjoQXbEISjkOde722K0QD7tqFv1d9y9RbJc7EDVkdyJPNB7zWLlcpBxhWLlZrokM</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[PRODUCAO_GHOS2023.AppSOP.sa]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{0B41072B-07C4-499B-8E9E-833CE8991C74}"
+      DTS:ObjectName="PRODUCAO_GHOS2023.AppSOP.sa">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=GHOS2023;User ID=sa;Initial Catalog=AppSOP;Provider=SQLNCLI11.1;Persist Security Info=True;Auto Translate=False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAkB1MNhC530aodqcCZ7uzjwAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAAAe8i6Ctx1jWuOkGSNjVwfgnyQF0gq+zgsPlgVkgM2SawAAAAAOgAAAAAIAACAAAADUPj1L0FKZ/Iw5MkasUGeoq5o1sf8OLCwMMag7zUpcTSAAAACl8rftMPUF3dAXCHwOs79mz+WRrCtZ2glV89YyVFFiqEAAAAAk3wZNAnrgvndTEcTPAt1K7un8eJqNudgUs7O4F0Ys4yZnTmSpICVWFXIFNk8Hk9tJn7O3Vv9y533o/C1aNB4W</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\SQ_DADOS"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{5BD58C73-089B-4933-A1DC-C86E07F356F5}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SQ_DADOS">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\SQ_DADOS\Execute SQL Task"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{3CDF8C5B-BA96-4429-8EC2-D93EB75B5A4D}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Execute SQL Task"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{BEA4B376-B4C5-473B-9905-DA7371B8461B}"
+              SQLTask:BypassPrepare="False"
+              SQLTask:SqlStatementSource="ALTER TABLE [dbo].[TIQF_Dados]  WITH CHECK ADD FOREIGN KEY([TIQF_FORCOD])&#xA;REFERENCES [dbo].[TIQF_Fornecedor] ([TIQF_FORCOD])&#xA;GO&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO"
+          DTS:CreationName="Microsoft.Pipeline"
+          DTS:Description="Data Flow Task"
+          DTS:DTSID="{5E0BA074-700C-44BB-8718-0EFEEAA8FF36}"
+          DTS:ExecutableType="Microsoft.Pipeline"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="PRODUCAO-HOMOLOGACAO"
+          DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <pipeline
+              version="1">
+              <components>
+                <component
+                  refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS"
+                  componentClassID="Microsoft.OLEDBSource"
+                  contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+                  description="OLE DB Source"
+                  name="FONTE PRODUCAO-&gt;TIQF_DADOS"
+                  usesDispositions="true"
+                  version="7">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">[dbo].[TIQF_Dados]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                    <property
+                      dataType="System.String"
+                      description="The variable that contains the SQL command to be executed."
+                      name="SqlCommandVariable"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">0</property>
+                    <property
+                      dataType="System.String"
+                      description="The mappings between the parameters in the SQL command and variables."
+                      name="ParameterMapping"></property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[PRODUCAO_GHOS2023.AppSOP.sa]"
+                      connectionManagerRefId="Package.ConnectionManagers[PRODUCAO_GHOS2023.AppSOP.sa]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <outputs>
+                    <output
+                      refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output]"
+                      name="OLE DB Source Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_DADCOD]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].ExternalColumns[TIQF_DADCOD]"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_DADCOD]"
+                          name="TIQF_DADCOD"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_PERCOD]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].ExternalColumns[TIQF_PERCOD]"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_PERCOD]"
+                          name="TIQF_PERCOD"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_FORCOD]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].ExternalColumns[TIQF_FORCOD]"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_FORCOD]"
+                          name="TIQF_FORCOD"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_DADQTDENT]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].ExternalColumns[TIQF_DADQTDENT]"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_DADQTDENT]"
+                          name="TIQF_DADQTDENT"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_DADQTDATR]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].ExternalColumns[TIQF_DADQTDATR]"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_DADQTDATR]"
+                          name="TIQF_DADQTDATR"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_DADQTDRNCEMB]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].ExternalColumns[TIQF_DADQTDRNCEMB]"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_DADQTDRNCEMB]"
+                          name="TIQF_DADQTDRNCEMB"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_DADQTDFAL]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].ExternalColumns[TIQF_DADQTDFAL]"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_DADQTDFAL]"
+                          name="TIQF_DADQTDFAL"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_DADPERIQFMES]"
+                          dataType="numeric"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].ExternalColumns[TIQF_DADPERIQFMES]"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_DADPERIQFMES]"
+                          name="TIQF_DADPERIQFMES"
+                          precision="15"
+                          scale="2"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_DADPERIQFACU]"
+                          dataType="numeric"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].ExternalColumns[TIQF_DADPERIQFACU]"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_DADPERIQFACU]"
+                          name="TIQF_DADPERIQFACU"
+                          precision="15"
+                          scale="2"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_DADQN]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].ExternalColumns[TIQF_DADQN]"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_DADQN]"
+                          name="TIQF_DADQN"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_DADDOCMANUAL]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].ExternalColumns[TIQF_DADDOCMANUAL]"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_DADDOCMANUAL]"
+                          name="TIQF_DADDOCMANUAL"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_DADDOCCER]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].ExternalColumns[TIQF_DADDOCCER]"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_DADDOCCER]"
+                          name="TIQF_DADDOCCER"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_DADDOCSUPA]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].ExternalColumns[TIQF_DADDOCSUPA]"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_DADDOCSUPA]"
+                          name="TIQF_DADDOCSUPA"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_DADDOCBALP]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].ExternalColumns[TIQF_DADDOCBALP]"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_DADDOCBALP]"
+                          name="TIQF_DADDOCBALP"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_DADNFEXML]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].ExternalColumns[TIQF_DADNFEXML]"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_DADNFEXML]"
+                          name="TIQF_DADNFEXML"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_DADNFENFP]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].ExternalColumns[TIQF_DADNFENFP]"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_DADNFENFP]"
+                          name="TIQF_DADNFENFP"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_DADNFEVCT]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].ExternalColumns[TIQF_DADNFEVCT]"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_DADNFEVCT]"
+                          name="TIQF_DADNFEVCT"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_DADNFEDEI]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].ExternalColumns[TIQF_DADNFEDEI]"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_DADNFEDEI]"
+                          name="TIQF_DADNFEDEI"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_DADDPO3045]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].ExternalColumns[TIQF_DADDPO3045]"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_DADDPO3045]"
+                          name="TIQF_DADDPO3045"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_DADDPO4660]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].ExternalColumns[TIQF_DADDPO4660]"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_DADDPO4660]"
+                          name="TIQF_DADDPO4660"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_DADDPO6190]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].ExternalColumns[TIQF_DADDPO6190]"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_DADDPO6190]"
+                          name="TIQF_DADDPO6190"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_DADDTMANUAL]"
+                          dataType="dbTimeStamp"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].ExternalColumns[TIQF_DADDTMANUAL]"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_DADDTMANUAL]"
+                          name="TIQF_DADDTMANUAL"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_DADDTSUPPLY]"
+                          dataType="dbTimeStamp"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].ExternalColumns[TIQF_DADDTSUPPLY]"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_DADDTSUPPLY]"
+                          name="TIQF_DADDTSUPPLY"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_DADDTBALANCO]"
+                          dataType="dbTimeStamp"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].ExternalColumns[TIQF_DADDTBALANCO]"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_DADDTBALANCO]"
+                          name="TIQF_DADDTBALANCO"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_DADDTDOP]"
+                          dataType="dbTimeStamp"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].ExternalColumns[TIQF_DADDTDOP]"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_DADDTDOP]"
+                          name="TIQF_DADDTDOP"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_FORSAP]"
+                          codePage="1252"
+                          dataType="str"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].ExternalColumns[TIQF_FORSAP]"
+                          length="255"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_FORSAP]"
+                          name="TIQF_FORSAP"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[PERCOD_CERTA]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].ExternalColumns[PERCOD_CERTA]"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[PERCOD_CERTA]"
+                          name="PERCOD_CERTA"
+                          truncationRowDisposition="FailComponent" />
+                      </outputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].ExternalColumns[TIQF_DADCOD]"
+                          dataType="i4"
+                          name="TIQF_DADCOD" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].ExternalColumns[TIQF_PERCOD]"
+                          dataType="i4"
+                          name="TIQF_PERCOD" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].ExternalColumns[TIQF_FORCOD]"
+                          dataType="i4"
+                          name="TIQF_FORCOD" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].ExternalColumns[TIQF_DADQTDENT]"
+                          dataType="i4"
+                          name="TIQF_DADQTDENT" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].ExternalColumns[TIQF_DADQTDATR]"
+                          dataType="i4"
+                          name="TIQF_DADQTDATR" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].ExternalColumns[TIQF_DADQTDRNCEMB]"
+                          dataType="i4"
+                          name="TIQF_DADQTDRNCEMB" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].ExternalColumns[TIQF_DADQTDFAL]"
+                          dataType="i4"
+                          name="TIQF_DADQTDFAL" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].ExternalColumns[TIQF_DADPERIQFMES]"
+                          dataType="numeric"
+                          name="TIQF_DADPERIQFMES"
+                          precision="15"
+                          scale="2" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].ExternalColumns[TIQF_DADPERIQFACU]"
+                          dataType="numeric"
+                          name="TIQF_DADPERIQFACU"
+                          precision="15"
+                          scale="2" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].ExternalColumns[TIQF_DADQN]"
+                          dataType="i4"
+                          name="TIQF_DADQN" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].ExternalColumns[TIQF_DADDOCMANUAL]"
+                          dataType="i4"
+                          name="TIQF_DADDOCMANUAL" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].ExternalColumns[TIQF_DADDOCCER]"
+                          dataType="i4"
+                          name="TIQF_DADDOCCER" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].ExternalColumns[TIQF_DADDOCSUPA]"
+                          dataType="i4"
+                          name="TIQF_DADDOCSUPA" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].ExternalColumns[TIQF_DADDOCBALP]"
+                          dataType="i4"
+                          name="TIQF_DADDOCBALP" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].ExternalColumns[TIQF_DADNFEXML]"
+                          dataType="i4"
+                          name="TIQF_DADNFEXML" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].ExternalColumns[TIQF_DADNFENFP]"
+                          dataType="i4"
+                          name="TIQF_DADNFENFP" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].ExternalColumns[TIQF_DADNFEVCT]"
+                          dataType="i4"
+                          name="TIQF_DADNFEVCT" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].ExternalColumns[TIQF_DADNFEDEI]"
+                          dataType="i4"
+                          name="TIQF_DADNFEDEI" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].ExternalColumns[TIQF_DADDPO3045]"
+                          dataType="i4"
+                          name="TIQF_DADDPO3045" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].ExternalColumns[TIQF_DADDPO4660]"
+                          dataType="i4"
+                          name="TIQF_DADDPO4660" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].ExternalColumns[TIQF_DADDPO6190]"
+                          dataType="i4"
+                          name="TIQF_DADDPO6190" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].ExternalColumns[TIQF_DADDTMANUAL]"
+                          dataType="dbTimeStamp"
+                          name="TIQF_DADDTMANUAL" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].ExternalColumns[TIQF_DADDTSUPPLY]"
+                          dataType="dbTimeStamp"
+                          name="TIQF_DADDTSUPPLY" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].ExternalColumns[TIQF_DADDTBALANCO]"
+                          dataType="dbTimeStamp"
+                          name="TIQF_DADDTBALANCO" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].ExternalColumns[TIQF_DADDTDOP]"
+                          dataType="dbTimeStamp"
+                          name="TIQF_DADDTDOP" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].ExternalColumns[TIQF_FORSAP]"
+                          codePage="1252"
+                          dataType="str"
+                          length="255"
+                          name="TIQF_FORSAP" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].ExternalColumns[PERCOD_CERTA]"
+                          dataType="i4"
+                          name="PERCOD_CERTA" />
+                      </externalMetadataColumns>
+                    </output>
+                    <output
+                      refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Error Output]"
+                      isErrorOut="true"
+                      name="OLE DB Source Error Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Error Output].Columns[TIQF_DADCOD]"
+                          dataType="i4"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Error Output].Columns[TIQF_DADCOD]"
+                          name="TIQF_DADCOD" />
+                        <outputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Error Output].Columns[TIQF_PERCOD]"
+                          dataType="i4"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Error Output].Columns[TIQF_PERCOD]"
+                          name="TIQF_PERCOD" />
+                        <outputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Error Output].Columns[TIQF_FORCOD]"
+                          dataType="i4"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Error Output].Columns[TIQF_FORCOD]"
+                          name="TIQF_FORCOD" />
+                        <outputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Error Output].Columns[TIQF_DADQTDENT]"
+                          dataType="i4"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Error Output].Columns[TIQF_DADQTDENT]"
+                          name="TIQF_DADQTDENT" />
+                        <outputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Error Output].Columns[TIQF_DADQTDATR]"
+                          dataType="i4"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Error Output].Columns[TIQF_DADQTDATR]"
+                          name="TIQF_DADQTDATR" />
+                        <outputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Error Output].Columns[TIQF_DADQTDRNCEMB]"
+                          dataType="i4"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Error Output].Columns[TIQF_DADQTDRNCEMB]"
+                          name="TIQF_DADQTDRNCEMB" />
+                        <outputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Error Output].Columns[TIQF_DADQTDFAL]"
+                          dataType="i4"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Error Output].Columns[TIQF_DADQTDFAL]"
+                          name="TIQF_DADQTDFAL" />
+                        <outputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Error Output].Columns[TIQF_DADPERIQFMES]"
+                          dataType="numeric"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Error Output].Columns[TIQF_DADPERIQFMES]"
+                          name="TIQF_DADPERIQFMES"
+                          precision="15"
+                          scale="2" />
+                        <outputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Error Output].Columns[TIQF_DADPERIQFACU]"
+                          dataType="numeric"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Error Output].Columns[TIQF_DADPERIQFACU]"
+                          name="TIQF_DADPERIQFACU"
+                          precision="15"
+                          scale="2" />
+                        <outputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Error Output].Columns[TIQF_DADQN]"
+                          dataType="i4"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Error Output].Columns[TIQF_DADQN]"
+                          name="TIQF_DADQN" />
+                        <outputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Error Output].Columns[TIQF_DADDOCMANUAL]"
+                          dataType="i4"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Error Output].Columns[TIQF_DADDOCMANUAL]"
+                          name="TIQF_DADDOCMANUAL" />
+                        <outputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Error Output].Columns[TIQF_DADDOCCER]"
+                          dataType="i4"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Error Output].Columns[TIQF_DADDOCCER]"
+                          name="TIQF_DADDOCCER" />
+                        <outputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Error Output].Columns[TIQF_DADDOCSUPA]"
+                          dataType="i4"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Error Output].Columns[TIQF_DADDOCSUPA]"
+                          name="TIQF_DADDOCSUPA" />
+                        <outputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Error Output].Columns[TIQF_DADDOCBALP]"
+                          dataType="i4"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Error Output].Columns[TIQF_DADDOCBALP]"
+                          name="TIQF_DADDOCBALP" />
+                        <outputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Error Output].Columns[TIQF_DADNFEXML]"
+                          dataType="i4"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Error Output].Columns[TIQF_DADNFEXML]"
+                          name="TIQF_DADNFEXML" />
+                        <outputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Error Output].Columns[TIQF_DADNFENFP]"
+                          dataType="i4"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Error Output].Columns[TIQF_DADNFENFP]"
+                          name="TIQF_DADNFENFP" />
+                        <outputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Error Output].Columns[TIQF_DADNFEVCT]"
+                          dataType="i4"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Error Output].Columns[TIQF_DADNFEVCT]"
+                          name="TIQF_DADNFEVCT" />
+                        <outputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Error Output].Columns[TIQF_DADNFEDEI]"
+                          dataType="i4"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Error Output].Columns[TIQF_DADNFEDEI]"
+                          name="TIQF_DADNFEDEI" />
+                        <outputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Error Output].Columns[TIQF_DADDPO3045]"
+                          dataType="i4"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Error Output].Columns[TIQF_DADDPO3045]"
+                          name="TIQF_DADDPO3045" />
+                        <outputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Error Output].Columns[TIQF_DADDPO4660]"
+                          dataType="i4"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Error Output].Columns[TIQF_DADDPO4660]"
+                          name="TIQF_DADDPO4660" />
+                        <outputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Error Output].Columns[TIQF_DADDPO6190]"
+                          dataType="i4"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Error Output].Columns[TIQF_DADDPO6190]"
+                          name="TIQF_DADDPO6190" />
+                        <outputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Error Output].Columns[TIQF_DADDTMANUAL]"
+                          dataType="dbTimeStamp"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Error Output].Columns[TIQF_DADDTMANUAL]"
+                          name="TIQF_DADDTMANUAL" />
+                        <outputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Error Output].Columns[TIQF_DADDTSUPPLY]"
+                          dataType="dbTimeStamp"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Error Output].Columns[TIQF_DADDTSUPPLY]"
+                          name="TIQF_DADDTSUPPLY" />
+                        <outputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Error Output].Columns[TIQF_DADDTBALANCO]"
+                          dataType="dbTimeStamp"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Error Output].Columns[TIQF_DADDTBALANCO]"
+                          name="TIQF_DADDTBALANCO" />
+                        <outputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Error Output].Columns[TIQF_DADDTDOP]"
+                          dataType="dbTimeStamp"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Error Output].Columns[TIQF_DADDTDOP]"
+                          name="TIQF_DADDTDOP" />
+                        <outputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Error Output].Columns[TIQF_FORSAP]"
+                          codePage="1252"
+                          dataType="str"
+                          length="255"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Error Output].Columns[TIQF_FORSAP]"
+                          name="TIQF_FORSAP" />
+                        <outputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Error Output].Columns[PERCOD_CERTA]"
+                          dataType="i4"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Error Output].Columns[PERCOD_CERTA]"
+                          name="PERCOD_CERTA" />
+                        <outputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS"
+                  componentClassID="Microsoft.OLEDBDestination"
+                  contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+                  description="OLE DB Destination"
+                  name="HOMOLOGACAO-&gt;TIQF_DADOS"
+                  usesDispositions="true"
+                  version="4">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">[dbo].[TIQF_Dados]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">3</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepIdentity">false</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepNulls">false</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                      name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                      name="FastLoadMaxInsertCommitSize">2147483647</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[HOMOLOGACAO_GHOS2023.AppSOP_HOM.sa]"
+                      connectionManagerRefId="Package.ConnectionManagers[HOMOLOGACAO_GHOS2023.AppSOP_HOM.sa]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input]"
+                      errorOrTruncationOperation="Insert"
+                      errorRowDisposition="FailComponent"
+                      hasSideEffects="true"
+                      name="OLE DB Destination Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].Columns[TIQF_PERCOD]"
+                          cachedDataType="i4"
+                          cachedName="TIQF_PERCOD"
+                          externalMetadataColumnId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_PERCOD]"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_PERCOD]" />
+                        <inputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].Columns[TIQF_FORCOD]"
+                          cachedDataType="i4"
+                          cachedName="TIQF_FORCOD"
+                          externalMetadataColumnId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_FORCOD]"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_FORCOD]" />
+                        <inputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].Columns[TIQF_DADQTDENT]"
+                          cachedDataType="i4"
+                          cachedName="TIQF_DADQTDENT"
+                          externalMetadataColumnId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_DADQTDENT]"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_DADQTDENT]" />
+                        <inputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].Columns[TIQF_DADQTDATR]"
+                          cachedDataType="i4"
+                          cachedName="TIQF_DADQTDATR"
+                          externalMetadataColumnId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_DADQTDATR]"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_DADQTDATR]" />
+                        <inputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].Columns[TIQF_DADQTDRNCEMB]"
+                          cachedDataType="i4"
+                          cachedName="TIQF_DADQTDRNCEMB"
+                          externalMetadataColumnId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_DADQTDRNCEMB]"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_DADQTDRNCEMB]" />
+                        <inputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].Columns[TIQF_DADQTDFAL]"
+                          cachedDataType="i4"
+                          cachedName="TIQF_DADQTDFAL"
+                          externalMetadataColumnId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_DADQTDFAL]"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_DADQTDFAL]" />
+                        <inputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].Columns[TIQF_DADPERIQFMES]"
+                          cachedDataType="numeric"
+                          cachedName="TIQF_DADPERIQFMES"
+                          cachedPrecision="15"
+                          cachedScale="2"
+                          externalMetadataColumnId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_DADPERIQFMES]"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_DADPERIQFMES]" />
+                        <inputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].Columns[TIQF_DADPERIQFACU]"
+                          cachedDataType="numeric"
+                          cachedName="TIQF_DADPERIQFACU"
+                          cachedPrecision="15"
+                          cachedScale="2"
+                          externalMetadataColumnId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_DADPERIQFACU]"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_DADPERIQFACU]" />
+                        <inputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].Columns[TIQF_DADQN]"
+                          cachedDataType="i4"
+                          cachedName="TIQF_DADQN"
+                          externalMetadataColumnId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_DADQN]"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_DADQN]" />
+                        <inputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].Columns[TIQF_DADDOCMANUAL]"
+                          cachedDataType="i4"
+                          cachedName="TIQF_DADDOCMANUAL"
+                          externalMetadataColumnId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_DADDOCMANUAL]"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_DADDOCMANUAL]" />
+                        <inputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].Columns[TIQF_DADDOCCER]"
+                          cachedDataType="i4"
+                          cachedName="TIQF_DADDOCCER"
+                          externalMetadataColumnId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_DADDOCCER]"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_DADDOCCER]" />
+                        <inputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].Columns[TIQF_DADDOCSUPA]"
+                          cachedDataType="i4"
+                          cachedName="TIQF_DADDOCSUPA"
+                          externalMetadataColumnId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_DADDOCSUPA]"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_DADDOCSUPA]" />
+                        <inputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].Columns[TIQF_DADDOCBALP]"
+                          cachedDataType="i4"
+                          cachedName="TIQF_DADDOCBALP"
+                          externalMetadataColumnId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_DADDOCBALP]"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_DADDOCBALP]" />
+                        <inputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].Columns[TIQF_DADNFEXML]"
+                          cachedDataType="i4"
+                          cachedName="TIQF_DADNFEXML"
+                          externalMetadataColumnId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_DADNFEXML]"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_DADNFEXML]" />
+                        <inputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].Columns[TIQF_DADNFENFP]"
+                          cachedDataType="i4"
+                          cachedName="TIQF_DADNFENFP"
+                          externalMetadataColumnId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_DADNFENFP]"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_DADNFENFP]" />
+                        <inputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].Columns[TIQF_DADNFEVCT]"
+                          cachedDataType="i4"
+                          cachedName="TIQF_DADNFEVCT"
+                          externalMetadataColumnId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_DADNFEVCT]"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_DADNFEVCT]" />
+                        <inputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].Columns[TIQF_DADNFEDEI]"
+                          cachedDataType="i4"
+                          cachedName="TIQF_DADNFEDEI"
+                          externalMetadataColumnId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_DADNFEDEI]"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_DADNFEDEI]" />
+                        <inputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].Columns[TIQF_DADDPO3045]"
+                          cachedDataType="i4"
+                          cachedName="TIQF_DADDPO3045"
+                          externalMetadataColumnId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_DADDPO3045]"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_DADDPO3045]" />
+                        <inputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].Columns[TIQF_DADDPO4660]"
+                          cachedDataType="i4"
+                          cachedName="TIQF_DADDPO4660"
+                          externalMetadataColumnId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_DADDPO4660]"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_DADDPO4660]" />
+                        <inputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].Columns[TIQF_DADDPO6190]"
+                          cachedDataType="i4"
+                          cachedName="TIQF_DADDPO6190"
+                          externalMetadataColumnId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_DADDPO6190]"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_DADDPO6190]" />
+                        <inputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].Columns[TIQF_DADDTMANUAL]"
+                          cachedDataType="dbTimeStamp"
+                          cachedName="TIQF_DADDTMANUAL"
+                          externalMetadataColumnId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_DADDTMANUAL]"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_DADDTMANUAL]" />
+                        <inputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].Columns[TIQF_DADDTSUPPLY]"
+                          cachedDataType="dbTimeStamp"
+                          cachedName="TIQF_DADDTSUPPLY"
+                          externalMetadataColumnId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_DADDTSUPPLY]"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_DADDTSUPPLY]" />
+                        <inputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].Columns[TIQF_DADDTBALANCO]"
+                          cachedDataType="dbTimeStamp"
+                          cachedName="TIQF_DADDTBALANCO"
+                          externalMetadataColumnId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_DADDTBALANCO]"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_DADDTBALANCO]" />
+                        <inputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].Columns[TIQF_DADDTDOP]"
+                          cachedDataType="dbTimeStamp"
+                          cachedName="TIQF_DADDTDOP"
+                          externalMetadataColumnId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_DADDTDOP]"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output].Columns[TIQF_DADDTDOP]" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_DADCOD]"
+                          dataType="i4"
+                          name="TIQF_DADCOD" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_PERCOD]"
+                          dataType="i4"
+                          name="TIQF_PERCOD" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_FORCOD]"
+                          dataType="i4"
+                          name="TIQF_FORCOD" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_DADQTDENT]"
+                          dataType="i4"
+                          name="TIQF_DADQTDENT" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_DADQTDATR]"
+                          dataType="i4"
+                          name="TIQF_DADQTDATR" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_DADQTDRNCEMB]"
+                          dataType="i4"
+                          name="TIQF_DADQTDRNCEMB" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_DADQTDFAL]"
+                          dataType="i4"
+                          name="TIQF_DADQTDFAL" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_DADPERIQFMES]"
+                          dataType="numeric"
+                          name="TIQF_DADPERIQFMES"
+                          precision="15"
+                          scale="2" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_DADPERIQFACU]"
+                          dataType="numeric"
+                          name="TIQF_DADPERIQFACU"
+                          precision="15"
+                          scale="2" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_DADQN]"
+                          dataType="i4"
+                          name="TIQF_DADQN" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_DADDOCMANUAL]"
+                          dataType="i4"
+                          name="TIQF_DADDOCMANUAL" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_DADDOCCER]"
+                          dataType="i4"
+                          name="TIQF_DADDOCCER" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_DADDOCSUPA]"
+                          dataType="i4"
+                          name="TIQF_DADDOCSUPA" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_DADDOCBALP]"
+                          dataType="i4"
+                          name="TIQF_DADDOCBALP" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_DADNFEXML]"
+                          dataType="i4"
+                          name="TIQF_DADNFEXML" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_DADNFENFP]"
+                          dataType="i4"
+                          name="TIQF_DADNFENFP" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_DADNFEVCT]"
+                          dataType="i4"
+                          name="TIQF_DADNFEVCT" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_DADNFEDEI]"
+                          dataType="i4"
+                          name="TIQF_DADNFEDEI" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_DADDPO3045]"
+                          dataType="i4"
+                          name="TIQF_DADDPO3045" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_DADDPO4660]"
+                          dataType="i4"
+                          name="TIQF_DADDPO4660" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_DADDPO6190]"
+                          dataType="i4"
+                          name="TIQF_DADDPO6190" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_DADDTMANUAL]"
+                          dataType="dbTimeStamp"
+                          name="TIQF_DADDTMANUAL" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_DADDTSUPPLY]"
+                          dataType="dbTimeStamp"
+                          name="TIQF_DADDTSUPPLY" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_DADDTBALANCO]"
+                          dataType="dbTimeStamp"
+                          name="TIQF_DADDTBALANCO" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_DADDTDOP]"
+                          dataType="dbTimeStamp"
+                          name="TIQF_DADDTDOP" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Outputs[OLE DB Destination Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="OLE DB Destination Error Output"
+                      synchronousInputId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+              </components>
+              <paths>
+                <path
+                  refId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO.Paths[OLE DB Source Output]"
+                  endId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS.Inputs[OLE DB Destination Input]"
+                  name="OLE DB Source Output"
+                  startId="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS.Outputs[OLE DB Source Output]" />
+              </paths>
+            </pipeline>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\SQ_DADOS.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{BC3B7278-CDF8-47D3-A1A0-1F3AF41CEE2A}"
+          DTS:From="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\SQ_DADOS\Execute SQL Task" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\SQ_FORNECEDOR"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{1297E92C-C624-4E4F-B89A-B73C3D37E8E3}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SQ_FORNECEDOR">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO"
+          DTS:CreationName="Microsoft.Pipeline"
+          DTS:Description="Data Flow Task"
+          DTS:DTSID="{524D0F7C-3767-47F1-A54B-FFA327804757}"
+          DTS:ExecutableType="Microsoft.Pipeline"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="PRODUCAO-&gt;HOMOLOGACAO"
+          DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <pipeline
+              version="1">
+              <components>
+                <component
+                  refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR"
+                  componentClassID="Microsoft.OLEDBSource"
+                  contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+                  description="OLE DB Source"
+                  name="FONTE PRODUCAO-&gt;TIQF_FORNECEDOR"
+                  usesDispositions="true"
+                  version="7">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">[dbo].[TIQF_Fornecedor]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                    <property
+                      dataType="System.String"
+                      description="The variable that contains the SQL command to be executed."
+                      name="SqlCommandVariable"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">0</property>
+                    <property
+                      dataType="System.String"
+                      description="The mappings between the parameters in the SQL command and variables."
+                      name="ParameterMapping"></property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[PRODUCAO_GHOS2023.AppSOP.sa]"
+                      connectionManagerRefId="Package.ConnectionManagers[PRODUCAO_GHOS2023.AppSOP.sa]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <outputs>
+                    <output
+                      refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output]"
+                      name="OLE DB Source Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].Columns[TIQF_FORCOD]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].ExternalColumns[TIQF_FORCOD]"
+                          lineageId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].Columns[TIQF_FORCOD]"
+                          name="TIQF_FORCOD"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].Columns[TIQF_FORSAP]"
+                          codePage="1252"
+                          dataType="str"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].ExternalColumns[TIQF_FORSAP]"
+                          length="255"
+                          lineageId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].Columns[TIQF_FORSAP]"
+                          name="TIQF_FORSAP"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].Columns[TIQF_FORNOM]"
+                          codePage="1252"
+                          dataType="str"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].ExternalColumns[TIQF_FORNOM]"
+                          length="255"
+                          lineageId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].Columns[TIQF_FORNOM]"
+                          name="TIQF_FORNOM"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].Columns[TIQF_FORATI]"
+                          codePage="1252"
+                          dataType="str"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].ExternalColumns[TIQF_FORATI]"
+                          length="1"
+                          lineageId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].Columns[TIQF_FORATI]"
+                          name="TIQF_FORATI"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].Columns[TIQF_FORCER]"
+                          codePage="1252"
+                          dataType="str"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].ExternalColumns[TIQF_FORCER]"
+                          length="1"
+                          lineageId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].Columns[TIQF_FORCER]"
+                          name="TIQF_FORCER"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].Columns[TIQF_FORCERDATVAL]"
+                          dataType="dbTimeStamp"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].ExternalColumns[TIQF_FORCERDATVAL]"
+                          lineageId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].Columns[TIQF_FORCERDATVAL]"
+                          name="TIQF_FORCERDATVAL"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].Columns[TIQF_FORDOCMANUAL]"
+                          codePage="1252"
+                          dataType="str"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].ExternalColumns[TIQF_FORDOCMANUAL]"
+                          length="1"
+                          lineageId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].Columns[TIQF_FORDOCMANUAL]"
+                          name="TIQF_FORDOCMANUAL"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].Columns[TIQF_FORDOCSUPA]"
+                          codePage="1252"
+                          dataType="str"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].ExternalColumns[TIQF_FORDOCSUPA]"
+                          length="1"
+                          lineageId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].Columns[TIQF_FORDOCSUPA]"
+                          name="TIQF_FORDOCSUPA"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].Columns[TIQF_FORDOCBALP]"
+                          codePage="1252"
+                          dataType="str"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].ExternalColumns[TIQF_FORDOCBALP]"
+                          length="1"
+                          lineageId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].Columns[TIQF_FORDOCBALP]"
+                          name="TIQF_FORDOCBALP"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].Columns[TIQF_FORDPODIAS]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].ExternalColumns[TIQF_FORDPODIAS]"
+                          lineageId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].Columns[TIQF_FORDPODIAS]"
+                          name="TIQF_FORDPODIAS"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].Columns[TIQF_CATEGORIA]"
+                          codePage="1252"
+                          dataType="str"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].ExternalColumns[TIQF_CATEGORIA]"
+                          length="20"
+                          lineageId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].Columns[TIQF_CATEGORIA]"
+                          name="TIQF_CATEGORIA"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].Columns[TIQF_DTMANUAL]"
+                          dataType="dbTimeStamp"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].ExternalColumns[TIQF_DTMANUAL]"
+                          lineageId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].Columns[TIQF_DTMANUAL]"
+                          name="TIQF_DTMANUAL"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].Columns[TIQF_DTSUPPLY]"
+                          dataType="dbTimeStamp"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].ExternalColumns[TIQF_DTSUPPLY]"
+                          lineageId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].Columns[TIQF_DTSUPPLY]"
+                          name="TIQF_DTSUPPLY"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].Columns[TIQF_DTBALANCO]"
+                          dataType="dbTimeStamp"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].ExternalColumns[TIQF_DTBALANCO]"
+                          lineageId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].Columns[TIQF_DTBALANCO]"
+                          name="TIQF_DTBALANCO"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].Columns[TIQF_DTDOP]"
+                          dataType="dbTimeStamp"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].ExternalColumns[TIQF_DTDOP]"
+                          lineageId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].Columns[TIQF_DTDOP]"
+                          name="TIQF_DTDOP"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].Columns[TIQF_CLASSIFICACAO]"
+                          codePage="1252"
+                          dataType="str"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].ExternalColumns[TIQF_CLASSIFICACAO]"
+                          length="1"
+                          lineageId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].Columns[TIQF_CLASSIFICACAO]"
+                          name="TIQF_CLASSIFICACAO"
+                          truncationRowDisposition="FailComponent" />
+                      </outputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].ExternalColumns[TIQF_FORCOD]"
+                          dataType="i4"
+                          name="TIQF_FORCOD" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].ExternalColumns[TIQF_FORSAP]"
+                          codePage="1252"
+                          dataType="str"
+                          length="255"
+                          name="TIQF_FORSAP" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].ExternalColumns[TIQF_FORNOM]"
+                          codePage="1252"
+                          dataType="str"
+                          length="255"
+                          name="TIQF_FORNOM" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].ExternalColumns[TIQF_FORATI]"
+                          codePage="1252"
+                          dataType="str"
+                          length="1"
+                          name="TIQF_FORATI" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].ExternalColumns[TIQF_FORCER]"
+                          codePage="1252"
+                          dataType="str"
+                          length="1"
+                          name="TIQF_FORCER" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].ExternalColumns[TIQF_FORCERDATVAL]"
+                          dataType="dbTimeStamp"
+                          name="TIQF_FORCERDATVAL" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].ExternalColumns[TIQF_FORDOCMANUAL]"
+                          codePage="1252"
+                          dataType="str"
+                          length="1"
+                          name="TIQF_FORDOCMANUAL" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].ExternalColumns[TIQF_FORDOCSUPA]"
+                          codePage="1252"
+                          dataType="str"
+                          length="1"
+                          name="TIQF_FORDOCSUPA" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].ExternalColumns[TIQF_FORDOCBALP]"
+                          codePage="1252"
+                          dataType="str"
+                          length="1"
+                          name="TIQF_FORDOCBALP" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].ExternalColumns[TIQF_FORDPODIAS]"
+                          dataType="i4"
+                          name="TIQF_FORDPODIAS" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].ExternalColumns[TIQF_CATEGORIA]"
+                          codePage="1252"
+                          dataType="str"
+                          length="20"
+                          name="TIQF_CATEGORIA" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].ExternalColumns[TIQF_DTMANUAL]"
+                          dataType="dbTimeStamp"
+                          name="TIQF_DTMANUAL" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].ExternalColumns[TIQF_DTSUPPLY]"
+                          dataType="dbTimeStamp"
+                          name="TIQF_DTSUPPLY" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].ExternalColumns[TIQF_DTBALANCO]"
+                          dataType="dbTimeStamp"
+                          name="TIQF_DTBALANCO" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].ExternalColumns[TIQF_DTDOP]"
+                          dataType="dbTimeStamp"
+                          name="TIQF_DTDOP" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].ExternalColumns[TIQF_CLASSIFICACAO]"
+                          codePage="1252"
+                          dataType="str"
+                          length="1"
+                          name="TIQF_CLASSIFICACAO" />
+                      </externalMetadataColumns>
+                    </output>
+                    <output
+                      refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Error Output]"
+                      isErrorOut="true"
+                      name="OLE DB Source Error Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Error Output].Columns[TIQF_FORCOD]"
+                          dataType="i4"
+                          lineageId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Error Output].Columns[TIQF_FORCOD]"
+                          name="TIQF_FORCOD" />
+                        <outputColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Error Output].Columns[TIQF_FORSAP]"
+                          codePage="1252"
+                          dataType="str"
+                          length="255"
+                          lineageId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Error Output].Columns[TIQF_FORSAP]"
+                          name="TIQF_FORSAP" />
+                        <outputColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Error Output].Columns[TIQF_FORNOM]"
+                          codePage="1252"
+                          dataType="str"
+                          length="255"
+                          lineageId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Error Output].Columns[TIQF_FORNOM]"
+                          name="TIQF_FORNOM" />
+                        <outputColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Error Output].Columns[TIQF_FORATI]"
+                          codePage="1252"
+                          dataType="str"
+                          length="1"
+                          lineageId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Error Output].Columns[TIQF_FORATI]"
+                          name="TIQF_FORATI" />
+                        <outputColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Error Output].Columns[TIQF_FORCER]"
+                          codePage="1252"
+                          dataType="str"
+                          length="1"
+                          lineageId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Error Output].Columns[TIQF_FORCER]"
+                          name="TIQF_FORCER" />
+                        <outputColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Error Output].Columns[TIQF_FORCERDATVAL]"
+                          dataType="dbTimeStamp"
+                          lineageId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Error Output].Columns[TIQF_FORCERDATVAL]"
+                          name="TIQF_FORCERDATVAL" />
+                        <outputColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Error Output].Columns[TIQF_FORDOCMANUAL]"
+                          codePage="1252"
+                          dataType="str"
+                          length="1"
+                          lineageId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Error Output].Columns[TIQF_FORDOCMANUAL]"
+                          name="TIQF_FORDOCMANUAL" />
+                        <outputColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Error Output].Columns[TIQF_FORDOCSUPA]"
+                          codePage="1252"
+                          dataType="str"
+                          length="1"
+                          lineageId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Error Output].Columns[TIQF_FORDOCSUPA]"
+                          name="TIQF_FORDOCSUPA" />
+                        <outputColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Error Output].Columns[TIQF_FORDOCBALP]"
+                          codePage="1252"
+                          dataType="str"
+                          length="1"
+                          lineageId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Error Output].Columns[TIQF_FORDOCBALP]"
+                          name="TIQF_FORDOCBALP" />
+                        <outputColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Error Output].Columns[TIQF_FORDPODIAS]"
+                          dataType="i4"
+                          lineageId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Error Output].Columns[TIQF_FORDPODIAS]"
+                          name="TIQF_FORDPODIAS" />
+                        <outputColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Error Output].Columns[TIQF_CATEGORIA]"
+                          codePage="1252"
+                          dataType="str"
+                          length="20"
+                          lineageId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Error Output].Columns[TIQF_CATEGORIA]"
+                          name="TIQF_CATEGORIA" />
+                        <outputColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Error Output].Columns[TIQF_DTMANUAL]"
+                          dataType="dbTimeStamp"
+                          lineageId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Error Output].Columns[TIQF_DTMANUAL]"
+                          name="TIQF_DTMANUAL" />
+                        <outputColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Error Output].Columns[TIQF_DTSUPPLY]"
+                          dataType="dbTimeStamp"
+                          lineageId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Error Output].Columns[TIQF_DTSUPPLY]"
+                          name="TIQF_DTSUPPLY" />
+                        <outputColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Error Output].Columns[TIQF_DTBALANCO]"
+                          dataType="dbTimeStamp"
+                          lineageId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Error Output].Columns[TIQF_DTBALANCO]"
+                          name="TIQF_DTBALANCO" />
+                        <outputColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Error Output].Columns[TIQF_DTDOP]"
+                          dataType="dbTimeStamp"
+                          lineageId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Error Output].Columns[TIQF_DTDOP]"
+                          name="TIQF_DTDOP" />
+                        <outputColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Error Output].Columns[TIQF_CLASSIFICACAO]"
+                          codePage="1252"
+                          dataType="str"
+                          length="1"
+                          lineageId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Error Output].Columns[TIQF_CLASSIFICACAO]"
+                          name="TIQF_CLASSIFICACAO" />
+                        <outputColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_FORNECEDOR"
+                  componentClassID="Microsoft.OLEDBDestination"
+                  contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+                  description="OLE DB Destination"
+                  name="HOMOLOGACAO-&gt;TIQF_FORNECEDOR"
+                  usesDispositions="true"
+                  version="4">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">[dbo].[TIQF_Fornecedor]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">3</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepIdentity">false</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepNulls">false</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                      name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                      name="FastLoadMaxInsertCommitSize">2147483647</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_FORNECEDOR.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[HOMOLOGACAO_GHOS2023.AppSOP_HOM.sa]"
+                      connectionManagerRefId="Package.ConnectionManagers[HOMOLOGACAO_GHOS2023.AppSOP_HOM.sa]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_FORNECEDOR.Inputs[OLE DB Destination Input]"
+                      errorOrTruncationOperation="Insert"
+                      errorRowDisposition="FailComponent"
+                      hasSideEffects="true"
+                      name="OLE DB Destination Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_FORNECEDOR.Inputs[OLE DB Destination Input].Columns[TIQF_FORSAP]"
+                          cachedCodepage="1252"
+                          cachedDataType="str"
+                          cachedLength="255"
+                          cachedName="TIQF_FORSAP"
+                          externalMetadataColumnId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_FORNECEDOR.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_FORSAP]"
+                          lineageId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].Columns[TIQF_FORSAP]" />
+                        <inputColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_FORNECEDOR.Inputs[OLE DB Destination Input].Columns[TIQF_FORNOM]"
+                          cachedCodepage="1252"
+                          cachedDataType="str"
+                          cachedLength="255"
+                          cachedName="TIQF_FORNOM"
+                          externalMetadataColumnId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_FORNECEDOR.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_FORNOM]"
+                          lineageId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].Columns[TIQF_FORNOM]" />
+                        <inputColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_FORNECEDOR.Inputs[OLE DB Destination Input].Columns[TIQF_FORATI]"
+                          cachedCodepage="1252"
+                          cachedDataType="str"
+                          cachedLength="1"
+                          cachedName="TIQF_FORATI"
+                          externalMetadataColumnId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_FORNECEDOR.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_FORATI]"
+                          lineageId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].Columns[TIQF_FORATI]" />
+                        <inputColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_FORNECEDOR.Inputs[OLE DB Destination Input].Columns[TIQF_FORCER]"
+                          cachedCodepage="1252"
+                          cachedDataType="str"
+                          cachedLength="1"
+                          cachedName="TIQF_FORCER"
+                          externalMetadataColumnId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_FORNECEDOR.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_FORCER]"
+                          lineageId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].Columns[TIQF_FORCER]" />
+                        <inputColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_FORNECEDOR.Inputs[OLE DB Destination Input].Columns[TIQF_FORCERDATVAL]"
+                          cachedDataType="dbTimeStamp"
+                          cachedName="TIQF_FORCERDATVAL"
+                          externalMetadataColumnId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_FORNECEDOR.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_FORCERDATVAL]"
+                          lineageId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].Columns[TIQF_FORCERDATVAL]" />
+                        <inputColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_FORNECEDOR.Inputs[OLE DB Destination Input].Columns[TIQF_FORDOCMANUAL]"
+                          cachedCodepage="1252"
+                          cachedDataType="str"
+                          cachedLength="1"
+                          cachedName="TIQF_FORDOCMANUAL"
+                          externalMetadataColumnId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_FORNECEDOR.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_FORDOCMANUAL]"
+                          lineageId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].Columns[TIQF_FORDOCMANUAL]" />
+                        <inputColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_FORNECEDOR.Inputs[OLE DB Destination Input].Columns[TIQF_FORDOCSUPA]"
+                          cachedCodepage="1252"
+                          cachedDataType="str"
+                          cachedLength="1"
+                          cachedName="TIQF_FORDOCSUPA"
+                          externalMetadataColumnId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_FORNECEDOR.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_FORDOCSUPA]"
+                          lineageId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].Columns[TIQF_FORDOCSUPA]" />
+                        <inputColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_FORNECEDOR.Inputs[OLE DB Destination Input].Columns[TIQF_FORDOCBALP]"
+                          cachedCodepage="1252"
+                          cachedDataType="str"
+                          cachedLength="1"
+                          cachedName="TIQF_FORDOCBALP"
+                          externalMetadataColumnId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_FORNECEDOR.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_FORDOCBALP]"
+                          lineageId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].Columns[TIQF_FORDOCBALP]" />
+                        <inputColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_FORNECEDOR.Inputs[OLE DB Destination Input].Columns[TIQF_FORDPODIAS]"
+                          cachedDataType="i4"
+                          cachedName="TIQF_FORDPODIAS"
+                          externalMetadataColumnId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_FORNECEDOR.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_FORDPODIAS]"
+                          lineageId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].Columns[TIQF_FORDPODIAS]" />
+                        <inputColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_FORNECEDOR.Inputs[OLE DB Destination Input].Columns[TIQF_CATEGORIA]"
+                          cachedCodepage="1252"
+                          cachedDataType="str"
+                          cachedLength="20"
+                          cachedName="TIQF_CATEGORIA"
+                          externalMetadataColumnId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_FORNECEDOR.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_CATEGORIA]"
+                          lineageId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].Columns[TIQF_CATEGORIA]" />
+                        <inputColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_FORNECEDOR.Inputs[OLE DB Destination Input].Columns[TIQF_DTMANUAL]"
+                          cachedDataType="dbTimeStamp"
+                          cachedName="TIQF_DTMANUAL"
+                          externalMetadataColumnId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_FORNECEDOR.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_DTMANUAL]"
+                          lineageId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].Columns[TIQF_DTMANUAL]" />
+                        <inputColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_FORNECEDOR.Inputs[OLE DB Destination Input].Columns[TIQF_DTSUPPLY]"
+                          cachedDataType="dbTimeStamp"
+                          cachedName="TIQF_DTSUPPLY"
+                          externalMetadataColumnId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_FORNECEDOR.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_DTSUPPLY]"
+                          lineageId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].Columns[TIQF_DTSUPPLY]" />
+                        <inputColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_FORNECEDOR.Inputs[OLE DB Destination Input].Columns[TIQF_DTBALANCO]"
+                          cachedDataType="dbTimeStamp"
+                          cachedName="TIQF_DTBALANCO"
+                          externalMetadataColumnId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_FORNECEDOR.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_DTBALANCO]"
+                          lineageId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].Columns[TIQF_DTBALANCO]" />
+                        <inputColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_FORNECEDOR.Inputs[OLE DB Destination Input].Columns[TIQF_DTDOP]"
+                          cachedDataType="dbTimeStamp"
+                          cachedName="TIQF_DTDOP"
+                          externalMetadataColumnId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_FORNECEDOR.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_DTDOP]"
+                          lineageId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].Columns[TIQF_DTDOP]" />
+                        <inputColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_FORNECEDOR.Inputs[OLE DB Destination Input].Columns[TIQF_CLASSIFICACAO]"
+                          cachedCodepage="1252"
+                          cachedDataType="str"
+                          cachedLength="1"
+                          cachedName="TIQF_CLASSIFICACAO"
+                          externalMetadataColumnId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_FORNECEDOR.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_CLASSIFICACAO]"
+                          lineageId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output].Columns[TIQF_CLASSIFICACAO]" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_FORNECEDOR.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_FORCOD]"
+                          dataType="i4"
+                          name="TIQF_FORCOD" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_FORNECEDOR.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_FORSAP]"
+                          codePage="1252"
+                          dataType="str"
+                          length="255"
+                          name="TIQF_FORSAP" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_FORNECEDOR.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_FORNOM]"
+                          codePage="1252"
+                          dataType="str"
+                          length="255"
+                          name="TIQF_FORNOM" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_FORNECEDOR.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_FORATI]"
+                          codePage="1252"
+                          dataType="str"
+                          length="1"
+                          name="TIQF_FORATI" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_FORNECEDOR.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_FORCER]"
+                          codePage="1252"
+                          dataType="str"
+                          length="1"
+                          name="TIQF_FORCER" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_FORNECEDOR.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_FORCERDATVAL]"
+                          dataType="dbTimeStamp"
+                          name="TIQF_FORCERDATVAL" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_FORNECEDOR.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_FORDOCMANUAL]"
+                          codePage="1252"
+                          dataType="str"
+                          length="1"
+                          name="TIQF_FORDOCMANUAL" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_FORNECEDOR.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_FORDOCSUPA]"
+                          codePage="1252"
+                          dataType="str"
+                          length="1"
+                          name="TIQF_FORDOCSUPA" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_FORNECEDOR.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_FORDOCBALP]"
+                          codePage="1252"
+                          dataType="str"
+                          length="1"
+                          name="TIQF_FORDOCBALP" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_FORNECEDOR.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_FORDPODIAS]"
+                          dataType="i4"
+                          name="TIQF_FORDPODIAS" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_FORNECEDOR.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_CATEGORIA]"
+                          codePage="1252"
+                          dataType="str"
+                          length="20"
+                          name="TIQF_CATEGORIA" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_FORNECEDOR.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_DTMANUAL]"
+                          dataType="dbTimeStamp"
+                          name="TIQF_DTMANUAL" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_FORNECEDOR.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_DTSUPPLY]"
+                          dataType="dbTimeStamp"
+                          name="TIQF_DTSUPPLY" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_FORNECEDOR.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_DTBALANCO]"
+                          dataType="dbTimeStamp"
+                          name="TIQF_DTBALANCO" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_FORNECEDOR.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_DTDOP]"
+                          dataType="dbTimeStamp"
+                          name="TIQF_DTDOP" />
+                        <externalMetadataColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_FORNECEDOR.Inputs[OLE DB Destination Input].ExternalColumns[TIQF_CLASSIFICACAO]"
+                          codePage="1252"
+                          dataType="str"
+                          length="1"
+                          name="TIQF_CLASSIFICACAO" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Destination Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="OLE DB Destination Error Output"
+                      synchronousInputId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_FORNECEDOR.Inputs[OLE DB Destination Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+              </components>
+              <paths>
+                <path
+                  refId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO.Paths[OLE DB Source Output]"
+                  endId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_FORNECEDOR.Inputs[OLE DB Destination Input]"
+                  name="OLE DB Source Output"
+                  startId="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR.Outputs[OLE DB Source Output]" />
+              </paths>
+            </pipeline>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\SQ_FORNECEDOR\TRUNCATE TABLE TIQF_DADOS EM HOMOLOGACAO"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{2fe387c5-91cf-44a3-be7c-31f599b8d29c}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="TRUNCATE TABLE TIQF_DADOS EM HOMOLOGACAO"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{BEA4B376-B4C5-473B-9905-DA7371B8461B}"
+              SQLTask:BypassPrepare="False"
+              SQLTask:SqlStatementSource="ALTER TABLE [dbo].[TIQF_Dados] DROP CONSTRAINT [FK__TIQF_Dado__TIQF___33408412]&#xA;GO&#xA;&#xA;TRUNCATE TABLE TIQF_Dados" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\SQ_FORNECEDOR\TRUNCATE TABLE TIQF_FORNECEDOR EM HOMOLOGACAO"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{18CBE03E-9502-4370-AC79-FE9BB8207760}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="TRUNCATE TABLE TIQF_FORNECEDOR EM HOMOLOGACAO"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{BEA4B376-B4C5-473B-9905-DA7371B8461B}"
+              SQLTask:BypassPrepare="False"
+              SQLTask:SqlStatementSource="TRUNCATE TABLE TIQF_Fornecedor" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\SQ_FORNECEDOR.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{7F99418F-114C-4C15-A460-090D4A525E27}"
+          DTS:From="Package\SQ_FORNECEDOR\TRUNCATE TABLE TIQF_DADOS EM HOMOLOGACAO"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\SQ_FORNECEDOR\TRUNCATE TABLE TIQF_FORNECEDOR EM HOMOLOGACAO" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\SQ_FORNECEDOR.PrecedenceConstraints[Constraint 1]"
+          DTS:CreationName=""
+          DTS:DTSID="{034F179C-2FBB-49E3-8F1C-88C4D2146C84}"
+          DTS:From="Package\SQ_FORNECEDOR\TRUNCATE TABLE TIQF_FORNECEDOR EM HOMOLOGACAO"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 1"
+          DTS:To="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{EBD00A0B-5C5D-43D9-A64D-4E5A5168FF51}"
+      DTS:From="Package\SQ_FORNECEDOR"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\SQ_DADOS" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="327,42"
+          Id="Package\SQ_FORNECEDOR\TRUNCATE TABLE TIQF_FORNECEDOR EM HOMOLOGACAO"
+          TopLeft="48.5,110.5" />
+        <EdgeLayout
+          Id="Package\SQ_FORNECEDOR.PrecedenceConstraints[Constraint 1]"
+          TopLeft="212,152.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-11.5,44"
+              Start="0,0"
+              End="-11.5,36.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,18" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,18"
+                    Point2="0,22"
+                    Point3="-4,22" />
+                  <mssgle:LineSegment
+                    End="-7.5,22" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-7.5,22"
+                    Point2="-11.5,22"
+                    Point3="-11.5,26" />
+                  <mssgle:LineSegment
+                    End="-11.5,36.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="222,42"
+          Id="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO"
+          TopLeft="89.5,196.5" />
+        <NodeLayout
+          Size="329,42"
+          Id="Package\SQ_FORNECEDOR\TRUNCATE TABLE TIQF_DADOS EM HOMOLOGACAO"
+          TopLeft="56,4" />
+        <EdgeLayout
+          Id="Package\SQ_FORNECEDOR.PrecedenceConstraints[Constraint]"
+          TopLeft="220.5,46">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-8.5,64.5"
+              Start="0,0"
+              End="-8.5,57">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,28.25" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,28.25"
+                    Point2="0,32.25"
+                    Point3="-4,32.25" />
+                  <mssgle:LineSegment
+                    End="-4.5,32.25" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-4.5,32.25"
+                    Point2="-8.5,32.25"
+                    Point3="-8.5,36.25" />
+                  <mssgle:LineSegment
+                    End="-8.5,57" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="390,353"
+          Size="390,396"
+          Id="Package\SQ_FORNECEDOR"
+          TopLeft="33,66" />
+        <NodeLayout
+          Size="215,42"
+          Id="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO"
+          TopLeft="111,144" />
+        <NodeLayout
+          Size="163,42"
+          Id="Package\SQ_DADOS\Execute SQL Task"
+          TopLeft="136,232" />
+        <EdgeLayout
+          Id="Package\SQ_DADOS.PrecedenceConstraints[Constraint]"
+          TopLeft="218,186">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,46"
+              Start="0,0"
+              End="0,38.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,38.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="393,329"
+          Size="393,372"
+          Id="Package\SQ_DADOS"
+          TopLeft="506,73" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="423,261.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="83,0"
+              Start="0,0"
+              End="75.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="75.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="277,42"
+          Id="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR"
+          TopLeft="211,48" />
+        <NodeLayout
+          Size="264,42"
+          Id="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_FORNECEDOR"
+          TopLeft="214,164" />
+        <EdgeLayout
+          Id="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO.Paths[OLE DB Source Output]"
+          TopLeft="347.75,90">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,74"
+              Start="0,0"
+              End="0,66.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,66.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_FORNECEDOR">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\SQ_FORNECEDOR\PRODUCAO-&gt;HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_FORNECEDOR">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="245,42"
+          Id="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS"
+          TopLeft="256,51" />
+        <NodeLayout
+          Size="231,42"
+          Id="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS"
+          TopLeft="285,187" />
+        <EdgeLayout
+          Id="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO.Paths[OLE DB Source Output]"
+          TopLeft="378.5,93">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="22,94"
+              Start="0,0"
+              End="22,86.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,43" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,43"
+                    Point2="0,47"
+                    Point3="4,47" />
+                  <mssgle:LineSegment
+                    End="18,47" />
+                  <mssgle:CubicBezierSegment
+                    Point1="18,47"
+                    Point2="22,47"
+                    Point3="22,51" />
+                  <mssgle:LineSegment
+                    End="22,86.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\FONTE PRODUCAO-&gt;TIQF_DADOS">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\SQ_DADOS\PRODUCAO-HOMOLOGACAO\HOMOLOGACAO-&gt;TIQF_DADOS">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Application>
+  <BOModel>
+    <Class Name="CielPostal.Module.BusinessObjects.NFe_Header" IsDesigned="True">
+      <OwnMembers>
+        <Member Name="DataEmissao" Caption="Data Emissão" GroupInterval="Day" />
+        <Member Name="PesoBrutoTotalNFe" DisplayFormat="#,##0.000" />
+        <Member Name="PesoLiquidoTotalNFe" DisplayFormat="#,##0.000" />
+      </OwnMembers>
+    </Class>
+  </BOModel>
+  <Views>
+    <ListView Id="ACF_Contrato_NFe_Headers_ListView" IsFooterVisible="False">
+      <Columns>
+        <ColumnInfo Id="ACF_Contrato" Width="20" Index="-1" />
+        <ColumnInfo Id="BairroDestinatario" Width="20" Index="-1" />
+        <ColumnInfo Id="CEPDestinatario" Width="20" Index="-1" />
+        <ColumnInfo Id="CidadeDestinatario" Width="20" Index="-1" />
+        <ColumnInfo Id="CNPJEmitente" Width="97" SortIndex="-1" SortOrder="None" Index="-1" />
+        <ColumnInfo Id="EnderecoDestinatario" Width="20" Index="-1" />
+        <ColumnInfo Id="EstadoDestinatario" Width="20" Index="-1" />
+        <ColumnInfo Id="InscricaoEstadualDestinatario" Width="20" Index="-1" />
+        <ColumnInfo Id="Loading" Index="-1" />
+        <ColumnInfo Id="Oid" Index="-1" />
+        <ColumnInfo Id="PesoBrutoTotalNFe" Width="20" Index="-1" />
+        <ColumnInfo Id="PesoLiquidoTotalNFe" Width="20" Index="-1" />
+        <ColumnInfo Id="SerieNFe" Width="56" Index="-1" />
+        <ColumnInfo Id="This" Index="-1" />
+        <ColumnInfo Id="NumeroNFe" Width="118" SortIndex="-1" SortOrder="None" />
+        <ColumnInfo Id="RazaoSocialEmitente" Width="253" Index="1" />
+        <ColumnInfo Id="CNPJDestinatario" Width="139" Index="2" />
+        <ColumnInfo Id="RazaoSocialDestinatario" Width="326" Index="3" />
+        <ColumnInfo Id="DataEmissao" Index="4" Width="103" SortIndex="0" SortOrder="Ascending" />
+        <ColumnInfo Id="NumeroPedido" Width="139" Index="5" />
+        <ColumnInfo Id="ValorTotalNFe" Width="96" Index="6" SortIndex="-1" SortOrder="None" />
+        <ColumnInfo Id="ServicoTransporte" Index="7" Width="124" />
+        <ColumnInfo Id="CodigoRastreio" Index="8" Width="141" SortIndex="-1" SortOrder="None" />
+        <ColumnInfo Id="NumeroDelivery" Index="9" Width="134" />
+        <ColumnInfo Id="ProdutoEntregue" Index="10" Width="20" />
+      </Columns>
+    </ListView>
+    <DetailView Id="NFe_Header_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main" RelativeSize="100" Caption="Main" ImageName="" CaptionLocation="Default" CaptionWordWrap="Default" CaptionHorizontalAlignment="Default" CaptionVerticalAlignment="Default">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="39" Caption="SimpleEditors" ImageName="" CaptionLocation="Default" CaptionWordWrap="Default" CaptionHorizontalAlignment="Default" CaptionVerticalAlignment="Default">
+            <LayoutGroup Id="NFe_Header" RelativeSize="100" ImageName="" CaptionLocation="Default" CaptionWordWrap="Default" CaptionHorizontalAlignment="Default" CaptionVerticalAlignment="Default" Caption="Nota Fiscal">
+              <LayoutGroup Id="NFe_Header_col1" RelativeSize="40" Caption="NFe_Header_col1" ImageName="" CaptionLocation="Default" CaptionWordWrap="Default" CaptionHorizontalAlignment="Default" CaptionVerticalAlignment="Default">
+                <LayoutItem Id="CNPJEmitente" SizeConstraintsType="Default" RelativeSize="12" CaptionLocation="Default" CaptionWordWrap="Default" CaptionHorizontalAlignment="Default" CaptionVerticalAlignment="Default" ViewItem="CNPJEmitente" />
+                <LayoutItem Id="RazaoSocialEmitente" SizeConstraintsType="Default" RelativeSize="9" CaptionLocation="Default" CaptionWordWrap="Default" CaptionHorizontalAlignment="Default" CaptionVerticalAlignment="Default" ViewItem="RazaoSocialEmitente" />
+                <LayoutItem Id="NumeroNFe" SizeConstraintsType="Default" RelativeSize="9" CaptionLocation="Default" CaptionWordWrap="Default" CaptionHorizontalAlignment="Default" CaptionVerticalAlignment="Default" ViewItem="NumeroNFe" />
+                <LayoutItem Id="SerieNFe" SizeConstraintsType="Default" RelativeSize="9" CaptionLocation="Default" CaptionWordWrap="Default" CaptionHorizontalAlignment="Default" CaptionVerticalAlignment="Default" ViewItem="SerieNFe" />
+                <LayoutItem Id="NumeroPedido" SizeConstraintsType="Default" RelativeSize="9" CaptionLocation="Default" CaptionWordWrap="Default" CaptionHorizontalAlignment="Default" CaptionVerticalAlignment="Default" ViewItem="NumeroPedido" />
+                <LayoutItem Id="CNPJDestinatario" SizeConstraintsType="Default" RelativeSize="9" CaptionLocation="Default" CaptionWordWrap="Default" CaptionHorizontalAlignment="Default" CaptionVerticalAlignment="Default" ViewItem="CNPJDestinatario" />
+                <LayoutItem Id="InscricaoEstadualDestinatario" SizeConstraintsType="Default" RelativeSize="9" CaptionLocation="Default" CaptionWordWrap="Default" CaptionHorizontalAlignment="Default" CaptionVerticalAlignment="Default" ViewItem="InscricaoEstadualDestinatario" />
+                <LayoutItem Id="RazaoSocialDestinatario" SizeConstraintsType="Default" RelativeSize="9" CaptionLocation="Default" CaptionWordWrap="Default" CaptionHorizontalAlignment="Default" CaptionVerticalAlignment="Default" ViewItem="RazaoSocialDestinatario" />
+                <LayoutItem Id="EnderecoDestinatario" SizeConstraintsType="Default" RelativeSize="9" CaptionLocation="Default" CaptionWordWrap="Default" CaptionHorizontalAlignment="Default" CaptionVerticalAlignment="Default" ViewItem="EnderecoDestinatario" />
+                <LayoutItem Id="BairroDestinatario" SizeConstraintsType="Default" RelativeSize="12" CaptionLocation="Default" CaptionWordWrap="Default" CaptionHorizontalAlignment="Default" CaptionVerticalAlignment="Default" ViewItem="BairroDestinatario" />
+              </LayoutGroup>
+              <LayoutGroup Id="NFe_Header_col2" RelativeSize="56" Caption="NFe_Header_col2" ImageName="" CaptionLocation="Default" CaptionWordWrap="Default" CaptionHorizontalAlignment="Default" CaptionVerticalAlignment="Default">
+                <LayoutItem Id="CidadeDestinatario" SizeConstraintsType="Default" RelativeSize="9" CaptionLocation="Default" CaptionWordWrap="Default" CaptionHorizontalAlignment="Default" CaptionVerticalAlignment="Default" ViewItem="CidadeDestinatario" />
+                <LayoutItem Id="EstadoDestinatario" SizeConstraintsType="Default" RelativeSize="9" CaptionLocation="Default" CaptionWordWrap="Default" CaptionHorizontalAlignment="Default" CaptionVerticalAlignment="Default" ViewItem="EstadoDestinatario" />
+                <LayoutItem Id="ValorTotalNFe" SizeConstraintsType="Default" RelativeSize="9" CaptionLocation="Default" CaptionWordWrap="Default" CaptionHorizontalAlignment="Default" CaptionVerticalAlignment="Default" ViewItem="ValorTotalNFe" />
+                <LayoutItem Id="PesoBrutoTotalNFe" SizeConstraintsType="Default" RelativeSize="9" CaptionLocation="Default" CaptionWordWrap="Default" CaptionHorizontalAlignment="Default" CaptionVerticalAlignment="Default" ViewItem="PesoBrutoTotalNFe" />
+                <LayoutItem Id="PesoLiquidoTotalNFe" SizeConstraintsType="Default" RelativeSize="9" CaptionLocation="Default" CaptionWordWrap="Default" CaptionHorizontalAlignment="Default" CaptionVerticalAlignment="Default" ViewItem="PesoLiquidoTotalNFe" />
+                <LayoutItem Id="ServicoTransporte" SizeConstraintsType="Default" RelativeSize="9" CaptionLocation="Default" CaptionWordWrap="Default" CaptionHorizontalAlignment="Default" CaptionVerticalAlignment="Default" ViewItem="ServicoTransporte" />
+                <LayoutItem Id="ACF_Contrato" SizeConstraintsType="Default" RelativeSize="9" Index="7" CaptionLocation="Default" CaptionWordWrap="Default" CaptionHorizontalAlignment="Default" CaptionVerticalAlignment="Default" ViewItem="ACF_Contrato" />
+                <LayoutItem Id="CodigoRastreio" SizeConstraintsType="Default" Index="8" RelativeSize="9" CaptionLocation="Default" CaptionWordWrap="Default" CaptionHorizontalAlignment="Default" CaptionVerticalAlignment="Default" ViewItem="CodigoRastreio" />
+                <LayoutItem Id="ProdutoEntregue" SizeConstraintsType="Default" RelativeSize="12" ViewItem="ProdutoEntregue" />
+              </LayoutGroup>
+            </LayoutGroup>
+          </LayoutGroup>
+          <TabbedGroup Id="Tabs" Index="1" RelativeSize="60" CaptionLocation="Default" CaptionWordWrap="Default" CaptionHorizontalAlignment="Default" CaptionVerticalAlignment="Default">
+            <LayoutGroup Id="NFe_SROs" RelativeSize="100" ImageName="" Caption="Rastreamento" CaptionLocation="Default" CaptionWordWrap="Default" CaptionHorizontalAlignment="Default" CaptionVerticalAlignment="Default" Index="0">
+              <LayoutItem Id="NFe_SROs" SizeConstraintsType="Default" RelativeSize="100" CaptionLocation="Default" CaptionWordWrap="Default" CaptionHorizontalAlignment="Default" CaptionVerticalAlignment="Default" ViewItem="NFe_SROs" />
+            </LayoutGroup>
+            <LayoutGroup Id="NFe_Etiquetas" RelativeSize="100" ImageName="" Caption="Volumes" CaptionLocation="Default" CaptionWordWrap="Default" CaptionHorizontalAlignment="Default" CaptionVerticalAlignment="Default" Index="1">
+              <LayoutItem Id="NFe_Etiquetas" SizeConstraintsType="Default" RelativeSize="100" CaptionLocation="Default" CaptionWordWrap="Default" CaptionHorizontalAlignment="Default" CaptionVerticalAlignment="Default" ViewItem="NFe_Etiquetas" />
+            </LayoutGroup>
+          </TabbedGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <ListView Id="NFe_Header_ListView" IsFooterVisible="False">
+      <Columns>
+        <ColumnInfo Id="ACF_Contrato" Index="-1" />
+        <ColumnInfo Id="BairroDestinatario" Index="-1" />
+        <ColumnInfo Id="CEPDestinatario" Index="-1" />
+        <ColumnInfo Id="CidadeDestinatario" Index="-1" />
+        <ColumnInfo Id="CNPJEmitente" Index="-1" />
+        <ColumnInfo Id="EnderecoDestinatario" Index="-1" />
+        <ColumnInfo Id="EstadoDestinatario" Index="-1" />
+        <ColumnInfo Id="InscricaoEstadualDestinatario" Index="-1" />
+        <ColumnInfo Id="Loading" Index="-1" />
+        <ColumnInfo Id="Oid" Index="-1" />
+        <ColumnInfo Id="PesoBrutoTotalNFe" Index="-1" />
+        <ColumnInfo Id="PesoLiquidoTotalNFe" Index="-1" />
+        <ColumnInfo Id="SerieNFe" Index="-1" />
+        <ColumnInfo Id="This" Index="-1" />
+        <ColumnInfo Id="DataEmissao" Width="126" Index="0" SortIndex="0" SortOrder="Descending" />
+        <ColumnInfo Id="NumeroNFe" Width="126" Index="1" SortIndex="-1" SortOrder="None" />
+        <ColumnInfo Id="NumeroPedido" Index="2" Width="104" />
+        <ColumnInfo Id="RazaoSocialEmitente" Index="3" Width="174" />
+        <ColumnInfo Id="CNPJDestinatario" Index="4" Width="150" />
+        <ColumnInfo Id="RazaoSocialDestinatario" Index="5" Width="339" />
+        <ColumnInfo Id="ValorTotalNFe" Index="6" Width="110" />
+        <ColumnInfo Id="ServicoTransporte" Width="118" Index="7" />
+        <ColumnInfo Id="CodigoRastreio" Width="139" Index="8" />
+        <ColumnInfo Id="ProdutoEntregue" Width="96" Index="9" />
+        <ColumnInfo Id="NumeroDelivery" Width="105" Index="10" />
+      </Columns>
+    </ListView>
+  </Views>
+</Application>

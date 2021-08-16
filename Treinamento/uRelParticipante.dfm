@@ -2,6 +2,7 @@ inherited FrmRelParticipante: TFrmRelParticipante
   Caption = 'Relatorio por Participante'
   ClientHeight = 502
   ClientWidth = 1142
+  ExplicitTop = -124
   ExplicitWidth = 1158
   ExplicitHeight = 541
   PixelsPerInch = 96
@@ -479,7 +480,6 @@ inherited FrmRelParticipante: TFrmRelParticipante
     object dxPrinterGrid: TdxGridReportLink
       Active = True
       Component = cxGrid1
-      PageNumberFormat = pnfNumeral
       PrinterPage.DMPaper = 9
       PrinterPage.Footer = 6350
       PrinterPage.Header = 6350
@@ -492,9 +492,8 @@ inherited FrmRelParticipante: TFrmRelParticipante
       PrinterPage.PageSize.Y = 297000
       PrinterPage._dxMeasurementUnits_ = 0
       PrinterPage._dxLastMU_ = 2
-      ReportDocument.CreationDate = 43615.448495798610000000
+      ReportDocument.CreationDate = 44246.403614895830000000
       ReportTitle.Text = 'Relat'#243'rio por Participante'
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

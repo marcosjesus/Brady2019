@@ -1,0 +1,185 @@
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\CielPostal.Module.dll
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\CielPostal.Module.pdb
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\obj\Debug\CielPostal.Module.CielPostalModule.resources
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\obj\Debug\CielPostal.Module.csproj.GenerateResource.Cache
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\obj\Debug\CielPostal.Module.dll
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\obj\Debug\CielPostal.Module.pdb
+C:\Work\Ciel\sistemas\CielPostal\CielPostal.Module\bin\Debug\CielPostal.Module.dll
+C:\Work\Ciel\sistemas\CielPostal\CielPostal.Module\bin\Debug\CielPostal.Module.pdb
+C:\Work\Ciel\sistemas\CielPostal\CielPostal.Module\bin\Debug\DevExpress.Data.v12.2.dll
+C:\Work\Ciel\sistemas\CielPostal\CielPostal.Module\bin\Debug\DevExpress.ExpressApp.ConditionalAppearance.v12.2.dll
+C:\Work\Ciel\sistemas\CielPostal\CielPostal.Module\bin\Debug\DevExpress.ExpressApp.Security.v12.2.dll
+C:\Work\Ciel\sistemas\CielPostal\CielPostal.Module\bin\Debug\DevExpress.ExpressApp.v12.2.dll
+C:\Work\Ciel\sistemas\CielPostal\CielPostal.Module\bin\Debug\DevExpress.ExpressApp.Win.v12.2.dll
+C:\Work\Ciel\sistemas\CielPostal\CielPostal.Module\bin\Debug\DevExpress.ExpressApp.Workflow.v12.2.dll
+C:\Work\Ciel\sistemas\CielPostal\CielPostal.Module\bin\Debug\DevExpress.ExpressApp.Workflow.Win.v12.2.dll
+C:\Work\Ciel\sistemas\CielPostal\CielPostal.Module\bin\Debug\DevExpress.ExpressApp.Xpo.v12.2.dll
+C:\Work\Ciel\sistemas\CielPostal\CielPostal.Module\bin\Debug\DevExpress.Persistent.Base.v12.2.dll
+C:\Work\Ciel\sistemas\CielPostal\CielPostal.Module\bin\Debug\DevExpress.Persistent.BaseImpl.v12.2.dll
+C:\Work\Ciel\sistemas\CielPostal\CielPostal.Module\bin\Debug\DevExpress.Printing.v12.2.Core.dll
+C:\Work\Ciel\sistemas\CielPostal\CielPostal.Module\bin\Debug\DevExpress.Utils.v12.2.dll
+C:\Work\Ciel\sistemas\CielPostal\CielPostal.Module\bin\Debug\DevExpress.Workflow.Activities.v12.2.Design.dll
+C:\Work\Ciel\sistemas\CielPostal\CielPostal.Module\bin\Debug\DevExpress.Workflow.Activities.v12.2.dll
+C:\Work\Ciel\sistemas\CielPostal\CielPostal.Module\bin\Debug\DevExpress.Xpo.v12.2.dll
+C:\Work\Ciel\sistemas\CielPostal\CielPostal.Module\bin\Debug\DevExpress.ExpressApp.ConditionalAppearance.v12.2.xml
+C:\Work\Ciel\sistemas\CielPostal\CielPostal.Module\bin\Debug\DevExpress.ExpressApp.Security.v12.2.xml
+C:\Work\Ciel\sistemas\CielPostal\CielPostal.Module\bin\Debug\DevExpress.ExpressApp.Win.v12.2.xml
+C:\Work\Ciel\sistemas\CielPostal\CielPostal.Module\bin\Debug\DevExpress.ExpressApp.Workflow.v12.2.xml
+C:\Work\Ciel\sistemas\CielPostal\CielPostal.Module\bin\Debug\DevExpress.ExpressApp.Workflow.Win.v12.2.xml
+C:\Work\Ciel\sistemas\CielPostal\CielPostal.Module\bin\Debug\DevExpress.ExpressApp.Xpo.v12.2.xml
+C:\Work\Ciel\sistemas\CielPostal\CielPostal.Module\bin\Debug\DevExpress.Printing.v12.2.Core.xml
+C:\Work\Ciel\sistemas\CielPostal\CielPostal.Module\bin\Debug\DevExpress.Data.v12.2.xml
+C:\Work\Ciel\sistemas\CielPostal\CielPostal.Module\bin\Debug\DevExpress.ExpressApp.v12.2.xml
+C:\Work\Ciel\sistemas\CielPostal\CielPostal.Module\bin\Debug\DevExpress.Persistent.Base.v12.2.xml
+C:\Work\Ciel\sistemas\CielPostal\CielPostal.Module\bin\Debug\DevExpress.Persistent.BaseImpl.v12.2.xml
+C:\Work\Ciel\sistemas\CielPostal\CielPostal.Module\bin\Debug\DevExpress.Utils.v12.2.xml
+C:\Work\Ciel\sistemas\CielPostal\CielPostal.Module\bin\Debug\DevExpress.Xpo.v12.2.xml
+C:\Work\Ciel\sistemas\CielPostal\CielPostal.Module\bin\Debug\de\DevExpress.ExpressApp.Security.v12.2.resources.dll
+C:\Work\Ciel\sistemas\CielPostal\CielPostal.Module\bin\Debug\es\DevExpress.ExpressApp.Security.v12.2.resources.dll
+C:\Work\Ciel\sistemas\CielPostal\CielPostal.Module\bin\Debug\ja\DevExpress.ExpressApp.Security.v12.2.resources.dll
+C:\Work\Ciel\sistemas\CielPostal\CielPostal.Module\bin\Debug\ru\DevExpress.ExpressApp.Security.v12.2.resources.dll
+C:\Work\Ciel\sistemas\CielPostal\CielPostal.Module\bin\Debug\de\DevExpress.ExpressApp.Win.v12.2.resources.dll
+C:\Work\Ciel\sistemas\CielPostal\CielPostal.Module\bin\Debug\es\DevExpress.ExpressApp.Win.v12.2.resources.dll
+C:\Work\Ciel\sistemas\CielPostal\CielPostal.Module\bin\Debug\ja\DevExpress.ExpressApp.Win.v12.2.resources.dll
+C:\Work\Ciel\sistemas\CielPostal\CielPostal.Module\bin\Debug\ru\DevExpress.ExpressApp.Win.v12.2.resources.dll
+C:\Work\Ciel\sistemas\CielPostal\CielPostal.Module\bin\Debug\de\DevExpress.ExpressApp.Workflow.v12.2.resources.dll
+C:\Work\Ciel\sistemas\CielPostal\CielPostal.Module\bin\Debug\ja\DevExpress.ExpressApp.Workflow.v12.2.resources.dll
+C:\Work\Ciel\sistemas\CielPostal\CielPostal.Module\bin\Debug\ru\DevExpress.ExpressApp.Workflow.v12.2.resources.dll
+C:\Work\Ciel\sistemas\CielPostal\CielPostal.Module\bin\Debug\de\DevExpress.ExpressApp.Workflow.Win.v12.2.resources.dll
+C:\Work\Ciel\sistemas\CielPostal\CielPostal.Module\bin\Debug\ja\DevExpress.ExpressApp.Workflow.Win.v12.2.resources.dll
+C:\Work\Ciel\sistemas\CielPostal\CielPostal.Module\bin\Debug\ru\DevExpress.ExpressApp.Workflow.Win.v12.2.resources.dll
+C:\Work\Ciel\sistemas\CielPostal\CielPostal.Module\bin\Debug\de\DevExpress.Printing.v12.2.Core.resources.dll
+C:\Work\Ciel\sistemas\CielPostal\CielPostal.Module\bin\Debug\es\DevExpress.Printing.v12.2.Core.resources.dll
+C:\Work\Ciel\sistemas\CielPostal\CielPostal.Module\bin\Debug\ja\DevExpress.Printing.v12.2.Core.resources.dll
+C:\Work\Ciel\sistemas\CielPostal\CielPostal.Module\bin\Debug\ru\DevExpress.Printing.v12.2.Core.resources.dll
+C:\Work\Ciel\sistemas\CielPostal\CielPostal.Module\bin\Debug\de\DevExpress.Data.v12.2.resources.dll
+C:\Work\Ciel\sistemas\CielPostal\CielPostal.Module\bin\Debug\es\DevExpress.Data.v12.2.resources.dll
+C:\Work\Ciel\sistemas\CielPostal\CielPostal.Module\bin\Debug\ja\DevExpress.Data.v12.2.resources.dll
+C:\Work\Ciel\sistemas\CielPostal\CielPostal.Module\bin\Debug\ru\DevExpress.Data.v12.2.resources.dll
+C:\Work\Ciel\sistemas\CielPostal\CielPostal.Module\bin\Debug\de\DevExpress.ExpressApp.v12.2.resources.dll
+C:\Work\Ciel\sistemas\CielPostal\CielPostal.Module\bin\Debug\es\DevExpress.ExpressApp.v12.2.resources.dll
+C:\Work\Ciel\sistemas\CielPostal\CielPostal.Module\bin\Debug\ja\DevExpress.ExpressApp.v12.2.resources.dll
+C:\Work\Ciel\sistemas\CielPostal\CielPostal.Module\bin\Debug\ru\DevExpress.ExpressApp.v12.2.resources.dll
+C:\Work\Ciel\sistemas\CielPostal\CielPostal.Module\bin\Debug\de\DevExpress.Utils.v12.2.resources.dll
+C:\Work\Ciel\sistemas\CielPostal\CielPostal.Module\bin\Debug\es\DevExpress.Utils.v12.2.resources.dll
+C:\Work\Ciel\sistemas\CielPostal\CielPostal.Module\bin\Debug\ja\DevExpress.Utils.v12.2.resources.dll
+C:\Work\Ciel\sistemas\CielPostal\CielPostal.Module\bin\Debug\ru\DevExpress.Utils.v12.2.resources.dll
+C:\Work\Ciel\sistemas\CielPostal\CielPostal.Module\bin\Debug\de\DevExpress.Xpo.v12.2.resources.dll
+C:\Work\Ciel\sistemas\CielPostal\CielPostal.Module\bin\Debug\es\DevExpress.Xpo.v12.2.resources.dll
+C:\Work\Ciel\sistemas\CielPostal\CielPostal.Module\bin\Debug\ja\DevExpress.Xpo.v12.2.resources.dll
+C:\Work\Ciel\sistemas\CielPostal\CielPostal.Module\bin\Debug\ru\DevExpress.Xpo.v12.2.resources.dll
+C:\Work\Ciel\sistemas\CielPostal\CielPostal.Module\obj\Debug\CielPostal.Module.CielPostalModule.resources
+C:\Work\Ciel\sistemas\CielPostal\CielPostal.Module\obj\Debug\CielPostal.Module.csproj.GenerateResource.Cache
+C:\Work\Ciel\sistemas\CielPostal\CielPostal.Module\obj\Debug\CielPostal.Module.dll.licenses
+C:\Work\Ciel\sistemas\CielPostal\CielPostal.Module\obj\Debug\CielPostal.Module.dll
+C:\Work\Ciel\sistemas\CielPostal\CielPostal.Module\obj\Debug\CielPostal.Module.pdb
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\CielPostal.Module.dll.config
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\DevExpress.Data.v12.2.dll
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\DevExpress.ExpressApp.ConditionalAppearance.v12.2.dll
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\DevExpress.ExpressApp.Security.v12.2.dll
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\DevExpress.ExpressApp.v12.2.dll
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\DevExpress.ExpressApp.Win.v12.2.dll
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\DevExpress.ExpressApp.Workflow.v12.2.dll
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\DevExpress.ExpressApp.Workflow.Win.v12.2.dll
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\DevExpress.ExpressApp.Xpo.v12.2.dll
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\DevExpress.Persistent.Base.v12.2.dll
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\DevExpress.Persistent.BaseImpl.v12.2.dll
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\DevExpress.Printing.v12.2.Core.dll
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\DevExpress.Utils.v12.2.dll
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\DevExpress.Workflow.Activities.v12.2.Design.dll
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\DevExpress.Workflow.Activities.v12.2.dll
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\DevExpress.Xpo.v12.2.dll
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\PresentationCore.dll
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\PresentationFramework.dll
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\System.Activities.Core.Presentation.dll
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\System.Activities.dll
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\System.Activities.Presentation.dll
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\System.Data.dll
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\System.dll
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\System.Drawing.dll
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\System.Runtime.Serialization.dll
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\System.ServiceModel.Activities.dll
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\System.ServiceModel.dll
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\System.Windows.Forms.dll
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\System.Xaml.dll
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\System.Xml.dll
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\System.Xml.Linq.dll
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\WindowsBase.dll
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\WindowsFormsIntegration.dll
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\DevExpress.ExpressApp.ConditionalAppearance.v12.2.xml
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\DevExpress.ExpressApp.Security.v12.2.xml
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\DevExpress.ExpressApp.Win.v12.2.xml
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\DevExpress.ExpressApp.Workflow.v12.2.xml
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\DevExpress.ExpressApp.Workflow.Win.v12.2.xml
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\DevExpress.ExpressApp.Xpo.v12.2.xml
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\DevExpress.Printing.v12.2.Core.xml
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\DevExpress.Data.v12.2.xml
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\DevExpress.ExpressApp.v12.2.xml
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\DevExpress.Persistent.Base.v12.2.xml
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\DevExpress.Persistent.BaseImpl.v12.2.xml
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\DevExpress.Utils.v12.2.xml
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\DevExpress.Xpo.v12.2.xml
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\de\DevExpress.ExpressApp.Security.v12.2.resources.dll
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\es\DevExpress.ExpressApp.Security.v12.2.resources.dll
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\ja\DevExpress.ExpressApp.Security.v12.2.resources.dll
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\ru\DevExpress.ExpressApp.Security.v12.2.resources.dll
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\de\DevExpress.ExpressApp.Win.v12.2.resources.dll
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\es\DevExpress.ExpressApp.Win.v12.2.resources.dll
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\ja\DevExpress.ExpressApp.Win.v12.2.resources.dll
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\ru\DevExpress.ExpressApp.Win.v12.2.resources.dll
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\de\DevExpress.ExpressApp.Workflow.v12.2.resources.dll
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\ja\DevExpress.ExpressApp.Workflow.v12.2.resources.dll
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\ru\DevExpress.ExpressApp.Workflow.v12.2.resources.dll
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\de\DevExpress.ExpressApp.Workflow.Win.v12.2.resources.dll
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\ja\DevExpress.ExpressApp.Workflow.Win.v12.2.resources.dll
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\ru\DevExpress.ExpressApp.Workflow.Win.v12.2.resources.dll
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\de\DevExpress.Printing.v12.2.Core.resources.dll
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\es\DevExpress.Printing.v12.2.Core.resources.dll
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\ja\DevExpress.Printing.v12.2.Core.resources.dll
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\ru\DevExpress.Printing.v12.2.Core.resources.dll
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\de\DevExpress.Data.v12.2.resources.dll
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\es\DevExpress.Data.v12.2.resources.dll
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\ja\DevExpress.Data.v12.2.resources.dll
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\ru\DevExpress.Data.v12.2.resources.dll
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\de\DevExpress.ExpressApp.v12.2.resources.dll
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\es\DevExpress.ExpressApp.v12.2.resources.dll
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\ja\DevExpress.ExpressApp.v12.2.resources.dll
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\ru\DevExpress.ExpressApp.v12.2.resources.dll
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\de\DevExpress.Utils.v12.2.resources.dll
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\es\DevExpress.Utils.v12.2.resources.dll
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\ja\DevExpress.Utils.v12.2.resources.dll
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\ru\DevExpress.Utils.v12.2.resources.dll
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\de\DevExpress.Xpo.v12.2.resources.dll
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\es\DevExpress.Xpo.v12.2.resources.dll
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\ja\DevExpress.Xpo.v12.2.resources.dll
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\bin\Debug\ru\DevExpress.Xpo.v12.2.resources.dll
+C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Module\obj\Debug\CielPostal.Module.dll.licenses
+C:\Users\aluga.com\Desktop\CielPostal\CielPostal.Module\bin\Debug\app.config
+C:\Users\aluga.com\Desktop\CielPostal\CielPostal.Module\bin\Debug\CielPostal.Module.dll.config
+C:\Users\aluga.com\Desktop\CielPostal\CielPostal.Module\bin\Debug\CielPostal.Module.dll
+C:\Users\aluga.com\Desktop\CielPostal\CielPostal.Module\bin\Debug\CielPostal.Module.pdb
+C:\Users\aluga.com\Desktop\CielPostal\CielPostal.Module\bin\Debug\PresentationCore.dll
+C:\Users\aluga.com\Desktop\CielPostal\CielPostal.Module\bin\Debug\PresentationFramework.dll
+C:\Users\aluga.com\Desktop\CielPostal\CielPostal.Module\bin\Debug\System.Activities.Core.Presentation.dll
+C:\Users\aluga.com\Desktop\CielPostal\CielPostal.Module\bin\Debug\System.Activities.dll
+C:\Users\aluga.com\Desktop\CielPostal\CielPostal.Module\bin\Debug\System.Activities.Presentation.dll
+C:\Users\aluga.com\Desktop\CielPostal\CielPostal.Module\bin\Debug\System.Data.dll
+C:\Users\aluga.com\Desktop\CielPostal\CielPostal.Module\bin\Debug\System.dll
+C:\Users\aluga.com\Desktop\CielPostal\CielPostal.Module\bin\Debug\System.Drawing.dll
+C:\Users\aluga.com\Desktop\CielPostal\CielPostal.Module\bin\Debug\System.Runtime.Serialization.dll
+C:\Users\aluga.com\Desktop\CielPostal\CielPostal.Module\bin\Debug\System.ServiceModel.Activities.dll
+C:\Users\aluga.com\Desktop\CielPostal\CielPostal.Module\bin\Debug\System.ServiceModel.dll
+C:\Users\aluga.com\Desktop\CielPostal\CielPostal.Module\bin\Debug\System.Windows.Forms.dll
+C:\Users\aluga.com\Desktop\CielPostal\CielPostal.Module\bin\Debug\System.Xaml.dll
+C:\Users\aluga.com\Desktop\CielPostal\CielPostal.Module\bin\Debug\System.Xml.dll
+C:\Users\aluga.com\Desktop\CielPostal\CielPostal.Module\bin\Debug\System.Xml.Linq.dll
+C:\Users\aluga.com\Desktop\CielPostal\CielPostal.Module\bin\Debug\WindowsBase.dll
+C:\Users\aluga.com\Desktop\CielPostal\CielPostal.Module\bin\Debug\WindowsFormsIntegration.dll
+C:\Users\aluga.com\Desktop\CielPostal\CielPostal.Module\obj\Debug\CielPostal.Module.CielPostalModule.resources
+C:\Users\aluga.com\Desktop\CielPostal\CielPostal.Module\obj\Debug\CielPostal.Module.csproj.GenerateResource.cache
+C:\Users\aluga.com\Desktop\CielPostal\CielPostal.Module\obj\Debug\CielPostal.Module.dll.licenses
+C:\Users\aluga.com\Desktop\CielPostal\CielPostal.Module\obj\Debug\CielPostal.Module.csproj.CoreCompileInputs.cache
+C:\Users\aluga.com\Desktop\CielPostal\CielPostal.Module\obj\Debug\CielPostal.Module.csproj.CopyComplete
+C:\Users\aluga.com\Desktop\CielPostal\CielPostal.Module\obj\Debug\CielPostal.Module.dll
+C:\Users\aluga.com\Desktop\CielPostal\CielPostal.Module\obj\Debug\CielPostal.Module.pdb
+C:\Users\aluga.com\Desktop\CielPostal\CielPostal.Module\obj\Debug\CielPostal.Module.csprojAssemblyReference.cache

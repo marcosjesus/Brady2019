@@ -706,10 +706,6 @@ object Fr_RelatorioGestaoMercados: TFr_RelatorioGestaoMercados
     object cxTabSheetPivot03: TcxTabSheet
       Caption = 'Forecast Accuracy - Familia'
       ImageIndex = 0
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object cxDBPivotGrid03: TcxDBPivotGrid
         Left = 0
         Top = 0

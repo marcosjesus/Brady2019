@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewBag.Title = "MenuForm";
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .button_area {
+        margin: auto;
+        display: block;
+        width: 200px;
+        padding: 20px;
+    }
+
+    .btn {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 150px;
+    }
+
+</style>
+
+
+<div class="container-fluid" style="margin-top: 20%;">
+
+    <div class="row">
+        <div class="button_area ">
+            <input type="button" class="btn btn-success" value="Check List" onclick="location.href='@Url.Action("SearchClienteReq", "CheckList")'" />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="button_area ">
+            <input type="button" class="btn btn-primary" value="Req. Mapeados" onclick="location.href='@Url.Action("Mercado", "Mapeado")'" />
+        </div>
+    </div>
+</div>
+

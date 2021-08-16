@@ -531,6 +531,16 @@ object Fr_CalcGM: TFr_CalcGM
         TabOrder = 29
         OnClick = cxButtonProcessarClick
       end
+      object Button1: TButton
+        Left = 10
+        Top = 171
+        Width = 75
+        Height = 25
+        Caption = 'Requisitos'
+        TabOrder = 30
+        Visible = False
+        OnClick = Button1Click
+      end
     end
   end
   object PanelSQLSplashScreen: TPanel
@@ -6198,5 +6208,15 @@ object Fr_CalcGM: TFr_CalcGM
       Origin = 'TMAQ_ITEROUDAT'
       Required = True
     end
+  end
+  object FDQueryAux: TFDQuery
+    Connection = FDConnection
+    Left = 116
+    Top = 201
+  end
+  object FDQueryAux2: TFDQuery
+    Connection = FDConnection
+    Left = 196
+    Top = 185
   end
 end

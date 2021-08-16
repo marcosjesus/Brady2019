@@ -1,0 +1,36 @@
+﻿@model IEnumerable<AppBradyReq.Models.RequisitoItemModel>
+
+@{
+    ViewBag.Title = "Item";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Item.Nome)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Item.Nome)
+            </td>
+            <td>
+                @Html.ActionLink("Salvar", "Create", "CheckList", new { cliente = item.Requisito.Cliente.Tsop_Clisapclicod, id_requisito = item.Requisito.Rqcl_Requisito_Id, id_item = item.Item.Item_Id }, htmlAttributes: new { @class = "btn btn-primary" })
+
+            </td>
+        </tr>
+    }
+
+</table>
+<p>
+    @Html.ActionLink("Voltar", "PesquisaPeloCNPJ", new { searchCNPJ = @Session["CNPJ"] })
+</p>
+
+
+

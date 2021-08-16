@@ -3642,8 +3642,6 @@ object frmProcessarL210: TfrmProcessarL210
     CachedUpdates = True
     Connection = DB_Conect.FDConnection
     SQL.Strings = (
-      ''
-      ''
       'WITH DADOS'
       'AS ('
       'SELECT C.ORDEM,  C.CODIGO_LINHA, C.DESC_L210,C.SUBGRUPO,'
@@ -3768,204 +3766,40 @@ object frmProcessarL210: TfrmProcessarL210
         'INNER JOIN ECF_CONTA C ON C.NUMERO_CONTA = ACC_NUMBER AND CODIGO' +
         '_LINHA IN ('#39'3'#39') --,'#39'34'#39','#39'35'#39','#39'29C'#39','#39'29B'#39
       'GROUP BY C.ORDEM, C.CODIGO_LINHA, C.DESC_L210,C.SUBGRUPO'
+      ''
+      '/*'
       'UNION ALL'
       ''
-      'SELECT ORDEM,  CODIGO_LINHA, DESC_L210, SUBGRUPO,'
-      ''
-      '        CAST(SUM([6]) AS NUMERIC(18,2)) AS '#39'JANEIRO'#39', '
-      #9#9'CAST(SUM([6]) + SUM([7]) AS NUMERIC(18,2)) AS '#39'FEVEREIRO'#39', '
+      'SELECT  ORDEM, CODIGO_LINHA, DESC_L210, SUBGRUPO,  JANEIRO '
       
-        #9#9'CAST(SUM([6]) + SUM([7]) + SUM([8]) AS NUMERIC(18,2))  AS '#39'MAR' +
-        #199'O'#39', '
+        '                                                 , FEVEREIRO + J' +
+        'ANEIRO AS FEVEREIRO'
+      #9#9#9#9#9#9', MARCO + FEVEREIRO + JANEIRO AS MARCO'
+      #9#9#9#9#9#9', ABRIL + MARCO + FEVEREIRO + JANEIRO AS ABRIL'
+      #9#9#9#9#9#9', MAIO + ABRIL + MARCO + FEVEREIRO + JANEIRO AS MAIO'
       
-        #9#9'CAST(SUM([6]) + SUM([7]) + SUM([8]) + SUM([9]) AS NUMERIC(18,2' +
-        '))  AS '#39'ABRIL'#39', '
+        #9#9#9#9#9#9', JUNHO + MAIO + ABRIL + MARCO + FEVEREIRO + JANEIRO AS JU' +
+        'NHO'
       
-        #9#9'CAST(SUM([6]) + SUM([7]) + SUM([8]) + SUM([9]) + SUM([10]) AS ' +
-        'NUMERIC(18,2))  AS '#39'MAIO'#39','
+        #9#9#9#9#9#9', JULHO + JUNHO + MAIO + ABRIL + MARCO + FEVEREIRO + JANEI' +
+        'RO AS JULHO'
       
-        #9#9'CAST(SUM([6]) + SUM([7]) + SUM([8]) + SUM([9]) + SUM([10]) + S' +
-        'UM([11]) AS NUMERIC(18,2))  AS '#39'JUNHO'#39', '
+        #9#9#9#9#9#9', AGOSTO + JULHO + JUNHO + MAIO + ABRIL + MARCO + FEVEREIR' +
+        'O + JANEIRO  AS AGOSTO'
       
-        #9#9'CAST(SUM([6]) + SUM([7]) + SUM([8]) + SUM([9]) + SUM([10]) + S' +
-        'UM([11])  + SUM([12]) AS NUMERIC(18,2))  AS '#39'JULHO'#39', '
+        #9#9#9#9#9#9', SETEMBRO + AGOSTO + JULHO + JUNHO + MAIO + ABRIL + MARCO' +
+        ' + FEVEREIRO + JANEIRO AS SETEMBRO'
       
-        #9#9'CAST(SUM([6]) + SUM([7]) + SUM([8]) + SUM([9]) + SUM([10]) + S' +
-        'UM([11])  + SUM([12]) + SUM([1]) AS NUMERIC(18,2))  AS '#39' AGOSTO'#39 +
-        ', '
+        #9#9#9#9#9#9', OUTUBRO + SETEMBRO + AGOSTO + JULHO + JUNHO + MAIO + ABR' +
+        'IL + MARCO + FEVEREIRO + JANEIRO AS OUTUBRO'
       
-        #9#9'CAST(SUM([6]) + SUM([7]) + SUM([8]) + SUM([9]) + SUM([10]) + S' +
-        'UM([11])  + SUM([12]) + SUM([1]) + SUM([2]) AS NUMERIC(18,2))  A' +
-        'S '#39'SETEMBRO'#39', '
+        #9#9#9#9#9#9', NOVEMBRO + OUTUBRO + SETEMBRO + AGOSTO + JULHO + JUNHO +' +
+        ' MAIO + ABRIL + MARCO + FEVEREIRO + JANEIRO AS NOVEMBRO'
       
-        #9#9'CAST(SUM([6]) + SUM([7]) + SUM([8]) + SUM([9]) + SUM([10]) + S' +
-        'UM([11])  + SUM([12]) + SUM([1]) + SUM([2]) + SUM([3]) AS NUMERI' +
-        'C(18,2))  AS '#39'OUTUBRO'#39', '
-      
-        #9#9'CAST(SUM([6]) + SUM([7]) + SUM([8]) + SUM([9]) + SUM([10]) + S' +
-        'UM([11])  + SUM([12]) + SUM([1]) + SUM([2]) + SUM([3]) + SUM([4]' +
-        ') AS NUMERIC(18,2))  AS '#39'NOVEMBRO'#39', '
-      
-        #9#9'CAST(SUM([6]) + SUM([7]) + SUM([8]) + SUM([9]) + SUM([10]) + S' +
-        'UM([11])  + SUM([12]) + SUM([1]) + SUM([2]) + SUM([3]) + SUM([4]' +
-        ') + SUM([5]) AS NUMERIC(18,2))  AS '#39'DEZEMBRO'#39
+        #9#9#9#9#9#9', DEZEMBRO + NOVEMBRO + OUTUBRO + SETEMBRO + AGOSTO + JULH' +
+        'O + JUNHO + MAIO + ABRIL + MARCO + FEVEREIRO + JANEIRO AS DEZEMB' +
+        'RO'
       'FROM ('
-      
-        'SELECT C.ORDEM, DESC_L210, C.CODIGO_LINHA, F.MES_FISCAL,C.SUBGRU' +
-        'PO, X.ECF_CENTRO_CUSTO_ID '
-      
-        #9'   ,CAST( COALESCE(SUM((F.VALOR/1) * (X.PERCENTUAL/100) ),0) AS' +
-        ' NUMERIC(18,2)) AS VALOR'
-      #9'  FROM ECF_FBL3N F'
-      #9'  INNER JOIN ECF_CONTA C ON C.NUMERO_CONTA = F.NUMERO_CONTA'
-      
-        #9'  AND  C.CODIGO_LINHA IN ('#39'9'#39','#39'11'#39','#39'15'#39','#39'16'#39','#39'18'#39','#39'23'#39')   AND C' +
-        '.GRUPO = 6'
-      
-        #9'  INNER JOIN ECF_CENTRO_CUSTO CC ON CC.CENTRO_CUSTO = F.CENTRO_' +
-        'CUSTO '
-      '      INNER JOIN (SELECT v.ECF_CENTRO_CUSTO_ID,  '
-      #9#9'                V.EXERCICIO,  '
-      #9#9#9#9'V.DT_EXERCICIOFISCAL ,  '
-      #9#9#9#9'CONVERT(INT,V.PERIODO_FISCAL) AS MES,  '
-      #9#9#9#9'SUM(V.PERCENTUAL) as PERCENTUAL FROM ECF_VINCULO V'
-      
-        #9#9#9'        INNER JOIN ECF_CENTRO_CUSTO C1 ON C1.ECF_CENTRO_CUSTO' +
-        '_ID = V.ECF_CENTRO_CUSTO_ID'
-      
-        #9#9#9#9'INNER JOIN ECF_CENTRO_CUSTO C2 ON C2.ECF_CENTRO_CUSTO_ID = V' +
-        '.ECF_CENTRO_CUSTO_FILHO '
-      
-        #9#9#9#9'WHERE  SUBSTRING(C1.CENTRO_CUSTO,1,1) = SUBSTRING(C2.CENTRO_' +
-        'CUSTO,1,1)'
-      
-        #9#9#9#9'GROUP BY v.ECF_CENTRO_CUSTO_ID,   V.DT_EXERCICIOFISCAL , V.E' +
-        'CF_CENTRO_CUSTO_ID, V.PERIODO_FISCAL, V.EXERCICIO) '
-      #9#9#9#9'X ON X.ECF_CENTRO_CUSTO_ID = CC.ECF_CENTRO_CUSTO_ID'
-      #9#9#9#9'AND X.DT_EXERCICIOFISCAL = :ANO'
-      #9#9#9#9'AND X.EXERCICIO IN (:ANO, :ANO_FUT)'
-      #9#9#9#9'AND X.MES = F.MES_FISCAL'
-      '   '
-      '          WHERE F.ano_base in (:ANO, :ANO_FUT) '
-      #9#9'  AND ECF_CONTROLE_ID = :CONTROLE_ID '
-      
-        '     GROUP BY C.ORDEM, C.CODIGO_LINHA, C.DESC_L210, F.MES_FISCAL' +
-        ', C.SUBGRUPO,  X.ECF_CENTRO_CUSTO_ID, X.PERCENTUAL) Q'
-      ''
-      
-        'PIVOT (SUM(VALOR) FOR MES_FISCAL IN ([6], [7], [8],[9], [10],[11' +
-        '],[12],[1], [2],[3],[4],[5])) AS PT'
-      'GROUP BY ORDEM,  CODIGO_LINHA, DESC_L210, SUBGRUPO'
-      ''
-      'UNION ALL'
-      'SELECT C.ORDEM, C.CODIGO_LINHA, C.DESC_L210,C.SUBGRUPO, '
-      '                        SUM([006]) AS '#39'JANEIRO'#39', '
-      #9#9#9'SUM([006]) + SUM([007]) AS '#39'FEVEREIRO'#39', '
-      #9#9#9'SUM([006]) + SUM([007]) + SUM([008]) AS '#39'MAR'#199'O'#39',   '
-      
-        #9#9#9'SUM([006]) + SUM([007]) + SUM([008]) + SUM([009]) AS '#39'ABRIL'#39',' +
-        '    '
-      
-        #9#9#9'SUM([006]) + SUM([007]) + SUM([008]) + SUM([009]) + SUM([010]' +
-        ') AS '#39'MAIO'#39', '
-      
-        '                        SUM([006]) + SUM([007]) + SUM([008]) + S' +
-        'UM([009]) + SUM([010]) + SUM([011]) AS '#39'JUNHO'#39',   '
-      
-        #9#9#9'SUM([006]) + SUM([007]) + SUM([008]) + SUM([009]) + SUM([010]' +
-        ') + SUM([011]) + SUM([012]) AS '#39'JULHO'#39',     '
-      
-        #9#9#9'SUM([006]) + SUM([007]) + SUM([008]) + SUM([009]) + SUM([010]' +
-        ') + SUM([011]) + SUM([012]) + SUM([001]) AS '#39'AGOSTO'#39', '
-      
-        #9#9#9'SUM([006]) + SUM([007]) + SUM([008]) + SUM([009]) + SUM([010]' +
-        ') + SUM([011]) + SUM([012]) + SUM([001]) + SUM([002]) AS '#39'SETEMB' +
-        'RO'#39', '
-      
-        #9#9#9'SUM([006]) + SUM([007]) + SUM([008]) + SUM([009]) + SUM([010]' +
-        ') + SUM([011]) + SUM([012]) + SUM([001]) + SUM([002]) + SUM([003' +
-        ']) AS '#39'OUTUBRO'#39', '
-      
-        #9#9#9'SUM([006]) + SUM([007]) + SUM([008]) + SUM([009]) + SUM([010]' +
-        ') + SUM([011]) + SUM([012]) + SUM([001]) + SUM([002]) + SUM([003' +
-        ']) + SUM([004]) AS '#39'NOVEMBRO'#39', '
-      
-        #9#9#9'SUM([006]) + SUM([007]) + SUM([008]) + SUM([009]) + SUM([010]' +
-        ') + SUM([011]) + SUM([012]) + SUM([001]) + SUM([002]) + SUM([003' +
-        ']) + SUM([004]) + SUM([005]) AS '#39'DEZEMBRO'#39
-      ''
-      
-        'FROM (SELECT ACC_NUMBER, POSITION_PERIODO,  SUM(AMOUNT) VALOR   ' +
-        '           '
-      '      FROM ECF_MOV_KE5Z'
-      
-        #9'  WHERE PAIS <> '#39'BR'#39' AND ANO_BASE = :ANO AND ECF_CONTROLE_ID = ' +
-        ':CONTROLE_ID'
-      '     GROUP BY ACC_NUMBER, POSITION_PERIODO ) SQ '
-      
-        'PIVOT (SUM(VALOR) FOR POSITION_PERIODO IN ([006], [007], [008], ' +
-        '[009], [010], [011], [012], [001], [002], [003], [004], [005])) ' +
-        'AS PT'
-      
-        'INNER JOIN ECF_CONTA C ON C.NUMERO_CONTA = ACC_NUMBER AND CODIGO' +
-        '_LINHA IN ('#39'4'#39') --,'#39'34'#39','#39'35'#39','#39'29C'#39','#39'29B'#39
-      'GROUP BY C.ORDEM, C.CODIGO_LINHA, C.DESC_L210,C.SUBGRUPO'
-      ''
-      ''
-      ''
-      'UNION ALL'
-      ''
-      'SELECT C.ORDEM, C.CODIGO_LINHA, C.DESC_L210,C.SUBGRUPO,   '
-      '                        SUM([006]) AS '#39'JANEIRO'#39', '
-      #9#9#9'SUM([006]) + SUM([007]) AS '#39'FEVEREIRO'#39', '
-      #9#9#9'SUM([006]) + SUM([007]) + SUM([008]) AS '#39'MAR'#199'O'#39',   '
-      
-        #9#9#9'SUM([006]) + SUM([007]) + SUM([008]) + SUM([009]) AS '#39'ABRIL'#39',' +
-        '    '
-      
-        #9#9#9'SUM([006]) + SUM([007]) + SUM([008]) + SUM([009]) + SUM([010]' +
-        ') AS '#39'MAIO'#39', '
-      
-        '                        SUM([006]) + SUM([007]) + SUM([008]) + S' +
-        'UM([009]) + SUM([010]) + SUM([011]) AS '#39'JUNHO'#39',   '
-      
-        #9#9#9'SUM([006]) + SUM([007]) + SUM([008]) + SUM([009]) + SUM([010]' +
-        ') + SUM([011]) + SUM([012]) AS '#39'JULHO'#39',     '
-      
-        #9#9#9'SUM([006]) + SUM([007]) + SUM([008]) + SUM([009]) + SUM([010]' +
-        ') + SUM([011]) + SUM([012]) + SUM([001]) AS '#39'AGOSTO'#39', '
-      
-        #9#9#9'SUM([006]) + SUM([007]) + SUM([008]) + SUM([009]) + SUM([010]' +
-        ') + SUM([011]) + SUM([012]) + SUM([001]) + SUM([002]) AS '#39'SETEMB' +
-        'RO'#39', '
-      
-        #9#9#9'SUM([006]) + SUM([007]) + SUM([008]) + SUM([009]) + SUM([010]' +
-        ') + SUM([011]) + SUM([012]) + SUM([001]) + SUM([002]) + SUM([003' +
-        ']) AS '#39'OUTUBRO'#39', '
-      
-        #9#9#9'SUM([006]) + SUM([007]) + SUM([008]) + SUM([009]) + SUM([010]' +
-        ') + SUM([011]) + SUM([012]) + SUM([001]) + SUM([002]) + SUM([003' +
-        ']) + SUM([004]) AS '#39'NOVEMBRO'#39', '
-      
-        #9#9#9'SUM([006]) + SUM([007]) + SUM([008]) + SUM([009]) + SUM([010]' +
-        ') + SUM([011]) + SUM([012]) + SUM([001]) + SUM([002]) + SUM([003' +
-        ']) + SUM([004]) + SUM([005]) AS '#39'DEZEMBRO'#39
-      
-        'FROM (SELECT ACC_NUMBER, POSITION_PERIODO,  SUM(AMOUNT) VALOR   ' +
-        '           '
-      '      FROM ECF_MOV_KE5Z'
-      '      WHERE ANO_BASE = :ANO AND ECF_CONTROLE_ID = :CONTROLE_ID'
-      '     GROUP BY ACC_NUMBER, POSITION_PERIODO ) SQ '
-      
-        'PIVOT (SUM(VALOR) FOR POSITION_PERIODO IN ([006], [007], [008], ' +
-        '[009], [010], [011], [012], [001], [002], [003], [004], [005])) ' +
-        'AS PT'
-      
-        'INNER JOIN ECF_CONTA C ON C.NUMERO_CONTA = ACC_NUMBER AND CODIGO' +
-        '_LINHA IN ('#39'29B'#39') '
-      'GROUP BY C.ORDEM, C.CODIGO_LINHA, C.DESC_L210,C.SUBGRUPO'
-      ''
-      'UNION ALL'
       ''
       
         'SELECT C.ORDEM, C.CODIGO_LINHA, C.DESC_L210,C.SUBGRUPO,    SUM(F' +
@@ -4047,7 +3881,7 @@ object frmProcessarL210: TfrmProcessarL210
       #9#9#9#9'FROM ECF_MOV_F01 M'
       
         #9#9#9#9'INNER JOIN ECF_CONTA C ON C.NUMERO_CONTA = M.NUMERO_CONTA AN' +
-        'D C.CODIGO_LINHA = '#39'29C'#39' AND C.NUMERO_CONTA   IN ('#39'134032'#39')'
+        'D C.CODIGO_LINHA = '#39'3A'#39' AND C.NUMERO_CONTA   IN ('#39'132000'#39')'
       #9#9#9#9'WHERE M.ANO = :ANO AND ECF_CONTROLE_ID = :CONTROLE_ID'
       #9#9#9#9'GROUP BY  C.ORDEM, C.CODIGO_LINHA, C.DESC_L210,C.SUBGRUPO'
       ''
@@ -4079,12 +3913,475 @@ object frmProcessarL210: TfrmProcessarL210
       ' '#9#9#9#9'FROM ECF_MOV_F01 M'
       
         #9#9#9#9'INNER JOIN ECF_CONTA C ON C.NUMERO_CONTA = M.NUMERO_CONTA AN' +
-        'D C.CODIGO_LINHA = '#39'29C'#39' AND C.NUMERO_CONTA  IN ('#39'134032'#39')'
+        'D C.CODIGO_LINHA = '#39'3A'#39' AND C.NUMERO_CONTA  IN ('#39'132000'#39')'
       #9#9#9#9'WHERE M.ANO = :ANO_FUT AND ECF_CONTROLE_ID = :CONTROLE_ID'
       #9#9#9#9'GROUP BY  C.ORDEM, C.CODIGO_LINHA, C.DESC_L210,C.SUBGRUPO'
       '      ) C'
       'GROUP BY  C.ORDEM, C.CODIGO_LINHA, C.DESC_L210,C.SUBGRUPO'
       ''
+      ') X'
+      '*/'
+      ''
+      ''
+      'UNION ALL'
+      ''
+      'SELECT ORDEM,  CODIGO_LINHA, DESC_L210, SUBGRUPO,'
+      
+        '                CAST(isnull(SUM([6]),0) AS NUMERIC(18,2)) AS '#39'JA' +
+        'NEIRO'#39', '
+      
+        #9#9'CAST(isnull(SUM([6]),0) + isnull(SUM([7]),0) AS NUMERIC(18,2))' +
+        ' AS '#39'FEVEREIRO'#39', '
+      
+        #9#9'CAST(isnull(SUM([6]),0) + isnull(SUM([7]),0) + isnull(SUM([8])' +
+        ',0) AS NUMERIC(18,2))  AS '#39'MAR'#199'O'#39', '
+      
+        #9#9'CAST(isnull(SUM([6]),0) + isnull(SUM([7]),0) + isnull(SUM([8])' +
+        ',0) + isnull(SUM([9]),0) AS NUMERIC(18,2))  AS '#39'ABRIL'#39', '
+      
+        #9#9'CAST(isnull(SUM([6]),0) + isnull(SUM([7]),0) + isnull(SUM([8])' +
+        ',0) + isnull(SUM([9]),0) + isnull(SUM([10]),0) AS NUMERIC(18,2))' +
+        '  AS '#39'MAIO'#39','
+      
+        #9#9'CAST(isnull(SUM([6]),0) + isnull(SUM([7]),0) + isnull(SUM([8])' +
+        ',0) + isnull(SUM([9]),0) + isnull(SUM([10]),0) + isnull(SUM([11]' +
+        '),0) AS NUMERIC(18,2))  AS '#39'JUNHO'#39', '
+      
+        #9#9'CAST(isnull(SUM([6]),0) + isnull(SUM([7]),0) + isnull(SUM([8])' +
+        ',0) + isnull(SUM([9]),0) + isnull(SUM([10]),0) + isnull(SUM([11]' +
+        '),0) + isnull(SUM([12]),0) AS NUMERIC(18,2))  AS '#39'JULHO'#39', '
+      
+        #9#9'CAST(isnull(SUM([6]),0) + isnull(SUM([7]),0) + isnull(SUM([8])' +
+        ',0) + isnull(SUM([9]),0) + isnull(SUM([10]),0) + isnull(SUM([11]' +
+        '),0) + isnull(SUM([12]),0) + isnull(SUM([1]),0) AS NUMERIC(18,2)' +
+        ')  AS '#39' AGOSTO'#39', '
+      
+        #9#9'CAST(isnull(SUM([6]),0) + isnull(SUM([7]),0) + isnull(SUM([8])' +
+        ',0) + isnull(SUM([9]),0) + isnull(SUM([10]),0) + isnull(SUM([11]' +
+        '),0) + isnull(SUM([12]),0) + isnull(SUM([1]),0) + isnull(SUM([2]' +
+        '),0)  AS NUMERIC(18,2))  AS '#39'SETEMBRO'#39', '
+      
+        #9#9'CAST(isnull(SUM([6]),0) + isnull(SUM([7]),0) + isnull(SUM([8])' +
+        ',0) + isnull(SUM([9]),0) + isnull(SUM([10]),0) + isnull(SUM([11]' +
+        '),0) + isnull(SUM([12]),0) + isnull(SUM([1]),0) + isnull(SUM([2]' +
+        '),0) + isnull(SUM([3]),0) AS NUMERIC(18,2))  AS '#39'OUTUBRO'#39', '
+      
+        #9#9'CAST(isnull(SUM([6]),0) + isnull(SUM([7]),0) + isnull(SUM([8])' +
+        ',0) + isnull(SUM([9]),0) + isnull(SUM([10]),0) + isnull(SUM([11]' +
+        '),0) + isnull(SUM([12]),0) + isnull(SUM([1]),0) + isnull(SUM([2]' +
+        '),0) + isnull(SUM([3]),0) + isnull(SUM([4]),0) AS NUMERIC(18,2))' +
+        '  AS '#39'NOVEMBRO'#39', '
+      
+        #9#9'CAST(isnull(SUM([6]),0) + isnull(SUM([7]),0) + isnull(SUM([8])' +
+        ',0) + isnull(SUM([9]),0) + isnull(SUM([10]),0) + isnull(SUM([11]' +
+        '),0) + isnull(SUM([12]),0) + isnull(SUM([1]),0) + isnull(SUM([2]' +
+        '),0) + isnull(SUM([3]),0) + isnull(SUM([4]),0) + isnull(SUM([5])' +
+        ',0) AS NUMERIC(18,2))  AS '#39'DEZEMBRO'#39
+      'FROM ('
+      
+        'SELECT C.ORDEM, DESC_L210, C.CODIGO_LINHA, F.MES_FISCAL,C.SUBGRU' +
+        'PO, X.ECF_CENTRO_CUSTO_ID '
+      
+        #9'   ,CAST( COALESCE(SUM((F.VALOR/1) * (X.PERCENTUAL/100) ),0) AS' +
+        ' NUMERIC(18,2)) AS VALOR'
+      #9'  FROM ECF_FBL3N F'
+      #9'  INNER JOIN ECF_CONTA C ON C.NUMERO_CONTA = F.NUMERO_CONTA'
+      
+        #9'  AND  C.CODIGO_LINHA IN ('#39'9'#39','#39'11'#39','#39'15'#39','#39'16'#39','#39'18'#39','#39'23'#39')   AND C' +
+        '.GRUPO = 6'
+      
+        #9'  INNER JOIN ECF_CENTRO_CUSTO CC ON CC.CENTRO_CUSTO = F.CENTRO_' +
+        'CUSTO '
+      '      INNER JOIN (SELECT v.ECF_CENTRO_CUSTO_ID,  '
+      #9#9'                V.EXERCICIO,  '
+      #9#9#9#9'V.DT_EXERCICIOFISCAL ,  '
+      #9#9#9#9'CONVERT(INT,V.PERIODO_FISCAL) AS MES,  '
+      #9#9#9#9'SUM(V.PERCENTUAL) as PERCENTUAL FROM ECF_VINCULO V'
+      
+        #9#9#9'        INNER JOIN ECF_CENTRO_CUSTO C1 ON C1.ECF_CENTRO_CUSTO' +
+        '_ID = V.ECF_CENTRO_CUSTO_ID'
+      
+        #9#9#9#9'INNER JOIN ECF_CENTRO_CUSTO C2 ON C2.ECF_CENTRO_CUSTO_ID = V' +
+        '.ECF_CENTRO_CUSTO_FILHO '
+      
+        #9#9#9#9'WHERE  SUBSTRING(C1.CENTRO_CUSTO,1,1) = SUBSTRING(C2.CENTRO_' +
+        'CUSTO,1,1)'
+      
+        #9#9#9#9'GROUP BY v.ECF_CENTRO_CUSTO_ID,   V.DT_EXERCICIOFISCAL , V.E' +
+        'CF_CENTRO_CUSTO_ID, V.PERIODO_FISCAL, V.EXERCICIO) '
+      #9#9#9#9'X ON X.ECF_CENTRO_CUSTO_ID = CC.ECF_CENTRO_CUSTO_ID'
+      #9#9#9#9'AND X.DT_EXERCICIOFISCAL = :ANO'
+      #9#9#9#9'AND X.EXERCICIO IN (:ANO, :ANO_FUT)'
+      #9#9#9#9'AND X.MES = F.MES_FISCAL'
+      '   '
+      '          WHERE F.ano_base in (:ANO, :ANO_FUT) '
+      #9#9'  AND ECF_CONTROLE_ID = :CONTROLE_ID AND F.TIPO_SA = '#39'N'#39
+      
+        '     GROUP BY C.ORDEM, C.CODIGO_LINHA, C.DESC_L210, F.MES_FISCAL' +
+        ', C.SUBGRUPO,  X.ECF_CENTRO_CUSTO_ID, X.PERCENTUAL) Q'
+      ''
+      
+        'PIVOT (SUM(VALOR) FOR MES_FISCAL IN ([6], [7], [8],[9], [10],[11' +
+        '],[12],[1], [2],[3],[4],[5])) AS PT'
+      'GROUP BY ORDEM,  CODIGO_LINHA, DESC_L210, SUBGRUPO'
+      ''
+      'UNION ALL'
+      'SELECT C.ORDEM, C.CODIGO_LINHA, C.DESC_L210,C.SUBGRUPO, '
+      '                        SUM([006]) AS '#39'JANEIRO'#39', '
+      #9#9#9'SUM([006]) + SUM([007]) AS '#39'FEVEREIRO'#39', '
+      #9#9#9'SUM([006]) + SUM([007]) + SUM([008]) AS '#39'MAR'#199'O'#39',   '
+      
+        #9#9#9'SUM([006]) + SUM([007]) + SUM([008]) + SUM([009]) AS '#39'ABRIL'#39',' +
+        '    '
+      
+        #9#9#9'SUM([006]) + SUM([007]) + SUM([008]) + SUM([009]) + SUM([010]' +
+        ') AS '#39'MAIO'#39', '
+      
+        '                        SUM([006]) + SUM([007]) + SUM([008]) + S' +
+        'UM([009]) + SUM([010]) + SUM([011]) AS '#39'JUNHO'#39',   '
+      
+        #9#9#9'SUM([006]) + SUM([007]) + SUM([008]) + SUM([009]) + SUM([010]' +
+        ') + SUM([011]) + SUM([012]) AS '#39'JULHO'#39',     '
+      
+        #9#9#9'SUM([006]) + SUM([007]) + SUM([008]) + SUM([009]) + SUM([010]' +
+        ') + SUM([011]) + SUM([012]) + SUM([001]) AS '#39'AGOSTO'#39', '
+      
+        #9#9#9'SUM([006]) + SUM([007]) + SUM([008]) + SUM([009]) + SUM([010]' +
+        ') + SUM([011]) + SUM([012]) + SUM([001]) + SUM([002]) AS '#39'SETEMB' +
+        'RO'#39', '
+      
+        #9#9#9'SUM([006]) + SUM([007]) + SUM([008]) + SUM([009]) + SUM([010]' +
+        ') + SUM([011]) + SUM([012]) + SUM([001]) + SUM([002]) + SUM([003' +
+        ']) AS '#39'OUTUBRO'#39', '
+      
+        #9#9#9'SUM([006]) + SUM([007]) + SUM([008]) + SUM([009]) + SUM([010]' +
+        ') + SUM([011]) + SUM([012]) + SUM([001]) + SUM([002]) + SUM([003' +
+        ']) + SUM([004]) AS '#39'NOVEMBRO'#39', '
+      
+        #9#9#9'SUM([006]) + SUM([007]) + SUM([008]) + SUM([009]) + SUM([010]' +
+        ') + SUM([011]) + SUM([012]) + SUM([001]) + SUM([002]) + SUM([003' +
+        ']) + SUM([004]) + SUM([005]) AS '#39'DEZEMBRO'#39
+      ''
+      
+        'FROM (SELECT ACC_NUMBER, POSITION_PERIODO,  SUM(AMOUNT) VALOR   ' +
+        '           '
+      '      FROM ECF_MOV_KE5Z'
+      
+        #9'  WHERE PAIS <> '#39'BR'#39' AND ANO_BASE = :ANO AND ECF_CONTROLE_ID = ' +
+        ':CONTROLE_ID'
+      '     GROUP BY ACC_NUMBER, POSITION_PERIODO ) SQ '
+      
+        'PIVOT (SUM(VALOR) FOR POSITION_PERIODO IN ([006], [007], [008], ' +
+        '[009], [010], [011], [012], [001], [002], [003], [004], [005])) ' +
+        'AS PT'
+      
+        'INNER JOIN ECF_CONTA C ON C.NUMERO_CONTA = ACC_NUMBER AND CODIGO' +
+        '_LINHA IN ('#39'4'#39') --,'#39'34'#39','#39'35'#39','#39'29C'#39','#39'29B'#39
+      'GROUP BY C.ORDEM, C.CODIGO_LINHA, C.DESC_L210,C.SUBGRUPO'
+      '/*'
+      'UNION ALL'
+      ''
+      ''
+      'SELECT  ORDEM, CODIGO_LINHA, DESC_L210, SUBGRUPO,  JANEIRO '
+      
+        '                                                 , FEVEREIRO + J' +
+        'ANEIRO AS FEVEREIRO'
+      #9#9#9#9#9#9', MARCO + FEVEREIRO + JANEIRO AS MARCO'
+      #9#9#9#9#9#9', ABRIL + MARCO + FEVEREIRO + JANEIRO AS ABRIL'
+      #9#9#9#9#9#9', MAIO + ABRIL + MARCO + FEVEREIRO + JANEIRO AS MAIO'
+      
+        #9#9#9#9#9#9', JUNHO + MAIO + ABRIL + MARCO + FEVEREIRO + JANEIRO AS JU' +
+        'NHO'
+      
+        #9#9#9#9#9#9', JULHO + JUNHO + MAIO + ABRIL + MARCO + FEVEREIRO + JANEI' +
+        'RO AS JULHO'
+      
+        #9#9#9#9#9#9', AGOSTO + JULHO + JUNHO + MAIO + ABRIL + MARCO + FEVEREIR' +
+        'O + JANEIRO  AS AGOSTO'
+      
+        #9#9#9#9#9#9', SETEMBRO + AGOSTO + JULHO + JUNHO + MAIO + ABRIL + MARCO' +
+        ' + FEVEREIRO + JANEIRO AS SETEMBRO'
+      
+        #9#9#9#9#9#9', OUTUBRO + SETEMBRO + AGOSTO + JULHO + JUNHO + MAIO + ABR' +
+        'IL + MARCO + FEVEREIRO + JANEIRO AS OUTUBRO'
+      
+        #9#9#9#9#9#9', NOVEMBRO + OUTUBRO + SETEMBRO + AGOSTO + JULHO + JUNHO +' +
+        ' MAIO + ABRIL + MARCO + FEVEREIRO + JANEIRO AS NOVEMBRO'
+      
+        #9#9#9#9#9#9', DEZEMBRO + NOVEMBRO + OUTUBRO + SETEMBRO + AGOSTO + JULH' +
+        'O + JUNHO + MAIO + ABRIL + MARCO + FEVEREIRO + JANEIRO AS DEZEMB' +
+        'RO'
+      'FROM ('
+      ''
+      
+        'SELECT C.ORDEM, C.CODIGO_LINHA, C.DESC_L210,C.SUBGRUPO,    SUM(F' +
+        'EVEREIRO) - SUM(JANEIRO) AS JANEIRO, '
+      
+        '                                                           SUM(M' +
+        'AR'#199'O)  - SUM(FEVEREIRO) AS FEVEREIRO, '
+      #9#9#9#9#9#9#9#9#9#9#9#9#9#9'   SUM(ABRIL) - SUM(MAR'#199'O) AS MARCO,'
+      #9#9#9#9#9#9#9#9#9#9#9#9#9#9'   SUM(MAIO)  - SUM(ABRIL) AS ABRIL ,'
+      #9#9#9#9#9#9#9#9#9#9#9#9#9#9'   SUM(JUNHO) - SUM(MAIO) AS MAIO, '
+      #9#9#9#9#9#9#9#9#9#9#9#9#9#9'   SUM(JULHO)- SUM(JUNHO) AS JUNHO,'
+      #9#9#9#9#9#9#9#9#9#9#9#9#9#9'   SUM(AGOSTO) - SUM(JULHO) AS JULHO,'
+      #9#9#9#9#9#9#9#9#9#9#9#9#9#9'   SUM(SETEMBRO) - SUM(AGOSTO)  AS AGOSTO,'
+      #9#9#9#9#9#9#9#9#9#9#9#9#9#9'   SUM(OUTUBRO) - SUM(SETEMBRO) AS SETEMBRO,'
+      #9#9#9#9#9#9#9#9#9#9#9#9#9#9'   SUM(NOVEMBRO) - SUM(OUTUBRO) AS OUTUBRO,'
+      #9#9#9#9#9#9#9#9#9#9#9#9#9#9'   SUM(DEZEMBRO)  - SUM(NOVEMBRO) AS NOVEMBRO,'
+      #9#9#9#9#9#9#9#9#9#9#9#9#9#9'   SUM(DEZ_ANT) -  SUM(DEZEMBRO) AS DEZEMBRO'
+      'FROM ('
+      #9#9#9#9'SELECT C.ORDEM,  C.CODIGO_LINHA, C.DESC_L210,C.SUBGRUPO,'
+      #9#9#9#9'0 DEZ_ANT,'
+      
+        #9#9#9#9'(SUM(M.VALOR_FIS_01)  + SUM(M.VALOR_FIS_02) + SUM(M.VALOR_FI' +
+        'S_03) + SUM(M.VALOR_FIS_04) + SUM(M.VALOR_FIS_05) + SUM(M.VALOR_' +
+        'FIS_06)) JANEIRO,'
+      
+        #9#9#9#9'(SUM(M.VALOR_FIS_01)  + SUM(M.VALOR_FIS_02) + SUM(M.VALOR_FI' +
+        'S_03) + SUM(M.VALOR_FIS_04) + SUM(M.VALOR_FIS_05) + SUM(M.VALOR_' +
+        'FIS_06) + '
+      #9#9#9#9'SUM(M.VALOR_FIS_07)) FEVEREIRO, '
+      
+        #9#9#9#9'(SUM(M.VALOR_FIS_01)  + SUM(M.VALOR_FIS_02) + SUM(M.VALOR_FI' +
+        'S_03) + SUM(M.VALOR_FIS_04) + SUM(M.VALOR_FIS_05) + SUM(M.VALOR_' +
+        'FIS_06) + '
+      #9#9#9#9'SUM(M.VALOR_FIS_07) + SUM(M.VALOR_FIS_08)) MAR'#199'O, '
+      
+        #9#9#9#9'(SUM(M.VALOR_FIS_01)  + SUM(M.VALOR_FIS_02) + SUM(M.VALOR_FI' +
+        'S_03) + SUM(M.VALOR_FIS_04) + SUM(M.VALOR_FIS_05) + SUM(M.VALOR_' +
+        'FIS_06) + '
+      
+        #9#9#9#9'SUM(M.VALOR_FIS_07) + SUM(M.VALOR_FIS_08) + SUM(M.VALOR_FIS_' +
+        '09)) ABRIL, '
+      
+        #9#9#9#9'(SUM(M.VALOR_FIS_01)  + SUM(M.VALOR_FIS_02) + SUM(M.VALOR_FI' +
+        'S_03) + SUM(M.VALOR_FIS_04) + SUM(M.VALOR_FIS_05) + SUM(M.VALOR_' +
+        'FIS_06) + '
+      
+        #9#9#9#9'SUM(M.VALOR_FIS_07) + SUM(M.VALOR_FIS_08) + SUM(M.VALOR_FIS_' +
+        '09)  + SUM(M.VALOR_FIS_10)) MAIO, '
+      
+        #9#9#9#9'(SUM(M.VALOR_FIS_01)  + SUM(M.VALOR_FIS_02) + SUM(M.VALOR_FI' +
+        'S_03) + SUM(M.VALOR_FIS_04) + SUM(M.VALOR_FIS_05) + SUM(M.VALOR_' +
+        'FIS_06) + '
+      
+        #9#9#9#9'SUM(M.VALOR_FIS_07) + SUM(M.VALOR_FIS_08) + SUM(M.VALOR_FIS_' +
+        '09)  + SUM(M.VALOR_FIS_10) + SUM(M.VALOR_FIS_11)) JUNHO, '
+      
+        #9#9#9#9'(SUM(M.VALOR_FIS_01)  + SUM(M.VALOR_FIS_02) + SUM(M.VALOR_FI' +
+        'S_03) + SUM(M.VALOR_FIS_04) + SUM(M.VALOR_FIS_05) + SUM(M.VALOR_' +
+        'FIS_06) + '
+      
+        #9#9#9#9'SUM(M.VALOR_FIS_07) + SUM(M.VALOR_FIS_08) + SUM(M.VALOR_FIS_' +
+        '09)  + SUM(M.VALOR_FIS_10) + SUM(M.VALOR_FIS_11) + SUM(M.VALOR_F' +
+        'IS_12))  JULHO, '
+      ''
+      
+        #9#9#9#9'(SUM(M.VALOR_FIS_01)  + SUM(M.VALOR_FIS_02) + SUM(M.VALOR_FI' +
+        'S_03) + SUM(M.VALOR_FIS_04) + SUM(M.VALOR_FIS_05) + SUM(M.VALOR_' +
+        'FIS_06) + '
+      
+        #9#9#9#9#9'SUM(M.VALOR_FIS_07) + SUM(M.VALOR_FIS_08) + SUM(M.VALOR_FIS' +
+        '_09)  + SUM(M.VALOR_FIS_10) + SUM(M.VALOR_FIS_11) + SUM(M.VALOR_' +
+        'FIS_12) + SUM(M.VALOR_FIS_13)) AGOSTO,         '
+      #9#9
+      #9#9#9#9'0 SETEMBRO, '
+      #9#9#9#9'0 OUTUBRO, '
+      #9#9#9#9'0 NOVEMBRO,'
+      #9#9#9#9'0 DEZEMBRO        '
+      ''
+      #9#9#9#9'FROM ECF_MOV_F01 M'
+      
+        #9#9#9#9'INNER JOIN ECF_CONTA C ON C.NUMERO_CONTA = M.NUMERO_CONTA AN' +
+        'D C.CODIGO_LINHA = '#39'4A'#39' AND C.NUMERO_CONTA   IN ('#39'134032'#39')'
+      #9#9#9#9'WHERE M.ANO = :ANO AND ECF_CONTROLE_ID = :CONTROLE_ID'
+      #9#9#9#9'GROUP BY  C.ORDEM, C.CODIGO_LINHA, C.DESC_L210,C.SUBGRUPO'
+      ''
+      #9#9#9#9'UNION ALL'
+      ''
+      #9#9#9#9'SELECT C.ORDEM,  C.CODIGO_LINHA, C.DESC_L210,C.SUBGRUPO,'
+      
+        #9#9#9#9'(SUM(M.VALOR_FIS_01)  + SUM(M.VALOR_FIS_02) + SUM(M.VALOR_FI' +
+        'S_03) + SUM(M.VALOR_FIS_04) + SUM(M.VALOR_FIS_05) + SUM(M.VALOR_' +
+        'FIS_06)) DEZ_ANT,'
+      #9#9#9#9'0 JANEIRO, '
+      #9#9#9#9'0 FEVEREIRO, '
+      #9#9#9#9'0 MARCO, '
+      #9#9#9#9'0 ABRIL, '
+      #9#9#9#9'0 MAIO, '
+      #9#9#9#9'0 JUNHO, '
+      #9#9#9#9'0 JULHO,'
+      #9#9#9#9'0 AGOSTO,       '
+      #9#9#9#9'(SUM(M.VALOR_FIS_01)  + SUM(M.VALOR_FIS_02)) SETEMBRO, '
+      
+        #9#9#9#9'(SUM(M.VALOR_FIS_01)  + SUM(M.VALOR_FIS_02) + SUM(M.VALOR_FI' +
+        'S_03)) OUTUBRO, '
+      
+        #9#9#9#9'(SUM(M.VALOR_FIS_01)  + SUM(M.VALOR_FIS_02) + SUM(M.VALOR_FI' +
+        'S_03) + SUM(M.VALOR_FIS_04)) NOVEMBRO, '
+      
+        #9#9#9#9'(SUM(M.VALOR_FIS_01)  + SUM(M.VALOR_FIS_02) + SUM(M.VALOR_FI' +
+        'S_03) + SUM(M.VALOR_FIS_04) + SUM(M.VALOR_FIS_05)) DEZEMBRO'
+      ' '#9#9#9#9'FROM ECF_MOV_F01 M'
+      
+        #9#9#9#9'INNER JOIN ECF_CONTA C ON C.NUMERO_CONTA = M.NUMERO_CONTA AN' +
+        'D C.CODIGO_LINHA = '#39'4A'#39' AND C.NUMERO_CONTA  IN ('#39'134032'#39')'
+      #9#9#9#9'WHERE M.ANO = :ANO_FUT AND ECF_CONTROLE_ID = :CONTROLE_ID'
+      #9#9#9#9'GROUP BY  C.ORDEM, C.CODIGO_LINHA, C.DESC_L210,C.SUBGRUPO'
+      '      ) C'
+      'GROUP BY  C.ORDEM, C.CODIGO_LINHA, C.DESC_L210,C.SUBGRUPO'
+      ''
+      ') X'
+      ''
+      '*/'
+      ''
+      ''
+      'UNION ALL'
+      ''
+      
+        'SELECT CC.ORDEM, '#39'29A'#39' as CODIGO_LINHA , '#39'510000 (tipo docto SA)' +
+        #39' as DESC_L210,CC.SUBGRUPO,   '
+      ''
+      '            -1*SUM([006]) AS '#39'JANEIRO'#39', '
+      #9'    -1*(SUM([006]) + SUM([007])) AS '#39'FEVEREIRO'#39', '
+      #9'    -1*(SUM([006]) + SUM([007]) + SUM([008])) AS '#39'MAR'#199'O'#39',   '
+      
+        #9'    -1*(SUM([006]) + SUM([007]) + SUM([008]) + SUM([009])) AS '#39 +
+        'ABRIL'#39',    '
+      
+        #9'    -1*(SUM([006]) + SUM([007]) + SUM([008]) + SUM([009]) + SUM' +
+        '([010])) AS '#39'MAIO'#39', '
+      
+        '            -1*(SUM([006]) + SUM([007]) + SUM([008]) + SUM([009]' +
+        ') + SUM([010]) + SUM([011])) AS '#39'JUNHO'#39',   '
+      
+        #9'    -1*(SUM([006]) + SUM([007]) + SUM([008]) + SUM([009]) + SUM' +
+        '([010]) + SUM([011]) + SUM([012])) AS '#39'JULHO'#39',     '
+      
+        #9'    -1*(SUM([006]) + SUM([007]) + SUM([008]) + SUM([009]) + SUM' +
+        '([010]) + SUM([011]) + SUM([012]) + SUM([001])) AS '#39'AGOSTO'#39', '
+      
+        #9'    -1*(SUM([006]) + SUM([007]) + SUM([008]) + SUM([009]) + SUM' +
+        '([010]) + SUM([011]) + SUM([012]) + SUM([001]) + SUM([002])) AS ' +
+        #39'SETEMBRO'#39', '
+      
+        #9'    -1*(SUM([006]) + SUM([007]) + SUM([008]) + SUM([009]) + SUM' +
+        '([010]) + SUM([011]) + SUM([012]) + SUM([001]) + SUM([002]) + SU' +
+        'M([003])) AS '#39'OUTUBRO'#39', '
+      
+        '            -1*(SUM([006]) + SUM([007]) + SUM([008]) + SUM([009]' +
+        ') + SUM([010]) + SUM([011]) + SUM([012]) + SUM([001]) + SUM([002' +
+        ']) + SUM([003]) + SUM([004])) AS '#39'NOVEMBRO'#39', '
+      
+        #9'    -1*(SUM([006]) + SUM([007]) + SUM([008]) + SUM([009]) + SUM' +
+        '([010]) + SUM([011]) + SUM([012]) + SUM([001]) + SUM([002]) + SU' +
+        'M([003]) + SUM([004]) + SUM([005])) AS '#39'DEZEMBRO'#39
+      ''
+      'FROM ('
+      
+        '     SELECT X.NUMERO_CONTA AS ACC_NUMBER, REPLICATE('#39'0'#39', 3 - LEN' +
+        '(X.MES_FISCAL)) + X.MES_FISCAL AS POSITION_PERIODO, X.CENTRO_CUS' +
+        'TO'
+      
+        '    ,CAST( COALESCE(SUM((X.VALOR/1)),0) AS NUMERIC(18,2)) AS VAL' +
+        'OR'
+      '     FROM ECF_FBL3N X'
+      '      '
+      #9' INNER JOIN   (SELECT  A.CENTRO_CUSTO, B.NUMERO_CONTA'
+      
+        #9'                FROM [DBO].[ECF_CENTRO_CUSTO] A, [DBO].[ECF_CON' +
+        'TA]  B'
+      
+        '                    WHERE   B.CODIGO_LINHA = '#39'29'#39' AND A.TP_CENTR' +
+        'O_CUSTO_ID <> '#39#39
+      #9#9#9#9#9'   AND B.GRUPO  IN (5,6) '
+      
+        #9#9#9#9#9'   ) Y ON ((Y.NUMERO_CONTA = X.NUMERO_CONTA) AND (Y.CENTRO_' +
+        'CUSTO = X.CENTRO_CUSTO) AND X.TIPO_SA = '#39'S'#39')'
+      ''
+      
+        '    INNER JOIN ECF_CENTRO_CUSTO CC ON CC.CENTRO_CUSTO = X.CENTRO' +
+        '_CUSTO '
+      ''
+      '   WHERE X.ANO_BASE = :ANO AND ECF_CONTROLE_ID = :CONTROLE_ID '
+      '    AND X.TIPO_SA = '#39'S'#39' AND X.NUMERO_CONTA = '#39'510000'#39
+      #9' GROUP BY X.NUMERO_CONTA, X.MES_FISCAL, X.CENTRO_CUSTO ) SQ '
+      ''
+      
+        '  PIVOT (SUM(VALOR) FOR POSITION_PERIODO IN ([006], [007], [008]' +
+        ', [009], [010], [011], [012], [001], [002], [003], [004], [005])' +
+        ') AS PT'
+      #9' '
+      
+        #9' INNER JOIN  (SELECT B.NUMERO_CONTA, A.CENTRO_CUSTO,  B.ORDEM, ' +
+        'B.CODIGO_LINHA, B.DESC_L210, B.SUBGRUPO FROM [DBO].[ECF_CENTRO_C' +
+        'USTO] A, [DBO].[ECF_CONTA]  B'
+      
+        '       WHERE B.CODIGO_LINHA = '#39'29C'#39' AND A.TP_CENTRO_CUSTO_ID <> ' +
+        #39#39'  AND B.GRUPO  IN (5)'
+      '     '
+      
+        #9'    ) CC ON CC.NUMERO_CONTA = PT.ACC_NUMBER AND CC.CENTRO_CUSTO' +
+        ' = PT.CENTRO_CUSTO'
+      #9' '
+      #9' '
+      'GROUP BY CC.ORDEM, CC.CODIGO_LINHA, CC.DESC_L210,CC.SUBGRUPO'
+      ''
+      ''
+      ''
+      ''
+      ''
+      'UNION ALL'
+      ''
+      'SELECT C.ORDEM, C.CODIGO_LINHA, C.DESC_L210,C.SUBGRUPO,   '
+      '                        SUM([006]) AS '#39'JANEIRO'#39', '
+      #9#9#9'SUM([006]) + SUM([007]) AS '#39'FEVEREIRO'#39', '
+      #9#9#9'SUM([006]) + SUM([007]) + SUM([008]) AS '#39'MAR'#199'O'#39',   '
+      
+        #9#9#9'SUM([006]) + SUM([007]) + SUM([008]) + SUM([009]) AS '#39'ABRIL'#39',' +
+        '    '
+      
+        #9#9#9'SUM([006]) + SUM([007]) + SUM([008]) + SUM([009]) + SUM([010]' +
+        ') AS '#39'MAIO'#39', '
+      
+        '                        SUM([006]) + SUM([007]) + SUM([008]) + S' +
+        'UM([009]) + SUM([010]) + SUM([011]) AS '#39'JUNHO'#39',   '
+      
+        #9#9#9'SUM([006]) + SUM([007]) + SUM([008]) + SUM([009]) + SUM([010]' +
+        ') + SUM([011]) + SUM([012]) AS '#39'JULHO'#39',     '
+      
+        #9#9#9'SUM([006]) + SUM([007]) + SUM([008]) + SUM([009]) + SUM([010]' +
+        ') + SUM([011]) + SUM([012]) + SUM([001]) AS '#39'AGOSTO'#39', '
+      
+        #9#9#9'SUM([006]) + SUM([007]) + SUM([008]) + SUM([009]) + SUM([010]' +
+        ') + SUM([011]) + SUM([012]) + SUM([001]) + SUM([002]) AS '#39'SETEMB' +
+        'RO'#39', '
+      
+        #9#9#9'SUM([006]) + SUM([007]) + SUM([008]) + SUM([009]) + SUM([010]' +
+        ') + SUM([011]) + SUM([012]) + SUM([001]) + SUM([002]) + SUM([003' +
+        ']) AS '#39'OUTUBRO'#39', '
+      
+        #9#9#9'SUM([006]) + SUM([007]) + SUM([008]) + SUM([009]) + SUM([010]' +
+        ') + SUM([011]) + SUM([012]) + SUM([001]) + SUM([002]) + SUM([003' +
+        ']) + SUM([004]) AS '#39'NOVEMBRO'#39', '
+      
+        #9#9#9'SUM([006]) + SUM([007]) + SUM([008]) + SUM([009]) + SUM([010]' +
+        ') + SUM([011]) + SUM([012]) + SUM([001]) + SUM([002]) + SUM([003' +
+        ']) + SUM([004]) + SUM([005]) AS '#39'DEZEMBRO'#39
+      
+        'FROM (SELECT ACC_NUMBER, POSITION_PERIODO,  SUM(AMOUNT) VALOR   ' +
+        '           '
+      '      FROM ECF_MOV_KE5Z'
+      '      WHERE ANO_BASE = :ANO AND ECF_CONTROLE_ID = :CONTROLE_ID'
+      '     GROUP BY ACC_NUMBER, POSITION_PERIODO ) SQ '
+      
+        'PIVOT (SUM(VALOR) FOR POSITION_PERIODO IN ([006], [007], [008], ' +
+        '[009], [010], [011], [012], [001], [002], [003], [004], [005])) ' +
+        'AS PT'
+      
+        'INNER JOIN ECF_CONTA C ON C.NUMERO_CONTA = ACC_NUMBER AND CODIGO' +
+        '_LINHA IN ('#39'29B'#39') '
+      'GROUP BY C.ORDEM, C.CODIGO_LINHA, C.DESC_L210,C.SUBGRUPO'
       ''
       'UNION ALL'
       ''
@@ -4127,51 +4424,68 @@ object frmProcessarL210: TfrmProcessarL210
       ''
       'FROM ('
       
-        '     SELECT X.ACC_NUMBER, X.POSITION_PERIODO, X.CENTRO_CUSTO,  S' +
-        'UM(X.AMOUNT) VALOR              '
-      '      FROM ECF_MOV_KE5Z X'
-      '      WHERE ANO_BASE = :ANO AND ECF_CONTROLE_ID = :CONTROLE_ID'
-      #9'  AND EXISTS  (SELECT *'
-      
-        #9'                FROM [DBO].[ECF_CENTRO_CUSTO] A, [DBO].[ECF_CON' +
-        'TA]  B'
-      
-        '                    WHERE  B.NUMERO_CONTA = X.ACC_NUMBER AND A.C' +
-        'ENTRO_CUSTO = X.CENTRO_CUSTO AND  A.TP_CENTRO_CUSTO_ID = 2 AND B' +
-        '.CODIGO_LINHA = '#39'29'#39' )'
-      '     GROUP BY X.ACC_NUMBER, X.POSITION_PERIODO , X.CENTRO_CUSTO'
-      '     UNION '
-      #9' -- PARTE ABAIXO FUNCIONA OK'
-      
         '     SELECT X.NUMERO_CONTA AS ACC_NUMBER, REPLICATE('#39'0'#39', 3 - LEN' +
         '(X.MES_FISCAL)) + X.MES_FISCAL AS POSITION_PERIODO, X.CENTRO_CUS' +
-        'TO, SUM(X.VALOR) VALOR'
+        'TO'
+      
+        '    ,CAST( COALESCE(SUM((X.VALOR/1) * (Z.PERCENTUAL/100) ),0) AS' +
+        ' NUMERIC(18,2)) AS VALOR'
       '     FROM ECF_FBL3N X'
-      '     WHERE X.ANO_BASE = :ANO AND ECF_CONTROLE_ID = :CONTROLE_ID'
-      #9' AND EXISTS  (SELECT * '
+      '      '
+      #9' INNER JOIN   (SELECT  A.CENTRO_CUSTO, B.NUMERO_CONTA'
       
         #9'                FROM [DBO].[ECF_CENTRO_CUSTO] A, [DBO].[ECF_CON' +
         'TA]  B'
       
-        '                    WHERE  B.NUMERO_CONTA = X.NUMERO_CONTA AND A' +
-        '.CENTRO_CUSTO = X.CENTRO_CUSTO AND  A.TP_CENTRO_CUSTO_ID = 2 AND' +
-        ' B.CODIGO_LINHA = '#39'29'#39' )'
-      ''
-      #9' GROUP BY X.NUMERO_CONTA, X.MES_FISCAL, X.CENTRO_CUSTO'
-      ''
-      #9' ) SQ '
-      ''
+        '                    WHERE   B.CODIGO_LINHA = '#39'29'#39' AND A.TP_CENTR' +
+        'O_CUSTO_ID <> '#39#39
+      #9#9#9#9#9'   AND B.GRUPO  IN (5,6) '
+      
+        #9#9#9#9#9'   ) Y ON ((Y.NUMERO_CONTA = X.NUMERO_CONTA) AND (Y.CENTRO_' +
+        'CUSTO = X.CENTRO_CUSTO) AND X.TIPO_SA = '#39'N'#39')'
       ''
       
-        'PIVOT (SUM(VALOR) FOR POSITION_PERIODO IN ([006], [007], [008], ' +
-        '[009], [010], [011], [012], [001], [002], [003], [004], [005])) ' +
-        'AS PT'
+        '    INNER JOIN ECF_CENTRO_CUSTO CC ON CC.CENTRO_CUSTO = X.CENTRO' +
+        '_CUSTO '
+      '    INNER JOIN (SELECT v.ECF_CENTRO_CUSTO_ID,  '
+      #9#9'                V.EXERCICIO,  '
+      #9#9#9#9'V.DT_EXERCICIOFISCAL ,  '
+      #9#9#9#9'CONVERT(INT,V.PERIODO_FISCAL) AS MES,  '
+      #9#9#9#9'SUM(V.PERCENTUAL) as PERCENTUAL FROM ECF_VINCULO V'
+      
+        #9#9#9'        INNER JOIN ECF_CENTRO_CUSTO C1 ON C1.ECF_CENTRO_CUSTO' +
+        '_ID = V.ECF_CENTRO_CUSTO_ID'
+      
+        #9#9#9#9'INNER JOIN ECF_CENTRO_CUSTO C2 ON C2.ECF_CENTRO_CUSTO_ID = V' +
+        '.ECF_CENTRO_CUSTO_FILHO '
+      
+        #9#9#9#9'WHERE  SUBSTRING(C1.CENTRO_CUSTO,1,1) = SUBSTRING(C2.CENTRO_' +
+        'CUSTO,1,1)'
+      
+        #9#9#9#9'GROUP BY v.ECF_CENTRO_CUSTO_ID,   V.DT_EXERCICIOFISCAL , V.E' +
+        'CF_CENTRO_CUSTO_ID, V.PERIODO_FISCAL, V.EXERCICIO) '
+      #9#9#9#9'Z ON Z.ECF_CENTRO_CUSTO_ID = CC.ECF_CENTRO_CUSTO_ID'
+      #9#9#9#9'AND Z.DT_EXERCICIOFISCAL = :ANO'
+      #9#9#9#9'AND Z.EXERCICIO IN (:ANO, :ANO_FUT)'
+      #9#9#9#9'AND Z.MES = X.MES_FISCAL'
+      '  '
+      
+        '   WHERE X.ANO_BASE = :ANO AND ECF_CONTROLE_ID = :CONTROLE_ID AN' +
+        'D X.TIPO_SA = '#39'N'#39' AND X.NUMERO_CONTA <> '#39'510000'#39
+      #9' GROUP BY X.NUMERO_CONTA, X.MES_FISCAL, X.CENTRO_CUSTO ) SQ '
+      ''
+      
+        '  PIVOT (SUM(VALOR) FOR POSITION_PERIODO IN ([006], [007], [008]' +
+        ', [009], [010], [011], [012], [001], [002], [003], [004], [005])' +
+        ') AS PT'
       #9' '
       
         #9' INNER JOIN  (SELECT B.NUMERO_CONTA, A.CENTRO_CUSTO,  B.ORDEM, ' +
         'B.CODIGO_LINHA, B.DESC_L210, B.SUBGRUPO FROM [DBO].[ECF_CENTRO_C' +
         'USTO] A, [DBO].[ECF_CONTA]  B'
-      '       WHERE A.TP_CENTRO_CUSTO_ID = 2 AND B.CODIGO_LINHA = '#39'29'#39
+      
+        '       WHERE B.CODIGO_LINHA = '#39'29'#39' AND A.TP_CENTRO_CUSTO_ID <> '#39 +
+        #39'  AND B.GRUPO  IN (5,6)'
       '     '
       
         #9'    ) CC ON CC.NUMERO_CONTA = PT.ACC_NUMBER AND CC.CENTRO_CUSTO' +
@@ -4262,7 +4576,7 @@ object frmProcessarL210: TfrmProcessarL210
         'CODIGO_LINHA = '#39'30'#39
       
         ' AND C.NUMERO_CONTA  IN ('#39'131000'#39','#39'132000'#39','#39'133000'#39','#39'134000'#39','#39'13' +
-        '4032'#39','#39'138000'#39','#39'138100'#39')'
+        '4032'#39','#39'138000'#39','#39'138100'#39','#39'146100'#39')'
       'WHERE M.ANO = :ANO AND ECF_CONTROLE_ID = :CONTROLE_ID'
       'GROUP BY  C.ORDEM, C.CODIGO_LINHA, C.DESC_L210,C.SUBGRUPO'
       ''
@@ -4314,7 +4628,7 @@ object frmProcessarL210: TfrmProcessarL210
         'CODIGO_LINHA = '#39'30'#39
       
         ' AND C.NUMERO_CONTA  IN ('#39'131000'#39','#39'132000'#39','#39'133000'#39','#39'134000'#39','#39'13' +
-        '4032'#39','#39'138000'#39','#39'138100'#39')'
+        '4032'#39','#39'138000'#39','#39'138100'#39','#39'146100'#39')'
       'WHERE M.ANO = :ANO_FUT AND ECF_CONTROLE_ID = :CONTROLE_ID'
       'GROUP BY  C.ORDEM, C.CODIGO_LINHA, C.DESC_L210,C.SUBGRUPO'
       ''
@@ -4731,7 +5045,6 @@ object frmProcessarL210: TfrmProcessarL210
       ''
       'GROUP BY Y.ORDEM, Y.CODIGO_LINHA, Y.DESC_L210, Y.SUBGRUPO'
       ''
-      ''
       'ORDER BY C.SUBGRUPO, C.ORDEM')
     Left = 192
     Top = 145
@@ -4879,7 +5192,7 @@ object frmProcessarL210: TfrmProcessarL210
     Left = 282
     Top = 279
     Bitmap = {
-      494C010126002700980310001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010126002700B80310001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000A0000000010020000000000000A0
       000000000000000000000000000000000000000000000000000096675E009F6F
       60009F6F60009F6F60009F6F60009F6F60009F6F60009F6F60009F6F60009F6F

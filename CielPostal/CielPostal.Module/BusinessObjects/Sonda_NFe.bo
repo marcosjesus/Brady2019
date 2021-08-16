@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Application>
+  <BOModel>
+    <Class Name="CielPostal.Module.BusinessObjects.Sonda_NFe" IsDesigned="True">
+      <OwnMembers>
+        <Member Name="SQLNFe" Size="-1" />
+      </OwnMembers>
+    </Class>
+  </BOModel>
+</Application>

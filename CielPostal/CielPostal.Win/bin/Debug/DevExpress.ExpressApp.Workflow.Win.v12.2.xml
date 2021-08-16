@@ -1,0 +1,126 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DevExpress.ExpressApp.Workflow.Win.v12.2</name>
+    </assembly>
+    <members>
+        <member name="T:DevExpress.ExpressApp.Workflow.ActivitiesInformationEventArgs">
+
+            <summary>
+                <para>Arguments passed to the <see cref="E:DevExpress.ExpressApp.Workflow.Win.WorkflowWindowsFormsModule.QueryAvailableActivities"/> event.
+</para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.ExpressApp.Workflow.ActivitiesInformationEventArgs.#ctor(System.Collections.Generic.List`1)">
+            <summary>
+                <para>Creates a new instance of the ActivitiesInformationEventArgs class.
+</para>
+            </summary>
+            <param name="activitiesInformation">
+		A list of <b>ActivityInformation</b> objects representing activities that will be available in the rehosted workflow designer's toolbox. This parameter value is assigned to the <see cref="P:DevExpress.ExpressApp.Workflow.ActivitiesInformationEventArgs.ActivitiesInformation"/> property.
+
+
+            </param>
+
+
+        </member>
+        <member name="P:DevExpress.ExpressApp.Workflow.ActivitiesInformationEventArgs.ActivitiesInformation">
+            <summary>
+                <para>Specifies activities that will be available in the rehosted workflow designer's toolbox.
+</para>
+            </summary>
+            <value>A list of <b>ActivityInformation</b> objects representing activities that will be available in the rehosted workflow designer's toolbox.
+
+</value>
+
+
+        </member>
+        <member name="T:DevExpress.ExpressApp.Workflow.Win.WorkflowWindowsFormsModule">
+
+            <summary>
+                <para>The module contained in the <i>DevExpress.ExpressApp.Workflow.Win.v12.2.dll</i> assembly.
+</para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.ExpressApp.Workflow.Win.WorkflowWindowsFormsModule.#ctor">
+            <summary>
+                <para>Creates an instance of the WorkflowWindowsFormsModule class.
+</para>
+            </summary>
+
+
+        </member>
+        <member name="M:DevExpress.ExpressApp.Workflow.Win.WorkflowWindowsFormsModule.AddGeneratorUpdaters(DevExpress.ExpressApp.Model.Core.ModelNodesGeneratorUpdaters)">
+            <summary>
+                <para>Registers the <b>NavigationItemsWorkflowsUpdater</b> Generator Updater.
+</para>
+            </summary>
+            <param name="updaters">
+		A <b>ModelNodesGeneratorUpdaters</b> object providing access to the list of Generator Updaters.
+
+            </param>
+
+
+        </member>
+        <member name="P:DevExpress.ExpressApp.Workflow.Win.WorkflowWindowsFormsModule.AvailableActivitiesProvider">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <value> [To be supplied] </value>
+
+
+        </member>
+        <member name="M:DevExpress.ExpressApp.Workflow.Win.WorkflowWindowsFormsModule.GetAvailableActivities(System.Collections.Generic.List`1)">
+            <summary>
+                <para>This method is intended for internal use.
+</para>
+            </summary>
+            <param name="activitiesInformation">
+		@nbsp;
+
+            </param>
+            <returns>@nbsp;
+</returns>
+
+
+        </member>
+        <member name="M:DevExpress.ExpressApp.Workflow.Win.WorkflowWindowsFormsModule.GetModuleUpdaters(DevExpress.ExpressApp.IObjectSpace,System.Version)">
+            <summary>
+                <para>Returns the list of <see cref="T:DevExpress.ExpressApp.Updating.ModuleUpdater"/> updaters that handle database updates for the WorkflowWindowsFormsModule module.
+</para>
+            </summary>
+            <param name="objectSpace">
+		An <see cref="T:DevExpress.ExpressApp.IObjectSpace"/> object which represents the Object Space used to update the database.
+
+            </param>
+            <param name="versionFromDB">
+		A <b>System.Version</b> object which represents the current database version.
+
+            </param>
+            <returns>An IEnumerable@lt;<see cref="T:DevExpress.ExpressApp.Updating.ModuleUpdater"/>@gt; list of updaters that handle database updates for the WorkflowWindowsFormsModule module.
+</returns>
+
+
+        </member>
+        <member name="E:DevExpress.ExpressApp.Workflow.Win.WorkflowWindowsFormsModule.QueryAvailableActivities">
+            <summary>
+                <para>Occurs prior to loading the rehosted workflow designer.
+</para>
+            </summary>
+
+
+        </member>
+        <member name="M:DevExpress.ExpressApp.Workflow.Win.WorkflowWindowsFormsModule.Setup(DevExpress.ExpressApp.XafApplication)">
+            <summary>
+                <para> [To be supplied] </para>
+            </summary>
+            <param name="application">
+		 [To be supplied] 
+            </param>
+
+
+        </member>
+    </members>
+</doc>

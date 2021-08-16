@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Application>
+  <BOModel>
+    <Class Name="CielPostal.Module.BusinessObjects.SRO_Configuracao" IsDesigned="True" />
+  </BOModel>
+  <Views>
+    <DetailView Id="SRO_Configuracao_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main" RelativeSize="100" ImageName="" Caption="Main" CaptionLocation="Default" CaptionWordWrap="Default" CaptionHorizontalAlignment="Default" CaptionVerticalAlignment="Default">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="22" ImageName="" Caption="SimpleEditors" CaptionLocation="Default" CaptionWordWrap="Default" CaptionHorizontalAlignment="Default" CaptionVerticalAlignment="Default">
+            <LayoutGroup Id="SRO_Configuracao" RelativeSize="100" ImageName="" CaptionLocation="Default" CaptionWordWrap="Default" CaptionHorizontalAlignment="Default" CaptionVerticalAlignment="Default">
+              <LayoutGroup Id="SRO_Configuracao_col1" RelativeSize="48">
+                <LayoutItem Id="Descricao" SizeConstraintsType="Default" RelativeSize="36" ViewItem="Descricao" />
+                <LayoutItem Id="NumeroInicial" SizeConstraintsType="Default" RelativeSize="27" ViewItem="NumeroInicial" />
+                <LayoutItem Id="NumeroFinal" SizeConstraintsType="Default" RelativeSize="36" ViewItem="NumeroFinal" />
+              </LayoutGroup>
+              <LayoutGroup Id="SRO_Configuracao_col2" RelativeSize="48">
+                <LayoutItem Id="Prefixo" SizeConstraintsType="Default" RelativeSize="27" ViewItem="Prefixo" />
+                <LayoutItem Id="Sufixo" SizeConstraintsType="Default" RelativeSize="36" ViewItem="Sufixo" />
+              </LayoutGroup>
+            </LayoutGroup>
+          </LayoutGroup>
+          <LayoutGroup Id="ACF_Contratos_Group" Direction="Vertical" Index="1" RelativeSize="77" ImageName="" Caption="ACF - Contratos" CaptionLocation="Default" CaptionWordWrap="Default" CaptionHorizontalAlignment="Default" CaptionVerticalAlignment="Default">
+            <LayoutItem Id="ACF_Contratos" SizeConstraintsType="Default" RelativeSize="92" CaptionLocation="Default" CaptionWordWrap="Default" CaptionHorizontalAlignment="Default" CaptionVerticalAlignment="Default" ViewItem="ACF_Contratos" />
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <ListView Id="SRO_Configuracao_ListView" IsFooterVisible="False">
+      <Columns>
+        <ColumnInfo Id="Descricao" Width="290" />
+        <ColumnInfo Id="NumeroInicial" Width="99" />
+        <ColumnInfo Id="NumeroFinal" Width="99" />
+        <ColumnInfo Id="NumeroAtual" Width="104" />
+      </Columns>
+    </ListView>
+  </Views>
+</Application>

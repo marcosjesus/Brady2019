@@ -1,0 +1,51 @@
+﻿@model AppBradyReq.Models.GlossarioModel
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Glossário</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.RQCL_Glossario_ID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RQCL_Glossario_ID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Titulo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Titulo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Descricao)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Descricao)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tsis_usucod)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tsis_usucod)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.RQCL_Glossario_ID }) |
+    @Html.ActionLink("Back to List", "Glossario")
+</p>

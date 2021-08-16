@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Application>
+  <BOModel>
+    <Class Name="CielPostal.Module.BusinessObjects.ZPL_Configuracao" IsDesigned="True">
+      <OwnMembers>
+        <Member Name="Senha" IsPassword="True" />
+        <Member Name="Usuario" IsPassword="False" />
+      </OwnMembers>
+    </Class>
+  </BOModel>
+  <Views>
+    <DetailView Id="ZPL_Configuracao_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main" RelativeSize="100" ImageName="">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="41" ImageName="">
+            <LayoutGroup Id="ZPL_Configuracao" RelativeSize="100" ImageName="">
+              <LayoutGroup Id="ZPL_Configuracao_col1" RelativeSize="55" ImageName="">
+                <LayoutItem Id="Descricao" SizeConstraintsType="Default" RelativeSize="17" ViewItem="Descricao" />
+                <LayoutItem Id="EnderecoTemporario" SizeConstraintsType="Default" RelativeSize="13" ViewItem="EnderecoTemporario" />
+                <LayoutItem Id="EnderecoImpressora" SizeConstraintsType="Default" RelativeSize="13" ViewItem="EnderecoImpressora" />
+                <LayoutItem Id="AutenticarUsuario" SizeConstraintsType="Default" RelativeSize="13" ViewItem="AutenticarUsuario" />
+                <LayoutItem Id="Dominio" ViewItem="Dominio" SizeConstraintsType="Default" Index="4" RelativeSize="13" IsNewNode="True" />
+                <LayoutItem Id="Usuario" ViewItem="Usuario" SizeConstraintsType="Default" Index="5" RelativeSize="13" IsNewNode="True" />
+                <LayoutItem Id="Senha" ViewItem="Senha" SizeConstraintsType="Default" Index="6" RelativeSize="17" IsNewNode="True" />
+              </LayoutGroup>
+              <LayoutGroup Id="ZPL_Configuracao_col2" RelativeSize="41" ImageName="" Caption="ZPL_Configuracao_col2">
+                <LayoutItem Id="Senha" SizeConstraintsType="Default" Index="0" RelativeSize="20" ViewItem="Senha" Removed="True" />
+                <LayoutItem Id="Usuario" SizeConstraintsType="Default" Index="0" RelativeSize="23" ViewItem="Usuario" Removed="True" />
+                <LayoutItem Id="Dominio" ViewItem="Dominio" Removed="True" />
+              </LayoutGroup>
+            </LayoutGroup>
+          </LayoutGroup>
+          <LayoutGroup Id="ACF_Contratos_Group" Direction="Vertical" Index="1" RelativeSize="58" ImageName="Action_Paste">
+            <LayoutItem Id="ACF_Contratos" SizeConstraintsType="Default" RelativeSize="87" ViewItem="ACF_Contratos" />
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <ListView Id="ZPL_Configuracao_ListView" IsFooterVisible="False">
+      <Columns>
+        <ColumnInfo Id="CodigoZPL" Width="164" />
+        <ColumnInfo Id="Descricao" Width="207" SortIndex="0" SortOrder="Ascending" />
+        <ColumnInfo Id="AutenticarUsuario" SortIndex="-1" SortOrder="None" Width="128" />
+        <ColumnInfo Id="Dominio" Width="55" />
+        <ColumnInfo Id="Usuario" Width="55" />
+        <ColumnInfo Id="Senha" Width="55" />
+      </Columns>
+    </ListView>
+  </Views>
+</Application>

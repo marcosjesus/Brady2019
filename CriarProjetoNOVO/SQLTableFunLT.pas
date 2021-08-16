@@ -727,8 +727,8 @@ Begin
 	Q := TQuery.Create(Self) ;
 	Q.DatabaseName := FDBName ;
 
-	Sql := 'Select * From xTabDef Where ColTabName =  ''' + pTabName + ''' Order By ' +
-          'ColTabName, ColID' ;
+	Sql := 'Select * From xTabDef Where coltabname =  ''' + pTabName + ''' Order By ' +
+          'coltabname, colid' ;
 	Q.Sql.Clear ;
 	Q.Sql.Add(Sql) ;
 	Try

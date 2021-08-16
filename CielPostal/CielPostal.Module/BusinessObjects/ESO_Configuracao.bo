@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Application>
+  <BOModel>
+    <Class Name="CielPostal.Module.BusinessObjects.ESO_Configuracao" IsDesigned="True" />
+  </BOModel>
+</Application>

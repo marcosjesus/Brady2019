@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Application>
+  <BOModel>
+    <Class Name="CielPostal.Module.BusinessObjects.SRO_Evento" IsDesigned="True" />
+  </BOModel>
+  <Views>
+    <ListView Id="SRO_Evento_ListView" IsFooterVisible="False">
+      <Columns>
+        <ColumnInfo Id="Detalhe" Width="127" />
+        <ColumnInfo Id="Descricao" Width="227" />
+        <ColumnInfo Id="SRO_TipoEvento" Width="119" />
+        <ColumnInfo Id="Status" Width="119" />
+      </Columns>
+    </ListView>
+  </Views>
+</Application>

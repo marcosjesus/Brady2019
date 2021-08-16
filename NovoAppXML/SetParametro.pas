@@ -75,12 +75,12 @@ begin
   if TipoConsulta = TipoTP_CentroCusto then
   begin
     CaixaTexto.bs_Caption := 'Tipo de Centro de Custo';
-    CaixaTexto.bs_Table := 'TP_CENTRO_CUSTO TC With (NOLOCK)';
+    CaixaTexto.bs_Table := 'ECF_CENTRO_CUSTO TC With (NOLOCK)';
 
     CaixaTexto.bs_Fields.Add('TC.TP_CENTRO_CUSTO_ID;ID;;' + inttostr(WIDTH_CODIGO));
-    CaixaTexto.bs_Fields.Add('TC.DESCRICAO;Tipo de Centro de Custo;;' + inttostr(WIDTH_DESCRICAO));                    //0
+    CaixaTexto.bs_Fields.Add('TC.CATEGORIA;Tipo de Centro de Custo;;' + inttostr(WIDTH_DESCRICAO));                    //0
 
-    CaixaTexto.bs_TextResult := 'DESCRICAO';
+    CaixaTexto.bs_TextResult := 'CATEGORIA';
     CaixaTexto.bs_KeyField   := 'TP_CENTRO_CUSTO_ID';
   end
   else

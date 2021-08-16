@@ -1,0 +1,30 @@
+﻿@model AppBradyReq.Models.ClienteModel
+
+@{
+    ViewBag.Title = "SearchClienteReq";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+@using (Html.BeginForm("PesquisaPeloCNPJ", "CheckList"))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Pesquisa Pelo CNPJ</h4>
+        <hr />
+        <div class="form-group">
+            <div class="col-md-10">
+                <label for="searchTitulo">Pesquisa pelo CNPJ</label>
+                <input type="text" name="searchCNPJ" id="searchCNPJ" class="form-control" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Ver CheckList" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}

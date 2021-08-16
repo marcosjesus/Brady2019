@@ -1,0 +1,52 @@
+﻿@model IEnumerable<AppBradyReq.Models.GlossarioModel>
+
+@{
+    ViewBag.Title = "Glossario";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Glossario</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.RQCL_Glossario_ID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Titulo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Descricao)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Tsis_usucod)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.RQCL_Glossario_ID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Titulo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Descricao)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Tsis_usucod)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new {  id = item.RQCL_Glossario_ID }) |
+            @Html.ActionLink("Details", "Details", new {id = item.RQCL_Glossario_ID }) |
+            @Html.ActionLink("Delete", "Delete", new {  id = item.RQCL_Glossario_ID })
+        </td>
+    </tr>
+}
+
+</table>

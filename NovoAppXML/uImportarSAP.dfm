@@ -318,7 +318,7 @@ object frmImportarSAP: TfrmImportarSAP
       Width = 89
     end
     object btnImportar: TcxButton
-      Left = 239
+      Left = 231
       Top = 6
       Width = 100
       Height = 37
@@ -475,7 +475,16 @@ object frmImportarSAP: TfrmImportarSAP
       ParentBackground = False
       TabOrder = 2
       OnClick = chkImportarClick
-      Width = 185
+      Width = 162
+    end
+    object cxCheckBoxCopiar: TcxCheckBox
+      Left = 561
+      Top = 12
+      Caption = 'Copiar Consultas para o Novo Ano'
+      ParentBackground = False
+      TabOrder = 3
+      OnClick = cxCheckBoxCopiarClick
+      Width = 192
     end
   end
   object Page: TcxPageControl
@@ -4037,10 +4046,13 @@ object frmImportarSAP: TfrmImportarSAP
       TabOrder = 0
       object cxGrid6DBTableView1: TcxGridDBTableView
         Navigator.Buttons.CustomButtons = <>
+        Navigator.Visible = True
         DataController.DataSource = dsConsultaSAP
+        DataController.KeyFieldNames = 'ECF_CONSULTA_ID'
         DataController.Summary.DefaultGroupSummaryItems = <>
         DataController.Summary.FooterSummaryItems = <>
         DataController.Summary.SummaryGroups = <>
+        FilterRow.Visible = True
         OptionsData.CancelOnExit = False
         OptionsData.Deleting = False
         OptionsData.DeletingConfirmation = False
@@ -4895,8 +4907,8 @@ object frmImportarSAP: TfrmImportarSAP
         'INNER JOIN ECF_CENTRO_CUSTO CC ON CC.ECF_CENTRO_CUSTO_ID = V.ECF' +
         '_CENTRO_CUSTO_FILHO'
       'WHERE V.EXERCICIO = :EXERCICIO')
-    Left = 788
-    Top = 9
+    Left = 796
+    Top = 65
     ParamData = <
       item
         Name = 'EXERCICIO'
@@ -4937,7 +4949,7 @@ object frmImportarSAP: TfrmImportarSAP
   object dsRateio: TDataSource
     DataSet = FDQueryRateio
     Left = 728
-    Top = 8
+    Top = 64
   end
   object FDQueryF01: TFDQuery
     Connection = DB_Conect.FDConnection
@@ -5424,6 +5436,12 @@ object frmImportarSAP: TfrmImportarSAP
       FieldName = 'ECF_CONTROLE_ID'
       Origin = 'ECF_CONTROLE_ID'
     end
+    object FDQueryFBL3NTIPO_SA: TStringField
+      FieldName = 'TIPO_SA'
+      Origin = 'TIPO_SA'
+      FixedChar = True
+      Size = 1
+    end
   end
   object cdsFBL3N: TClientDataSet
     Aggregates = <>
@@ -5487,6 +5505,11 @@ object frmImportarSAP: TfrmImportarSAP
     end
     object cdsFBL3NECF_CONTROLE_ID: TIntegerField
       FieldName = 'ECF_CONTROLE_ID'
+    end
+    object cdsFBL3NTIPO_SA: TStringField
+      FieldName = 'TIPO_SA'
+      FixedChar = True
+      Size = 1
     end
   end
   object dspFBL3N: TDataSetProvider
@@ -5611,7 +5634,7 @@ object frmImportarSAP: TfrmImportarSAP
     Left = 598
     Top = 240
     Bitmap = {
-      494C010126002700800410001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C0101260027009C0410001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000A0000000010020000000000000A0
       000000000000000000000000000000000000000000000000000096675E009F6F
       60009F6F60009F6F60009F6F60009F6F60009F6F60009F6F60009F6F60009F6F

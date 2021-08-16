@@ -53,7 +53,6 @@ object Fr_UploadDistribuidores: TFr_UploadDistribuidores
         Align = alTop
         Caption = 'Tabela de Pre'#231'o'
         TabOrder = 0
-        ExplicitTop = -6
         Height = 185
         Width = 889
         object cxLabel9: TcxLabel

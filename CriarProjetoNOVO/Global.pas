@@ -98,10 +98,86 @@ procedure AguardandoProcesso(Formulario: TForm; Visivel: Boolean; Titulo : Strin
 function ContaChar(Palavra, BuscaCaracter: string): integer;
 procedure ListarArquivos(diretorioInicial, mascara: string; listtotaldir: boolean = false; recursive: boolean = true);
 
+Function Glob_FillPerfilPG ( CodUsu : Integer ) : Boolean ; Export ;
+
 implementation
 
 Uses
-   StrFun, SQLTableFun, NumFun ;
+   StrFun, SQLTableFun, NumFun, DBConect ;
+
+Function Glob_FillPerfilPG ( CodUsu : Integer ) : Boolean ;
+Var
+   Tab : TSQLTableClass ;
+   CodPer : String ;
+   QPerOpe, QUsuario : TFDQuery ;
+   i : Integer ;
+Begin
+
+   Result := False ;
+   QUsuario := TFDQuery.Create(Nil);
+
+   Try
+     QUsuario.Connection := DB_Conect.SQLConnection;
+     QUsuario.Close;
+     QUsuario.SQL.Clear;
+     QUsuario.SQL.Add('Select codusuario, nome, senha, codfilial, codperfil From usuario ');
+     QUsuario.SQL.Add(' Where codusuario = :codusuario');
+     QUsuario.Params.ParamByName('codusuario').AsInteger  := CodUsu;
+     QUsuario.Open;
+
+     CodPer  := IntToStr(QUsuario.FieldByName('codperfil').AsInteger);
+     GPerfil := IntToStr(QUsuario.FieldByName('codfilial').AsInteger);
+
+   Finally
+     FreeAndNil(QUsuario);
+   End;
+
+
+   QPerOpe := TFDQuery.Create(Nil);
+   Try
+      QPerOpe.Connection := DB_Conect.SQLConnection;
+      QPerOpe.Close;
+      QPerOpe.SQL.Clear;
+      QPerOpe.SQL.Add('Select codoperacao, manut from perfil_operacao ');
+      QPerOpe.SQL.Add(' where codperfil = :codperfil');
+      QPerOpe.Params.ParamByName('codperfil').AsInteger :=  StrToInt(CodPer);
+      QPerOpe.Open;
+
+       If ( QPerOpe.Eof ) Then
+       Begin
+           GPerNumOpe := 1 ;
+           SetLength(GPerOperacao,1) ;
+           SetLength(GPerManut,1) ;
+           GPerOperacao[0] := 'CAD-ESTADO' ;
+           GPerManut[0]    :='T' ;
+           Exit ;
+       End;
+
+       GPerNumOpe := QPerOpe.RecordCount ;
+       SetLength(GPerOperacao,GPerNumOpe) ;
+       SetLength(GPerManut,GPerNumOpe) ;
+       i := 0 ;
+       While ( Not QPerOpe.Eof ) Do
+       Begin
+           GPerOperacao[i] := QPerOpe.FieldByName('codoperacao').AsString ;
+           GPerManut[i]    := QPerOpe.FieldByName('manut').AsString ;
+           i := i + 1 ;
+           QPerOpe.Next ;
+       End;
+
+       GUsuario := IntToStr(CodUsu);
+
+       Result := True ;
+
+   Finally
+      FreeAndNil(QPerOpe);
+   End;
+
+
+
+End ;
+
+
 
 function ContaChar(Palavra, BuscaCaracter: string): integer;
 var
@@ -241,7 +317,7 @@ Begin
    Result := False ;
 
    Tab := TSQLTableClass.Create ;
-   If ( Not Tab.OpenTable('USUARIO') ) Then
+   If ( Not Tab.OpenTable('usuario') ) Then
    Begin
        Tab.SetError('[Glob_SetPerfil] - Não foi possível abrir a tabela USUARIO') ;
        Exit ;

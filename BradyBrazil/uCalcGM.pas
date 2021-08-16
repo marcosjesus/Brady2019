@@ -144,7 +144,11 @@ type
     FDQueryRoutingTMAQ_ITEROUMINLAB: TBCDField;
     FDQueryRoutingTMAQ_ITEROUMINOVE: TBCDField;
     FDQueryRoutingTMAQ_ITEROUDAT: TSQLTimeStampField;
+    Button1: TButton;
+    FDQueryAux: TFDQuery;
+    FDQueryAux2: TFDQuery;
     procedure ImportarHoras;
+    procedure ImportarRequisitos;
     procedure ImportarPlanilhaAnterior;
     procedure cxButtonProcessarClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -166,6 +170,7 @@ type
     procedure cxButtonAtualizaCustoClick(Sender: TObject);
     procedure cxButtonAtualizaUOMClick(Sender: TObject);
     procedure cxButtonInsertSQLClick(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
   private
     procedure Mensagem(pMensagem: String);
     { Private declarations }
@@ -183,6 +188,14 @@ implementation
 uses uBrady, uUtils, uDados;
 
 
+
+procedure TFr_CalcGM.Button1Click(Sender: TObject);
+begin
+  if cxButtonEditPath.Text = EmptyStr then
+    raise Exception.Create('Informe o arquivo primeiro.');
+
+  ImportarRequisitos;
+end;
 
 procedure TFr_CalcGM.cxButtonAtualizaBOM2Click(Sender: TObject);
 begin
@@ -739,6 +752,166 @@ begin
   finally
        Mensagem( EmptyStr );
   end;
+
+end;
+
+procedure TFr_CalcGM.ImportarRequisitos;
+var
+  I, X: Integer;
+  dxSpreadSheet: TdxSpreadSheet;
+  varRedId, varItemId : Integer;
+  varVetor : Array[0..23] of String;
+  varNomeItem : string;
+
+begin
+
+  Mensagem( 'Iniciando processo de importação...' );
+  try
+
+    dxSpreadSheet := TdxSpreadSheet.Create(nil);
+    try
+
+      Mensagem( 'Carregando planilha...' );
+      dxSpreadSheet.LoadFromFile( cxButtonEditPath.Text );
+      dxSpreadSheet.BeginUpdate;
+
+      FDConnection.Params.LoadFromFile( MyDocumentsPath + '\DB.ini' );
+
+      Mensagem( 'Abrindo Conexão...' );
+      FDConnection.Open;
+      try
+
+        try
+
+          Mensagem( 'Lendo linhas da planilha...' );
+          for X := dxSpreadSheet.ActiveSheetAsTable.Rows.FirstIndex+1 to dxSpreadSheet.ActiveSheetAsTable.Rows.LastIndex do
+          begin
+
+            try
+
+              if dxSpreadSheet.ActiveSheetAsTable.Rows[X].CellCount = 0 then
+                Continue;
+
+              if dxSpreadSheet.ActiveSheetAsTable.Rows[X].CellCount < 24 then
+                Continue;
+
+              Mensagem( 'Linha (" ' + IntToStr(X) + '/' + IntToStr(dxSpreadSheet.ActiveSheetAsTable.Rows.LastIndex) + '") "' + Trim(dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[2].AsString) + '" ...' );
+
+              if Trim(dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[0].AsString) = EmptyStr then
+                Continue;
+
+            except
+
+              Continue;
+
+            end;
+            varRedId  := 0;
+            varItemId := 0;
+            varVetor[0] := dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[0].AsString;
+            varVetor[1] := dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[1].AsString;
+            varVetor[2] := dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[2].AsString;
+            varVetor[3] := dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[3].AsString;
+            varVetor[4] := dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[4].AsString;
+            varVetor[5] := dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[5].AsString;
+            varVetor[6] := dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[6].AsString;
+            varVetor[7] := dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[7].AsString;
+            varVetor[8] := dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[8].AsString;
+            varVetor[9] := dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[9].AsString;
+            varVetor[10] := dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[10].AsString;
+            varVetor[11] := dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[11].AsString;
+            varVetor[12] := dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[12].AsString;
+            varVetor[13] := dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[13].AsString;
+            varVetor[14] := dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[14].AsString;
+            varVetor[15] := dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[15].AsString;
+            varVetor[16] := dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[16].AsString;
+            varVetor[17] := dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[17].AsString;
+            varVetor[18] := dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[18].AsString;
+            varVetor[19] := dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[19].AsString;
+            varVetor[20] := dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[20].AsString;
+            varVetor[21] := dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[21].AsString;
+            varVetor[22] := dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[22].AsString;
+            varVetor[23] := dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[23].AsString;
+
+            FDQueryAux.Close;
+            FDQueryAux.SQL.Clear;
+            FDQueryAux.SQL.Add('Select rqcl_requisito_id from rqcl_requisito where nome = :nome');
+            FDQueryAux.Params.ParamByName('Nome').AsString := varVetor[0];
+            FDQueryAux.Open;
+            varRedId :=  FDQueryAux.FieldByName('rqcl_requisito_id').AsInteger;
+
+             for I := 1 to High(varVetor) do
+             begin
+                FDQueryAux2.Close;
+                FDQueryAux2.SQL.Clear;
+                FDQueryAux2.SQL.Add('Select RQCL_ITEM_ID From RQCL_ITEM where Nome = :Nome');
+                if varVetor[I] = '1' then
+                   varNomeItem := 'APLICAVEL'
+                else if varVetor[I] = '2' then
+                   varNomeItem := 'NÃO APLICAVEL'
+                else  varNomeItem := varVetor[I];;
+
+
+
+                FDQueryAux2.Params.ParamByName('Nome').AsString := varNomeItem;
+                FDQueryAux2.Open;
+                varItemId := FDQueryAux2.FieldByName('RQCL_ITEM_ID').AsInteger;
+
+                FDQueryAux.Close;
+                FDQueryAux.SQL.Clear;
+                FDQueryAux.SQL.Add('Select rqcl_requisito_itens_id from rqcl_requisito_itens where rqcl_requisito_id = :rqcl_requisito_id ');
+                FDQueryAux.SQL.Add('and  RQCL_ITEM_ID = :RQCL_ITEM_ID ');
+                FDQueryAux.Params.ParamByName('rqcl_requisito_id').AsInteger := varRedId;
+                FDQueryAux.Params.ParamByName('RQCL_ITEM_ID').AsInteger := varItemId;
+                FDQueryAux.Open;
+                if FDQueryAux.IsEmpty then
+                begin
+                    Try
+                     FDQueryAux2.Close;
+                     FDQueryAux2.SQL.Clear;
+                     FDQueryAux2.SQL.Add('Insert into rqcl_requisito_itens (rqcl_requisito_id, RQCL_ITEM_ID, Tsis_usucod)  values ( :rqcl_requisito_id, :RQCL_ITEM_ID, :tsis_usucod )');
+                     FDQueryAux2.Params.ParamByName('rqcl_requisito_id').AsInteger := varRedId;
+                     FDQueryAux2.Params.ParamByName('RQCL_ITEM_ID').AsInteger := varItemId;
+                     FDQueryAux2.Params.ParamByName('tsis_usucod').AsInteger := 191;
+                      FDQueryAux2.ExecSQL;
+                   except
+                    on E : Exception do
+                    begin
+                        raise Exception.Create(' Req: ' + varVetor[0]  + #13#10 + ' Item: ' +  varNomeItem + #13#10 + 'ItemID: ' + IntToStr(varItemId));
+                    end;
+                   End;
+                end;
+
+             end;
+
+
+            Application.ProcessMessages;
+
+          end;
+
+        finally
+
+          FDQueryAux.Close;
+
+        end;
+
+      finally
+
+        FDConnection.Close;
+
+      end;
+
+    finally
+
+      FreeAndNil(dxSpreadSheet);
+
+    end;
+
+  finally
+
+    Mensagem( EmptyStr );
+
+  end;
+
 
 end;
 

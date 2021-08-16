@@ -80,11 +80,11 @@ object Fr_CadastroIQFParametro: TFr_CadastroIQFParametro
         end
         item
           Caption = 'Detalhado Documenta'#231#227'o'
-          Width = 460
+          Width = 445
         end
         item
           Caption = 'Detalhado DPO'
-          Width = 290
+          Width = 350
         end
         item
           Caption = 'Detalhado NFE'
@@ -169,7 +169,7 @@ object Fr_CadastroIQFParametro: TFr_CadastroIQFParametro
         Position.RowIndex = 0
       end
       object cxTableViewIQF_ParametroTIQF_PARDOP6190: TcxGridDBBandedColumn
-        Caption = 'Acima de 60'
+        Caption = 'Acima de 60 Dias'
         DataBinding.FieldName = 'TIQF_PARDOP6190'
         Width = 70
         Position.BandIndex = 2

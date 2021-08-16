@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Application Company="Ciel Soluções em TI" Copyright="" Subtitle="Postal" WebSite="http://www.cielsolucoes.com.br" Title="Ciel" Logo="Action_EditModel">
+  <ActionDesign>
+    <Actions>
+      <Action Id="NFe_Header.ObterNFe" SelectionDependencyType="Independent" />
+    </Actions>
+  </ActionDesign>
+  <BOModel>
+    <Class Name="CielPostal.Module.BusinessObjects.ESO_Configuracao" IsDesigned="True" />
+    <Class Name="CielPostal.Module.BusinessObjects.ESO_Header" IsDesigned="True" ImageName="BO_List" />
+    <Class Name="CielPostal.Module.BusinessObjects.NFe_Etiqueta" IsDesigned="True" />
+    <Class Name="CielPostal.Module.BusinessObjects.Sonda_NFe" IsDesigned="True">
+      <OwnMembers>
+        <Member Name="SQLNFe" Size="-1" />
+      </OwnMembers>
+    </Class>
+  </BOModel>
+  <NavigationItems>
+    <Items>
+      <Item Id="Consulta" Index="1">
+        <Items>
+          <Item Id="NFe_Header_ListView" Index="1" />
+        </Items>
+      </Item>
+      <Item Id="Configuração" Index="2">
+        <Items>
+          <Item Id="ACF_Contrato_ListView" Index="1" />
+          <Item Id="SRO_Configuracao_ListView" Index="2" />
+          <Item Id="ZPL_Configuracao_ListView" Index="3" ImageName="BO_Contract" />
+          <Item Id="SRO_Evento_ListView" Index="4" ImageName="BO_Category" />
+          <Item Id="SRO_TipoEvento_ListView" Index="5" />
+          <Item Id="Sonda_NFe_ListView" Index="6" />
+        </Items>
+      </Item>
+      <Item Id="Default" Caption="Administrativo" IsNewNode="True" />
+      <Item Id="NaoVisivel" Visible="False" />
+    </Items>
+  </NavigationItems>
+  <SchemaModules>
+    <SchemaModule Name="SystemModule" Version="12.2.8.0" IsNewNode="True" />
+  </SchemaModules>
+  <Views></Views>
+</Application>

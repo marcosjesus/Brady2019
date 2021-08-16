@@ -3659,46 +3659,27 @@ object Fr_ConsultaNotaFiscal: TFr_ConsultaNotaFiscal
     end
   end
   object ACBrNFeDANFeRL: TACBrNFeDANFeRL
-    ACBrNFe = ACBrNFe
-    Logo = 'brady-co-logo.jpg'
     PathPDF = 'C:\Temp\'
-    MostrarPreview = True
-    MostrarStatus = True
-    TipoDANFE = tiPaisagem
-    NumCopias = 1
-    ImprimeNomeFantasia = False
-    ImprimirDescPorc = False
-    ImprimirTotalLiquido = True
+    Logo = 'brady-co-logo.jpg'
+    Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
     MargemInferior = 0.700000000000000000
     MargemSuperior = 0.700000000000000000
     MargemEsquerda = 0.700000000000000000
     MargemDireita = 0.700000000000000000
+    ExpandeLogoMarcaConfig.Altura = 0
+    ExpandeLogoMarcaConfig.Esquerda = 0
+    ExpandeLogoMarcaConfig.Topo = 0
+    ExpandeLogoMarcaConfig.Largura = 0
+    ExpandeLogoMarcaConfig.Dimensionar = False
+    ExpandeLogoMarcaConfig.Esticar = True
     CasasDecimais.Formato = tdetInteger
-    CasasDecimais._qCom = 4
-    CasasDecimais._vUnCom = 6
-    CasasDecimais._Mask_qCom = '#,##0.0000'
-    CasasDecimais._Mask_vUnCom = '#,##0.000000'
-    ExibirResumoCanhoto = False
-    FormularioContinuo = False
-    TamanhoFonte_DemaisCampos = 10
-    ProdutosPorPagina = 0
-    ImprimirDetalhamentoEspecifico = True
-    NFeCancelada = False
-    ImprimirItens = True
-    ViaConsumidor = True
-    TamanhoLogoHeight = 0
-    TamanhoLogoWidth = 0
-    RecuoEndereco = 0
-    RecuoEmpresa = 0
-    LogoemCima = False
-    TamanhoFonteEndereco = 0
-    RecuoLogo = 0
-    LarguraCodProd = 54
-    ExibirEAN = False
-    QuebraLinhaEmDetalhamentoEspecifico = True
+    CasasDecimais.qCom = 2
+    CasasDecimais.vUnCom = 2
+    CasasDecimais.MaskqCom = ',0.00'
+    CasasDecimais.MaskvUnCom = ',0.00'
+    ACBrNFe = ACBrNFe
+    TipoDANFE = tiPaisagem
     ExibeCampoFatura = False
-    ImprimirUnQtVlComercial = iuComercial
-    ImprimirDadosDocReferenciados = True
     Left = 464
     Top = 433
   end
@@ -3714,6 +3695,7 @@ object Fr_ConsultaNotaFiscal: TFr_ConsultaNotaFiscal
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
+    Configuracoes.RespTec.IdCSRT = 0
     DANFE = ACBrNFeDANFeRL
     Left = 464
     Top = 377
@@ -3730,7 +3712,7 @@ object Fr_ConsultaNotaFiscal: TFr_ConsultaNotaFiscal
     Left = 352
     Top = 424
     Bitmap = {
-      494C010108002800C40020002000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010108002800C80020002000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       00000000000036000000280000008000000060000000010020000000000000C0
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

@@ -68,7 +68,10 @@ uses
   uConfig in 'uConfig.pas' {FConfig},
   uFr_ListaEmail in 'uFr_ListaEmail.pas' {Fr_ListaEmail},
   uFr_CadastroIQFCategoria in 'uFr_CadastroIQFCategoria.pas' {Fr_CadastroIQFCategoria},
-  uFr_UploadDistribuidores in 'uFr_UploadDistribuidores.pas' {Fr_UploadDistribuidores};
+  uFr_UploadDistribuidores in 'uFr_UploadDistribuidores.pas' {Fr_UploadDistribuidores},
+  uRelatorioManutencaoClientes in 'uRelatorioManutencaoClientes.pas' {Fr_RelatorioManutencaoClientes},
+  uFr_PrecoSite in 'uFr_PrecoSite.pas' {Fr_PrecoSite},
+  Excel in 'Excel.pas';
 
 {$R *.res}
 

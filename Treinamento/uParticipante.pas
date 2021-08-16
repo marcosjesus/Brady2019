@@ -328,7 +328,7 @@ end;
 procedure  TFrmCadParticipante.AtualizaHistorico;
 begin
   sqlHistorico.Close;
-  sqlHistorico.Params.ParamByName('FUN_MATRICULA').AsString := EditBuscaParticipante.bs_KeyValues[3];
+  sqlHistorico.Params.ParamByName('FUN_MATRICULA').AsString := EditBuscaParticipante.bs_KeyValues[2];
   sqlHistorico.Open;
 end;
 

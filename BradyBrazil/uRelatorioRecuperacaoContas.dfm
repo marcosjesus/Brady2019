@@ -92,6 +92,8 @@ object Fr_RelatorioRecuperacaoContas: TFr_RelatorioRecuperacaoContas
         TabOrder = 0
         RootLevelOptions.DetailTabsPosition = dtpTop
         OnFocusedViewChanged = cxGridContasFocusedViewChanged
+        ExplicitLeft = 1
+        ExplicitTop = 3
         object cxGridContasDBTableContas: TcxGridDBTableView
           Navigator.Buttons.CustomButtons = <>
           OnCellClick = cxGridContasDBTableContasCellClick

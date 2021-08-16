@@ -100,7 +100,7 @@ Type
            Function GetMensErro : String ;
            Function GetError : Boolean ;
            Function GetNumErro : Integer ;
-           Function OpenTable ( TableName : String ) : Boolean ;
+           Function OpenTable ( xTableName : String ) : Boolean ;
            Procedure ResetAllUpdFields ( Value : Boolean = False ) ;
            Function GetNumFields : Integer ;
            Function SetUpdField ( FieldName : String ) : Boolean ;
@@ -767,8 +767,8 @@ Begin
   Q.Connection := DB_Conect.SQLConnection ;
 //	Q.DatabaseName := FDBName ;
 
-	Sql := 'Select * From xTabDef Where ColTabName =  ''' + pTabName + ''' Order By ' +
-          'ColTabName, ColID' ;
+	Sql := 'Select * From xtabdef Where coltabname =  ''' + pTabName + ''' Order By ' +
+          'coltabname, colid' ;
 	Q.Sql.Clear ;
 	Q.Sql.Add(Sql) ;
 	Try
@@ -815,8 +815,8 @@ Begin
        End ;
     End ;
 }
-	Sql := 'Select * From xTabDef Where ColTabName =  ''' + pTabName + ''' Order By ' +
-          'ColTabName, ColID' ;
+	Sql := 'Select * From xtabdef Where coltabname =  ''' + pTabName + ''' Order By ' +
+          'coltabname, colid' ;
     Q.Sql.Clear ;
     Q.Sql.Add(Sql) ;
     Try
@@ -935,12 +935,14 @@ End ;
  *                                                                           *
  * Parametros: TableName -> Nome da tabela                                   *
 (* ------------------------------------------------------------------------- *)
-Function TSQLTableClass.OpenTable ( TableName : String ) : Boolean ;
+Function TSQLTableClass.OpenTable ( xTableName : String ) : Boolean ;
 Var
    i : Integer ;
    sLastCol : String ;
+   TableName : String;
 Begin
    Result := False ;
+   TableName := LowerCase(xTableName);
    Case FDBType Of
        DBTYPE_PARADOX : Begin
            If ( Str_CasePos('.db',TableName) = 0 ) Then
@@ -955,7 +957,7 @@ Begin
                FFieldCount := FTable.FieldCount ;
                For i:=0 To FTable.FieldCount-1 Do
                Begin
-                   FFieldDesc[i].FName     := FTable.Fields[i].FieldName ;
+                   FFieldDesc[i].FName     := LowerCase(FTable.Fields[i].FieldName) ;
                    FFieldDesc[i].FPos      := i ;
                    FFieldDesc[i].FType     := GetFieldType(FTable.Fields[i].FieldName) ;
                End ;
@@ -1006,14 +1008,14 @@ Begin
            i := 0 ;
            While ( Not FQuery.Eof ) Do
            Begin
-               If ( sLastCol <> FQuery.FieldByName('ColName').AsString ) Then
+               If ( sLastCol <> FQuery.FieldByName('colname').AsString ) Then
                Begin
-                  FFieldDesc[i].FName     := FQuery.FieldByName('ColName').AsString ;
+                  FFieldDesc[i].FName     := FQuery.FieldByName('colname').AsString ;
                   FFieldDesc[i].FPos      := i ;
-                  FFieldDesc[i].FType     := GetFieldType(FQuery.FieldByName('ColType').AsString) ;
-                  FFieldDesc[i].FDecimals := FQuery.FieldByName('ColScale').AsInteger ;
-                  FFieldDesc[i].FAutoVal  := FQuery.FieldByName('ColAutoVal').AsInteger ;
-                  sLastCol := FQuery.FieldByName('ColName').AsString ;
+                  FFieldDesc[i].FType     := GetFieldType(FQuery.FieldByName('coltype').AsString) ;
+                  //FFieldDesc[i].FDecimals := FQuery.FieldByName('colscale').AsInteger ;
+                  //FFieldDesc[i].FAutoVal  := FQuery.FieldByName('colautoval').AsInteger ;
+                  sLastCol := FQuery.FieldByName('colname').AsString ;
                   i := i + 1 ;
                End ;
                FQuery.Next ;

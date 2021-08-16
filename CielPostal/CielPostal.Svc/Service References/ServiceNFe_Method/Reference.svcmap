@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="cc622dc7-650f-4f44-b6e0-f989e0430fe6" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:2119/NFe_Method.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="NFe_Method.xsd" MetadataType="Schema" ID="261bd5a7-5af8-4dec-aef4-01317a2597d3" SourceId="1" SourceUrl="http://localhost:2119/NFe_Method.svc?xsd=xsd0" />
+    <MetadataFile FileName="NFe_Method1.xsd" MetadataType="Schema" ID="292c3e62-2875-4224-b27f-74c6e09010b3" SourceId="1" SourceUrl="http://localhost:2119/NFe_Method.svc?xsd=xsd1" />
+    <MetadataFile FileName="NFe_Method2.xsd" MetadataType="Schema" ID="6fb579df-74a4-4a13-b1fd-71e44d4b6166" SourceId="1" SourceUrl="http://localhost:2119/NFe_Method.svc?xsd=xsd2" />
+    <MetadataFile FileName="NFe_Method.disco" MetadataType="Disco" ID="2841901c-18c4-4b46-af5a-a44925010fdb" SourceId="1" SourceUrl="http://localhost:2119/NFe_Method.svc?disco" />
+    <MetadataFile FileName="NFe_Method.wsdl" MetadataType="Wsdl" ID="2a6012b9-c2a3-4616-8d9b-5edf59376335" SourceId="1" SourceUrl="http://localhost:2119/NFe_Method.svc?wsdl" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

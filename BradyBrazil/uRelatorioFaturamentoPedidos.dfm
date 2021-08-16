@@ -63,7 +63,7 @@ object Fr_RelatorioFaturamentoPedidos: TFr_RelatorioFaturamentoPedidos
     Height = 597
     Align = alClient
     TabOrder = 0
-    Properties.ActivePage = cxTabSheetPivot
+    Properties.ActivePage = cxTabSheetGrid
     Properties.CustomButtons.Buttons = <>
     Properties.Images = Fr_Brady.cxSmallImages
     LookAndFeel.NativeStyle = False
@@ -6090,7 +6090,7 @@ object Fr_RelatorioFaturamentoPedidos: TFr_RelatorioFaturamentoPedidos
         Height = 566
         Align = alClient
         TabOrder = 0
-        Properties.ActivePage = cxTabSheetPivot00
+        Properties.ActivePage = cxTabSheetPivot01
         Properties.CustomButtons.Buttons = <>
         OnPageChanging = cxPageControlPivotPageChanging
         ClientRectBottom = 562
@@ -7019,6 +7019,10 @@ object Fr_RelatorioFaturamentoPedidos: TFr_RelatorioFaturamentoPedidos
         object cxTabSheetPivot10: TcxTabSheet
           Caption = '10 - Faturamento (antecipado em meses anteriores)'
           ImageIndex = 0
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 0
+          ExplicitHeight = 0
           object cxDBPivotGrid10: TcxDBPivotGrid
             Left = 0
             Top = 0
@@ -7111,6 +7115,10 @@ object Fr_RelatorioFaturamentoPedidos: TFr_RelatorioFaturamentoPedidos
         object cxTabSheetPivot11: TcxTabSheet
           Caption = '11 - Faturamento Ano x Ano'
           ImageIndex = 0
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 0
+          ExplicitHeight = 0
           object cxDBPivotGrid11: TcxDBPivotGrid
             Left = 0
             Top = 0

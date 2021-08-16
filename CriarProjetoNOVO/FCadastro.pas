@@ -127,7 +127,7 @@ type
     Function  LastCodigo(Chave, Tab, Condicao : String ) : String;
     function dDataSql(Data: TDateTime) :String ;
     Procedure GridExcel(Grid : TDBGrid; Consulta : TFDQuery);
-    Procedure BuscaCEP(CEP : String; Var Logradouro : TrsSuperEdit; Var Cidade : TrsSuperEdit; Var Bairro : TrsSuperEdit; Var UF : TrsSuperEdit; var IDCEP :TrsSuperEdit );
+    Procedure BuscaCEP(CEP : String; Var Logradouro : TrsSuperEdit; Var Cidade : TrsSuperEdit; Var Bairro : TrsSuperEdit; Var UF : TrsSuperEdit );
     Function SalvarCEP(CEP, Logradouro, Bairro, Cidade, UF : String): Integer;
 
     Procedure EmailOutlook(CodCliente, Assunto, Arquivo : String; var Gerado : Boolean) ;
@@ -1635,8 +1635,7 @@ begin
 
 end;
 
-procedure TFrmCadastro.BuscaCEP(CEP: String; var Logradouro, Cidade,
-  Bairro, UF, IDCEP : TrsSuperEdit);
+procedure TFrmCadastro.BuscaCEP(CEP: String; var Logradouro, Cidade, Bairro, UF : TrsSuperEdit);
 var
   QryAux : TFDQuery;
 begin
@@ -1659,7 +1658,7 @@ begin
     begin
       Close;
       Sql.Clear;
-      Sql.Add('select * from CEP where cep = ''' + Cep  + '''' );
+      Sql.Add('select * from cep where cep = ''' + Cep  + '''' );
       Open;
 
 //      Logradouro.Enabled := ((IsEmpty) or  (Copy(Trim(Cep),6,3) = '000'));
@@ -1669,11 +1668,11 @@ begin
 
       if Not IsEmpty then
       begin
-        Logradouro.AsString := Copy(FieldByName('Tipo').AsString + ' ' + FieldByName('Logradouro').AsString,1,50);
-        Cidade.AsString     := Copy(FieldByName('Localidade').AsString,1,Cidade.MaxLength);
-        Bairro.AsString     := Copy(FieldByName('Bairro').AsString,1,Bairro.MaxLength);
-        UF.AsString         := Copy(FieldByName('UF').AsString,1,2);
-        IDCEP.AsString      := Copy(FieldByName('IDCEP').AsString,1,25);
+        Logradouro.AsString := Copy(FieldByName('tipo').AsString + ' ' + FieldByName('logradouro').AsString,1,50);
+        Cidade.AsString     := Copy(FieldByName('localidade').AsString,1,Cidade.MaxLength);
+        Bairro.AsString     := Copy(FieldByName('bairro').AsString,1,Bairro.MaxLength);
+        UF.AsString         := Copy(FieldByName('uf').AsString,1,2);
+     //   IDCEP.AsString      := Copy(FieldByName('IDCEP').AsString,1,25);
       end
       else
       begin

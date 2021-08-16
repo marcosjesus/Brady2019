@@ -73,7 +73,13 @@ object Fr_RelatorioVendas: TFr_RelatorioVendas
     ClientRectTop = 24
     object cxTabSheetPivot00: TcxTabSheet
       Caption = 'Entrada de Pedidos do M'#234's'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
       ImageIndex = 0
+      ParentFont = False
       object cxDBPivotGrid00: TcxDBPivotGrid
         Left = 0
         Top = 0
@@ -81,6 +87,11 @@ object Fr_RelatorioVendas: TFr_RelatorioVendas
         Height = 718
         Align = alClient
         DataSource = DataSourceVSOP_OrderBillingPedidos
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = []
         Groups = <>
         OptionsPrefilter.Visible = pfvAlways
         OptionsSelection.MultiSelect = True
@@ -90,6 +101,7 @@ object Fr_RelatorioVendas: TFr_RelatorioVendas
         OptionsView.RowGrandTotalWidth = 468
         OptionsView.RowTotalsLocation = rtlTree
         OptionsView.TotalsForSingleValues = True
+        ParentFont = False
         TabOrder = 0
         object cxDBPivotGrid00FieldTSOP_ORDBILREPNOM: TcxDBPivotGridField
           Area = faRow

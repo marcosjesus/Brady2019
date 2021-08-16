@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="CielPostal.Wcf.NFe_Method" CodeBehind="NFe_Method.svc.cs" %>

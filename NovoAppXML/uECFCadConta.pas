@@ -39,6 +39,12 @@ type
     QryAux: TFDQuery;
     Panel5: TPanel;
     editGrupo: TrsSuperEdit;
+    Panel6: TPanel;
+    rsSuperEdit1: TrsSuperEdit;
+    Panel7: TPanel;
+    rsSuperEdit2: TrsSuperEdit;
+    Panel8: TPanel;
+    rsSuperEdit3: TrsSuperEdit;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure ButNovoClick(Sender: TObject);
@@ -114,7 +120,7 @@ begin
 			 Exit ;
 	 End ;
 
-   if ((VarOperacao = OPE_INCLUSAO) or (VarOperacao = OPE_ALTERACAO)) then
+   if ((VarOperacao = OPE_INCLUSAO)) then
    begin
        QryAux.Close;
        QryAux.SQL.Clear;

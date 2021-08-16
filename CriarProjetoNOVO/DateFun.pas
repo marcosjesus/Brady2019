@@ -170,7 +170,7 @@ Begin
    Result := False ;
    NumFeriados := 0 ;
    Tab := TSQLTableClass.Create ;
-   If ( Not Tab.OpenTable('Feriado') ) Then
+   If ( Not Tab.OpenTable('feriado') ) Then
       Exit ;
    If ( Not Tab.GetExecSqlSel('Select Count(*) From Feriado') ) Then
       Exit ;

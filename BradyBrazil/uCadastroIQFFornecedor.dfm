@@ -174,18 +174,18 @@ object Fr_CadastroIQFFornecedor: TFr_CadastroIQFFornecedor
             Value = 0
           end
           item
-            Description = '30 '#225' 45 Dias'
+            Description = '30 '#225' 44 Dias'
             ImageIndex = 0
             Tag = 1
             Value = 1
           end
           item
-            Description = '46 '#225' 60 Dias'
+            Description = '45 '#225' 59 Dias'
             Tag = 2
             Value = 2
           end
           item
-            Description = '61 '#225' 90 Dias'
+            Description = 'Acima de 60 Dias'
             Tag = 3
             Value = 3
           end>

@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Application>
+  <BOModel>
+    <Class Name="CielPostal.Module.BusinessObjects.ACF_Contrato" IsDesigned="True" />
+  </BOModel>
+  <Views>
+    <DetailView Id="ACF_Contrato_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main" RelativeSize="100" ImageName="">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="38" ImageName="">
+            <LayoutGroup Id="ACF_Contrato" RelativeSize="100" ImageName="" Caption="ACF - Contrato">
+              <LayoutGroup Id="ACF_Contrato_col1" RelativeSize="48" ImageName="">
+                <LayoutItem Id="Servico" SizeConstraintsType="Default" RelativeSize="20" ViewItem="Servico" />
+                <LayoutItem Id="CodigoSAP" SizeConstraintsType="Default" RelativeSize="15" ViewItem="CodigoSAP" />
+                <LayoutItem Id="NumeroContrato" SizeConstraintsType="Default" RelativeSize="15" ViewItem="NumeroContrato" />
+                <LayoutItem Id="UnidadeVinculacao" ViewItem="UnidadeVinculacao" SizeConstraintsType="Default" Index="3" RelativeSize="15" IsNewNode="True" />
+                <LayoutItem Id="ZPL_Configuracao" ViewItem="ZPL_Configuracao" SizeConstraintsType="Default" Index="4" RelativeSize="15" IsNewNode="True" />
+                <LayoutItem Id="SRO_Configuracao" ViewItem="SRO_Configuracao" SizeConstraintsType="Default" Index="5" RelativeSize="20" IsNewNode="True" />
+              </LayoutGroup>
+              <LayoutGroup Id="ACF_Contrato_col2" RelativeSize="48" ImageName="" Caption="ACF_Contrato_col2" Direction="Horizontal">
+                <LayoutItem Id="SRO_Configuracao" ViewItem="SRO_Configuracao" Removed="True" />
+                <LayoutItem Id="UnidadeVinculacao" ViewItem="UnidadeVinculacao" Removed="True" />
+                <LayoutItem Id="ZPL_Configuracao" ViewItem="ZPL_Configuracao" Removed="True" />
+              </LayoutGroup>
+            </LayoutGroup>
+          </LayoutGroup>
+          <LayoutGroup Id="NFe_Headers_Group" Direction="Vertical" Index="1" RelativeSize="61" ImageName="">
+            <LayoutItem Id="NFe_Headers" SizeConstraintsType="Default" RelativeSize="89" ViewItem="NFe_Headers" />
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <ListView Id="ACF_Contrato_ListView" IsFooterVisible="False">
+      <Columns>
+        <ColumnInfo Id="NumeroContrato" Width="238" />
+        <ColumnInfo Id="Servico" Width="118" />
+        <ColumnInfo Id="CodigoSAP" Width="118" />
+        <ColumnInfo Id="UnidadeVinculacao" Width="132" />
+        <ColumnInfo Id="ZPL_Configuracao" Width="111" />
+        <ColumnInfo Id="SRO_Configuracao" Width="121" />
+      </Columns>
+    </ListView>
+  </Views>
+</Application>

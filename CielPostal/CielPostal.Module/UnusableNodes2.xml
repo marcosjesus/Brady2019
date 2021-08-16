@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Application>
+  <Views Id="Views">
+    <DetailView Id="SRO_Configuracao_DetailView">
+      <Layout Id="Layout">
+        <LayoutGroup Id="Main">
+          <LayoutGroup Id="SimpleEditors">
+            <LayoutGroup Id="SRO_Configuracao">
+              <LayoutGroup Id="SRO_Configuracao_col2">
+                <LayoutItem Id="NumeroAtual" SizeConstraintsType="Default" RelativeSize="36" ViewItem="NumeroAtual" />
+              </LayoutGroup>
+            </LayoutGroup>
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <ListView Id="ZPL_Configuracao_ListView">
+      <Columns Id="Columns">
+        <ColumnInfo Id="Impressora" Width="190" />
+      </Columns>
+    </ListView>
+    <DetailView Id="ZPL_Configuracao_DetailView">
+      <Layout Id="Layout">
+        <LayoutGroup Id="Main">
+          <LayoutGroup Id="SimpleEditors">
+            <LayoutGroup Id="ZPL_Configuracao">
+              <LayoutGroup Id="ZPL_Configuracao_col1">
+                <LayoutItem Id="Impressora" SizeConstraintsType="Default" RelativeSize="13" Index="2" ViewItem="Impressora" />
+                <LayoutItem Id="Dominio" SizeConstraintsType="Default" RelativeSize="13" Index="4" ViewItem="Dominio" />
+              </LayoutGroup>
+              <LayoutGroup Id="ZPL_Configuracao_col2">
+                <LayoutItem Id="CodigoZPL" ViewItem="CodigoZPL" />
+                <LayoutItem Id="EnderecoTemporario" ViewItem="EnderecoTemporario" />
+              </LayoutGroup>
+            </LayoutGroup>
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+  </Views>
+</Application>

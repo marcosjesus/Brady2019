@@ -131,7 +131,7 @@ begin
   FormDataFocus     := 'editCentroCusto' ;
 
   SetParametros(EditBuscaCC, TipoECFCentroCusto);
-   SetParametros(EditBuscaTipoCusto, TipoTP_CentroCusto);
+  SetParametros(EditBuscaTipoCusto, TipoTP_CentroCusto);
 
   inherited;
 

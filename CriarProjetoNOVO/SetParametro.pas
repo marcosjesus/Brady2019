@@ -14,7 +14,7 @@ type
                    TipoNFE, TipoTreinamento, TipoFornecedor, TipoCurso, TipoInstrutor, TipoParticipante, TipoCursoID,  TipoPeriodicidade,
                    TipoFornecedorID, TipoPeriodicidadeID, TipoTpTreinamentoID, TipoFilialID, TipoInstrutorID,
                    TipoTreinamentoID, TipoPerfil, TipoOperacao,TipoUsuarioID, TipoParticipanteID, TipoParticipanteCad,
-                   TipoCentroCustoID, TipoCargoID, TipoParticipanteFILIAL);
+                   TipoCentroCustoID, TipoCargoID, TipoParticipanteFILIAL, TipoFuncao);
 
 procedure SetParametros(CaixaTexto: TEditBusca; TipoConsulta: TTipoConsulta);
 procedure SetParametroTabela(EditBusca: TEditBusca; Tabela: ShortString);
@@ -57,7 +57,7 @@ begin
   if TipoConsulta = TipoOperacao then
   begin
     CaixaTexto.bs_Caption := 'Operação';
-    CaixaTexto.bs_Table := 'Operacao With (NOLOCK)';
+    CaixaTexto.bs_Table := 'Operacao';
 
     CaixaTexto.bs_Fields.Add('DESCRICAO;Operação;;' + inttostr(WIDTH_NOME220));                    //0
     CaixaTexto.bs_Fields.Add('CodOperacao;#;;' + inttostr(WIDTH_DOCUMENTO));
@@ -397,14 +397,14 @@ begin
   if TipoConsulta = TipoUsuario then
   begin
     CaixaTexto.bs_Caption := 'Tabela de Usuários';
-    CaixaTexto.bs_Table   := 'USUARIO';
+    CaixaTexto.bs_Table   := 'usuario';
 
-    CaixaTexto.bs_Fields.Add('CodUsuario;Codigo;;' + inttostr(Width_Codigo));       //0
-    CaixaTexto.bs_Fields.Add('Nome;Nome do Usuario;;' + inttostr(WIDTH_NOME220));           //1
+    CaixaTexto.bs_Fields.Add('codusuario;Codigo;;' + inttostr(Width_Codigo));       //0
+    CaixaTexto.bs_Fields.Add('nome;Nome do Usuario;;' + inttostr(WIDTH_NOME220));           //1
 
 
-    CaixaTexto.bs_TextResult := 'Nome';
-    CaixaTexto.bs_KeyField   := 'CodUsuario';
+    CaixaTexto.bs_TextResult := 'nome';
+    CaixaTexto.bs_KeyField   := 'codusuario';
   end
   else
   if TipoConsulta = TipoUsuarioID then
@@ -425,17 +425,15 @@ begin
   if TipoConsulta = TipoFilial then
   begin
     CaixaTexto.bs_Caption := 'Tabela de Empresa';
-    CaixaTexto.bs_Table   := 'FILIAL ';
+    CaixaTexto.bs_Table   := 'filial ';
 
-    CaixaTexto.bs_Fields.Add('FILIAL.CodFilial;Codigo;;' + inttostr(Width_Codigo));       //0
-    CaixaTexto.bs_Fields.Add('FILIAL.AliasEmpresa;Nome Fantasia;;' + inttostr(WIDTH_NOME220));
-    CaixaTexto.bs_Fields.Add('c.Localidade;Cidade;;' + inttostr(WIDTH_NOME220));
-    CaixaTexto.bs_Fields.Add('c.UF;UF;;' + inttostr(WIDTH_NOME220));
+    CaixaTexto.bs_Fields.Add('filial.codfilial;Codigo;;' + inttostr(Width_Codigo));       //0
+    CaixaTexto.bs_Fields.Add('filial.aliasempresa;Nome Fantasia;;' + inttostr(WIDTH_NOME220));
+    CaixaTexto.bs_Fields.Add('filial.cidade;Cidade;;' + inttostr(WIDTH_NOME220));
+    CaixaTexto.bs_Fields.Add('filial.uf;UF;;' + inttostr(WIDTH_NOME220));
 
-    CaixaTexto.bs_Join := ' left outer Join CEP c on c.IDCEP = FILIAL.IDCEP ';
-
-    CaixaTexto.bs_TextResult := 'AliasEmpresa';
-    CaixaTexto.bs_KeyField   := 'CodFilial';
+    CaixaTexto.bs_TextResult := 'aliasempresa';
+    CaixaTexto.bs_KeyField   := 'codfilial';
 
   end
   else
@@ -563,21 +561,34 @@ begin
     CaixaTexto.bs_TextResult := 'DESCRICAO';
     CaixaTexto.bs_KeyField   := 'TRE_CARGO_ID';
   end
+  else
+  if TipoConsulta = TipoFuncao then
+  begin
+    CaixaTexto.bs_Caption := 'Funcão';
+    CaixaTexto.bs_Table   := 'funcao';
 
+    CaixaTexto.bs_Fields.Add('codfuncao;Codigo;;' + inttostr(Width_Codigo));           //1
+    CaixaTexto.bs_Fields.Add('descfuncao;Nome do Cargo;;' + inttostr(WIDTH_NOME220));           //1
 
+    CaixaTexto.bs_OrderBy := 'descfuncao';
+   // CaixaTexto.bs_Distinct := True;
+
+    CaixaTexto.bs_TextResult := 'descfuncao';
+    CaixaTexto.bs_KeyField   := 'codfuncao';
+  end
   else
   if TipoConsulta = TipoProfissao then
   begin
     CaixaTexto.bs_Caption := 'Profissão';
-    CaixaTexto.bs_Table   := 'Profissao With (NOLOCK)';
+    CaixaTexto.bs_Table   := 'profissao';
 
-    CaixaTexto.bs_Fields.Add('CodProfissao;Codigo;;' + inttostr(Width_Codigo));       //0
-    CaixaTexto.bs_Fields.Add('DescProfissao;Nome da Profissão;;' + inttostr(WIDTH_NOME220));           //1
+    CaixaTexto.bs_Fields.Add('codprofissao;Codigo;;' + inttostr(Width_Codigo));       //0
+    CaixaTexto.bs_Fields.Add('descprofissao;Nome da Profissão;;' + inttostr(WIDTH_NOME220));           //1
 
-    CaixaTexto.bs_OrderBy := 'DescProfissao';
+    CaixaTexto.bs_OrderBy := 'descprofissao';
 
-    CaixaTexto.bs_TextResult := 'DescProfissao';
-    CaixaTexto.bs_KeyField   := 'CodProfissao';
+    CaixaTexto.bs_TextResult := 'descprofissao';
+    CaixaTexto.bs_KeyField   := 'codprofissao';
   end
   else
   if TipoConsulta = TipoMarca then
@@ -1024,33 +1035,19 @@ begin
   else if TipoConsulta = TipoFornecedorX then
   begin
 
-    {
+
     CaixaTexto.bs_Caption := 'Fornecedores';
-    CaixaTexto.bs_Table := 'Fornecedores With (NOLOCK)';
+    CaixaTexto.bs_Table := 'fornecedores';
 
-    CaixaTexto.bs_Fields.Add('Nome;Nome;;' + inttostr(WIDTH_NOME220));                    //0
-    CaixaTexto.bs_Fields.Add('Cgc_2;#;;' + inttostr(WIDTH_DOCUMENTO));              //1
-    CaixaTexto.bs_Fields.Add('Inscricao;#;;' + inttostr(WIDTH_DOCUMENTO) + ';');    //2
-    CaixaTexto.bs_Fields.Add('Endereco_3;Endereço;;' + inttostr(WIDTH_NOME));          //3
-    CaixaTexto.bs_Fields.Add('EndNum;#;;' + inttostr(Width_Codigo));              //4
-    CaixaTexto.bs_Fields.Add('Complemento;#;;' + inttostr(WIDTH_DOCUMENTO)); //5
-    CaixaTexto.bs_Fields.Add('Cidade_3;Cidade;;' + inttostr(WIDTH_NOME220));              //6
-    CaixaTexto.bs_Fields.Add('Bairro_3;#;;' + inttostr(WIDTH_NOME));              //7
-    CaixaTexto.bs_Fields.Add('Estado_3;UF;;' + inttostr(Width_Codigo) + ';;S');                  //8
-    CaixaTexto.bs_Fields.Add('Cep_3;#;;' + inttostr(Width_Codigo));                  //9
-    CaixaTexto.bs_Fields.Add('Email_3;#;;' + inttostr(WIDTH_DOCUMENTO));           //10
-    CaixaTexto.bs_Fields.Add('Fornecedores.CodFornecedor;Codigo;;' + inttostr(Width_Codigo));            //11
-    CaixaTexto.bs_Fields.Add('CDContabil;#;;' + inttostr(Width_Codigo));            //12
-    CaixaTexto.bs_Fields.Add('CdCentroCusto;#;;' + inttostr(Width_Codigo));            //13
-    CaixaTexto.bs_Fields.Add('ReducaoICMS;#;;' + inttostr(Width_Codigo));       //14
-    CaixaTexto.bs_Fields.Add('IsNull(AliqReducaoICMS,0);#;;' + inttostr(Width_Codigo));   //15
-    CaixaTexto.bs_Fields.Add('(cast(Fornecedores.CodFornecedor as varchar) +'' - ''+ Nome) as Fornecedor;#');      // 16
-    CaixaTexto.bs_Fields.Add('IsNull(REGIMEICMS,3);#;;');      // 17
+    CaixaTexto.bs_Fields.Add('codfornecedor;Codigo;;' + inttostr(WIDTH_NOME220));                    //0
+    CaixaTexto.bs_Fields.Add('nome;Nome;;' + inttostr(WIDTH_NOME220));                    //0
+    CaixaTexto.bs_Fields.Add('cnpj;CNPJ;;' + inttostr(WIDTH_DOCUMENTO));
+    CaixaTexto.bs_Fields.Add('estado;UF;;' + inttostr(Width_Codigo) + ';;S');
 
-    CaixaTexto.bs_TextResult := 'Fornecedor';
-    CaixaTexto.bs_KeyField := 'Fornecedores.CodFornecedor';
+    CaixaTexto.bs_TextResult := 'nome';
+    CaixaTexto.bs_KeyField := 'codfornecedor';
     CaixaTexto.bs_KeyField2 := '';
-     }
+
 
   end
   else if TipoConsulta = TipoItensFaturado then

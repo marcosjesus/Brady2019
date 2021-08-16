@@ -10,7 +10,7 @@ uses
   FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Stan.Param,
   FireDAC.DatS, FireDAC.DApt.Intf, FireDAC.DApt, FireDAC.Comp.DataSet,
   FireDAC.Comp.Client, FireDAC.Phys.ODBCBase, FireDAC.Phys.MSSQL,
-  FireDAC.VCLUI.Wait, FireDAC.Comp.UI;
+  FireDAC.VCLUI.Wait, FireDAC.Comp.UI, FireDAC.Phys.PG;
 
 type
   TCredenciais = record
@@ -18,16 +18,19 @@ type
     DataBase  : string;
     UserName  : string;
     Password  : string;
+    Port      : string;
+    DriverID  : string;
   end;
 
 
 type
   TDB_Conect = class(TDataModule)
-    SQLConnection: TFDConnection;
     sqlAux: TFDQuery;
     sqlFunc: TFDQuery;
-    FDPhysMSSQLDriverLink: TFDPhysMSSQLDriverLink;
     FDGUIxWaitCursor: TFDGUIxWaitCursor;
+    sqlAuxiliar: TFDQuery;
+    FDPhysPgDriverLink1: TFDPhysPgDriverLink;
+    SQLConnection: TFDConnection;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }
@@ -91,6 +94,7 @@ var
   Credencias               : TCredenciais;
   varFolderSistema         : String;
 
+
   // Pasta dos Arquivos XML
   PastaSERVIDORTEMP        : String;
   PastaRAIZ                : String;
@@ -131,17 +135,17 @@ procedure TDB_Conect.LerCredenciais;
 var
    varParam : TStringList;
 begin
-  if TFile.Exists( ExtractFilePath(Application.ExeName) + 'DB-Treinamento.ini' ) then
+  if TFile.Exists( ExtractFilePath(Application.ExeName) + 'ConexaoABC.ini' ) then
   begin
      varParam := TStringList.Create;
      Try
-       varParam.LoadFromFile(ExtractFilePath(Application.ExeName)  + 'DB-Treinamento.ini');
+       varParam.LoadFromFile(ExtractFilePath(Application.ExeName)  + 'ConexaoABC.ini');
        Credencias.Host         := varParam.Values['SERVER'];
        Credencias.Username     := varParam.Values['User_Name'];
        Credencias.Password     := varParam.Values['Password'];
        Credencias.DataBase     := varParam.Values['DATABASE'];
-
-
+       Credencias.Port         := varParam.Values['PORT'];
+       Credencias.DriverID     := varParam.Values['DRIVEID'];
      Finally
        FreeAndNil(varParam);
      End;
@@ -575,7 +579,7 @@ end;
 
 procedure TDB_Conect.DataModuleCreate(Sender: TObject);
 begin
-  //Glob_GetParFin() ;
+  FDPhysPgDriverLink1.VendorHome := '.\';
 end;
 
 Function TDB_Conect.Decifra1(Buffer : String; KeyString : String):String;

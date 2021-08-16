@@ -535,9 +535,7 @@ begin
     FDScriptCalcIQF.SQLScripts.Add.SQL.Add( 'EXEC dbo.PIQF_CalculoIQF_2 ' + FDQueryTIQF_PeriodoTIQF_PERCOD.AsString );
     FDScriptCalcIQF.ExecuteAll;
 
-    Mensagem( 'Importação Concluida...' );
-
-    Sleep(3000);
+    Application.MessageBox( 'Importação concluída com sucesso!!!', 'S&OP', MB_ICONINFORMATION );
 
     Mensagem( EmptyStr );
 

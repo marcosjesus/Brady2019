@@ -1,0 +1,339 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{5F15837D-D1E5-44DC-92F0-4F2EBE9C3F8D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CielPostal.Module</RootNamespace>
+    <AssemblyName>CielPostal.Module</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'EasyTest|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\EasyTest\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;EASYTEST</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DevExpress.ExpressApp.ConditionalAppearance.v12.2, Version=12.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.ExpressApp.Security.v12.2, Version=12.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.ExpressApp.Win.v12.2, Version=12.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.ExpressApp.Workflow.v12.2, Version=12.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.ExpressApp.Workflow.Win.v12.2, Version=12.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.ExpressApp.Xpo.v12.2">
+      <SpecificVersion>False</SpecificVersion>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Printing.v12.2.Core">
+      <SpecificVersion>False</SpecificVersion>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Data.v12.2">
+      <SpecificVersion>False</SpecificVersion>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.ExpressApp.v12.2">
+      <SpecificVersion>False</SpecificVersion>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Persistent.Base.v12.2">
+      <SpecificVersion>False</SpecificVersion>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Persistent.BaseImpl.v12.2">
+      <SpecificVersion>False</SpecificVersion>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Utils.v12.2, Version=12.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Workflow.Activities.v12.2, Version=12.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Workflow.Activities.v12.2.Design, Version=12.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Xpo.v12.2">
+      <SpecificVersion>False</SpecificVersion>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PresentationCore">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PresentationFramework">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System">
+      <Name>System</Name>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Activities">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Activities.Core.Presentation">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Activities.Presentation">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.ServiceModel">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.ServiceModel.Activities">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xaml">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Name>System.XML</Name>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="WindowsBase">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="WindowsFormsIntegration">
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BusinessObjects\ACF_Contrato.bo.cs">
+      <DependentUpon>ACF_Contrato.bo</DependentUpon>
+    </Compile>
+    <Compile Include="BusinessObjects\ACF_Contrato.bo.designer.cs">
+      <DependentUpon>ACF_Contrato.bo</DependentUpon>
+    </Compile>
+    <Compile Include="BusinessObjects\ESO_Configuracao.bo.cs">
+      <DependentUpon>ESO_Configuracao.bo</DependentUpon>
+    </Compile>
+    <Compile Include="BusinessObjects\ESO_Configuracao.bo.designer.cs">
+      <DependentUpon>ESO_Configuracao.bo</DependentUpon>
+    </Compile>
+    <Compile Include="BusinessObjects\ESO_Header.bo.cs">
+      <DependentUpon>ESO_Header.bo</DependentUpon>
+    </Compile>
+    <Compile Include="BusinessObjects\ESO_Header.bo.designer.cs">
+      <DependentUpon>ESO_Header.bo</DependentUpon>
+    </Compile>
+    <Compile Include="BusinessObjects\ESO_Item.bo.cs">
+      <DependentUpon>ESO_Item.bo</DependentUpon>
+    </Compile>
+    <Compile Include="BusinessObjects\ESO_Item.bo.designer.cs">
+      <DependentUpon>ESO_Item.bo</DependentUpon>
+    </Compile>
+    <Compile Include="BusinessObjects\NFe_Etiqueta.bo.cs">
+      <DependentUpon>NFe_Etiqueta.bo</DependentUpon>
+    </Compile>
+    <Compile Include="BusinessObjects\NFe_Etiqueta.bo.designer.cs">
+      <DependentUpon>NFe_Etiqueta.bo</DependentUpon>
+    </Compile>
+    <Compile Include="BusinessObjects\NFe_Header.bo.cs">
+      <DependentUpon>NFe_Header.bo</DependentUpon>
+    </Compile>
+    <Compile Include="BusinessObjects\NFe_Header.bo.designer.cs">
+      <DependentUpon>NFe_Header.bo</DependentUpon>
+    </Compile>
+    <Compile Include="BusinessObjects\NFe_SRO.bo.cs">
+      <DependentUpon>NFe_SRO.bo</DependentUpon>
+    </Compile>
+    <Compile Include="BusinessObjects\NFe_SRO.bo.designer.cs">
+      <DependentUpon>NFe_SRO.bo</DependentUpon>
+    </Compile>
+    <Compile Include="BusinessObjects\Sonda_NFe.bo.cs">
+      <DependentUpon>Sonda_NFe.bo</DependentUpon>
+    </Compile>
+    <Compile Include="BusinessObjects\Sonda_NFe.bo.designer.cs">
+      <DependentUpon>Sonda_NFe.bo</DependentUpon>
+    </Compile>
+    <Compile Include="BusinessObjects\SRO_Configuracao.bo.cs">
+      <DependentUpon>SRO_Configuracao.bo</DependentUpon>
+    </Compile>
+    <Compile Include="BusinessObjects\SRO_Configuracao.bo.designer.cs">
+      <DependentUpon>SRO_Configuracao.bo</DependentUpon>
+    </Compile>
+    <Compile Include="BusinessObjects\SRO_Evento.bo.cs">
+      <DependentUpon>SRO_Evento.bo</DependentUpon>
+    </Compile>
+    <Compile Include="BusinessObjects\SRO_Evento.bo.designer.cs">
+      <DependentUpon>SRO_Evento.bo</DependentUpon>
+    </Compile>
+    <Compile Include="BusinessObjects\SRO_TipoEvento.bo.cs">
+      <DependentUpon>SRO_TipoEvento.bo</DependentUpon>
+    </Compile>
+    <Compile Include="BusinessObjects\SRO_TipoEvento.bo.designer.cs">
+      <DependentUpon>SRO_TipoEvento.bo</DependentUpon>
+    </Compile>
+    <Compile Include="BusinessObjects\ZPL_Configuracao.bo.cs">
+      <DependentUpon>ZPL_Configuracao.bo</DependentUpon>
+    </Compile>
+    <Compile Include="BusinessObjects\ZPL_Configuracao.bo.designer.cs">
+      <DependentUpon>ZPL_Configuracao.bo</DependentUpon>
+    </Compile>
+    <Compile Include="BusinessObjects\Impersonator.cs" />
+    <Compile Include="Module.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Module.Designer.cs">
+      <DependentUpon>Module.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="DatabaseUpdate\Updater.cs" />
+    <Compile Include="Service References\Gimba\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Model.DesignedDiffs.xafml" />
+    <EmbeddedResource Include="Module.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>Module.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\licenses.licx" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="BusinessObjects\SRO_Configuracao.bo" />
+    <EmbeddedResource Include="BusinessObjects\NFe_Header.bo" />
+    <EmbeddedResource Include="BusinessObjects\NFe_Etiqueta.bo" />
+    <EmbeddedResource Include="BusinessObjects\NFe_SRO.bo" />
+    <EmbeddedResource Include="BusinessObjects\ZPL_Configuracao.bo" />
+    <EmbeddedResource Include="BusinessObjects\SRO_TipoEvento.bo" />
+    <EmbeddedResource Include="BusinessObjects\SRO_Evento.bo" />
+    <EmbeddedResource Include="BusinessObjects\ACF_Contrato.bo" />
+    <EmbeddedResource Include="BusinessObjects\Sonda_NFe.bo" />
+    <EmbeddedResource Include="BusinessObjects\ESO_Header.bo" />
+    <EmbeddedResource Include="BusinessObjects\ESO_Item.bo" />
+    <EmbeddedResource Include="BusinessObjects\ESO_Configuracao.bo" />
+    <None Include="app.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="DatabaseUpdate\ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="BusinessObjects\ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Controllers\ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="FunctionalTests\ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="FunctionalTests\Sample.ets" />
+    <None Include="Images\ReadMe.txt" />
+    <None Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="FunctionalTests\Config.xml" />
+    <None Include="UnusableNodes5.xml">
+      <DependentUpon>Model.DesignedDiffs.xafml</DependentUpon>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Gimba\CielPostal.Module.Gimba.AtualizarResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Gimba\CielPostal.Module.Gimba.ItemEstoque.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Gimba\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\Gimba\configuration.svcinfo" />
+    <None Include="Service References\Gimba\configuration91.svcinfo" />
+    <None Include="Service References\Gimba\estoque.disco" />
+    <None Include="Service References\Gimba\estoque.wsdl" />
+    <None Include="UnusableNodes4.xml">
+      <DependentUpon>Model.DesignedDiffs.xafml</DependentUpon>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="UnusableNodes3.xml">
+      <DependentUpon>Model.DesignedDiffs.xafml</DependentUpon>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="UnusableNodes2.xml">
+      <DependentUpon>Model.DesignedDiffs.xafml</DependentUpon>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="UnusableNodes1.xml">
+      <DependentUpon>Model.DesignedDiffs.xafml</DependentUpon>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="UnusableNodes.xml">
+      <DependentUpon>Model.DesignedDiffs.xafml</DependentUpon>
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\Gimba\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

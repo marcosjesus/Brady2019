@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Application>
+  <BOModel>
+    <Class Name="CielPostal.Module.BusinessObjects.NFe_SRO" IsDesigned="True" />
+  </BOModel>
+  <Views>
+    <ListView Id="NFe_Header_NFe_SROs_ListView" IsFooterVisible="False">
+      <Columns>
+        <ColumnInfo Id="Codigo" Width="37" Index="-1" />
+        <ColumnInfo Id="NFe_Header" Width="58" Index="-1" />
+        <ColumnInfo Id="STO" Width="27" SortIndex="-1" SortOrder="None" Index="-1" />
+        <ColumnInfo Id="Descricao" Width="78" SortIndex="-1" SortOrder="None" />
+        <ColumnInfo Id="SRO_Evento" Width="80" Index="1" />
+        <ColumnInfo Id="Data" Width="45" SortIndex="0" SortOrder="Ascending" Index="2" />
+        <ColumnInfo Id="Hora" Width="43" Index="3" SortIndex="1" SortOrder="Ascending" />
+        <ColumnInfo Id="Recebedor" Width="100" SortIndex="-1" SortOrder="None" Index="4" />
+        <ColumnInfo Id="Documento" Width="61" Index="5" />
+        <ColumnInfo Id="Comentario" Width="62" Index="6" />
+        <ColumnInfo Id="Local" Width="31" Index="7" />
+        <ColumnInfo Id="Cidade" Width="54" Index="8" />
+        <ColumnInfo Id="UF" Width="38" Index="9" />
+      </Columns>
+    </ListView>
+    <ListView Id="NFe_SRO_ListView" IsFooterVisible="False">
+      <Columns>
+        <ColumnInfo Id="Codigo" Index="-1" />
+        <ColumnInfo Id="NFe_Header" Index="-1" />
+        <ColumnInfo Id="STO" Index="-1" />
+        <ColumnInfo Id="Descricao" Width="105" />
+        <ColumnInfo Id="SRO_Evento" Index="1" Width="64" />
+        <ColumnInfo Id="Data" Index="2" Width="49" />
+        <ColumnInfo Id="Hora" Index="3" Width="49" />
+        <ColumnInfo Id="Recebedor" Index="4" Width="70" />
+        <ColumnInfo Id="Documento" Index="5" Width="67" />
+        <ColumnInfo Id="Comentario" Index="6" Width="62" />
+        <ColumnInfo Id="Local" Index="7" Width="41" />
+        <ColumnInfo Id="Cidade" Index="8" Width="54" />
+        <ColumnInfo Id="UF" Index="9" Width="31" />
+      </Columns>
+    </ListView>
+  </Views>
+</Application>

@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Application>
+  <BOModel>
+    <Class Name="CielPostal.Module.BusinessObjects.ESO_Item" IsDesigned="True" />
+  </BOModel>
+  <Views>
+    <DetailView Id="ESO_Item_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main" RelativeSize="100">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="100">
+            <LayoutGroup Id="ESO_Item" RelativeSize="100">
+              <LayoutItem Id="Quantidade" SizeConstraintsType="Default" RelativeSize="4" ViewItem="Quantidade" />
+              <LayoutItem Id="ESO_Header" SizeConstraintsType="Default" RelativeSize="89" ViewItem="ESO_Header" />
+            </LayoutGroup>
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+  </Views>
+</Application>

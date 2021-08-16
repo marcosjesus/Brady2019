@@ -234,6 +234,8 @@ type
     dxBarManagerBarUploadDistribuidores: TdxBar;
     dxBarButton8: TdxBarButton;
     dxBarLargeButtonUploadDistribuidores: TdxBarLargeButton;
+    dxBarButton9: TdxBarButton;
+    dxBarLargeButtonVerPrecoSite: TdxBarLargeButton;
     procedure FormCreate(Sender: TObject);
     procedure dxRibbonBackstageViewSISTEMATabChanged(Sender: TObject);
     procedure ValueListEditorStringsChange(Sender: TObject);
@@ -307,6 +309,7 @@ type
     procedure dxBarLargeButtonMKTListaClick(Sender: TObject);
     procedure dxBarButtonCategoriaClick(Sender: TObject);
     procedure dxBarLargeButtonUploadDistribuidoresClick(Sender: TObject);
+    procedure dxBarLargeButtonVerPrecoSiteClick(Sender: TObject);
   private
     FFormatoBR: TFormatSettings;
     FPainelOperador: Boolean;
@@ -353,7 +356,7 @@ uses uUtils, uRelatorioPreco, uRelatorioPartNumber, uCadastroSite, AsyncCalls, u
   uUploadCustosEstoque, uUploadRouting, uUploadTaxasHoras, uCalcGM, uCadastroProdutoSeton,
   uUploadProdutoSeton, uRelatorioRecuperacaoContas, uRelatorioGestaoMercados,uRelatorioRecuperacaoClientes,
   uExibeForecast, uDashBoard,uEditoEmail,uFr_CadastroMetaIQF, uFr_CadastroRegrasIQF, uConfig,uFr_ListaEmail,
-  uFr_CadastroIQFCategoria,uFr_UploadDistribuidores;
+  uFr_CadastroIQFCategoria,uFr_UploadDistribuidores, uRelatorioManutencaoClientes,uFr_PrecoSite;
 
 { TForm3 }
 
@@ -1525,23 +1528,24 @@ end;
 
 procedure TFr_Brady.dxBarLargeButtonSIOPRecuperacaodeContasClick(
   Sender: TObject);
-  procedure AbrirDataset;
+
+ { procedure AbrirDataset;
   begin
 
-    Fr_RelatorioRecuperacaoContas.AbrirDataset;
+    Fr_RelatorioManutencaoClientes.AbrirDataset;
 
   end;
-
+  }
 begin
 
-  if not Assigned(Fr_RelatorioRecuperacaoContas) then
-    Fr_RelatorioRecuperacaoContas := TFr_RelatorioRecuperacaoContas.Create(Self);
+  if not Assigned(Fr_RelatorioManutencaoClientes) then
+    Fr_RelatorioManutencaoClientes := TFr_RelatorioManutencaoClientes.Create(Self);
 
-  Fr_RelatorioRecuperacaoContas.Visible := True;
-  Fr_RelatorioRecuperacaoContas.BringToFront;
-  Fr_RelatorioRecuperacaoContas.Update;
+  Fr_RelatorioManutencaoClientes.Visible := True;
+  Fr_RelatorioManutencaoClientes.BringToFront;
+  Fr_RelatorioManutencaoClientes.Update;
 
-  LocalAsyncVclCall( @AbrirDataset );
+ // LocalAsyncVclCall( @AbrirDataset );
 
 end;
 
@@ -1663,6 +1667,26 @@ begin
   Fr_UploadDistribuidores.Visible := True;
   Fr_UploadDistribuidores.BringToFront;
   Fr_UploadDistribuidores.Update;
+end;
+
+procedure TFr_Brady.dxBarLargeButtonVerPrecoSiteClick(Sender: TObject);
+
+  procedure AbrirDataset;
+  begin
+
+    Fr_PrecoSite.AbrirDataset;
+
+  end;
+begin
+  if not Assigned(Fr_PrecoSite) then
+    Fr_PrecoSite := TFr_PrecoSite.Create(Self);
+
+  Fr_PrecoSite.Visible := True;
+  Fr_PrecoSite.BringToFront;
+  Fr_PrecoSite.Update;
+
+  LocalAsyncVclCall( @AbrirDataset );
+
 end;
 
 procedure TFr_Brady.dxBarLargeEditorEmailClick(Sender: TObject);
