@@ -7640,6 +7640,74 @@ var
   I: Integer;
   meuIP, meuCaminho : String;
 
+  procedure WritelnMail( varStr: String );
+  var
+    varACBrNFe: TACBrNFe;
+    varACBrMail: TACBrMail;
+    varMensagem: TStringList;
+    varCC: TStringList;
+
+  begin
+
+    Writeln( varStr );
+
+    varCC := TStringList.Create;
+    varMensagem := TStringList.Create;
+    varACBrNFe := TACBrNFe.Create(nil);
+    varACBrMail := TACBrMail.Create(nil);
+    varACBrNFe.MAIL := varACBrMail;
+    try
+
+      varMensagem.Add(MyDocumentsPath+'\'+FSearchRecord.Name);
+      varMensagem.Add( varStr );
+
+      varACBrMail.Clear;
+      varACBrMail.Host := 'smtp.gmail.com';
+      varACBrMail.Port := '465';
+      varACBrMail.SetSSL := True;
+      varACBrMail.SetTLS := False;
+
+      varACBrMail.Username := 'suportebrasil@bradycorp.com';
+      varACBrMail.Password := 'spUhurebRuF5';
+
+      varACBrMail.From := 'suportebrasil@bradycorp.com';
+      varACBrMail.FromName := 'SUPORTE BRASIL';
+
+
+      varACBrMail.AddAddress('LUCIANA_PONTIERI@BRADYCORP.COM', 'LUCIANA PONTIERI');
+      varACBrMail.AddAddress('marcos.jesus.external@k2partnering.com', 'MARCOS JESUS');
+      varACBrMail.Subject := 'ERRO DE CONEXAO COM A BASE DO MYSQL EM ' + FormatDateTime( 'dd/mm/yyyy', Now );
+      varACBrMail.IsHTML := True;
+      varACBrMail.AltBody.Text := varMensagem.Text;
+
+      try
+
+        varACBrMail.Send;
+
+      except
+
+        on E: Exception do
+        begin
+
+          Writeln( E.Message );
+
+        end;
+
+      end;
+
+    finally
+
+      FreeAndNil(varACBrNFe);
+      FreeAndNil(varACBrMail);
+      FreeAndNil(varMensagem);
+      FreeAndNil(varCC);
+
+    end;
+
+  end;
+
+
+
 begin
 
   Writeln( 'Criando DataModule' );
@@ -7662,7 +7730,15 @@ begin
       Writeln (meuCaminho);
 
       Writeln( 'Open FDConnection' );
-      FDConnection.Open;
+
+      Try
+         FDConnection.Open;
+      except
+         if not FDConnection.Connected then
+           WritelnMail( 'Tentando conectar com a conexão: ' +  MyDocumentsPath + '\DB-MySQL.ini' );
+           exit;
+      end;
+
       try
 
         Writeln( 'Abrindo arquivo C:\Brady\Files\SOP\Estoque\BR-SIOP-009.txt' );
@@ -7866,6 +7942,8 @@ begin
           end;
 
         end;
+
+
 
       finally
 

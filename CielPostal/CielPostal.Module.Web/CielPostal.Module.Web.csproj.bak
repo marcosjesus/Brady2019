@@ -66,6 +66,10 @@
       <SpecificVersion>False</SpecificVersion>
       <Private>True</Private>
     </Reference>
+    <Reference Include="DevExpress.RichEdit.v12.2.Core">
+      <SpecificVersion>False</SpecificVersion>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="DevExpress.Web.v12.2">
       <SpecificVersion>False</SpecificVersion>
       <Private>True</Private>
@@ -75,15 +79,19 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System">
-      <Private>False</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Data">
-      <Private>False</Private>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Web" />
+    <Reference Include="System.Drawing">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml">
-      <Private>False</Private>
+      <Private>True</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>

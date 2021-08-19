@@ -1,75 +1,23 @@
-C:\Work\Ciel\sistemas\CielPostal\CielPostal.Svc\bin\Release\CielPostal.Svc.exe.config
-C:\Work\Ciel\sistemas\CielPostal\CielPostal.Svc\bin\Release\CielPostal.Svc.exe
-C:\Work\Ciel\sistemas\CielPostal\CielPostal.Svc\bin\Release\CielPostal.Svc.pdb
-C:\Work\Ciel\sistemas\CielPostal\CielPostal.Svc\obj\Release\CielPostal.Svc.exe
-C:\Work\Ciel\sistemas\CielPostal\CielPostal.Svc\obj\Release\CielPostal.Svc.pdb
-C:\Work\Ciel\sistemas\CielPostal\CielPostal.Svc\obj\Release\CielPostal.Svc.csproj.GenerateResource.Cache
-C:\Work\Ciel\sistemas\CielPostal\CielPostal.Svc\obj\Release\CielPostal.Svc.CielPostalService.resources
-C:\Work\Ciel\sistemas\CielPostal\CielPostal.Svc\obj\Release\CielPostal.Svc.ProjectInstaller.resources
-C:\Work\Ciel\sistemas\CielPostal\CielPostal.Svc\obj\Release\CielPostal.Svc.csprojResolveAssemblyReference.cache
-C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Svc\bin\Release\CielPostal.Svc.exe.config
-C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Svc\bin\Release\CielPostal.Svc.exe
-C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Svc\bin\Release\CielPostal.Svc.pdb
-C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Svc\obj\Release\CielPostal.Svc.CielPostalService.resources
-C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Svc\obj\Release\CielPostal.Svc.ProjectInstaller.resources
-C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Svc\obj\Release\CielPostal.Svc.csproj.GenerateResource.Cache
-C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Svc\obj\Release\CielPostal.Svc.exe
-C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Svc\obj\Release\CielPostal.Svc.pdb
-C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Svc\bin\Release\Microsoft.CSharp.dll
-C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Svc\bin\Release\System.Configuration.Install.dll
-C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Svc\bin\Release\System.Data.DataSetExtensions.dll
-C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Svc\bin\Release\System.Data.dll
-C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Svc\bin\Release\System.dll
-C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Svc\bin\Release\System.Management.dll
-C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Svc\bin\Release\System.Runtime.Serialization.dll
-C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Svc\bin\Release\System.ServiceModel.dll
-C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Svc\bin\Release\System.ServiceProcess.dll
-C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Svc\bin\Release\System.Xml.dll
-C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Svc\bin\Release\System.Xml.Linq.dll
-C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Svc\bin\Release\App.config
-C:\Ciel Solucoes\Clientes\Brady\Sistemas\CielPostal\CielPostal.Svc\obj\Release\CielPostal.Svc.csprojResolveAssemblyReference.cache
-C:\CielPostal\CielPostal.Svc\bin\Release\App.config
-C:\CielPostal\CielPostal.Svc\bin\Release\CielPostal.Svc.exe.config
-C:\CielPostal\CielPostal.Svc\bin\Release\CielPostal.Svc.exe
-C:\CielPostal\CielPostal.Svc\bin\Release\CielPostal.Svc.pdb
-C:\CielPostal\CielPostal.Svc\bin\Release\Microsoft.CSharp.dll
-C:\CielPostal\CielPostal.Svc\bin\Release\System.Configuration.Install.dll
-C:\CielPostal\CielPostal.Svc\bin\Release\System.Data.DataSetExtensions.dll
-C:\CielPostal\CielPostal.Svc\bin\Release\System.Data.dll
-C:\CielPostal\CielPostal.Svc\bin\Release\System.dll
-C:\CielPostal\CielPostal.Svc\bin\Release\System.Management.dll
-C:\CielPostal\CielPostal.Svc\bin\Release\System.Runtime.Serialization.dll
-C:\CielPostal\CielPostal.Svc\bin\Release\System.ServiceModel.dll
-C:\CielPostal\CielPostal.Svc\bin\Release\System.ServiceProcess.dll
-C:\CielPostal\CielPostal.Svc\bin\Release\System.Xml.dll
-C:\CielPostal\CielPostal.Svc\bin\Release\System.Xml.Linq.dll
-C:\CielPostal\CielPostal.Svc\obj\Release\CielPostal.Svc.csprojAssemblyReference.cache
-C:\CielPostal\CielPostal.Svc\obj\Release\CielPostal.Svc.CielPostalService.resources
-C:\CielPostal\CielPostal.Svc\obj\Release\CielPostal.Svc.ProjectInstaller.resources
-C:\CielPostal\CielPostal.Svc\obj\Release\CielPostal.Svc.csproj.GenerateResource.cache
-C:\CielPostal\CielPostal.Svc\obj\Release\CielPostal.Svc.csproj.CopyComplete
-C:\CielPostal\CielPostal.Svc\obj\Release\CielPostal.Svc.exe
-C:\CielPostal\CielPostal.Svc\obj\Release\CielPostal.Svc.pdb
-C:\Users\aluga.com\Desktop\CielPostal\CielPostal.Svc\bin\Release\App.config
-C:\Users\aluga.com\Desktop\CielPostal\CielPostal.Svc\bin\Release\CielPostal.Svc.exe.config
-C:\Users\aluga.com\Desktop\CielPostal\CielPostal.Svc\bin\Release\CielPostal.Svc.exe
-C:\Users\aluga.com\Desktop\CielPostal\CielPostal.Svc\bin\Release\CielPostal.Svc.pdb
-C:\Users\aluga.com\Desktop\CielPostal\CielPostal.Svc\bin\Release\Microsoft.CSharp.dll
-C:\Users\aluga.com\Desktop\CielPostal\CielPostal.Svc\bin\Release\System.Configuration.Install.dll
-C:\Users\aluga.com\Desktop\CielPostal\CielPostal.Svc\bin\Release\System.Data.DataSetExtensions.dll
-C:\Users\aluga.com\Desktop\CielPostal\CielPostal.Svc\bin\Release\System.Data.dll
-C:\Users\aluga.com\Desktop\CielPostal\CielPostal.Svc\bin\Release\System.dll
-C:\Users\aluga.com\Desktop\CielPostal\CielPostal.Svc\bin\Release\System.Management.dll
-C:\Users\aluga.com\Desktop\CielPostal\CielPostal.Svc\bin\Release\System.Runtime.Serialization.dll
-C:\Users\aluga.com\Desktop\CielPostal\CielPostal.Svc\bin\Release\System.ServiceModel.dll
-C:\Users\aluga.com\Desktop\CielPostal\CielPostal.Svc\bin\Release\System.ServiceProcess.dll
-C:\Users\aluga.com\Desktop\CielPostal\CielPostal.Svc\bin\Release\System.Xml.dll
-C:\Users\aluga.com\Desktop\CielPostal\CielPostal.Svc\bin\Release\System.Xml.Linq.dll
-C:\Users\aluga.com\Desktop\CielPostal\CielPostal.Svc\obj\Release\CielPostal.Svc.csprojAssemblyReference.cache
-C:\Users\aluga.com\Desktop\CielPostal\CielPostal.Svc\obj\Release\CielPostal.Svc.CielPostalService.resources
-C:\Users\aluga.com\Desktop\CielPostal\CielPostal.Svc\obj\Release\CielPostal.Svc.ProjectInstaller.resources
-C:\Users\aluga.com\Desktop\CielPostal\CielPostal.Svc\obj\Release\CielPostal.Svc.csproj.GenerateResource.cache
-C:\Users\aluga.com\Desktop\CielPostal\CielPostal.Svc\obj\Release\CielPostal.Svc.csproj.CoreCompileInputs.cache
-C:\Users\aluga.com\Desktop\CielPostal\CielPostal.Svc\obj\Release\CielPostal.Svc.csproj.CopyComplete
-C:\Users\aluga.com\Desktop\CielPostal\CielPostal.Svc\obj\Release\CielPostal.Svc.exe
-C:\Users\aluga.com\Desktop\CielPostal\CielPostal.Svc\obj\Release\CielPostal.Svc.pdb
+C:\Users\aluga.com\Brady2019\Brady2019\CielPostal\CielPostal.Svc\bin\Release\App.config
+C:\Users\aluga.com\Brady2019\Brady2019\CielPostal\CielPostal.Svc\bin\Release\CielPostal.Svc.exe.config
+C:\Users\aluga.com\Brady2019\Brady2019\CielPostal\CielPostal.Svc\bin\Release\CielPostal.Svc.exe
+C:\Users\aluga.com\Brady2019\Brady2019\CielPostal\CielPostal.Svc\bin\Release\CielPostal.Svc.pdb
+C:\Users\aluga.com\Brady2019\Brady2019\CielPostal\CielPostal.Svc\bin\Release\Microsoft.CSharp.dll
+C:\Users\aluga.com\Brady2019\Brady2019\CielPostal\CielPostal.Svc\bin\Release\System.Configuration.Install.dll
+C:\Users\aluga.com\Brady2019\Brady2019\CielPostal\CielPostal.Svc\bin\Release\System.Data.DataSetExtensions.dll
+C:\Users\aluga.com\Brady2019\Brady2019\CielPostal\CielPostal.Svc\bin\Release\System.Data.dll
+C:\Users\aluga.com\Brady2019\Brady2019\CielPostal\CielPostal.Svc\bin\Release\System.dll
+C:\Users\aluga.com\Brady2019\Brady2019\CielPostal\CielPostal.Svc\bin\Release\System.Management.dll
+C:\Users\aluga.com\Brady2019\Brady2019\CielPostal\CielPostal.Svc\bin\Release\System.Runtime.Serialization.dll
+C:\Users\aluga.com\Brady2019\Brady2019\CielPostal\CielPostal.Svc\bin\Release\System.ServiceModel.dll
+C:\Users\aluga.com\Brady2019\Brady2019\CielPostal\CielPostal.Svc\bin\Release\System.ServiceProcess.dll
+C:\Users\aluga.com\Brady2019\Brady2019\CielPostal\CielPostal.Svc\bin\Release\System.Xml.dll
+C:\Users\aluga.com\Brady2019\Brady2019\CielPostal\CielPostal.Svc\bin\Release\System.Xml.Linq.dll
+C:\Users\aluga.com\Brady2019\Brady2019\CielPostal\CielPostal.Svc\obj\Release\CielPostal.Svc.csprojAssemblyReference.cache
+C:\Users\aluga.com\Brady2019\Brady2019\CielPostal\CielPostal.Svc\obj\Release\CielPostal.Svc.CielPostalService.resources
+C:\Users\aluga.com\Brady2019\Brady2019\CielPostal\CielPostal.Svc\obj\Release\CielPostal.Svc.ProjectInstaller.resources
+C:\Users\aluga.com\Brady2019\Brady2019\CielPostal\CielPostal.Svc\obj\Release\CielPostal.Svc.csproj.GenerateResource.cache
+C:\Users\aluga.com\Brady2019\Brady2019\CielPostal\CielPostal.Svc\obj\Release\CielPostal.Svc.csproj.CoreCompileInputs.cache
+C:\Users\aluga.com\Brady2019\Brady2019\CielPostal\CielPostal.Svc\obj\Release\CielPostal.Svc.csproj.CopyComplete
+C:\Users\aluga.com\Brady2019\Brady2019\CielPostal\CielPostal.Svc\obj\Release\CielPostal.Svc.exe
+C:\Users\aluga.com\Brady2019\Brady2019\CielPostal\CielPostal.Svc\obj\Release\CielPostal.Svc.pdb
