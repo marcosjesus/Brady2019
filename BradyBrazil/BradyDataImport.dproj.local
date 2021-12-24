@@ -1,20 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
 	<Transactions>
-    <Transaction>2018/02/20 14:43:30.000.785,C:\Users\K2-User\CIEL-IT-PROJECTS\BradyBrazil\Magento.pas=C:\Users\K2-User\CIEL-IT-PROJECTS\BradyBrazil\Magento_Homol.pas</Transaction>
+    <Transaction>2018/02/20 14:43:30.000.785,C:\Users\K2-User\CIEL-IT-PROJECTS\BradyBrazil\Magento_Homol.pas=C:\Users\K2-User\CIEL-IT-PROJECTS\BradyBrazil\Magento.pas</Transaction>
     <Transaction>2018/02/22 13:34:22.000.690,=C:\Users\K2-User\CIEL-IT-PROJECTS\BradyBrazil\v2_soap.pas</Transaction>
-    <Transaction>2018/02/22 13:34:40.000.757,C:\Users\K2-User\CIEL-IT-PROJECTS\BradyBrazil\Magento_Prod.pas=C:\Users\K2-User\CIEL-IT-PROJECTS\BradyBrazil\v2_soap.pas</Transaction>
+    <Transaction>2018/02/22 13:34:40.000.757,C:\Users\K2-User\CIEL-IT-PROJECTS\BradyBrazil\v2_soap.pas=C:\Users\K2-User\CIEL-IT-PROJECTS\BradyBrazil\Magento_Prod.pas</Transaction>
     <Transaction>2019/04/18 17:02:44.000.466,=C:\Users\aluga.com\Brady2018\BradyBrazil\Magento.pas</Transaction>
-    <Transaction>2019/04/18 17:03:35.000.432,C:\Users\aluga.com\Brady2018\BradyBrazil\Magento_Prod.pas=C:\Users\aluga.com\Brady2018\BradyBrazil\Magento_Prod_OLD.pas</Transaction>
-    <Transaction>2019/04/18 17:03:42.000.901,C:\Users\aluga.com\Brady2018\BradyBrazil\Magento.pas=C:\Users\aluga.com\Brady2018\BradyBrazil\Magento_Prod.pas</Transaction>
+    <Transaction>2019/04/18 17:03:35.000.432,C:\Users\aluga.com\Brady2018\BradyBrazil\Magento_Prod_OLD.pas=C:\Users\aluga.com\Brady2018\BradyBrazil\Magento_Prod.pas</Transaction>
+    <Transaction>2019/04/18 17:03:42.000.901,C:\Users\aluga.com\Brady2018\BradyBrazil\Magento_Prod.pas=C:\Users\aluga.com\Brady2018\BradyBrazil\Magento.pas</Transaction>
     <Transaction>2019/04/22 10:47:32.000.559,=C:\Users\aluga.com\Brady2018\BradyBrazil\v2_soap.pas</Transaction>
-    <Transaction>2019/04/22 10:48:14.000.351,C:\Users\aluga.com\Brady2018\BradyBrazil\Magento_Prod.pas=C:\Users\aluga.com\Brady2018\BradyBrazil\Magento_Prod_old.pas</Transaction>
-    <Transaction>2019/04/22 10:48:14.000.147,C:\Users\aluga.com\Brady2018\BradyBrazil\Magento_Prod_old.pas=C:\Users\aluga.com\Brady2018\BradyBrazil\Magento_Prod.pas</Transaction>
-    <Transaction>2019/04/22 10:48:22.000.582,C:\Users\aluga.com\Brady2018\BradyBrazil\Magento_Prod_o.pas=C:\Users\aluga.com\Brady2018\BradyBrazil\Magento_Prod.pas</Transaction>
-    <Transaction>2019/04/22 10:48:39.000.779,C:\Users\aluga.com\Brady2018\BradyBrazil\Magento_Prod.pas=C:\Users\aluga.com\Brady2018\BradyBrazil\v2_soap.pas</Transaction>
+    <Transaction>2019/04/22 10:48:14.000.147,C:\Users\aluga.com\Brady2018\BradyBrazil\Magento_Prod.pas=C:\Users\aluga.com\Brady2018\BradyBrazil\Magento_Prod_old.pas</Transaction>
+    <Transaction>2019/04/22 10:48:14.000.351,C:\Users\aluga.com\Brady2018\BradyBrazil\Magento_Prod_old.pas=C:\Users\aluga.com\Brady2018\BradyBrazil\Magento_Prod.pas</Transaction>
+    <Transaction>2019/04/22 10:48:22.000.582,C:\Users\aluga.com\Brady2018\BradyBrazil\Magento_Prod.pas=C:\Users\aluga.com\Brady2018\BradyBrazil\Magento_Prod_o.pas</Transaction>
+    <Transaction>2019/04/22 10:48:39.000.779,C:\Users\aluga.com\Brady2018\BradyBrazil\v2_soap.pas=C:\Users\aluga.com\Brady2018\BradyBrazil\Magento_Prod.pas</Transaction>
     <Transaction>2019/04/22 10:51:25.000.919,=C:\Users\aluga.com\Brady2018\BradyBrazil\Magento.pas</Transaction>
-    <Transaction>2019/04/22 10:51:34.000.748,C:\Users\aluga.com\Brady2018\BradyBrazil\Magento_Prod2.pas=C:\Users\aluga.com\Brady2018\BradyBrazil\Magento_Prod.pas</Transaction>
-    <Transaction>2019/04/22 10:51:41.000.382,C:\Users\aluga.com\Brady2018\BradyBrazil\Magento_Prod.pas=C:\Users\aluga.com\Brady2018\BradyBrazil\Magento.pas</Transaction>
+    <Transaction>2019/04/22 10:51:34.000.748,C:\Users\aluga.com\Brady2018\BradyBrazil\Magento_Prod.pas=C:\Users\aluga.com\Brady2018\BradyBrazil\Magento_Prod2.pas</Transaction>
+    <Transaction>2019/04/22 10:51:41.000.382,C:\Users\aluga.com\Brady2018\BradyBrazil\Magento.pas=C:\Users\aluga.com\Brady2018\BradyBrazil\Magento_Prod.pas</Transaction>
     <Transaction>2019/04/24 09:49:35.000.640,=C:\Users\aluga.com\Brady2018\BradyBrazil\Unit1.pas</Transaction>
     <Transaction>2020/01/15 13:48:52.000.380,=C:\Users\aluga.com\Brady2019\Brady2019\BradyBrazil\v2_soap.pas</Transaction>
   </Transactions>

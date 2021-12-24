@@ -66,7 +66,7 @@ inherited FrmCadTreinamento: TFrmCadTreinamento
       Height = 604
       Align = alClient
       TabOrder = 4
-      Properties.ActivePage = TabParticipante
+      Properties.ActivePage = tabTreinamento
       Properties.CustomButtons.Buttons = <>
       OnChange = PageChange
       ClientRectBottom = 600
@@ -4115,6 +4115,10 @@ inherited FrmCadTreinamento: TFrmCadTreinamento
               ImageIndex = 1
               ParentFont = False
               TabVisible = False
+              ExplicitLeft = 0
+              ExplicitTop = 0
+              ExplicitWidth = 0
+              ExplicitHeight = 0
               object Panel13: TPanel
                 Tag = -1
                 Left = 2
@@ -4312,6 +4316,10 @@ inherited FrmCadTreinamento: TFrmCadTreinamento
       object TabAnexar: TcxTabSheet
         Caption = 'Anexar Documentos'
         ImageIndex = 2
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object Panel12: TPanel
           Tag = -1
           Left = 0
@@ -4581,7 +4589,7 @@ inherited FrmCadTreinamento: TFrmCadTreinamento
     Left = 514
     Top = 176
     Bitmap = {
-      494C010126002700680310001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C0101260027006C0310001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000A0000000010020000000000000A0
       000000000000000000000000000000000000000000000000000096675E009F6F
       60009F6F60009F6F60009F6F60009F6F60009F6F60009F6F60009F6F60009F6F

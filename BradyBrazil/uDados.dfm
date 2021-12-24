@@ -3335,14 +3335,22 @@ object Fr_Dados: TFr_Dados
         ' TSOP_VALOR_LIKELY, '
       'SUM(TSOP_VALOR_FORECAST) as TSOP_VALOR_FORECAST'
       'FROM  TSOP_SETONFORECAST'
-      'WHERE TSOP_PERIODO = :TSOP_PERIODO'
+      
+        'WHERE TSOP_PERIODO >= :TSOP_PERIODOINI and TSOP_PERIODO <= :TSOP' +
+        '_PERIODOFIN'
       'AND TSOP_DPACANTXTDEP = :TSOP_DPACANTXTDEP'
       'GROUP BY TSOP_DPACANTXTDEP,TSOP_PERIODO')
     Left = 1024
     Top = 280
     ParamData = <
       item
-        Name = 'TSOP_PERIODO'
+        Name = 'TSOP_PERIODOINI'
+        DataType = ftDate
+        ADDataType = dtDate
+        ParamType = ptInput
+      end
+      item
+        Name = 'TSOP_PERIODOFIN'
         DataType = ftDate
         ADDataType = dtDate
         ParamType = ptInput
@@ -4148,5 +4156,15 @@ object Fr_Dados: TFr_Dados
     Connection = FDConnection
     Left = 760
     Top = 16
+  end
+  object FDQueryVW_NiceLabel: TFDQuery
+    Connection = FDConnection
+    Left = 48
+    Top = 200
+  end
+  object FDQueryGravaNiceLabel: TFDQuery
+    Connection = FDConnection
+    Left = 32
+    Top = 136
   end
 end

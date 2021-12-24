@@ -1,6 +1,7 @@
 program BradyDataImport;
 
 {$APPTYPE CONSOLE}
+{$WARN DUPLICATE_CTOR_DTOR OFF}
 
 {$R *.res}
 
@@ -13,6 +14,7 @@ DELETE FROM TSOP_UOM
 
 }
 uses
+  FireDAC.Stan.Error,
   ActiveX,
   ComObj,
   Variants,
@@ -91,6 +93,9 @@ var
   varArqLogSetonMagento : String;
   varSessionIDMagento  : System.string;
 
+  //Variavel utilizada para reenvio de dados para a base do MYSQL, em caso de erro de conexão.
+  varUploadTXTSaldoEstoque : SmallInt;
+
 procedure doSaveLog(lPath,  Msg: String);
 Var
  loLista : TStringList;
@@ -107,6 +112,50 @@ begin
      loLista.LoadFromFile(lPath + varArquivo);
 
      loLista.Add(timetostr(now) + ';' + Msg);
+   except
+    on e: exception do
+      loLista.add(timetostr(now) + ': Erro ' + E.Message);
+   end;
+ Finally
+    loLista.SaveToFile(lPath + varArquivo);
+    loLista.Free;
+ end;
+
+end;
+
+function Zero(Texto: string; Quant: Integer): string;
+// Zeros a Esquerda de uma STRING - Março de 2002
+begin
+  // Cola Zeros a Esquerda de um Número quantos forem necessários
+  // Texto = 'TEXTO INFORMADO'
+  // QUANT = Quantidade de Zeros a Esquerda
+
+  while Length(Texto) < Quant do
+    Texto := '0' + Texto;
+
+  Result := Texto;
+end;
+
+
+
+procedure doSaveNiceLabelPrint(lPath,  Msg, NomeArquivo: String);
+Var
+ loLista : TStringList;
+ varDataHora : String;
+ varArquivo  : String;
+begin
+ varDataHora           := FormatDateTime('ddmmyyyy',Now);
+ varArquivo            := '\' + NomeArquivo + '.TXT';
+ varArqLogSetonMagento := lPath + varArquivo;
+ try
+   loLista := TStringList.Create;
+   try
+   if FileExists(lPath + varArquivo) Then
+     //loLista.LoadFromFile(lPath + varArquivo);
+
+      DeleteFile(PWideChar(lPath + varArquivo));
+
+     loLista.Add(Msg);
    except
     on e: exception do
       loLista.add(timetostr(now) + ': Erro ' + E.Message);
@@ -4135,8 +4184,22 @@ begin
     varACBrMail.From := 'suportebrasil@bradycorp.com';
     varACBrMail.FromName := 'Suporte Brasil';
 
+    with Fr_Dados do
+    begin
+      FDQueryTSOP_EMAIL.Close;
+      FDQueryTSOP_EMAIL.SQL.Clear;
+      FDQueryTSOP_EMAIL.SQL.Add('Select TSOP_EMAIL From TSOP_EMAIL where TSOP_ATIVO = ''S'' AND');
+      FDQueryTSOP_EMAIL.SQL.Add(' TSOP_PROGRAMA = ''SOP_PROCESSARARQUIVOS''');
+      FDQueryTSOP_EMAIL.Open;
+      FDQueryTSOP_EMAIL.First;
+      while not FDQueryTSOP_EMAIL.eof do
+      begin
+         varACBrMail.AddAddress(FDQueryTSOP_EMAIL.FieldByName('TSOP_EMAIL').AsString);
+         FDQueryTSOP_EMAIL.Next;
+      end;
+      FDQueryTSOP_EMAIL.Close;
+    end;
 
-    varACBrMail.AddAddress('LUCIANA_PONTIERI@BRADYCORP.COM', 'LUCIANA PONTIERI');
 
     varACBrMail.Subject := 'S&OP XLS ' + FormatDateTime( 'dd/mm/yyyy', Now );
     varACBrMail.IsHTML := True;
@@ -4298,7 +4361,19 @@ begin
       varACBrMail.FromName := 'Suporte Brasil';
 
 
-      varACBrMail.AddAddress('LUCIANA_PONTIERI@BRADYCORP.COM', 'LUCIANA PONTIERI');
+      FDQueryTSOP_EMAIL.Close;
+      FDQueryTSOP_EMAIL.SQL.Clear;
+      FDQueryTSOP_EMAIL.SQL.Add('Select TSOP_EMAIL From TSOP_EMAIL where TSOP_ATIVO = ''S'' AND');
+      FDQueryTSOP_EMAIL.SQL.Add(' TSOP_PROGRAMA = ''SOP_VALORESPROCESSADOS''');
+      FDQueryTSOP_EMAIL.Open;
+      FDQueryTSOP_EMAIL.First;
+      while not FDQueryTSOP_EMAIL.eof do
+      begin
+         varACBrMail.AddAddress(FDQueryTSOP_EMAIL.FieldByName('TSOP_EMAIL').AsString);
+         FDQueryTSOP_EMAIL.Next;
+      end;
+      FDQueryTSOP_EMAIL.Close;
+
 
       varACBrMail.Subject := 'S&OP R$ ' + FormatDateTime( 'dd/mm/yyyy', Now );
       varACBrMail.IsHTML := True;
@@ -6144,6 +6219,8 @@ end;
 procedure Importar_NovosProdutos;
 var
   I: Integer;
+  err : TFDDBError;
+  MensError : String;
 
   dxSpreadSheet        : TdxSpreadSheet;
   varStringList        : TStringList;
@@ -6456,9 +6533,8 @@ begin
 
         Writeln('Open FDConnection');
         FDConnection.Open;
+ 
         try
-
-
 
             varStringList.Clear;
             Writeln('Looping pelas linhas');
@@ -7629,12 +7705,13 @@ begin
     FreeAndNil(dxSpreadSheet);
   end;
 end;
-
+                         
 procedure UploadTXTSaldoEstoque;
 var
   varSIOP_009: TStringList;
   varSIOP_009B: TStringList;
   varSIOP_009C: TStringList;
+  varMensError : TStringList;
   varInicial, varFinal: Integer;
   varCMD: AnsiString;
   I: Integer;
@@ -7674,8 +7751,21 @@ var
       varACBrMail.FromName := 'SUPORTE BRASIL';
 
 
-      varACBrMail.AddAddress('LUCIANA_PONTIERI@BRADYCORP.COM', 'LUCIANA PONTIERI');
-      varACBrMail.AddAddress('marcos.jesus.external@k2partnering.com', 'MARCOS JESUS');
+      with Fr_Dados do
+      begin
+        FDQueryTSOP_EMAIL.Close;
+        FDQueryTSOP_EMAIL.SQL.Clear;
+        FDQueryTSOP_EMAIL.SQL.Add('Select TSOP_EMAIL From TSOP_EMAIL where TSOP_ATIVO = ''S'' AND');
+        FDQueryTSOP_EMAIL.SQL.Add(' TSOP_PROGRAMA = ''DB-MySQL''');
+        FDQueryTSOP_EMAIL.Open;
+        FDQueryTSOP_EMAIL.First;
+        while not FDQueryTSOP_EMAIL.eof do
+        begin
+          varACBrMail.AddAddress(FDQueryTSOP_EMAIL.FieldByName('TSOP_EMAIL').AsString);
+          FDQueryTSOP_EMAIL.Next;
+        end;
+        FDQueryTSOP_EMAIL.Close;
+      end;
       varACBrMail.Subject := 'ERRO DE CONEXAO COM A BASE DO MYSQL EM ' + FormatDateTime( 'dd/mm/yyyy', Now );
       varACBrMail.IsHTML := True;
       varACBrMail.AltBody.Text := varMensagem.Text;
@@ -7717,6 +7807,7 @@ begin
   varSIOP_009 := TStringList.Create;
   varSIOP_009B := TStringList.Create;
   varSIOP_009C := TStringList.Create;
+  varMensError := TStringList.Create;
   try
 
     with Fr_Dados do
@@ -7731,14 +7822,22 @@ begin
 
       Writeln( 'Open FDConnection' );
 
-      Try
+      try
          FDConnection.Open;
       except
-         if not FDConnection.Connected then
-           WritelnMail( 'Tentando conectar com a conexão: ' +  MyDocumentsPath + '\DB-MySQL.ini' );
-           exit;
+         on E : EFDDBEngineException do
+         begin
+           for i := 0 to E.ErrorCount - 1 do
+            begin
+              varMensError.Add(E.Errors[i].Message);
+            end;
+            varMensError.Add('Conexão utilizada: ' +  MyDocumentsPath + '\DB-MySQL.ini' );
+            WritelnMail(varMensError.Text + 'Tentativa de Conectar Nrº' + IntToStr(varUploadTXTSaldoEstoque));
+            varUploadTXTSaldoEstoque := varUploadTXTSaldoEstoque + 1;
+            Exit;
+         end;
       end;
-
+      varUploadTXTSaldoEstoque := 4; // valor declarado acima de 3 para não repetir o processo, em caso de sucesso na primeira vez.
       try
 
         Writeln( 'Abrindo arquivo C:\Brady\Files\SOP\Estoque\BR-SIOP-009.txt' );
@@ -7958,6 +8057,7 @@ begin
     FreeAndNil(varSIOP_009);
     FreeAndNil(varSIOP_009B);
     FreeAndNil(varSIOP_009C);
+    FreeAndNil(varMensError);
     FreeAndNil(Fr_Dados);
 
   end;
@@ -9750,7 +9850,8 @@ begin
 
         //StrToDateTime('01/03/2019 00:00:00'); StrToDateTime('31/03/2019 00:00:00');
         FDQueryTSOP_SETONFORECAST.Close;
-        FDQueryTSOP_SETONFORECAST.Params.ParamByName('TSOP_PERIODO').AsDateTime    :=  System.DateUtils.StartOfTheMonth(varNow);
+        FDQueryTSOP_SETONFORECAST.Params.ParamByName('TSOP_PERIODOINI').AsDateTime    :=  System.DateUtils.StartOfTheMonth(varNow);
+        FDQueryTSOP_SETONFORECAST.Params.ParamByName('TSOP_PERIODOFIN').AsDateTime    :=  System.DateUtils.EndOfTheMonth(varNow);
         FDQueryTSOP_SETONFORECAST.Params.ParamByName('TSOP_DPACANTXTDEP').AsString :=  'DM';
         FDQueryTSOP_SETONFORECAST.Open;
 
@@ -10154,8 +10255,8 @@ begin
                            varBacklogDM     := varBacklogDM  + varBacklog;
                            varGrossMarginDM := varGrossMarginDM   + varGrossMargin;
                            varBillingDM     := varBillingDM  + varBilling;
-                           varForecast      := FDQueryTSOP_SETONFORECASTTSOP_VALOR_FORECAST.asFloat;
-                           varForecastDM    := varForecastDM + varForecast;
+                        //   varForecast      := FDQueryTSOP_SETONFORECASTTSOP_VALOR_FORECAST.asFloat;
+                        //   varForecastDM    := varForecastDM + varForecast;
                            varBlockDM       := varBlockDM + varBlock;
                            varLateDM        := varLateDM + varLate;
                            varMonthDM       := varMonthDM + varMonth;
@@ -10453,7 +10554,7 @@ begin
             Writeln('Sistema Enviando Email para : ' + FDQuerySalesRepTSIS_USUEML.AsString);
 
             varACBrMail.AddAddress(FDQuerySalesRepTSIS_USUEML.AsString, FDQuerySalesRepTSIS_USUNOM.AsString);
-    //        varACBrMail.AddAddress('marcos.jesus.external@k2partnering.com', 'Marcos');
+            //varACBrMail.AddAddress('marcos.jesus.external@k2partnering.com', 'Marcos');
            // varACBrMail.AddAddress('LUCIANA_PONTIERI@BRADYCORP.com', 'Luciana');
             // varACBrMail.AddAddress('alessandra_gocalo@bradycorp.com', 'Alessandra');
 
@@ -10511,6 +10612,10 @@ begin
       //  varBodyTotal.Add( varBody07.Text.Replace( '%Geral%', 'MANAUS - PID' ) );
       //  varBodyTotal.Text := varBodyTotal.Text.Replace( '%back-tot-geral%', FormatFloat('#,##0', varBacklogMANPID) ).Replace( '%gm-tot-geral%', FormatFloat('#,##0', varGrossMarginMANPID) ).Replace( '%bill-tot-geral%', FormatFloat('#,##0', varBillingMANPID) ).Replace( '%act-tot-geral%', FormatFloat('#,##0', varActualMANPID) ).Replace( '%fct-tot-geral%', FormatFloat('#,##0', varForecastMANPID) ).Replace( '%act-fct-geral%', FormatFloat('#,##0', varActualMANPID-varForecastMANPID) ).Replace( '%act/fct-geral%', FormatFloat('#,##0', varPercentualMANPID)+'%' );
 
+
+        // DM
+        varForecastDM    := FDQueryTSOP_SETONFORECASTTSOP_VALOR_FORECAST.asFloat;
+        FDQueryTSOP_SETONFORECAST.Close;
 
         varPercentualBrazil   := 0.00;
         varPercentualBrazil   := (( varActualTOTPID + varActualTAMMRO  + varActualDM ) /  (varForecastTOTPID + varForecastTAMMRO + varForecastDM))*100.00;
@@ -10720,7 +10825,7 @@ begin
             varACBrMail.FromName := 'Suporte Brasil';
 
 
-       //     varACBrMail.AddAddress('marcos.jesus.external@k2partnering.com', 'Marcos');
+          //  varACBrMail.AddAddress('marcos.jesus.external@k2partnering.com', 'Marcos');
          //     varACBrMail.AddAddress('LUCIANA_PONTIERI@BRADYCORP.com', 'Luciana');
           //  varACBrMail.AddAddress('alessandra_gocalo@bradycorp.com', 'Alessandra');
 
@@ -10763,6 +10868,8 @@ begin
        // varSalvar.SaveToFile('c:\brady\emaildiario_prod_MRO.txt');
 
         FreeAndNil(varSalvar);
+
+
 
         // NAO ENVIAR NO TESTE
 
@@ -10818,7 +10925,7 @@ begin
             FDQueryTSOP_EMAIL.Close;
 
 //            varACBrMail.AddAddress( 'suportebrasil@bradycorp.com', 'Suporte Brasil' );
-          {  varACBrMail.AddAddress('EMERSON_ZAIDAN@BRADYCORP.COM');
+          {
             varACBrMail.AddAddress('MARCIO_TANADA@BRADYCORP.COM');
             varACBrMail.AddAddress('LILIAN_IWATA@BRADYCORP.COM');
             varACBrMail.AddAddress('LUCIANA_PONTIERI@BRADYCORP.COM');
@@ -10905,7 +11012,6 @@ begin
             {
 
 //            varACBrMail.AddAddress( 'suportebrasil@bradycorp.com', 'Suporte Brasil' );
-            varACBrMail.AddAddress('EMERSON_ZAIDAN@BRADYCORP.COM');
             varACBrMail.AddAddress('MARCIO_TANADA@BRADYCORP.COM');
             varACBrMail.AddAddress('LILIAN_IWATA@BRADYCORP.COM');
             varACBrMail.AddAddress('LUCIANA_PONTIERI@BRADYCORP.COM');
@@ -12195,7 +12301,7 @@ begin
             FDQueryTSOP_EMAIL.Close;
 
 //            varACBrMail.AddAddress( 'suportebrasil@bradycorp.com', 'Suporte Brasil' );
-          {  varACBrMail.AddAddress('EMERSON_ZAIDAN@BRADYCORP.COM');
+          {
             varACBrMail.AddAddress('MARCIO_TANADA@BRADYCORP.COM');
             varACBrMail.AddAddress('LILIAN_IWATA@BRADYCORP.COM');
             varACBrMail.AddAddress('LUCIANA_PONTIERI@BRADYCORP.COM');
@@ -12281,7 +12387,7 @@ begin
             {
 
 //            varACBrMail.AddAddress( 'suportebrasil@bradycorp.com', 'Suporte Brasil' );
-            varACBrMail.AddAddress('EMERSON_ZAIDAN@BRADYCORP.COM');
+
             varACBrMail.AddAddress('MARCIO_TANADA@BRADYCORP.COM');
             varACBrMail.AddAddress('LILIAN_IWATA@BRADYCORP.COM');
             varACBrMail.AddAddress('LUCIANA_PONTIERI@BRADYCORP.COM');
@@ -14984,7 +15090,6 @@ var
   varACBrNFe: TACBrNFe;
   varACBrMail: TACBrMail;
   varMensagem: TStringList;
-  varCC: TStringList;
 
   varTSOP_CAMPANHA_ID : smallint;
   varTSOP_ANEXO        : string;
@@ -14998,7 +15103,6 @@ var
   emSMTP : TIdSMTP;
   emMessage : TIdMessage;
   SSLHandler: TIdSSLIOHandlerSocketOpenSSL;
-  I : Integer;
   bEnvio : Boolean;
 
 begin
@@ -15982,7 +16086,6 @@ begin
         varACBrMail.FromName := 'Suporte Brasil';
 
 //        varACBrMail.AddAddress( 'suportebrasil@bradycorp.com', 'Suporte Brasil' );
-     //   varACBrMail.AddAddress('EMERSON_ZAIDAN@BRADYCORP.COM');
      //   varACBrMail.AddAddress('CINTIA_SANTOS@BRADYCORP.COM');
      //   varACBrMail.AddAddress('MARCIO_TANADA@BRADYCORP.COM');
       //  varACBrMail.AddAddress('LILIAN_IWATA@BRADYCORP.COM');
@@ -16049,7 +16152,6 @@ begin
             varACBrMail.FromName := 'Suporte Brasil';
 
 //            varACBrMail.AddAddress( 'suportebrasil@bradycorp.com', 'Suporte Brasil' );
-            varACBrMail.AddAddress('EMERSON_ZAIDAN@BRADYCORP.COM');
             varACBrMail.AddAddress('MARCIO_TANADA@BRADYCORP.COM');
             varACBrMail.AddAddress('LILIAN_IWATA@BRADYCORP.COM');
             varACBrMail.AddAddress('LUCIANA_PONTIERI@BRADYCORP.COM');
@@ -16121,7 +16223,6 @@ begin
             varACBrMail.FromName := 'Suporte Brasil';
 
 //            varACBrMail.AddAddress( 'suportebrasil@bradycorp.com', 'Suporte Brasil' );
-            varACBrMail.AddAddress('EMERSON_ZAIDAN@BRADYCORP.COM');
             varACBrMail.AddAddress('MARCIO_TANADA@BRADYCORP.COM');
             varACBrMail.AddAddress('LILIAN_IWATA@BRADYCORP.COM');
             varACBrMail.AddAddress('LUCIANA_PONTIERI@BRADYCORP.COM');
@@ -16190,6 +16291,75 @@ begin
 
 end;
 
+
+
+procedure NiceLabelPrint;
+begin
+
+  Fr_Dados := TFr_Dados.Create(nil);
+
+  Try
+    with Fr_Dados do
+    begin
+       FDQueryVW_NiceLabel.Close;
+       FDQueryVW_NiceLabel.SQL.Clear;
+       FDQueryVW_NiceLabel.SQL.Add('Select * from VW_NiceLabel_Print order by numeronfe');
+       FDQueryVW_NiceLabel.Open;
+       FDQueryVW_NiceLabel.First;
+
+
+       if not System.IOUtils.TDirectory.Exists( 'C:\Brady\Files\SONDA_NICELABEL_PRINT\' ) then
+         System.IOUtils.TDirectory.CreateDirectory( 'C:\Brady\Files\SONDA_NICELABEL_PRINT\' );
+
+       while not FDQueryVW_NiceLabel.Eof do
+       begin
+          try
+
+             doSaveNiceLabelPrint('\\vals2014\nfelbl\' ,
+              Zero(FDQueryVW_NiceLabel.FieldByName('NumeroNFe').AsString,3),
+              FDQueryVW_NiceLabel.FieldByName('NumeroNFe').AsString) ;
+
+             Writeln( 'NumeroNF: ' +  FDQueryVW_NiceLabel.FieldByName('NumeroNFe').AsString + ' - Volume: ' + Zero(FDQueryVW_NiceLabel.FieldByName('VolumesNFe').AsString,2));
+
+
+             FDQueryGravaNiceLabel.Close;
+             FDQueryGravaNiceLabel.SQL.Clear;
+             FDQueryGravaNiceLabel.SQL.Add('Insert INTO TSOP_NICELABEL (NUM_NF, QTD_VOLUME) VALUES (:NumeroNFe, :VolumesNFe)');
+             FDQueryGravaNiceLabel.Params.ParamByName('NumeroNFe').AsString := FDQueryVW_NiceLabel.FieldByName('NumeroNFe').AsString;
+             FDQueryGravaNiceLabel.Params.ParamByName('VolumesNFe').AsString := FDQueryVW_NiceLabel.FieldByName('VolumesNFe').AsString;
+
+             Try
+
+               FDQueryGravaNiceLabel.ExecSQL;
+
+             except
+
+                on E: Exception do
+                begin
+                   Writeln( E.Message );
+                end;
+
+             End;
+
+          except
+
+              on E: Exception do
+              begin
+                 Writeln( E.Message );
+              end;
+
+          end;
+
+          FDQueryVW_NiceLabel.Next;
+       end;
+
+       FDQueryVW_NiceLabel.Close;
+    end;
+  Finally
+    FreeAndNil (Fr_Dados);
+  End;
+
+end;
 
 
 
@@ -16472,9 +16642,11 @@ begin
   if ParamStr(1).Equals('-saldo_estoque') then
   begin
 
-    try
+    varUploadTXTSaldoEstoque := 0;
 
-      UploadTXTSaldoEstoque;
+    try
+      while varUploadTXTSaldoEstoque <= 3 do
+         UploadTXTSaldoEstoque;
 
     except
 
@@ -17232,6 +17404,27 @@ begin
     end
 
   end
+  else
+   if  ParamStr(1).Equals('-NiceLabelPrint') then
+  begin
+     try
+
+      NiceLabelPrint;
+
+    except
+
+      on E: Exception do
+      begin
+
+        Writeln(E.ClassName, ' : ', E.Message);
+        Sleep(60000);
+
+      end;
+
+    end
+
+  end
+
   else
   if  ParamStr(1).Equals('-full_package') then
   begin

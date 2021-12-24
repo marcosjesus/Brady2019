@@ -3,7 +3,7 @@ object Fr_CadastroSetonForecast: TFr_CadastroSetonForecast
   Top = 0
   Caption = 'Cadastro Seton - Forecast'
   ClientHeight = 561
-  ClientWidth = 784
+  ClientWidth = 1075
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -54,15 +54,15 @@ object Fr_CadastroSetonForecast: TFr_CadastroSetonForecast
   OnContextPopup = FormContextPopup
   OnCreate = FormCreate
   DesignSize = (
-    784
+    1075
     561)
   PixelsPerInch = 96
   TextHeight = 13
   object cxGridSetonForecast: TcxGrid
     Left = 0
-    Top = 0
-    Width = 784
-    Height = 561
+    Top = 43
+    Width = 1075
+    Height = 518
     Align = alClient
     TabOrder = 0
     RootLevelOptions.DetailTabsPosition = dtpTop
@@ -92,7 +92,18 @@ object Fr_CadastroSetonForecast: TFr_CadastroSetonForecast
       DataController.Filter.Active = True
       DataController.KeyFieldNames = 'TSOP_SETON_FORECASTCOD'
       DataController.Summary.DefaultGroupSummaryItems = <>
-      DataController.Summary.FooterSummaryItems = <>
+      DataController.Summary.FooterSummaryItems = <
+        item
+          Format = 'R$,0.00;(R$,0.00)'
+          Kind = skSum
+          FieldName = 'TSOP_VALOR_LIKELY'
+        end
+        item
+          Format = 'R$,0.00;(R$,0.00)'
+          Kind = skSum
+          FieldName = 'TSOP_VALOR_FORECAST'
+          Column = cxTableViewSetonForecastTSOP_VALOR_FORECAST
+        end>
       DataController.Summary.SummaryGroups = <>
       DateTimeHandling.IgnoreTimeForFiltering = True
       DateTimeHandling.MonthFormat = 'mmm'
@@ -109,6 +120,8 @@ object Fr_CadastroSetonForecast: TFr_CadastroSetonForecast
       OptionsSelection.MultiSelect = True
       OptionsSelection.CellMultiSelect = True
       OptionsView.NoDataToDisplayInfoText = '<Sem dados para exibi'#231#227'o>'
+      OptionsView.Footer = True
+      OptionsView.FooterMultiSummaries = True
       OptionsView.Indicator = True
       object cxTableViewSetonForecastTSOP_SETON_FORECASTCOD: TcxGridDBColumn
         Caption = 'ID'
@@ -125,15 +138,14 @@ object Fr_CadastroSetonForecast: TFr_CadastroSetonForecast
         DataBinding.FieldName = 'TSOP_PERIODO'
         Width = 104
       end
-      object cxTableViewSetonForecastTSOP_VALOR_LIKELY: TcxGridDBColumn
-        Caption = 'Valor Likely'
-        DataBinding.FieldName = 'TSOP_VALOR_LIKELY'
-        Width = 109
-      end
       object cxTableViewSetonForecastTSOP_VALOR_FORECAST: TcxGridDBColumn
         Caption = 'Valor Forecast'
         DataBinding.FieldName = 'TSOP_VALOR_FORECAST'
         Width = 112
+      end
+      object cxTableViewSetonForecastTSIS_USUNOM: TcxGridDBColumn
+        DataBinding.FieldName = 'TSIS_USUNOM'
+        Width = 200
       end
     end
     object cxGridLevelSetonForecast: TcxGridLevel
@@ -142,7 +154,7 @@ object Fr_CadastroSetonForecast: TFr_CadastroSetonForecast
     end
   end
   object PanelSQLSplashScreen: TPanel
-    Left = 232
+    Left = 383
     Top = 225
     Width = 350
     Height = 175
@@ -3049,6 +3061,51 @@ object Fr_CadastroSetonForecast: TFr_CadastroSetonForecast
       AnchorY = 88
     end
   end
+  object Panel1: TPanel
+    Left = 0
+    Top = 0
+    Width = 1075
+    Height = 43
+    Align = alTop
+    TabOrder = 2
+    object cxLabel1: TcxLabel
+      Left = 7
+      Top = 19
+      Caption = 'M'#234's/Ano:'
+    end
+    object DtInicial: TDateTimePicker
+      Left = 59
+      Top = 18
+      Width = 86
+      Height = 19
+      Hint = 'Per'#237'odo de Refer'#234'ncia'
+      Date = 43619.912428298610000000
+      Format = 'MM/yyyy'
+      Time = 43619.912428298610000000
+      ParentShowHint = False
+      ShowHint = True
+      TabOrder = 1
+    end
+    object RgFiltro: TcxRadioGroup
+      Left = 151
+      Top = 1
+      Caption = 'Aplicar Filtro'
+      Properties.Columns = 2
+      Properties.Items = <
+        item
+          Caption = 'Sim'
+          Value = 'S'
+        end
+        item
+          Caption = 'N'#227'o'
+          Value = 'N'
+        end>
+      TabOrder = 2
+      OnClick = RgFiltroClick
+      Height = 38
+      Width = 145
+    end
+  end
   object DataSourceTSTOP_SetonForecast: TDataSource
     DataSet = FDQueryTSOP_SetonForecast
     Left = 152
@@ -3071,7 +3128,12 @@ object Fr_CadastroSetonForecast: TFr_CadastroSetonForecast
     AfterInsert = FDQueryTSOP_SetonForecastAfterInsert
     Connection = FDConnection
     SQL.Strings = (
-      'SELECT * FROM TSOP_SetonForecast A01')
+      'SELECT A01.*, U.TSIS_USUNOM '
+      'FROM TSOP_SetonForecast A01'
+      
+        'LEFT OUTER JOIN TSIS_USUARIO U ON U.TSIS_USUCOD = A01.TSOP_USUCO' +
+        'D'
+      'ORDER BY A01.TSOP_PERIODO')
     Left = 472
     Top = 200
     object FDQueryTSOP_SetonForecastTSOP_SETON_FORECASTCOD: TFDAutoIncField
@@ -3091,19 +3153,24 @@ object Fr_CadastroSetonForecast: TFr_CadastroSetonForecast
       Origin = 'TSOP_PERIODO'
       Required = True
     end
-    object FDQueryTSOP_SetonForecastTSOP_VALOR_LIKELY: TBCDField
-      FieldName = 'TSOP_VALOR_LIKELY'
-      Origin = 'TSOP_VALOR_LIKELY'
-      Required = True
-      Precision = 15
-      Size = 2
-    end
     object FDQueryTSOP_SetonForecastTSOP_VALOR_FORECAST: TBCDField
       FieldName = 'TSOP_VALOR_FORECAST'
       Origin = 'TSOP_VALOR_FORECAST'
       Required = True
+      DisplayFormat = 'R$,0.00;(R$,0.00)'
       Precision = 15
       Size = 2
+    end
+    object FDQueryTSOP_SetonForecastTSOP_USUCOD: TIntegerField
+      FieldName = 'TSOP_USUCOD'
+      Origin = 'TSOP_USUCOD'
+    end
+    object FDQueryTSOP_SetonForecastTSIS_USUNOM: TStringField
+      DisplayLabel = 'Usu'#225'rio'
+      FieldName = 'TSIS_USUNOM'
+      Origin = 'TSIS_USUNOM'
+      ProviderFlags = []
+      Size = 255
     end
   end
 end

@@ -157,6 +157,8 @@ type
     cxButton1: TcxButton;
     Label4: TLabel;
     cxButtonPathPeriodo: TcxButtonEdit;
+    cxLabel3: TcxLabel;
+    cxTipoDoc: TcxComboBox;
     procedure cxButtonRefreshClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure cdsGraficoDetalheAfterOpen(DataSet: TDataSet);
@@ -396,8 +398,15 @@ begin
       ('																	AND A01.YEARDOC            = C01.TSOP_ORDBILYEADOC ');
     FDQueryBase.SQL.Add
       ('																	AND A01.MONTHDOC           = C01.TSOP_ORDBILMONDOC ');
-    FDQueryBase.SQL.Add
-      ('																	AND C01.TSOP_ORDBILTIPDOC  IN (''BILLING'',''RETURN'') ) ');
+    if cxTipoDoc.ItemIndex = 0 then
+      FDQueryBase.SQL.Add
+        ('																	AND C01.TSOP_ORDBILTIPDOC  IN (''BILLING'',''RETURN'') ) ')
+    else
+      FDQueryBase.SQL.Add
+        ('																	AND C01.TSOP_ORDBILTIPDOC  IN (''ORDER'') ) ');
+
+
+
     FDQueryBase.SQL.Add
       ('	    	      LEFT OUTER JOIN TSIS_USUARIO U ON UPPER(U.TSIS_USUNOM) = UPPER(B01.TSOP_ORDBILREPNOM) ');
     //FDQueryBase.SQL.Add('		WHERE  U.TSIS_USUATI = ''S'' ');
@@ -438,8 +447,13 @@ begin
       (' 																	AND B01.TSOP_ORDBILCANNOM  = C01.TSOP_ORDBILCANNOM  ');
     FDQueryBase.SQL.Add
       (' 																	AND B01.TSOP_ORDBILSITNOM  = C01.TSOP_ORDBILSITNOM    ');
-    FDQueryBase.SQL.Add
-      (' 																	AND C01.TSOP_ORDBILTIPDOC  IN (''BILLING'',''RETURN'') )  ');
+    if cxTipoDoc.ItemIndex = 0 then
+      FDQueryBase.SQL.Add
+        ('																	AND C01.TSOP_ORDBILTIPDOC  IN (''BILLING'',''RETURN'') ) ')
+    else
+      FDQueryBase.SQL.Add
+        ('																	AND C01.TSOP_ORDBILTIPDOC  IN (''ORDER'') ) ');
+
     FDQueryBase.SQL.Add
       ('  	LEFT OUTER JOIN TSIS_USUARIO U ON UPPER(U.TSIS_USUNOM) = UPPER(B01.TSOP_ORDBILREPNOM) ');
     FDQueryBase.SQL.Add('  	WHERE  1 = 1 ');
@@ -447,8 +461,14 @@ begin
     // FDQueryBase.SQL.Add(' 	AND C01.TSOP_ORDBILDATDOC <= :MES_FIMANT   ');
     FDQueryBase.SQL.Add
       ('     AND  NOT EXISTS (SELECT TSOP_ORDBILCLICOD  FROM VSOP_ORDERBILLINGFULL D01 WITH(NOLOCK)   ');
-    FDQueryBase.SQL.Add
-      (' 	                                         WHERE 	 D01.TSOP_ORDBILTIPDOC  IN (''BILLING'',''RETURN'')  ');
+
+    if cxTipoDoc.ItemIndex = 0 then
+      FDQueryBase.SQL.Add
+        ('																	WHERE D01.TSOP_ORDBILTIPDOC  IN (''BILLING'',''RETURN'')  ')
+    else
+      FDQueryBase.SQL.Add
+        ('																	WHERE D01.TSOP_ORDBILTIPDOC  IN (''ORDER'')  ');
+
     FDQueryBase.SQL.Add
       (' 													AND	D01.TSOP_ORDBILDATDOC >= :MES_INI    ');
     FDQueryBase.SQL.Add
@@ -544,7 +564,7 @@ begin
       FDQueryBase.MacroByName( 'WHERE4' ).AsRaw := ' AND B01.TSOP_ORDBILREPNOM  = ''HUGO CASIMIRO'' ' ;
     }
 
-   //  FDQueryBase.SQL.SaveToFile('C:\Brady\BaseClientesMar_2021.sql');
+    // FDQueryBase.SQL.SaveToFile('C:\Brady\BaseClientesOut_2021.sql');
 
     // Criando Tabela no Banco
     FDQueryBase.ExecSQL;
@@ -1987,7 +2007,16 @@ begin
     FDQueryClienteAtivo.SQL.Add('																	AND B01.TSOP_ORDBILSITNOM  = C01.TSOP_ORDBILSITNOM ');
     FDQueryClienteAtivo.SQL.Add('																	AND A01.YEARDOC            = C01.TSOP_ORDBILYEADOC ');
     FDQueryClienteAtivo.SQL.Add('																	AND A01.MONTHDOC           = C01.TSOP_ORDBILMONDOC ');
-    FDQueryClienteAtivo.SQL.Add('																	AND C01.TSOP_ORDBILTIPDOC  IN (''BILLING'',''RETURN'') )  ');
+
+
+    if cxTipoDoc.ItemIndex = 0 then
+      FDQueryClienteAtivo.SQL.Add
+        ('																	AND C01.TSOP_ORDBILTIPDOC  IN (''BILLING'',''RETURN'') ) ')
+    else
+      FDQueryClienteAtivo.SQL.Add
+        ('																	AND C01.TSOP_ORDBILTIPDOC  IN (''ORDER'') ) ');
+
+
     FDQueryClienteAtivo.SQL.Add('	    	      LEFT OUTER JOIN TSIS_USUARIO U ON UPPER(U.TSIS_USUNOM) = UPPER(B01.TSOP_ORDBILREPNOM) ');
     FDQueryClienteAtivo.SQL.Add('		WHERE  C01.TSOP_ORDBILDATDOC >= :MES_INI   ');
     FDQueryClienteAtivo.SQL.Add('	AND C01.TSOP_ORDBILDATDOC <= :MES_FIM  ');
@@ -2018,12 +2047,33 @@ begin
     FDQueryClienteAtivo.SQL.Add(' 							LEFT  JOIN VSOP_ORDERBILLINGFULL C01 WITH (NOLOCK)  ON ( B01.TSOP_ORDBILCLICOD  = C01.TSOP_ORDBILCLICOD  ');
     FDQueryClienteAtivo.SQL.Add(' 																	AND B01.TSOP_ORDBILCANNOM  = C01.TSOP_ORDBILCANNOM  ');
     FDQueryClienteAtivo.SQL.Add(' 																	AND B01.TSOP_ORDBILSITNOM  = C01.TSOP_ORDBILSITNOM   ');
-    FDQueryClienteAtivo.SQL.Add(' 																	AND C01.TSOP_ORDBILTIPDOC  IN (''BILLING'',''RETURN'') )  ');
+
+
+    if cxTipoDoc.ItemIndex = 0 then
+      FDQueryClienteAtivo.SQL.Add
+        ('																	AND C01.TSOP_ORDBILTIPDOC  IN (''BILLING'',''RETURN'') ) ')
+    else
+      FDQueryClienteAtivo.SQL.Add
+        ('																	AND C01.TSOP_ORDBILTIPDOC  IN (''ORDER'') ) ');
+
     FDQueryClienteAtivo.SQL.Add('  	LEFT OUTER JOIN TSIS_USUARIO U ON UPPER(U.TSIS_USUNOM) = UPPER(B01.TSOP_ORDBILREPNOM)  ');
     FDQueryClienteAtivo.SQL.Add('  	WHERE  1 = 1   ');
     FDQueryClienteAtivo.SQL.Add('	 AND      COALESCE( C01.TSOP_ORDBILREPNOM, '''') <> ''ASSISTENCIA TECNICA'' ');
-    FDQueryClienteAtivo.SQL.Add('     AND  NOT EXISTS (SELECT TSOP_ORDBILCLICOD  FROM VSOP_ORDERBILLINGFULL D01 WITH(NOLOCK)  ');
-    FDQueryClienteAtivo.SQL.Add(' 	                                         WHERE 	 D01.TSOP_ORDBILTIPDOC  IN (''BILLING'',''RETURN'')   ');
+
+
+    if cxTipoDoc.ItemIndex = 0 then
+    begin
+      FDQueryClienteAtivo.SQL.Add('     AND  NOT EXISTS (SELECT TSOP_ORDBILCLICOD  FROM VSOP_ORDERBILLINGFULL D01 WITH(NOLOCK)  ');
+      FDQueryClienteAtivo.SQL.Add(' 	                                         WHERE 	 D01.TSOP_ORDBILTIPDOC  IN (''BILLING'',''RETURN'')   ');
+    end
+    else
+    begin
+      FDQueryClienteAtivo.SQL.Add('     AND  NOT EXISTS (SELECT TSOP_ORDBILCLICOD  FROM VSOP_ORDERBILLINGFULL D01 WITH(NOLOCK)  ');
+      FDQueryClienteAtivo.SQL.Add(' 	                                         WHERE 	 D01.TSOP_ORDBILTIPDOC  IN (''ORDER'')   ');
+    end;
+
+
+
     FDQueryClienteAtivo.SQL.Add(' 													AND	D01.TSOP_ORDBILDATDOC >= :MES_INI   ');
     FDQueryClienteAtivo.SQL.Add(' 	                        AND D01.TSOP_ORDBILDATDOC <= :MES_FIM  ');
     FDQueryClienteAtivo.SQL.Add(' 	                        AND D01.TSOP_ORDBILCLICOD = C01.TSOP_ORDBILCLICOD  ');
@@ -2663,7 +2713,7 @@ var
   varCor1,varCor2: TColor;
 begin
   Planilha:= CreateOleObject('Excel.Application');
-  Planilha.caption := 'Delphi para excel';
+  Planilha.caption := 'Base de Clientes';
   Planilha.visible:=false;
   Planilha.workbooks.add(1);
 

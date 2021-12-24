@@ -54,6 +54,7 @@ object Fr_CadastroDetran: TFr_CadastroDetran
   OnClose = FormClose
   OnContextPopup = FormContextPopup
   OnCreate = FormCreate
+  OnShow = FormShow
   DesignSize = (
     784
     561)
@@ -3032,7 +3033,7 @@ object Fr_CadastroDetran: TFr_CadastroDetran
     Left = 0
     Top = 0
     Width = 784
-    Height = 66
+    Height = 97
     Align = alTop
     TabOrder = 2
     Properties.ActivePage = cxTabSheetFiltro
@@ -3040,15 +3041,24 @@ object Fr_CadastroDetran: TFr_CadastroDetran
     Properties.Images = Fr_Brady.cxSmallImages
     LookAndFeel.NativeStyle = False
     LookAndFeel.SkinName = 'Office2013White'
-    ClientRectBottom = 66
-    ClientRectRight = 784
-    ClientRectTop = 25
+    ClientRectBottom = 95
+    ClientRectLeft = 2
+    ClientRectRight = 782
+    ClientRectTop = 29
     object cxTabSheetFiltro: TcxTabSheet
       Caption = 'Filtros'
       ImageIndex = 50
+      ExplicitHeight = 78
+      object Label1: TLabel
+        Left = 40
+        Top = 11
+        Width = 55
+        Height = 13
+        Caption = 'Letra Inicial'
+      end
       object cxLabelSequenciaInicial: TcxLabel
         Left = 42
-        Top = 11
+        Top = 37
         Caption = 'Sequencia'
         ParentColor = False
         Style.BorderStyle = ebsNone
@@ -3059,15 +3069,15 @@ object Fr_CadastroDetran: TFr_CadastroDetran
         StyleHot.LookAndFeel.SkinName = 'Office2013White'
       end
       object cxLabelDataFinal: TcxLabel
-        Left = 228
-        Top = 11
+        Left = 247
+        Top = 39
         Caption = 'at'#233
         ParentColor = False
         Style.Color = clWhite
       end
       object cxButtonRefresh: TcxButton
-        Left = 381
-        Top = 3
+        Left = 421
+        Top = 29
         Width = 32
         Height = 32
         LookAndFeel.SkinName = 'Office2013White'
@@ -3204,33 +3214,45 @@ object Fr_CadastroDetran: TFr_CadastroDetran
           0000000000000000000000000000000000000000000000000000}
         PaintStyle = bpsGlyph
         SpeedButtonOptions.Transparent = True
-        TabOrder = 2
+        TabOrder = 3
         OnClick = cxButtonRefreshClick
       end
       object cxTextEditSeqIni: TcxTextEdit
         Left = 101
-        Top = 9
-        TabOrder = 3
-        Width = 121
+        Top = 35
+        TabOrder = 1
+        Width = 140
       end
       object cxTextEditSeqFim: TcxTextEdit
-        Left = 254
-        Top = 9
-        TabOrder = 4
-        Width = 121
+        Left = 273
+        Top = 35
+        TabOrder = 2
+        Width = 140
+      end
+      object cxTextLetraInicial: TcxTextEdit
+        Left = 101
+        Top = 8
+        Properties.CharCase = ecUpperCase
+        TabOrder = 0
+        Width = 140
+      end
+      object cxLabel1: TcxLabel
+        Left = 247
+        Top = 11
+        Caption = 'Ex: SP'
+        Properties.ShadowedColor = clSilver
       end
     end
   end
   object cxMemoDetran: TcxMemo
     Left = 0
-    Top = 66
+    Top = 97
     HelpType = htKeyword
     Align = alClient
     TabOrder = 3
-    ExplicitLeft = 599
-    ExplicitWidth = 495
-    ExplicitHeight = 185
-    Height = 495
+    ExplicitTop = 66
+    ExplicitHeight = 495
+    Height = 464
     Width = 784
   end
   object DataSourceTSOP_Detran: TDataSource

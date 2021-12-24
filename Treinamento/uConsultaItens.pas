@@ -24,7 +24,8 @@ uses
   cxGridExportLink, Clipbrd,       FMTBcd, SqlExpr, Provider, DBClient, Mask,
   rsEdit, cxGridCustomPopupMenu, cxGridPopupMenu, dxSkinsdxStatusBarPainter,
   cxContainer, cxGroupBox, dxStatusBar, RseditDB, cxPC, cxTextEdit, cxMaskEdit,
-  cxDropDownEdit, cxCalendar, ACBrCTe, ACBrBase, ACBrDFe, ACBrNFe ;
+  cxDropDownEdit, cxCalendar, ACBrCTe, ACBrBase, ACBrDFe, ACBrNFe,
+  dxSkinOffice2013White, dxBarBuiltInMenu, dxCore, cxDateUtils ;
 
 
 Type

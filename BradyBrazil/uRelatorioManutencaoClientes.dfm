@@ -47,20 +47,20 @@
       ParentFont = False
       object Label1: TLabel
         Left = 223
-        Top = 10
+        Top = 12
         Width = 31
         Height = 13
         Caption = 'Canal:'
       end
       object Label3: TLabel
-        Left = 456
+        Left = 676
         Top = 12
-        Width = 76
+        Width = 54
         Height = 13
-        Caption = 'Salvar Arq. xlsx'
+        Caption = 'Salvar Arq.'
       end
       object cxButtonRefresh: TcxButton
-        Left = 383
+        Left = 603
         Top = 5
         Width = 41
         Height = 32
@@ -210,7 +210,7 @@
       object cxLabel1: TcxLabel
         Left = 5
         Top = 10
-        Caption = 'Busca por Per'#237'odo'
+        Caption = 'Busca por Per'#237'odo:'
         ParentColor = False
         Style.BorderStyle = ebsNone
         Style.Color = clWhite
@@ -232,7 +232,7 @@
         Width = 121
       end
       object ButExcel: TcxButton
-        Left = 894
+        Left = 1008
         Top = 5
         Width = 33
         Height = 32
@@ -343,7 +343,7 @@
         Width = 121
       end
       object cxButtonEditPath: TcxButtonEdit
-        Left = 538
+        Left = 736
         Top = 10
         Properties.Buttons = <
           item
@@ -353,7 +353,29 @@
         Properties.ReadOnly = True
         TabOrder = 5
         OnClick = cxButtonEditPathClick
-        Width = 337
+        Width = 266
+      end
+      object cxLabel3: TcxLabel
+        Left = 383
+        Top = 10
+        Caption = 'Tipo Documento:'
+        ParentColor = False
+        Style.BorderStyle = ebsNone
+        Style.Color = clWhite
+        Style.LookAndFeel.SkinName = 'Office2013White'
+        StyleDisabled.LookAndFeel.SkinName = 'Office2013White'
+        StyleFocused.LookAndFeel.SkinName = 'Office2013White'
+        StyleHot.LookAndFeel.SkinName = 'Office2013White'
+      end
+      object cxTipoDoc: TcxComboBox
+        Left = 469
+        Top = 10
+        Properties.Items.Strings = (
+          'Faturamento'
+          'Pedido')
+        TabOrder = 7
+        Text = 'Faturamento'
+        Width = 121
       end
     end
   end
@@ -386,10 +408,6 @@
       Font.Style = []
       ImageIndex = 0
       ParentFont = False
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object cxGrid1: TcxGrid
         Left = 0
         Top = 0
@@ -431,10 +449,6 @@
       Font.Style = []
       ImageIndex = 1
       ParentFont = False
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object DBGrid1: TDBGrid
         Left = 0
         Top = 0
@@ -630,10 +644,6 @@
       Font.Style = []
       ImageIndex = 2
       ParentFont = False
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label2: TLabel
         Left = 920
         Top = 64
@@ -863,10 +873,6 @@
       Font.Style = []
       ImageIndex = 3
       ParentFont = False
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object cxGrid2: TcxGrid
         Left = 0
         Top = 0
@@ -908,10 +914,6 @@
       Font.Style = []
       ImageIndex = 4
       ParentFont = False
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object cxGrid4: TcxGrid
         Left = 0
         Top = 0
@@ -951,10 +953,6 @@
       Font.Style = []
       ImageIndex = 5
       ParentFont = False
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object cxDBPivotGrid00: TcxDBPivotGrid
         Left = 0
         Top = 0

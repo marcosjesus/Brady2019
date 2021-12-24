@@ -71,7 +71,8 @@ uses
   uFr_UploadDistribuidores in 'uFr_UploadDistribuidores.pas' {Fr_UploadDistribuidores},
   uRelatorioManutencaoClientes in 'uRelatorioManutencaoClientes.pas' {Fr_RelatorioManutencaoClientes},
   uFr_PrecoSite in 'uFr_PrecoSite.pas' {Fr_PrecoSite},
-  Excel in 'Excel.pas';
+  Excel in 'Excel.pas',
+  uFr_RelOnBoardClientes in 'uFr_RelOnBoardClientes.pas' {Fr_RelOnBoardClientes};
 
 {$R *.res}
 
@@ -95,8 +96,8 @@ begin
     Fr_MainSplashScreen := TFr_MainSplashScreen.Create(nil);
     try
 
-      Fr_MainSplashScreen.Show;
-      Fr_MainSplashScreen.Update;
+    //  Fr_MainSplashScreen.Show;
+    //  Fr_MainSplashScreen.Update;
 
       Application.MainFormOnTaskbar := True;
       Application.Title := 'Brady Brazil';
@@ -108,6 +109,7 @@ begin
         System.IOUtils.TFile.Copy( ExtractFileDir(ParamStr(0)) + '\DB.ini', MyDocumentsPath + '\DB.ini' );
 
       Application.CreateForm(TFr_Brady, Fr_Brady);
+
   finally
 
       Fr_MainSplashScreen.Hide;

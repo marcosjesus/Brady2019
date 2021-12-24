@@ -236,6 +236,7 @@ type
     dxBarLargeButtonUploadDistribuidores: TdxBarLargeButton;
     dxBarButton9: TdxBarButton;
     dxBarLargeButtonVerPrecoSite: TdxBarLargeButton;
+    dxBarLargeButtonSIOPOnBoardClientes: TdxBarLargeButton;
     procedure FormCreate(Sender: TObject);
     procedure dxRibbonBackstageViewSISTEMATabChanged(Sender: TObject);
     procedure ValueListEditorStringsChange(Sender: TObject);
@@ -310,6 +311,7 @@ type
     procedure dxBarButtonCategoriaClick(Sender: TObject);
     procedure dxBarLargeButtonUploadDistribuidoresClick(Sender: TObject);
     procedure dxBarLargeButtonVerPrecoSiteClick(Sender: TObject);
+    procedure dxBarLargeButtonSIOPOnBoardClientesClick(Sender: TObject);
   private
     FFormatoBR: TFormatSettings;
     FPainelOperador: Boolean;
@@ -356,7 +358,7 @@ uses uUtils, uRelatorioPreco, uRelatorioPartNumber, uCadastroSite, AsyncCalls, u
   uUploadCustosEstoque, uUploadRouting, uUploadTaxasHoras, uCalcGM, uCadastroProdutoSeton,
   uUploadProdutoSeton, uRelatorioRecuperacaoContas, uRelatorioGestaoMercados,uRelatorioRecuperacaoClientes,
   uExibeForecast, uDashBoard,uEditoEmail,uFr_CadastroMetaIQF, uFr_CadastroRegrasIQF, uConfig,uFr_ListaEmail,
-  uFr_CadastroIQFCategoria,uFr_UploadDistribuidores, uRelatorioManutencaoClientes,uFr_PrecoSite;
+  uFr_CadastroIQFCategoria,uFr_UploadDistribuidores, uRelatorioManutencaoClientes,uFr_PrecoSite, uFr_RelOnBoardClientes;
 
 { TForm3 }
 
@@ -1501,6 +1503,18 @@ begin
   Fr_RelatorioGestaoMercados.Update;
 
   LocalAsyncVclCall( @AbrirDataset );
+end;
+
+procedure TFr_Brady.dxBarLargeButtonSIOPOnBoardClientesClick(Sender: TObject);
+begin
+  if not Assigned(Fr_RelOnBoardClientes) then
+    Fr_RelOnBoardClientes := TFr_RelOnBoardClientes.Create(Self);
+
+  Fr_RelOnBoardClientes.Visible := True;
+  Fr_RelOnBoardClientes.BringToFront;
+  Fr_RelOnBoardClientes.Update;
+
+
 end;
 
 procedure TFr_Brady.dxBarLargeButtonSIOPRecuperacaodeClientesClick(

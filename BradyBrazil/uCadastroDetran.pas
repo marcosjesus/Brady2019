@@ -34,10 +34,14 @@ type
     FDQueryTSOP_DetranTSOP_DENCOD: TStringField;
     cxTableViewDetranTSOP_DENCOD: TcxGridDBColumn;
     cxMemoDetran: TcxMemo;
+    Label1: TLabel;
+    cxTextLetraInicial: TcxTextEdit;
+    cxLabel1: TcxLabel;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormContextPopup(Sender: TObject; MousePos: TPoint; var Handled: Boolean);
     procedure FormCreate(Sender: TObject);
     procedure cxButtonRefreshClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     procedure Mensagem( pMensagem: String );
     { Private declarations }
@@ -119,6 +123,13 @@ var
 
 
 begin
+  if cxTextLetraInicial.Text = EmptyStr then
+  begin
+    Application.MessageBox('Preencha o campo Letra Inicial.', 'Etiquetas - Detran', MB_ICONERROR +  MB_OK);
+    cxTextLetraInicial.SetFocus;
+    Exit;
+  end;
+
 
   Inicial := StrToInt64(Trim(cxTextEditSeqIni.Text));
   Atual := StrToInt64(Trim(cxTextEditSeqIni.Text));
@@ -128,7 +139,7 @@ begin
   while Atual <= Final do
   begin
 
-    cxMemoDetran.Lines.Add( IntToStr(Atual)+ DvModulo11(IntToStr(Atual)) );
+    cxMemoDetran.Lines.Add( cxTextLetraInicial.Text +  IntToStr(Atual)+ DvModulo11(IntToStr(Atual)) );
     Atual := Atual +1;
 
   end;
@@ -159,6 +170,12 @@ begin
 
   LoadGridCustomization;
 
+
+end;
+
+procedure TFr_CadastroDetran.FormShow(Sender: TObject);
+begin
+  cxTextLetraInicial.SetFocus;
 end;
 
 procedure TFr_CadastroDetran.LoadGridCustomization;

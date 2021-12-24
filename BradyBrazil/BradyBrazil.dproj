@@ -87,9 +87,9 @@
         <Debugger_RunParams>-sop_dailysalesmail</Debugger_RunParams>
         <VerInfo_Release>1</VerInfo_Release>
         <VerInfo_MinorVer>2</VerInfo_MinorVer>
-        <VerInfo_Keys>CompanyName=CIEL Soluções em TI;FileDescription=Brady;FileVersion=1.2.1.277;InternalName=Brady;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=Brady;ProductVersion=1.0.0.0;Comments=Rafael Petrella</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=CIEL Soluções em TI;FileDescription=Brady;FileVersion=1.2.1.282;InternalName=Brady;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=Brady;ProductVersion=1.0.0.0;Comments=Rafael Petrella</VerInfo_Keys>
         <DCC_BplOutput>C:\Brady\Projetos\BradyBrazil\Win32\Debug</DCC_BplOutput>
-        <VerInfo_Build>277</VerInfo_Build>
+        <VerInfo_Build>282</VerInfo_Build>
         <VerInfo_AutoIncVersion>true</VerInfo_AutoIncVersion>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>1033</VerInfo_Locale>
@@ -106,8 +106,8 @@
         <VerInfo_AutoIncVersion>true</VerInfo_AutoIncVersion>
         <VerInfo_MajorVer>2</VerInfo_MajorVer>
         <VerInfo_Release>2</VerInfo_Release>
-        <VerInfo_Keys>CompanyName=CIEL Soluções em TI;FileDescription=Brady;FileVersion=2.0.2.566;InternalName=Brady;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=Brady;ProductVersion=1.0.0.0;Comments=Rafael Petrella</VerInfo_Keys>
-        <VerInfo_Build>566</VerInfo_Build>
+        <VerInfo_Keys>CompanyName=CIEL Soluções em TI;FileDescription=Brady;FileVersion=2.0.2.576;InternalName=Brady;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=Brady;ProductVersion=1.0.0.0;Comments=Rafael Petrella</VerInfo_Keys>
+        <VerInfo_Build>576</VerInfo_Build>
         <DCC_BplOutput>C:\Brady\Projetos\BradyBrazil\Win32\Debug</DCC_BplOutput>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
     </PropertyGroup>
@@ -336,6 +336,10 @@
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Excel.pas"/>
+        <DCCReference Include="uFr_RelOnBoardClientes.pas">
+            <Form>Fr_RelOnBoardClientes</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

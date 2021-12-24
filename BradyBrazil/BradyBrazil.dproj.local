@@ -5,12 +5,12 @@
     <Transaction>2017/12/06 14:07:15.000.003,C:\Users\K2-User\CIEL-IT-PROJECTS\BradyBrazil\uCadastroDeParaSite.dfm=C:\Users\K2-User\CIEL-IT-PROJECTS\BradyBrazil\uCadastroProdutoSeton.dfm</Transaction>
     <Transaction>2017/12/07 10:34:23.000.837,C:\Users\K2-User\CIEL-IT-PROJECTS\BradyBrazil\uUploadProdutoSeton.dfm=C:\Users\K2-User\CIEL-IT-PROJECTS\BradyBrazil\uUploadForecast.dfm</Transaction>
     <Transaction>2017/12/07 10:34:23.000.837,C:\Users\K2-User\CIEL-IT-PROJECTS\BradyBrazil\uUploadProdutoSeton.pas=C:\Users\K2-User\CIEL-IT-PROJECTS\BradyBrazil\uUploadForecast.pas</Transaction>
-    <Transaction>2018/02/05 14:53:34.000.449,C:\Users\K2-User\CIEL-IT-PROJECTS\BradyBrazil\uCadastroSetonForecast.pas=C:\Users\K2-User\CIEL-IT-PROJECTS\BradyBrazil\uCadastroIQFPeriodo.pas</Transaction>
     <Transaction>2018/02/05 14:53:34.000.449,C:\Users\K2-User\CIEL-IT-PROJECTS\BradyBrazil\uCadastroSetonForecast.dfm=C:\Users\K2-User\CIEL-IT-PROJECTS\BradyBrazil\uCadastroIQFPeriodo.dfm</Transaction>
-    <Transaction>2018/03/12 13:43:28.000.886,C:\Users\K2-User\CIEL-IT-PROJECTS\BradyBrazil\uCadastroCliente.pas=C:\Users\K2-User\CIEL-IT-PROJECTS\BradyBrazil\uCadastroFamilia.pas</Transaction>
+    <Transaction>2018/02/05 14:53:34.000.449,C:\Users\K2-User\CIEL-IT-PROJECTS\BradyBrazil\uCadastroSetonForecast.pas=C:\Users\K2-User\CIEL-IT-PROJECTS\BradyBrazil\uCadastroIQFPeriodo.pas</Transaction>
     <Transaction>2018/03/12 13:43:28.000.886,C:\Users\K2-User\CIEL-IT-PROJECTS\BradyBrazil\uCadastroCliente.dfm=C:\Users\K2-User\CIEL-IT-PROJECTS\BradyBrazil\uCadastroFamilia.dfm</Transaction>
-    <Transaction>2018/03/14 09:08:47.000.000,C:\Users\K2-User\CIEL-IT-PROJECTS\BradyBrazil\uRelatorioRecuperacaoContas.pas=C:\Users\K2-User\CIEL-IT-PROJECTS\BradyBrazil\uRelatorioGrossMargin.pas</Transaction>
+    <Transaction>2018/03/12 13:43:28.000.886,C:\Users\K2-User\CIEL-IT-PROJECTS\BradyBrazil\uCadastroCliente.pas=C:\Users\K2-User\CIEL-IT-PROJECTS\BradyBrazil\uCadastroFamilia.pas</Transaction>
     <Transaction>2018/03/14 09:08:47.000.000,C:\Users\K2-User\CIEL-IT-PROJECTS\BradyBrazil\uRelatorioRecuperacaoContas.dfm=C:\Users\K2-User\CIEL-IT-PROJECTS\BradyBrazil\uRelatorioGrossMargin.dfm</Transaction>
+    <Transaction>2018/03/14 09:08:47.000.000,C:\Users\K2-User\CIEL-IT-PROJECTS\BradyBrazil\uRelatorioRecuperacaoContas.pas=C:\Users\K2-User\CIEL-IT-PROJECTS\BradyBrazil\uRelatorioGrossMargin.pas</Transaction>
     <Transaction>2018/03/23 08:41:10.000.905,C:\Users\K2-User\CIEL-IT-PROJECTS\BradyBrazil\uRelatorioVendas.pas=C:\Users\K2-User\CIEL-IT-PROJECTS\BradyBrazil\uRelatorioGestaoMercados.pas</Transaction>
     <Transaction>2018/03/23 08:41:10.000.905,C:\Users\K2-User\CIEL-IT-PROJECTS\BradyBrazil\uRelatorioVendas.dfm=C:\Users\K2-User\CIEL-IT-PROJECTS\BradyBrazil\uRelatorioGestaoMercados.dfm</Transaction>
     <Transaction>2018/11/24 07:27:46.000.981,=C:\Users\aluga.com\Brady2018\BradyBrazil\Unit1.pas</Transaction>
@@ -41,20 +41,23 @@
     <Transaction>2020/01/07 11:07:33.000.271,C:\Users\aluga.com\Brady2019\Brady2019\BradyBrazil\uFr_ListaEmail.dfm=C:\Users\aluga.com\Brady2019\Brady2019\BradyBrazil\Unit1.dfm</Transaction>
     <Transaction>2020/01/07 11:07:33.000.271,C:\Users\aluga.com\Brady2019\Brady2019\BradyBrazil\uFr_ListaEmail.pas=C:\Users\aluga.com\Brady2019\Brady2019\BradyBrazil\Unit1.pas</Transaction>
     <Transaction>2020/01/17 14:05:36.000.423,=C:\Users\aluga.com\Brady2019\Brady2019\BradyBrazil\Unit1.pas</Transaction>
-    <Transaction>2020/01/17 14:06:24.000.707,C:\Users\aluga.com\Brady2019\Brady2019\BradyBrazil\Unit1.dfm=C:\Users\aluga.com\Brady2019\Brady2019\BradyBrazil\uFr_CadastroIQFCategoria.dfm</Transaction>
     <Transaction>2020/01/17 14:06:24.000.707,C:\Users\aluga.com\Brady2019\Brady2019\BradyBrazil\Unit1.pas=C:\Users\aluga.com\Brady2019\Brady2019\BradyBrazil\uFr_CadastroIQFCategoria.pas</Transaction>
+    <Transaction>2020/01/17 14:06:24.000.707,C:\Users\aluga.com\Brady2019\Brady2019\BradyBrazil\Unit1.dfm=C:\Users\aluga.com\Brady2019\Brady2019\BradyBrazil\uFr_CadastroIQFCategoria.dfm</Transaction>
     <Transaction>2020/03/12 11:40:54.000.890,=C:\Users\aluga.com\Brady2019\Brady2019\BradyBrazil\Unit1.pas</Transaction>
-    <Transaction>2020/03/12 11:45:55.000.612,C:\Users\aluga.com\Brady2019\Brady2019\BradyBrazil\Unit1.dfm=C:\Users\aluga.com\Brady2019\Brady2019\BradyBrazil\uFr_UploadDistribuidores.dfm</Transaction>
     <Transaction>2020/03/12 11:45:55.000.612,C:\Users\aluga.com\Brady2019\Brady2019\BradyBrazil\Unit1.pas=C:\Users\aluga.com\Brady2019\Brady2019\BradyBrazil\uFr_UploadDistribuidores.pas</Transaction>
+    <Transaction>2020/03/12 11:45:55.000.612,C:\Users\aluga.com\Brady2019\Brady2019\BradyBrazil\Unit1.dfm=C:\Users\aluga.com\Brady2019\Brady2019\BradyBrazil\uFr_UploadDistribuidores.dfm</Transaction>
     <Transaction>2020/08/05 08:47:21.000.145,=C:\Users\aluga.com\Brady2019\Brady2019\BradyBrazil\Unit1.pas</Transaction>
     <Transaction>2020/08/05 08:48:47.000.937,C:\Users\aluga.com\Brady2019\Brady2019\BradyBrazil\Unit1.dfm=C:\Users\aluga.com\Brady2019\Brady2019\BradyBrazil\uRelatorioManutencaoClientes.dfm</Transaction>
     <Transaction>2020/08/05 08:48:47.000.937,C:\Users\aluga.com\Brady2019\Brady2019\BradyBrazil\Unit1.pas=C:\Users\aluga.com\Brady2019\Brady2019\BradyBrazil\uRelatorioManutencaoClientes.pas</Transaction>
     <Transaction>2020/08/10 16:22:20.000.440,=C:\Users\aluga.com\Brady2019\Brady2019\BradyBrazil\Unit1.pas</Transaction>
     <Transaction>2020/08/17 11:21:50.000.893,=C:\Users\aluga.com\Brady2019\Brady2019\BradyBrazil\Unit1.pas</Transaction>
-    <Transaction>2020/08/17 11:32:29.000.949,C:\Users\aluga.com\Brady2019\Brady2019\BradyBrazil\uFr_PrecoSite.dfm=C:\Users\aluga.com\Brady2019\Brady2019\BradyBrazil\Unit1.dfm</Transaction>
     <Transaction>2020/08/17 11:32:29.000.949,C:\Users\aluga.com\Brady2019\Brady2019\BradyBrazil\uFr_PrecoSite.pas=C:\Users\aluga.com\Brady2019\Brady2019\BradyBrazil\Unit1.pas</Transaction>
+    <Transaction>2020/08/17 11:32:29.000.949,C:\Users\aluga.com\Brady2019\Brady2019\BradyBrazil\uFr_PrecoSite.dfm=C:\Users\aluga.com\Brady2019\Brady2019\BradyBrazil\Unit1.dfm</Transaction>
     <Transaction>2020/09/14 09:54:10.000.255,=C:\Users\aluga.com\Brady2019\Brady2019\BradyBrazil\Unit1.pas</Transaction>
     <Transaction>2020/09/14 09:54:50.000.984,C:\Users\aluga.com\Brady2019\Brady2019\BradyBrazil\Excel.pas=C:\Users\aluga.com\Brady2019\Brady2019\BradyBrazil\Unit1.pas</Transaction>
+    <Transaction>2021/11/19 07:24:15.000.927,=C:\Users\aluga.com\Brady2019\Brady2019\BradyBrazil\Unit1.pas</Transaction>
+    <Transaction>2021/11/19 07:27:35.000.360,C:\Users\aluga.com\Brady2019\Brady2019\BradyBrazil\uFr_RelOnBoardClientes.dfm=C:\Users\aluga.com\Brady2019\Brady2019\BradyBrazil\Unit1.dfm</Transaction>
+    <Transaction>2021/11/19 07:27:35.000.360,C:\Users\aluga.com\Brady2019\Brady2019\BradyBrazil\uFr_RelOnBoardClientes.pas=C:\Users\aluga.com\Brady2019\Brady2019\BradyBrazil\Unit1.pas</Transaction>
   </Transactions>
 	<ProjectSortOrder AutoSort="0" SortType="0">
     <File Path="uUtils.pas"/>
@@ -184,5 +187,7 @@
     <File Path="uFr_PrecoSite.pas"/>
     <File Path="uFr_PrecoSite.dfm"/>
     <File Path="Excel.pas"/>
+    <File Path="uFr_RelOnBoardClientes.pas"/>
+    <File Path="uFr_RelOnBoardClientes.dfm"/>
   </ProjectSortOrder>
 </BorlandProject>

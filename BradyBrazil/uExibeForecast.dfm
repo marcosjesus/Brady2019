@@ -407,7 +407,7 @@ object frmExibeForecast: TfrmExibeForecast
       Height = 490
       Align = alClient
       TabOrder = 0
-      Properties.ActivePage = TabForecast
+      Properties.ActivePage = TabTarget
       Properties.CustomButtons.Buttons = <>
       OnChange = PageChange
       ClientRectBottom = 486
@@ -4161,7 +4161,7 @@ object frmExibeForecast: TfrmExibeForecast
       'SELECT *'
       'FROM TSOP_Budget A01'
       'where 1 = 1')
-    Left = 136
+    Left = 760
     Top = 160
     object FDSalvaBudgetLKTSOP_BUDCOD: TFDAutoIncField
       FieldName = 'TSOP_BUDCOD'
@@ -4274,8 +4274,8 @@ object frmExibeForecast: TfrmExibeForecast
   end
   object DataSetProviderSalvaBudgetLK: TDataSetProvider
     DataSet = FDSalvaBudgetLK
-    Left = 509
-    Top = 253
+    Left = 605
+    Top = 157
   end
   object FDQueryTSOP_PeriodoImportacao: TFDQuery
     Connection = FDConnection

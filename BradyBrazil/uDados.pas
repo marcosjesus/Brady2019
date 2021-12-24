@@ -372,6 +372,8 @@ type
     FDQuerySalesRepGrupoTSIS_USUEML: TStringField;
     FDQueryTSOP_RepresentanteCanalGrupo: TFDQuery;
     FDQueryConsultaChamada: TFDQuery;
+    FDQueryVW_NiceLabel: TFDQuery;
+    FDQueryGravaNiceLabel: TFDQuery;
     procedure FDQueryTSOP_OrderBillingNewRecord(DataSet: TDataSet);
   private
     { Private declarations }

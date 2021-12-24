@@ -120,7 +120,7 @@
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
         <VerInfo_Locale>1033</VerInfo_Locale>
         <Manifest_File>None</Manifest_File>
-        <Debugger_RunParams>-saldo_estoque</Debugger_RunParams>
+        <Debugger_RunParams>-excel</Debugger_RunParams>
         <DCC_RemoteDebug>false</DCC_RemoteDebug>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
@@ -132,13 +132,13 @@
     <PropertyGroup Condition="'$(Cfg_2_Win32)'!=''">
         <VerInfo_Release>2</VerInfo_Release>
         <VerInfo_MajorVer>2</VerInfo_MajorVer>
-        <Debugger_RunParams>-imp_novosprodutos</Debugger_RunParams>
+        <Debugger_RunParams>-NiceLabelPrint</Debugger_RunParams>
         <VerInfo_Locale>1046</VerInfo_Locale>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
         <VerInfo_AutoIncVersion>true</VerInfo_AutoIncVersion>
-        <VerInfo_Keys>CompanyName=CIEL Soluções em TI;FileDescription=Brady;FileVersion=2.0.2.683;InternalName=Brady;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=Brady;ProductVersion=1.0.0.0;Comments=Rafael Petrella</VerInfo_Keys>
-        <VerInfo_Build>683</VerInfo_Build>
+        <VerInfo_Keys>CompanyName=CIEL Soluções em TI;FileDescription=Brady;FileVersion=2.0.2.698;InternalName=Brady;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=Brady;ProductVersion=1.0.0.0;Comments=Rafael Petrella</VerInfo_Keys>
+        <VerInfo_Build>698</VerInfo_Build>
         <Icon_MainIcon>Brady_Icon.ico</Icon_MainIcon>
     </PropertyGroup>
     <ItemGroup>
@@ -244,6 +244,7 @@
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="D:\Embarcadero\ACBr\Lib\Delphi\LibD19\ACBrCapicom.bpl" Configuration="Debug" Class="DependencyPackage"/>
+                <DeployFile LocalName="D:\Embarcadero\ACBr\Lib\Delphi\LibD19\ACBrComum.bpl" Configuration="Debug" Class="DependencyPackage"/>
                 <DeployFile LocalName="C:\Program Files (x86)\Embarcadero\RAD Studio\12.0\bin\FireDACSqliteDriver190.bpl" Class="File">
                     <Platform Name="Android">
                         <RemoteName>FireDACSqliteDriver190.bpl</RemoteName>
@@ -262,7 +263,6 @@
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="$(BDS)\Redist\Win32\FireDACODBCDriver190.bpl" Configuration="Debug" Class="DependencyPackage"/>
-                <DeployFile LocalName="$(BDS)\Redist\Win32\FireDAC190.bpl" Configuration="Debug" Class="DependencyPackage"/>
                 <DeployFile LocalName="$(BDS)\Redist\Win32\dbrtl190.bpl" Configuration="Debug" Class="DependencyPackage"/>
                 <DeployFile LocalName="C:\Program Files (x86)\Embarcadero\RAD Studio\12.0\bin\vclx190.bpl" Class="File">
                     <Platform Name="Android">
@@ -309,7 +309,7 @@
                 <DeployFile LocalName="Win32\Debug\BradyDataImport.exe" Configuration="Debug" Class="ProjectOutput"/>
                 <DeployFile LocalName="$(BDS)\Redist\Win32\FireDACCommon190.bpl" Configuration="Debug" Class="DependencyPackage"/>
                 <DeployFile LocalName="$(BDS)\Redist\Win32\vclFireDAC190.bpl" Configuration="Debug" Class="DependencyPackage"/>
-                <DeployFile LocalName="D:\Embarcadero\ACBr\Lib\Delphi\LibD19\ACBrComum.bpl" Configuration="Debug" Class="DependencyPackage"/>
+                <DeployFile LocalName="$(BDS)\Redist\Win32\FireDAC190.bpl" Configuration="Debug" Class="DependencyPackage"/>
                 <DeployFile LocalName="$(BDS)\Redist\Win32\rtl190.bpl" Configuration="Debug" Class="DependencyPackage"/>
                 <DeployFile LocalName="D:\Embarcadero\ACBr\Lib\Delphi\LibD19\ACBr_NFe2.bpl" Configuration="Debug" Class="DependencyPackage"/>
                 <DeployFile LocalName="C:\Program Files (x86)\Embarcadero\RAD Studio\12.0\bin\designide190.bpl" Class="File">
