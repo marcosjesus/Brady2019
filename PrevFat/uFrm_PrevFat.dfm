@@ -1,8 +1,9 @@
 object Frm_Previsao: TFrm_Previsao
   Left = 0
   Top = 0
+  BorderIcons = [biSystemMenu]
   Caption = 'Previs'#227'o de Faturamento'
-  ClientHeight = 407
+  ClientHeight = 458
   ClientWidth = 742
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -15,36 +16,44 @@ object Frm_Previsao: TFrm_Previsao
   OnShow = FormShow
   DesignSize = (
     742
-    407)
+    458)
   PixelsPerInch = 96
   TextHeight = 13
   object Page: TcxPageControl
     Left = 0
     Top = 0
     Width = 742
-    Height = 407
+    Height = 458
     Align = alClient
     TabOrder = 0
     Properties.ActivePage = TabEmail
     Properties.CustomButtons.Buttons = <>
     OnChange = PageChange
-    ClientRectBottom = 403
+    ExplicitHeight = 407
+    ClientRectBottom = 454
     ClientRectLeft = 4
     ClientRectRight = 738
     ClientRectTop = 24
     object TabEmail: TcxTabSheet
       Caption = 'Enviar E-mail'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
       ImageIndex = 0
+      ParentFont = False
+      ExplicitHeight = 379
       object cxLabel9: TcxLabel
-        Left = 170
-        Top = 75
-        Caption = 'Arquivo'
+        Left = 122
+        Top = 99
+        Caption = 'Selecione o Arquivo do SAP'
         ParentColor = False
         Style.Color = clWhite
       end
       object cxButtonEditPath: TcxButtonEdit
-        Left = 170
-        Top = 96
+        Left = 122
+        Top = 120
         Properties.Buttons = <
           item
             Default = True
@@ -53,21 +62,250 @@ object Frm_Previsao: TFrm_Previsao
         Properties.ReadOnly = True
         TabOrder = 1
         OnClick = cxButtonEditPathClick
-        Width = 337
+        Width = 495
       end
-      object cxButtonProcessar: TcxButton
-        Left = 376
-        Top = 137
-        Width = 131
-        Height = 46
+      object BitBtn1: TBitBtn
+        Left = 122
+        Top = 150
+        Width = 129
+        Height = 39
         Caption = 'Enviar E-mail'
+        Glyph.Data = {
+          36100000424D3610000000000000360000002800000020000000200000000100
+          2000000000000010000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000010000000100000001000000010000000100000001000000010000
+          0001000000010000000100000001000000010000000100000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000001000000030000000400000005000000050000
+          0005000000050000000500000005000000050000000500000005000000050000
+          0005000000050000000500000005000000050000000300000002000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          00000000000000000001000000050000000B0000001000000012000000120000
+          0013000000130000001300000013000000130000001300000013000000130000
+          0013000000130000001300000013000000110000000C00000005000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          000000000000000000030000000B7E5A4CBEAF7C6AFFAE7D6BFFAE7B69FFAE7B
+          69FFAE7B69FFAE7B68FFAD7A68FFAD7968FFAD7967FFAD7967FFAC7967FFAC79
+          66FFAC7867FFAC7866FFAB7866FFAC7866FF7B5648BE0000000C000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          000000000000000000040000000EB07F6DFFFAF6F4FFFAF6F3FFFAF6F4FFFAF6
+          F3FFFAF5F3FFFAF5F2FFFAF5F3FFFAF5F2FFFAF4F2FFFAF4F2FFF9F5F2FFF9F4
+          F1FFF9F4F1FFF9F4F1FFF9F3F0FFF9F4F1FFAC7966FF00000010000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          000000000000000000040000000FB1816FFFFAF6F5FFF7EFEAFFF6EEEAFFF6EE
+          EBFFF6EEEAFFF7EEEAFFF6EEEAFFF6EFEAFFF6EEEAFFF6EEEAFFF6EEE9FFF6EE
+          E9FFF6EDEAFFF6EEE9FFF6EEEAFFF9F4F1FFAD7A68FF00000011000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          000000000000000000040000000FB38371FFFBF7F5FFF6EFEBFFCDADA0FFCDAC
+          9FFFCCAD9FFFCCAC9FFFCBAC9FFFCBAB9FFFCCAC9FFFCBAB9EFFCBAB9EFFCBAB
+          9DFFCAAB9DFFCAAB9DFFF6EEEAFFFAF5F2FFAE7B69FF00000011000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          000000000000000000040000000EB58573FFFBF8F6FFF7F0ECFFCDAEA1FFCDAE
+          A1FFCDAEA1FFCDAEA0FFCCADA0FFCDAD9FFFCCAD9FFFCCAD9FFFCCAC9FFFCCAC
+          9FFFCBAC9EFFCBAC9EFFF6EFEBFFFAF6F3FFAF7E6CFF00000010000000000000
+          0001000000020000000400000004000000040000000500000005000000050000
+          0005000000050000000800000012B58676FFFCF9F7FFF8F1ECFFCEB0A2FFCEAF
+          A3FFCDAFA2FFCDAFA2FFCDAFA1FFCDAFA1FFCDAEA0FFCCAEA0FFCCAEA0FFCDAD
+          A0FFCCADA0FFCCAC9FFFF7EFEBFFFBF6F4FFB1806EFF0000000F000000010000
+          0003000000080000000D00000010000000110000001100000011000000110000
+          001200000012000000150000001EB78878FFFCF9F8FFF8F1EDFFCFB1A4FFCFB1
+          A4FFCEB1A4FFCEB0A3FFCEB0A3FFCEB0A2FFCEAFA2FFCEAFA2FFCEAEA1FFCEAF
+          A1FFCCADA1FFCDAEA1FFF7F0ECFFFBF7F5FFB28270FF0000000E000000020000
+          0007312F69A28F7079EDB18574FFA96F4BFFA7683DFFA86A42FFAE806DFFAA81
+          79FF4B49ADFF2B36BBFF9497D0FFB98B7BFFFDFAF8FFF9F2EFFFD0B2A6FFD0B2
+          A5FFCFB1A5FFCFB1A4FFCFB1A4FFCEB1A4FFCFB0A4FFCFB0A3FFCEB0A3FFCEB0
+          A3FFCDAFA2FFCDAEA1FFF8F0ECFFFBF7F6FFB38472FF0000000E000000030000
+          000C303CC1FF4149C2FFCEC7D7FFE9DBD5FFB88665FFA7693FFFAF764EFFE5D3
+          CAFFE7DEE2FF5B61C6FF9095D5FFBB8C7DFFFCFAF9FFF8F2EFFFD1B4A7FFD1B3
+          A7FFD0B3A6FFD0B2A6FFD0B2A6FFD0B2A5FFD0B1A5FFD0B1A5FFD0B1A5FFCFB1
+          A4FFCFB0A4FFCEB0A3FFF7F1EEFFFCF8F6FFB48474FF0000000D000000030000
+          000E4F4EAFFF323FC3FFEFE7E3FFEDE3DEFFEDE4DFFFEEE5E1FFF0E6E3FFF0E7
+          E4FFF1E8E5FFEFE6E3FFEEEAE9FFBC907FFFFDFBFAFFF9F3F0FFF9F3F0FFF9F2
+          EFFFF9F3F0FFF8F3EFFFF9F2EFFFF9F2EFFFF8F2EFFFF8F2EFFFF9F2EFFFF9F1
+          EFFFF8F2EEFFF8F1EEFFF8F2EEFFFCF9F8FFB78776FF0000000C000000030000
+          000EA87E76FF595BBCFFF6F0EEFFF0E8E4FFEEE5E1FFEFE6E3FFF0E7E4FFF1E9
+          E5FFF1EAE6FFF0E9E5FFEFECEAFFBE9281FFFDFCFAFFF9F3F1FFD2B6ABFFD2B6
+          AAFFD1B6AAFFF9F3F0FFD1B5A9FFD1B5A9FFD1B4A8FFD1B4A7FFD1B3A7FFD0B3
+          A7FFD1B3A7FFD0B2A7FFF9F2EFFFFCF9F8FFB78A78FF0000000C000000030000
+          000DB0816EFFD8C9C8FFCFB2A6FFF7F3F0FFF1E8E5FFF0E6E4FFF1E9E6FFF3EC
+          E9FFF6F0EDFFF4F0EDFFF3F0EFFFBF9483FFFEFCFBFFFAF4F2FFD3B8ACFFD3B7
+          ACFFD2B7ABFFF9F3F1FFD1B6AAFFD2B6AAFFD2B6AAFFD1B5A9FFD1B5A9FFD1B5
+          A8FFD1B4A9FFD1B4A8FFF9F3F0FFFCFAF9FFB98B7BFF0000000B000000030000
+          000CB0774FFFDCC5BBFFE1D1CBFFD2B4AAFFF9F5F4FFF5EFEDFFF7F2F0FFF8F3
+          F2FFF8F4F1FFF6F2F0FFF4F2F1FFC19786FFFEFCFCFFFAF4F3FFD4B9ADFFD3B9
+          AEFFD3B8ADFFFAF5F2FFD3B8ACFFD3B8ACFFD3B7ACFFD2B6ABFFD2B6ABFFD2B6
+          AAFFD1B6AAFFD1B6A9FFFAF3F0FFFDFBFAFFBA8E7DFF0000000A000000030000
+          000BB1774EFFB5805AFFE5D8D2FFE2D1CAFFDAC1B8FFFCFAF9FFF9F4F2FFF8F4
+          F2FFF9F5F3FFF7F3F2FFF5F3F2FFC29989FFFEFDFCFFFAF5F3FFFAF5F3FFFAF5
+          F3FFFAF5F2FFFAF5F3FFFAF5F3FFFAF5F2FFFAF4F2FFFAF5F2FFFAF4F2FFFAF4
+          F1FFFAF4F2FFFAF5F1FFFAF4F2FFFDFBFAFFBD917FFF00000009000000030000
+          000BB37F5BFFB27B51FFE8DAD5FFE8DAD5FFE3D2CBFFDFC7BFFFFCFAFAFFF9F6
+          F4FFF9F6F4FFF8F4F3FFF5F3F2FFC49B8BFFFEFDFDFFFBF6F4FFD6BBB1FFD5BB
+          B1FFD5BBB0FFD5BBAFFFD5BBAFFFD5BAAFFFD4BAAEFFD5B9AEFFD3BAADFFD3B8
+          ADFFD4B8ADFFD4B8ACFFFAF4F2FFFDFBFBFFBE9382FF00000009000000020000
+          000AB88D7EFFC09373FFE9DCD8FFE9DCD8FFE9DCD8FFE3D1CCFFE4D1CAFFFCFB
+          FAFFFAF7F5FFF3EDECFFE6DDDBFFC59D8DFFFEFDFDFFFBF6F4FFD7BDB2FFD7BD
+          B1FFD7BDB1FFD6BCB1FFD5BBB1FFD5BBB0FFD5BBB0FFD6BBAFFFD5BBAFFFD5BA
+          AFFFD5BAAFFFD5BAAEFFFAF5F3FFFDFCFBFFC09485FF00000008000000020000
+          0009A7878EFFE9DBD4FFEBDFDAFFEBE0DAFFEBDFDAFFEBE0DAFFE5D3CCFFEEE3
+          DFFFEFE8E5FFCFBAB4FFD0BFBBFFC79F8FFFFEFEFDFFFCF7F5FFD8BFB4FFD7BE
+          B3FFD7BEB3FFD7BEB2FFD7BDB3FFD7BDB2FFD7BCB1FFD6BCB1FFD6BCB1FFD5BC
+          B0FFD5BBB0FFD5BBB0FFFBF5F4FFFEFCFCFFC19886FF00000008000000020000
+          0009535ECBFFD2CCDAFFECE1DDFFEBE2DCFFECE1DCFFEBE1DCFFEADFDAFFD6BC
+          B4FFAD8173FF9C6F61FFE3D8D4FFC8A291FFFFFEFEFFFCF8F6FFFBF8F5FFFBF8
+          F6FFFBF8F5FFFBF8F6FFFCF8F5FFFCF7F5FFFBF7F5FFFBF7F5FFFBF6F5FFFBF6
+          F4FFFBF7F5FFFBF7F5FFFBF7F4FFFEFDFCFFC2998AFF00000007000000020000
+          00084B5DD5FF5969D5FFEEE4DFFFEEE3E0FFECE2DFFFEBDFDBFFD3BEB7FFAC85
+          7AFFB28C7FFFF1EAE8FFFAF9F8FFC9A394FFFFFEFEFFFFFEFEFFFFFEFEFFFEFE
+          FEFFFEFEFDFFFEFEFDFFFEFEFDFFFEFEFDFFFEFEFDFFFEFDFDFFFEFDFDFFFEFD
+          FDFFFEFDFDFFFEFDFDFFFEFDFDFFFEFDFDFFC49B8BFF00000005000000020000
+          0007686CC4FF4D5FD6FFF0E5E1FFEEE3E0FFEADFD9FFC9ACA3FFAD8376FFD7C3
+          BBFFFCFAF9FFF8F5F3FFF8F5F4FFD6B9AEFFCAA695FFCAA494FFCAA494FFCAA3
+          94FFC9A393FFC9A293FFC8A292FFC9A192FFC8A192FFC7A091FFC7A190FFC79F
+          90FFC6A08FFFC6A08FFFC69E8FFFC69D8EFF927468BF00000004000000020000
+          0007BC9991FF7582DAFFEEE5E1FFE8DDD7FFBF9D92FFBF9D93FFF4EEEDFFFCFB
+          FAFFF8F5F3FFF8F5F2FFF8F5F3FFF9F7F5FFF9F7F6FFF8F6F5FFF8F6F5FFF7F6
+          F5FFF8F6F5FFF8F7F5FFFAF9F9FFF5F2F1FFD7C6C1FFD7C5BEFFEBE4E1FFF2ED
+          EBFFE5E2EBFFD9C5BEFF0000000F000000060000000300000001000000010000
+          0006C29C8BFFE8E0E1FFE2D2CBFFBE988CFFDFCDC7FFFCFBFAFFFAF8F6FFF9F6
+          F3FFF9F6F3FFF9F6F3FFF9F6F4FFF9F6F3FFF8F5F3FFF8F5F4FFF8F5F3FFF8F5
+          F3FFF8F5F2FFF8F5F3FFF8F5F2FFFAF8F5FFFBFAF9FFDBC7C1FFB38C7FFFDAC8
+          C1FF4C5ACAFFA7898FFF0000000A000000030000000100000000000000010000
+          0005C1936EFFD4BBADFFCDAEA4FFF7F2F0FFFCFBFBFFF9F8F5FFF9F6F4FFF9F7
+          F5FFF9F7F5FFF9F7F6FFF9F7F6FFFAF7F6FFFBF9F9FFFBF9F9FFFAF8F7FFFAF7
+          F7FFF9F7F6FFF9F7F5FFF9F7F5FFF9F7F5FFF9F8F5FFFDFCFBFFF5F1EFFFC4A4
+          99FF4050CCFF4B56C6FF00000008000000020000000000000000000000010000
+          0005C3956CFFC69B76FFFDFCFBFFFBF9F8FFFAF8F5FFFAF8F5FFFAF8F6FFFBFA
+          F9FFFDFCFCFFFEFEFEFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+          FFFFFEFEFEFFFDFCFCFFFCFAFAFFFAF8F7FFFAF8F6FFFAF8F5FFFBFAF8FFFDFB
+          FBFF6871CFFF4153CFFF00000007000000020000000000000000000000010000
+          0003B39288E8F2EAE6FFFAF9F7FFFAF8F7FFFBFAF9FFFDFDFCFFFFFFFFFFFFFF
+          FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+          FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFDFDFDFFFBFAF9FFFAF9F7FFFAF9
+          F8FFEFE6E2FFAB887BE800000005000000010000000000000000000000000000
+          0002342C2942A68C83CAD0B2A6FFD1B1A6FFD0B1A5FFD0B1A4FFCFAFA3FFCFAE
+          A2FFCEAEA2FFCEADA1FFCEACA0FFCDACA0FFCDAB9EFFCBAB9DFFCBAA9DFFCBA9
+          9CFFCAA89BFFC9A89AFFC9A699FFC8A598FFC8A597FFC7A496FFC7A396FFC6A3
+          95FF9B7F74CB3128244400000003000000010000000000000000000000000000
+          0001000000010000000300000003000000040000000400000004000000040000
+          0004000000040000000400000004000000040000000400000004000000050000
+          0005000000050000000500000005000000050000000500000005000000050000
+          0005000000040000000200000001000000000000000000000000000000000000
+          0000000000000000000100000001000000010000000100000001000000010000
+          0001000000010000000100000001000000010000000100000001000000010000
+          0001000000010000000100000001000000010000000100000001000000010000
+          0001000000010000000100000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000}
         TabOrder = 2
-        OnClick = cxButtonProcessarClick
+        OnClick = BitBtn1Click
+      end
+      object pnlEmail: TPanel
+        Left = 0
+        Top = 0
+        Width = 734
+        Height = 430
+        Align = alClient
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 3
+        Visible = False
+        ExplicitHeight = 379
+        object Panel7: TPanel
+          Left = 1
+          Top = 1
+          Width = 732
+          Height = 41
+          Align = alTop
+          Caption = 'E-mail(s) Inv'#225'lido(s) - Erro ao tentar enviar e-mail'
+          Color = clNavy
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindow
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentBackground = False
+          ParentFont = False
+          TabOrder = 0
+          object btnFecharPnl: TBitBtn
+            Left = 698
+            Top = 10
+            Width = 27
+            Height = 25
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindow
+            Font.Height = -11
+            Font.Name = 'Tahoma'
+            Font.Style = []
+            Glyph.Data = {
+              36040000424D3604000000000000360000002800000010000000100000000100
+              2000000000000004000000000000000000000000000000000000000000030000
+              000B000000120000001300000013000000140000001400000014000000140000
+              0014000000140000001500000015000000140000000D000000030000000B1C11
+              6CC3261796FF271696FF261695FF261594FF251594FF251594FF241394FF2412
+              93FF241292FF231292FF231192FF231191FF190C68C50000000C0000000F2B1C
+              9BFF384AD3FF2637CEFF3042D2FF4254D9FF3646D4FF2437CCFF2434CCFF3444
+              D3FF3C4ED6FF2A3ACEFF202FC9FF1E2CC9FF251595FF000000120000000F3121
+              A0FF4356D7FF374BD5FF3F4BCBFF2827ABFF363CBEFF3E4FD6FF3D4ED5FF353A
+              BEFF2827ABFF3B45C9FF2F41D0FF2332CCFF291A99FF000000120000000E3529
+              A5FF4E62DBFF444FCCFF605DBDFFEDEDF8FF8B89CEFF383CBCFF383CBBFF8B89
+              CEFFEDEDF8FF5F5DBDFF3D47C9FF293ACEFF2D1F9EFF000000110000000D392F
+              ABFF596FDFFF2722A5FFECE7ECFFF5EBE4FFF8F2EEFF9491D1FF9491D1FFF8F1
+              EDFFF3E9E2FFECE6EBFF2721A5FF2F42D1FF3326A3FF0000000F0000000C4036
+              B1FF657AE2FF3135B7FF8070ADFFEBDBD3FFF4EAE4FFF7F2EDFFF8F1EDFFF4E9
+              E2FFEADAD1FF7F6FACFF2E31B6FF3549D5FF372CA9FF0000000E0000000B453D
+              B6FF6E83E5FF485EDCFF393BB7FF8A7FB9FFF6ECE7FFF5ECE6FFF4EBE5FFF6EB
+              E5FF897DB8FF3739B6FF4054D9FF3D51D7FF3C33AFFF0000000D0000000A4A44
+              BCFF788FE8FF6077E3FF4B4BBBFF9189C7FFF7EFE9FFF6EEE9FFF6EFE8FFF7ED
+              E8FF9087C5FF4949BAFF596FDFFF4359DAFF423AB4FF0000000C00000009504C
+              C2FF92A7EEFF5655BCFF8F89CAFFFBF6F4FFF7F1ECFFEDE1D9FFEDE0D9FFF7F0
+              EAFFFAF5F2FF8F89CAFF5453BCFF6278E2FF4943B9FF0000000B000000086B6A
+              D0FFADC1F4FF2A1E9BFFE5DADEFFF6EEEBFFEDDFDAFF816EA9FF816EA9FFEDDF
+              D8FFF4ECE7FFE5D9DCFF2A1D9BFF8B9EEBFF6563C9FF0000000A000000077577
+              D6FFB1C6F5FF6E77D1FF5747A1FFCCB6BCFF7A68A8FF4E4CB7FF4F4EB8FF7A68
+              A8FFCBB5BCFF5746A1FF6B75D0FF8EA1ECFF706ED0FF0000000900000006797B
+              DAFFB5CAF6FF93A7EEFF7079D2FF2E229BFF5453BBFF93A7EEFF93A7EEFF5555
+              BCFF2E219BFF6F77D1FF91A4EDFF90A3EDFF7475D4FF00000008000000057D80
+              DEFFB9CDF6FFB9CDF6FFB9CCF6FFB9CCF6FFB9CDF6FFB8CCF6FFB8CCF6FFB7CC
+              F6FFB7CBF6FFB6CBF6FFB5C9F6FFB5C9F6FF787AD8FF00000006000000036062
+              A6C08184E1FF8183E0FF8083E0FF7F83DFFF7F83DFFF7F82DFFF7E81DFFF7E81
+              DEFF7D81DEFF7D80DEFF7D7FDEFF7C7FDDFF5C5EA3C100000004000000000000
+              0002000000030000000400000004000000040000000400000004000000040000
+              0004000000040000000400000005000000050000000300000001}
+            ParentFont = False
+            TabOrder = 0
+            OnClick = btnFecharPnlClick
+          end
+        end
+        object memEmail: TMemo
+          Left = 1
+          Top = 42
+          Width = 732
+          Height = 387
+          Align = alClient
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
+          TabOrder = 1
+          ExplicitHeight = 336
+        end
       end
     end
     object TabConfig: TcxTabSheet
       Caption = 'Configura'#231#227'o'
       ImageIndex = 1
+      ExplicitHeight = 379
       object Panel1: TPanel
         Left = 3
         Top = 3
@@ -84,9 +322,9 @@ object Frm_Previsao: TFrm_Previsao
           Caption = 'Host'
         end
         object edtHost: TEdit
-          Left = 72
+          Left = 36
           Top = 8
-          Width = 257
+          Width = 301
           Height = 21
           TabOrder = 0
           OnKeyUp = edtHostKeyUp
@@ -95,7 +333,7 @@ object Frm_Previsao: TFrm_Previsao
       object Panel2: TPanel
         Left = 359
         Top = 3
-        Width = 350
+        Width = 372
         Height = 41
         BevelKind = bkFlat
         BevelOuter = bvNone
@@ -108,178 +346,432 @@ object Frm_Previsao: TFrm_Previsao
           Caption = 'Port'
         end
         object edtPort: TEdit
-          Left = 72
+          Left = 48
           Top = 8
-          Width = 257
-          Height = 21
-          TabOrder = 0
-          OnKeyUp = edtHostKeyUp
-        end
-      end
-      object Panel3: TPanel
-        Left = 3
-        Top = 62
-        Width = 350
-        Height = 41
-        BevelKind = bkFlat
-        BevelOuter = bvNone
-        TabOrder = 2
-        object Label3: TLabel
-          Left = 8
-          Top = 8
-          Width = 48
-          Height = 13
-          Caption = 'Username'
-        end
-        object edtUserName: TEdit
-          Left = 72
-          Top = 8
-          Width = 257
-          Height = 21
-          TabOrder = 0
-          OnKeyUp = edtHostKeyUp
-        end
-      end
-      object Panel4: TPanel
-        Left = 359
-        Top = 61
-        Width = 349
-        Height = 41
-        BevelKind = bkFlat
-        BevelOuter = bvNone
-        TabOrder = 3
-        object Label4: TLabel
-          Left = 8
-          Top = 8
-          Width = 46
-          Height = 13
-          Caption = 'Password'
-        end
-        object edtPassword: TEdit
-          Left = 72
-          Top = 8
-          Width = 257
-          Height = 21
-          TabOrder = 0
-          OnKeyUp = edtHostKeyUp
-        end
-      end
-      object Panel5: TPanel
-        Left = 3
-        Top = 109
-        Width = 350
-        Height = 41
-        BevelKind = bkFlat
-        BevelOuter = bvNone
-        TabOrder = 4
-        object Label5: TLabel
-          Left = 8
-          Top = 8
-          Width = 24
-          Height = 13
-          Caption = 'From'
-        end
-        object edtFrom: TEdit
-          Left = 72
-          Top = 8
-          Width = 257
-          Height = 21
-          TabOrder = 0
-          OnKeyUp = edtHostKeyUp
-        end
-      end
-      object Panel6: TPanel
-        Left = 359
-        Top = 108
-        Width = 349
-        Height = 41
-        BevelKind = bkFlat
-        BevelOuter = bvNone
-        TabOrder = 5
-        object Label6: TLabel
-          Left = 8
-          Top = 8
-          Width = 39
-          Height = 13
-          Caption = 'Assunto'
-        end
-        object edtAssunto: TEdit
-          Left = 72
-          Top = 8
-          Width = 257
+          Width = 313
           Height = 21
           TabOrder = 0
           OnKeyUp = edtHostKeyUp
         end
       end
       object rgSSL: TRadioGroup
-        Left = 3
-        Top = 156
-        Width = 347
-        Height = 43
+        Left = 590
+        Top = 50
+        Width = 67
+        Height = 51
         Caption = 'SSL'
-        Columns = 2
         ItemIndex = 0
         Items.Strings = (
           'Sim'
           'N'#227'o')
-        TabOrder = 6
+        TabOrder = 2
+        Visible = False
         OnClick = rgSSLClick
       end
       object rgTLS: TRadioGroup
-        Left = 356
-        Top = 155
-        Width = 347
-        Height = 43
+        Left = 663
+        Top = 50
+        Width = 68
+        Height = 51
         Caption = 'TLS'
-        Columns = 2
         ItemIndex = 0
         Items.Strings = (
           'Sim'
           'N'#227'o')
-        TabOrder = 7
+        TabOrder = 3
+        Visible = False
         OnClick = rgTLSClick
       end
       object btnSalvarINI: TBitBtn
-        Left = 3
-        Top = 327
-        Width = 121
+        Left = 605
+        Top = 364
+        Width = 126
         Height = 41
         Caption = 'Salvar'
-        TabOrder = 8
+        Glyph.Data = {
+          36040000424D3604000000000000360000002800000010000000100000000100
+          2000000000000004000000000000000000000000000000000000000000040000
+          00130000001E0000002000000020000000200000002100000021000000210000
+          002200000022000000220000002300000021000000160000000500000012281E
+          16CB37291EFF463A31FFBD8150FFBC7E4DFFB97949FFB67646FFB37141FFB06D
+          3DFFAD6839FFAB6535FF42362EFF3D3026FF241A13CE00000015000000193B2C
+          21FF685C54FF483C34FFE8C28BFFE7C088FFE6BD85FFE5BB81FFE4B87CFFE3B5
+          79FFE2B276FFE2B273FF443931FF51433AFF34261DFF0000001E000000183E2F
+          24FF6C6057FF4A3F37FFD9B27DFFD8B07BFFD7AE77FFD7AB74FFD6A970FFD5A6
+          6DFFD4A56AFFD4A268FF473B33FF5B4F47FF37291EFF0000001D000000164031
+          26FF6F645CFF4C4038FFFFFFFFFFF7F1EBFFF7F0EBFFF7F0EBFFF7EFEBFFF6EF
+          EAFFF6EFEAFFF6EFE9FF463B34FF5D5249FF3A2C21FF0000001B000000144434
+          29FF73675FFF4F443CFFFFFFFFFFF8F2EDFFF8F1EDFFF7F1EDFFF7F0EDFFF8F1
+          EBFFF7F0EBFFF7F0ECFF4A4037FF5F534BFF3D2E23FF00000019000000124637
+          2CFF776B63FF50453DFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+          FFFFFFFFFFFFFFFFFFFF4E433BFF61544CFF403126FF0000001700000010493A
+          2FFF796E66FF50453DFF61564EFF60564EFF60554DFF5F544CFF5E544CFF5E53
+          4BFF5D524AFF5C5249FF5B5149FF61554DFF433429FF000000150000000E4C3D
+          32FF7C706AFF674E44FF654B42FF634A41FF61473FFF5F473EFF5C443CFF5B43
+          3AFF594139FF584038FF573F37FF63574FFF46362DFF000000130000000D4E3F
+          35FF80746DFF6B5248FFF4ECE6FFE9DACEFFE9D8CDFFE9D8CCFFE9D8CBFFE8D7
+          CAFFF3EAE2FFF3E9E2FF5A4139FF645850FF483A2FFF000000110000000B5142
+          36FF827770FF70564DFFF9F5F2FFF4EAE4FFF1E6DEFFEBDCD2FFE9D9CCFF4E41
+          3DFF60534CFFF3EAE3FF5D453CFF655951FF4C3D32FF0000000F000000095344
+          39FF857A73FF755A50FFFAF6F3FFF5EDE7FFF4EDE6FFF4ECE6FFEFE2DAFF493D
+          38FF5A4D46FFF4EBE4FF60483FFF655A52FF4F3F34FF0000000D000000075545
+          3AFF887D76FF795E54FFFAF6F4FFF5EEE9FFF5EDE7FFF4EDE7FFF4ECE6FF473A
+          36FF483D36FFE9D9CDFF644C43FF675A52FF514137FF0000000B000000065748
+          3DFF898079FF7C6157FFFAF7F4FFFAF6F4FFFAF6F4FFFAF6F3FFFAF6F3FFFAF5
+          F2FFF5EEE9FFF4ECE6FF695046FF82776FFF534439FF00000009000000034235
+          2EC058493DFF7F645AFF998178FF967F75FF937A72FF8E786DFF8B7269FF866E
+          64FF82695FFF7D645BFF6E544AFF56453BFF3F332BC200000005000000000000
+          0002000000030000000400000004000000040000000400000005000000050000
+          0005000000050000000500000006000000060000000400000001}
+        TabOrder = 4
         OnClick = btnSalvarINIClick
       end
       object GroupBox1: TGroupBox
-        Left = 8
-        Top = 208
-        Width = 695
-        Height = 105
-        Caption = 'Pastas'
-        TabOrder = 9
+        Left = 3
+        Top = 320
+        Width = 581
+        Height = 85
+        Caption = 'Para armazenar os arquivos enviados aos clientes'
+        TabOrder = 5
         object edtPathSalvaExcel: TcxButtonEdit
-          Left = 24
-          Top = 32
+          Left = 4
+          Top = 27
           Properties.Buttons = <
             item
               Default = True
               Kind = bkEllipsis
             end>
           TabOrder = 0
-          Width = 121
+          OnClick = edtPathSalvaExcelClick
+          Width = 573
         end
+        object chkCopia: TCheckBox
+          Left = 18
+          Top = 54
+          Width = 145
+          Height = 17
+          Caption = 'Salvar C'#243'pia dos Arquivos'
+          TabOrder = 1
+          OnClick = chkCopiaClick
+        end
+      end
+      object StatusBar: TStatusBar
+        Left = 0
+        Top = 411
+        Width = 734
+        Height = 19
+        Panels = <
+          item
+            Width = 200
+          end>
+        ExplicitTop = 360
+      end
+      object cxGroupBox1: TcxGroupBox
+        Left = 3
+        Top = 50
+        Caption = 'From ( Pedidos  - 4150 - C1)'
+        TabOrder = 7
+        Height = 51
+        Width = 185
+        object edtFrom: TEdit
+          Left = 4
+          Top = 20
+          Width = 178
+          Height = 21
+          TabOrder = 0
+          OnKeyUp = edtHostKeyUp
+        end
+      end
+      object cxGroupBox2: TcxGroupBox
+        Left = 194
+        Top = 50
+        Caption = 'UserName'
+        TabOrder = 8
+        Height = 51
+        Width = 199
+        object edtUserName: TEdit
+          Left = 5
+          Top = 20
+          Width = 189
+          Height = 21
+          TabOrder = 0
+          OnKeyUp = edtHostKeyUp
+        end
+      end
+      object cxGroupBox3: TcxGroupBox
+        Left = 399
+        Top = 50
+        Caption = 'Password'
+        TabOrder = 9
+        Height = 51
+        Width = 185
+        object edtPassword: TEdit
+          Left = 5
+          Top = 20
+          Width = 176
+          Height = 21
+          TabOrder = 0
+          OnKeyUp = edtHostKeyUp
+        end
+      end
+      object cxGroupBox4: TcxGroupBox
+        Left = 3
+        Top = 107
+        Caption = 'From ( Distribuidor  - 4150  - DV)'
+        TabOrder = 10
+        Height = 51
+        Width = 185
+        object edtDistriFrom: TEdit
+          Left = 4
+          Top = 20
+          Width = 178
+          Height = 21
+          TabOrder = 0
+          OnKeyUp = edtHostKeyUp
+        end
+      end
+      object cxGroupBox5: TcxGroupBox
+        Left = 194
+        Top = 107
+        Caption = 'UserName'
+        TabOrder = 11
+        Height = 51
+        Width = 199
+        object edtDistriUserName: TEdit
+          Left = 5
+          Top = 20
+          Width = 189
+          Height = 21
+          TabOrder = 0
+          OnKeyUp = edtHostKeyUp
+        end
+      end
+      object cxGroupBox6: TcxGroupBox
+        Left = 399
+        Top = 107
+        Caption = 'Password'
+        TabOrder = 12
+        Height = 51
+        Width = 185
+        object edtDistriPassword: TEdit
+          Left = 5
+          Top = 20
+          Width = 176
+          Height = 21
+          TabOrder = 0
+          OnKeyUp = edtHostKeyUp
+        end
+      end
+      object rgDistriSSL: TRadioGroup
+        Left = 590
+        Top = 107
+        Width = 67
+        Height = 51
+        Caption = 'SSL'
+        ItemIndex = 0
+        Items.Strings = (
+          'Sim'
+          'N'#227'o')
+        TabOrder = 13
+        Visible = False
+        OnClick = rgSSLClick
+      end
+      object rgDistriTLS: TRadioGroup
+        Left = 663
+        Top = 107
+        Width = 68
+        Height = 51
+        Caption = 'TLS'
+        ItemIndex = 0
+        Items.Strings = (
+          'Sim'
+          'N'#227'o')
+        TabOrder = 14
+        Visible = False
+        OnClick = rgTLSClick
+      end
+      object cxGroupBox7: TcxGroupBox
+        Left = 3
+        Top = 164
+        Caption = 'From ( Informa'#231#245'es - 4110 )'
+        TabOrder = 15
+        Height = 51
+        Width = 185
+        object edtInfoFrom: TEdit
+          Left = 4
+          Top = 20
+          Width = 178
+          Height = 21
+          TabOrder = 0
+          OnKeyUp = edtHostKeyUp
+        end
+      end
+      object cxGroupBox8: TcxGroupBox
+        Left = 194
+        Top = 164
+        Caption = 'UserName'
+        TabOrder = 16
+        Height = 51
+        Width = 199
+        object edtInfoUserName: TEdit
+          Left = 5
+          Top = 20
+          Width = 189
+          Height = 21
+          TabOrder = 0
+          OnKeyUp = edtHostKeyUp
+        end
+      end
+      object cxGroupBox9: TcxGroupBox
+        Left = 399
+        Top = 164
+        Caption = 'Password'
+        TabOrder = 17
+        Height = 51
+        Width = 185
+        object edtInfoPassword: TEdit
+          Left = 5
+          Top = 20
+          Width = 176
+          Height = 21
+          TabOrder = 0
+          OnKeyUp = edtHostKeyUp
+        end
+      end
+      object rgInfoSSL: TRadioGroup
+        Left = 590
+        Top = 164
+        Width = 67
+        Height = 51
+        Caption = 'SSL'
+        ItemIndex = 0
+        Items.Strings = (
+          'Sim'
+          'N'#227'o')
+        TabOrder = 18
+        Visible = False
+        OnClick = rgSSLClick
+      end
+      object rgInfoTLS: TRadioGroup
+        Left = 663
+        Top = 164
+        Width = 68
+        Height = 51
+        Caption = 'TLS'
+        ItemIndex = 0
+        Items.Strings = (
+          'Sim'
+          'N'#227'o')
+        TabOrder = 19
+        Visible = False
+        OnClick = rgTLSClick
+      end
+      object cxGroupBox10: TcxGroupBox
+        Left = 3
+        Top = 267
+        Caption = 'Assunto'
+        TabOrder = 20
+        Height = 47
+        Width = 581
+        object edtAssunto: TEdit
+          Left = 4
+          Top = 18
+          Width = 573
+          Height = 21
+          TabOrder = 0
+          OnKeyUp = edtHostKeyUp
+        end
+      end
+      object cxGroupBox11: TcxGroupBox
+        Left = 3
+        Top = 217
+        Caption = 'From ( Manaus - 4160 )'
+        TabOrder = 21
+        Height = 51
+        Width = 185
+        object EdiManausFrom: TEdit
+          Left = 4
+          Top = 20
+          Width = 178
+          Height = 21
+          TabOrder = 0
+          OnKeyUp = edtHostKeyUp
+        end
+      end
+      object cxGroupBox12: TcxGroupBox
+        Left = 194
+        Top = 217
+        Caption = 'UserName'
+        TabOrder = 22
+        Height = 51
+        Width = 199
+        object EdiManausUserName: TEdit
+          Left = 5
+          Top = 20
+          Width = 189
+          Height = 21
+          TabOrder = 0
+          OnKeyUp = edtHostKeyUp
+        end
+      end
+      object cxGroupBox13: TcxGroupBox
+        Left = 399
+        Top = 217
+        Caption = 'Password'
+        TabOrder = 23
+        Height = 51
+        Width = 185
+        object EditManausPassword: TEdit
+          Left = 5
+          Top = 20
+          Width = 176
+          Height = 21
+          TabOrder = 0
+          OnKeyUp = edtHostKeyUp
+        end
+      end
+      object rgManausSSL: TRadioGroup
+        Left = 590
+        Top = 217
+        Width = 67
+        Height = 51
+        Caption = 'SSL'
+        ItemIndex = 0
+        Items.Strings = (
+          'Sim'
+          'N'#227'o')
+        TabOrder = 24
+        Visible = False
+        OnClick = rgSSLClick
+      end
+      object rgManausTLS: TRadioGroup
+        Left = 663
+        Top = 217
+        Width = 68
+        Height = 51
+        Caption = 'TLS'
+        ItemIndex = 0
+        Items.Strings = (
+          'Sim'
+          'N'#227'o')
+        TabOrder = 25
+        Visible = False
+        OnClick = rgTLSClick
       end
     end
     object TabCopia: TcxTabSheet
       Caption = 'E-mail CC'
       ImageIndex = 2
+      ExplicitHeight = 379
       object cxGridEmail: TcxGrid
         Left = 0
         Top = 0
         Width = 734
-        Height = 379
+        Height = 430
         Align = alClient
         TabOrder = 0
         RootLevelOptions.DetailTabsPosition = dtpTop
+        ExplicitHeight = 379
         object cxTableViewEmail: TcxGridDBTableView
           Navigator.Buttons.ConfirmDelete = True
           Navigator.Buttons.CustomButtons = <>
@@ -343,10 +835,10 @@ object Frm_Previsao: TFrm_Previsao
     end
   end
   object PanelSQLSplashScreen: TPanel
-    Left = 360
-    Top = 0
-    Width = 350
-    Height = 175
+    Left = 40
+    Top = 230
+    Width = 657
+    Height = 153
     Anchors = []
     BevelInner = bvRaised
     BevelOuter = bvNone
@@ -356,8 +848,8 @@ object Frm_Previsao: TFrm_Previsao
     object ImageSQLSplashScreen: TImage
       Left = 2
       Top = 2
-      Width = 346
-      Height = 171
+      Width = 653
+      Height = 149
       Align = alClient
       Picture.Data = {
         0B546478504E47496D61676589504E470D0A1A0A0000000D49484452000002BC
@@ -3225,12 +3717,14 @@ object Frm_Previsao: TFrm_Previsao
       Stretch = True
       Transparent = True
       ExplicitLeft = 258
+      ExplicitWidth = 346
+      ExplicitHeight = 171
     end
     object cxLabelMensagem: TcxLabel
       Left = 2
       Top = 2
       Align = alClient
-      Caption = 'Atualizando Dados..'
+      Caption = 'Mensagem'
       ParentColor = False
       ParentFont = False
       Style.BorderStyle = ebsNone
@@ -3246,8 +3740,9 @@ object Frm_Previsao: TFrm_Previsao
       Properties.LabelStyle = cxlsRaised
       Properties.WordWrap = True
       Transparent = True
-      Width = 346
-      AnchorY = 88
+      ExplicitWidth = 669
+      Width = 653
+      AnchorY = 77
     end
   end
   object FDManager: TFDManager
@@ -3255,12 +3750,12 @@ object Frm_Previsao: TFrm_Previsao
     FormatOptions.OwnMapRules = True
     FormatOptions.MapRules = <>
     Active = True
-    Left = 656
-    Top = 105
+    Left = 680
+    Top = 73
   end
   object FDPhysMSSQLDriverLink: TFDPhysMSSQLDriverLink
-    Left = 656
-    Top = 41
+    Left = 648
+    Top = 129
   end
   object FDConnection: TFDConnection
     Params.Strings = (
@@ -3272,8 +3767,8 @@ object Frm_Previsao: TFrm_Previsao
       'MARS=yes'
       'LoginTimeout=300'
       'DriverID=MSSQL')
-    Left = 655
-    Top = 153
+    Left = 679
+    Top = 89
   end
   object FDQueryTmp: TFDQuery
     Connection = FDConnection
@@ -3291,48 +3786,49 @@ object Frm_Previsao: TFrm_Previsao
       '  AND TSOP_ORDBILDATDOC BETWEEN '#39'20150501'#39' AND '#39'20150531'#39
       'GROUP BY TSOP_ORDBILDATDOC'
       '        ,TSOP_ORDBILSITNOM')
-    Left = 656
-    Top = 209
+    Left = 376
+    Top = 121
   end
   object FDGUIxWaitCursor: TFDGUIxWaitCursor
     Provider = 'Forms'
-    Left = 656
-    Top = 274
+    Left = 600
+    Top = 90
   end
   object SaveDialog: TSaveDialog
     DefaultExt = '*.xls'
     Filter = 'Arquivos CSV|*.xls'
-    Left = 582
-    Top = 34
+    Left = 550
+    Top = 138
   end
   object FDSSalvaPrevisao: TFDQuery
     Connection = FDConnection
     SQL.Strings = (
       'SELECT * FROM TSOP_PREVISAOFAT'
       'WHERE 1 = 1')
-    Left = 588
-    Top = 112
+    Left = 348
+    Top = 48
   end
   object DSSalvaPrevisao: TDataSetProvider
     DataSet = FDSSalvaPrevisao
-    Left = 572
-    Top = 256
+    Left = 532
+    Top = 128
   end
   object CDSSalvaPrevisao: TClientDataSet
     Aggregates = <>
     Params = <>
     ProviderName = 'DSSalvaPrevisao'
-    Left = 580
-    Top = 184
+    Left = 444
+    Top = 88
   end
   object FDQueryEmail: TFDQuery
     BeforePost = FDQueryEmailBeforePost
     Connection = FDConnection
     SQL.Strings = (
       'SELECT * FROM TSOP_EMAIL'
-      'WHERE TSOP_PROGRAMA = '#39'SOP_PREVISAOFATURAMENTO'#39)
-    Left = 144
-    Top = 80
+      'WHERE TSOP_PROGRAMA = '#39'SOP_PREVISAOFATURAMENTO'#39
+      '')
+    Left = 32
+    Top = 144
     object FDQueryEmailTSOP_EMAILCOD: TFDAutoIncField
       FieldName = 'TSOP_EMAILCOD'
       Origin = 'TSOP_EMAILCOD'
@@ -3358,22 +3854,22 @@ object Frm_Previsao: TFrm_Previsao
   end
   object DataSourceEmail: TDataSource
     DataSet = FDQueryEmail
-    Left = 224
-    Top = 72
+    Left = 64
+    Top = 144
   end
   object FDItem: TFDQuery
     Connection = FDConnection
-    Left = 84
-    Top = 312
+    Left = 260
+    Top = 136
   end
   object FDComprador: TFDQuery
     Connection = FDConnection
-    Left = 84
-    Top = 168
+    Left = 196
+    Top = 144
   end
   object FDOrdem: TFDQuery
     Connection = FDConnection
-    Left = 84
-    Top = 240
+    Left = 324
+    Top = 136
   end
 end

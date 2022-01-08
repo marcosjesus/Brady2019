@@ -4184,41 +4184,46 @@ begin
     varACBrMail.From := 'suportebrasil@bradycorp.com';
     varACBrMail.FromName := 'Suporte Brasil';
 
-    with Fr_Dados do
-    begin
-      FDQueryTSOP_EMAIL.Close;
-      FDQueryTSOP_EMAIL.SQL.Clear;
-      FDQueryTSOP_EMAIL.SQL.Add('Select TSOP_EMAIL From TSOP_EMAIL where TSOP_ATIVO = ''S'' AND');
-      FDQueryTSOP_EMAIL.SQL.Add(' TSOP_PROGRAMA = ''SOP_PROCESSARARQUIVOS''');
-      FDQueryTSOP_EMAIL.Open;
-      FDQueryTSOP_EMAIL.First;
-      while not FDQueryTSOP_EMAIL.eof do
-      begin
-         varACBrMail.AddAddress(FDQueryTSOP_EMAIL.FieldByName('TSOP_EMAIL').AsString);
-         FDQueryTSOP_EMAIL.Next;
-      end;
-      FDQueryTSOP_EMAIL.Close;
-    end;
+     Fr_Dados := TFr_Dados.Create(Nil);
+     Try
+        with Fr_Dados do
+        begin
+          FDQueryTSOP_EMAIL.Close;
+          FDQueryTSOP_EMAIL.SQL.Clear;
+          FDQueryTSOP_EMAIL.SQL.Add('Select TSOP_EMAIL From TSOP_EMAIL where TSOP_ATIVO = ''S'' AND');
+          FDQueryTSOP_EMAIL.SQL.Add(' TSOP_PROGRAMA = ''SOP_PROCESSARARQUIVOS''');
+          FDQueryTSOP_EMAIL.Open;
+          FDQueryTSOP_EMAIL.First;
+          while not FDQueryTSOP_EMAIL.eof do
+          begin
+             varACBrMail.AddAddress(FDQueryTSOP_EMAIL.FieldByName('TSOP_EMAIL').AsString);
+             FDQueryTSOP_EMAIL.Next;
+          end;
+          FDQueryTSOP_EMAIL.Close;
+        end;
 
 
-    varACBrMail.Subject := 'S&OP XLS ' + FormatDateTime( 'dd/mm/yyyy', Now );
-    varACBrMail.IsHTML := True;
-    varACBrMail.AltBody.Text := varFilesDia.Text;
+        varACBrMail.Subject := 'S&OP XLS ' + FormatDateTime( 'dd/mm/yyyy', Now );
+        varACBrMail.IsHTML := True;
+        varACBrMail.AltBody.Text := varFilesDia.Text;
 
-    try
+        try
 
-      varACBrMail.Send;
+          varACBrMail.Send;
 
-    except
+        except
 
-      on E: Exception do
-      begin
+          on E: Exception do
+          begin
 
-        Writeln( E.Message );
+            Writeln( E.Message );
 
-      end;
+          end;
 
-    end;
+        end;
+     Finally
+       FreeAndNil(Fr_Dados);
+     End;
 
   finally
 
@@ -12917,6 +12922,7 @@ begin
                     bPDF      := False;
                     varTmp := '';
                     varXML := '';
+
                     for j := 0 to pred(varMsgXml.MessageParts.Count) do
                     begin
                       if (varMsgXml.MessageParts.Items[j] is TIdAttachment) then
@@ -12924,6 +12930,28 @@ begin
 
                         varXML := TIdAttachment(varMsgXml.MessageParts.Items[j]).FileName;
                         varTmp := PastaSERVIDORTEMP  + varXML;
+                        {   coloquei para teste.
+                        doSaveLog(PastaLOG, 'Arquivo Anexo Encontrado: ' +  PWideChar(  PChar(varTmp) ));
+
+                        Try
+                            TIdAttachment(varMsgXml.MessageParts.Items[j]).SaveToFile(varTmp);
+                              if varIdIMAP41.UIDDeleteMsg(TheUID) = True then
+                              begin
+                                  if varIdIMAP41.ExpungeMailBox = False then
+                                    Writeln(' Sucesso em marcar a Mensagem como Deletada mas ela não foi eliminada');
+                              end else begin
+                                    Writeln('Falha em Apagar Mensagem. Esta Past é Somente Leitura?');
+                              end;
+
+                            Writeln(' XML-Outro Lido: ' +  PWideChar(  PChar(varTmp) ));
+                        except
+                           on E: Exception do
+                           begin
+                               doSaveLog(PastaLOG, '[ERRO] Tentando Salvar Arquivo Anexo: ' +  PWideChar(  PChar(varTmp) ));
+                           end;
+
+                        End;
+                         }
                         bPDF := False;
                         if lowercase(ExtractFileExt(varTmp)) = '.pdf' then
                           bPDF := True

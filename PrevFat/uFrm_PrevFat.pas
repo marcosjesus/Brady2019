@@ -16,7 +16,7 @@ uses
   System.RegularExpressions,
   ComObj,
   Excel,
-
+  Vcl.FileCtrl,
   idGlobal,
   IdIOHandler,
   IdIOHandlerSocket,
@@ -68,7 +68,8 @@ uses
   Vcl.ExtCtrls, cxPC, Datasnap.Provider, Datasnap.DBClient, cxGroupBox,
   cxCheckGroup, Vcl.Buttons, cxStyles, cxCustomData, cxFilter, cxData,
   cxDataStorage, cxNavigator, cxDBData, cxGridCustomTableView, cxGridTableView,
-  cxGridDBTableView, cxGridLevel, cxClasses, cxGridCustomView, cxGrid;
+  cxGridDBTableView, cxGridLevel, cxClasses, cxGridCustomView, cxGrid, ACBrMail,
+  Vcl.ComCtrls, Vcl.ImgList;
 
 type
   TFrm_Previsao = class(TForm)
@@ -81,7 +82,6 @@ type
     TabEmail: TcxTabSheet;
     cxLabel9: TcxLabel;
     cxButtonEditPath: TcxButtonEdit;
-    cxButtonProcessar: TcxButton;
     SaveDialog: TSaveDialog;
     FDSSalvaPrevisao: TFDQuery;
     DSSalvaPrevisao: TDataSetProvider;
@@ -93,18 +93,6 @@ type
     Panel2: TPanel;
     Label2: TLabel;
     edtPort: TEdit;
-    Panel3: TPanel;
-    Label3: TLabel;
-    edtUserName: TEdit;
-    Panel4: TPanel;
-    Label4: TLabel;
-    edtPassword: TEdit;
-    Panel5: TPanel;
-    Label5: TLabel;
-    edtFrom: TEdit;
-    Panel6: TPanel;
-    Label6: TLabel;
-    edtAssunto: TEdit;
     TabCopia: TcxTabSheet;
     rgSSL: TRadioGroup;
     rgTLS: TRadioGroup;
@@ -128,8 +116,46 @@ type
     FDComprador: TFDQuery;
     FDOrdem: TFDQuery;
     edtPathSalvaExcel: TcxButtonEdit;
+    StatusBar: TStatusBar;
+    BitBtn1: TBitBtn;
+    chkCopia: TCheckBox;
+    pnlEmail: TPanel;
+    Panel7: TPanel;
+    btnFecharPnl: TBitBtn;
+    memEmail: TMemo;
+    cxGroupBox1: TcxGroupBox;
+    edtFrom: TEdit;
+    cxGroupBox2: TcxGroupBox;
+    edtUserName: TEdit;
+    cxGroupBox3: TcxGroupBox;
+    edtPassword: TEdit;
+    cxGroupBox4: TcxGroupBox;
+    edtDistriFrom: TEdit;
+    cxGroupBox5: TcxGroupBox;
+    edtDistriUserName: TEdit;
+    cxGroupBox6: TcxGroupBox;
+    edtDistriPassword: TEdit;
+    rgDistriSSL: TRadioGroup;
+    rgDistriTLS: TRadioGroup;
+    cxGroupBox7: TcxGroupBox;
+    edtInfoFrom: TEdit;
+    cxGroupBox8: TcxGroupBox;
+    edtInfoUserName: TEdit;
+    cxGroupBox9: TcxGroupBox;
+    edtInfoPassword: TEdit;
+    rgInfoSSL: TRadioGroup;
+    rgInfoTLS: TRadioGroup;
+    cxGroupBox10: TcxGroupBox;
+    edtAssunto: TEdit;
+    cxGroupBox11: TcxGroupBox;
+    EdiManausFrom: TEdit;
+    cxGroupBox12: TcxGroupBox;
+    EdiManausUserName: TEdit;
+    cxGroupBox13: TcxGroupBox;
+    EditManausPassword: TEdit;
+    rgManausSSL: TRadioGroup;
+    rgManausTLS: TRadioGroup;
     procedure cxButtonEditPathClick(Sender: TObject);
-    procedure cxButtonProcessarClick(Sender: TObject);
     procedure PageChange(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure btnSalvarINIClick(Sender: TObject);
@@ -137,16 +163,26 @@ type
     procedure rgSSLClick(Sender: TObject);
     procedure rgTLSClick(Sender: TObject);
     procedure FDQueryEmailBeforePost(DataSet: TDataSet);
+    procedure edtPathSalvaExcelClick(Sender: TObject);
+    procedure BitBtn1Click(Sender: TObject);
+    procedure chkCopiaClick(Sender: TObject);
+    procedure btnFecharPnlClick(Sender: TObject);
+    procedure edtPasswordExit(Sender: TObject);
   private
+    varAnexos: TStringList;
+    varEmailInvalido : TStringList;
+    dxSpreadSheet : TdxSpreadSheet;
     varSMTP : TStringList;
     Mudou : Boolean;
+    ACBrMail: TACBrMail;
     procedure Mensagem(pMensagem: String);
     procedure LimparTabela;
     function IsMatch(const Input, Pattern: string): boolean;
     function IsValidEmailRegEx(const EmailAddress: string): boolean;
-    function ConectarEmailPadrao : Boolean;
+    function EnviarEmail (varEmail, varMensagem : String) : Boolean;
     procedure EnviarMalaDireta;
     procedure CarregaINI;
+    procedure ConectarEmailPadrao;
     { Private declarations }
   public
     { Public declarations }
@@ -160,137 +196,235 @@ implementation
 {$R *.dfm}
 
 
-function TFrm_Previsao.ConectarEmailPadrao : Boolean;
+procedure TFrm_Previsao.ConectarEmailPadrao;
 var
-  IdSSL       : TIdSSLIOHandlerSocketOpenSSL;
-  idSMTP      : TIdSMTP;
+  SSLHandler   : TIdSSLIOHandlerSocketOpenSSL;
+  emMessage    : TIdMessage;
+  emSMTP       : TIdSMTP;
+  bEnvio       : Boolean;
+  Attachment   : TIdAttachment;
+  I            : Integer;
 begin
-  idSMTP := TIdSMTP.Create(nil);
-  Try
-    IdSSL               := TIdSSLIOHandlerSocketOpenSSL.Create(Nil);
-    idSMTP.IOHandler    := IdSSL;
-    idSMTP.UseTLS       := utUseExplicitTLS;
-
-    idSMTP.Host         := edtHost.Text;
-    idSMTP.Username     := edtUserName.Text;
-    idSMTP.Password     := edtPassword.Text;
-    idSMTP.Port         := StrToInt(edtPort.Text);
-
-    idSMTP.Connect();
-    result := idSMTP.Authenticate;
-
-  Finally
-    idSMTP.Disconnect();
-    FreeAndNil( idSMTP );
-    FreeAndNil( IdSSL  );
-
-  End;
-
-
-end;
-
-procedure TFrm_Previsao.btnSalvarINIClick(Sender: TObject);
-Var
-  ArqIni: TIniFile;
-
-begin
-
-{   if not ConectarEmailPadrao then
-  begin
-     Application.MessageBox( 'Configuração de Conta de E-mail Padrão Incorreta - Não foi possível conectar na Conta de E-mail', 'Configuração', MB_ICONEXCLAMATION);
-     Exit;
-  end;
- }
-  Mensagem('Aguarde...');
+  emSMTP     := TIdSMTP.Create;
+  emMessage := TIdMessage.Create;
+  SSLHandler := TIdSSLIOHandlerSocketOpenSSL.Create(nil);
   Try
 
-    DeleteFile(MyDocumentsPath + '\SMTP_PREVFAT.ini');
+   SSLHandler.MaxLineAction          := maException;
 
-  except
-  on E: Exception do
-      begin
+   SSLHandler.SSLOptions.Method      := sslvTLSv1;
 
-        ShowMessage( E.Message );
+   SSLHandler.SSLOptions.Mode        := sslmUnassigned;
+   SSLHandler.SSLOptions.VerifyMode  := [];
+   SSLHandler.SSLOptions.VerifyDepth := 0;
 
-      end;
-  End;
+   emSMTP.IOHandler := SSLHandler;
+   emSMTP.Host      := ACBrMail.Host;
+   emSMTP.Port      := StrToInt(ACBrMail.Port);
+   emSMTP.Username  := ACBrMail.Username;
+   emSMTP.Password  := ACBrMail.Password;
 
-  ArqIni := TIniFile.Create(MyDocumentsPath + '\SMTP_PREVFAT.ini');
+   //emSMTP.UseTLS    := utUseImplicitTLS;
 
+   emSMTP.Disconnect;
+   emSMTP.Connect;
+
+   if emSMTP.Connected then
+   begin
+       with emMessage do
+       begin
+         Clear;
+         Body.Clear;
+         Recipients.Clear;
+         Subject                :='[Teste] - Envio de E-mail da Ferrament Previsão de Faturamento';
+         From.Address           := ACBrMail.Username;
+         From.Name              := ACBrMail.FromName;
+         Recipients.Add.Address := ACBrMail.Username;
+         ContentType            := 'multipart/alternative';
+         ContentDisposition     := 'inline';
+         Encoding               := meMIME;
+       end;
+
+       with TIdText.Create(emMessage.MessageParts) do
+       begin
+          Body.Text       := 'This message contains HTML and images.';
+          ContentTransfer := '7bit';
+          ContentType     := 'text/plain';
+       end;
+
+       with TIdText.Create(emMessage.MessageParts) do
+       begin
+          ContentType     := 'multipart/related';
+          Body.Clear;
+       end;
+
+
+       with TIdText.Create(emMessage.MessageParts) do
+       begin
+         Body.Clear;
+         Body.Text       := 'Teste de envio de E-mail da Conta' + ACBrMail.Username;
+         ContentTransfer := '7bit';
+         ContentType     := 'text/html';
+         ParentPart      := 1;
+       end;
+
+   end;
 
    try
-    ArqIni.WriteString('[EMAIL]','','');
+       emSMTP.Send(emMessage);
+       Application.MessageBox( PChar( 'Conta de E-mail ' + edtFrom.Text + ' Conectou com Sucesso.'), 'Configuração', MB_ICONINFORMATION)
+    except
+       on e: exception do
+         begin
+           Application.MessageBox( Pchar( 'Não foi possível conectar na Conta de E-mail ' + edtFrom.Text + '.'), 'Configuração', MB_ICONERROR);
 
-    ArqIni.WriteString('EMAIL', 'HOST', edtHost.Text);
-    ArqIni.WriteString('EMAIL', 'PORT', edtPort.Text);
+         end;
+    end;
 
-    if  rgSSL.ItemIndex = 0 then
-     ArqIni.WriteString('EMAIL', 'SSL', 'Sim')
-    else    ArqIni.WriteString('EMAIL', 'SSL', 'Não');
-
-    if  rgTLS.ItemIndex = 0 then
-      ArqIni.WriteString('EMAIL', 'TLS', 'Sim')
-    else    ArqIni.WriteString('EMAIL', 'TLS', 'Não');
-
-    ArqIni.WriteString('EMAIL', 'USER', edtUserName.Text);
-    ArqIni.WriteString('EMAIL', 'PWD', edtPassword.Text);
-    ArqIni.WriteString('EMAIL', 'FROM', edtFrom.Text);
-    ArqIni.WriteString('EMAIL', 'ASSUNTO', edtAssunto.Text);
-    ArqIni.WriteString('PASTA', 'SALVAR_EXCEL', edtPathSalvaExcel.Text);
-
-    Mensagem(EmptyStr);
-    Application.MessageBox( 'Alteração do E-mail Padrão Salvas com Sucesso.', 'Configuração', MB_ICONINFORMATION);
-
-  finally
-     Mudou := False;
-     ArqIni.Free;
-  end;
-
-
-
+   emSMTP.Disconnect;
+  Finally
+     FreeAndNil(emMessage);
+     FreeAndNil(emSMTP);
+     FreeAndNil(SSLHandler);
+  End;
 end;
 
-procedure TFrm_Previsao.cxButtonEditPathClick(Sender: TObject);
-begin
-  if SaveDialog.Execute(Handle) then
-  begin
-    cxButtonEditPath.Text := SaveDialog.FileName;
-  end;
-end;
 
-procedure  TFrm_Previsao.LimparTabela;
-begin
-  FDQueryTmp.Close;
-  FDQueryTmp.SQL.Clear;
-  FDQueryTmp.SQL.Add('Truncate Table TSOP_PREVISAOFAT');
-  FDQueryTmp.ExecSQL;
-end;
-
-procedure TFrm_Previsao.Mensagem(pMensagem: String);
+function TFrm_Previsao.EnviarEmail(varEmail, varMensagem : String) : Boolean;
 var
-  I, X, Y, varAno, varMes : Integer;
-  dxSpreadSheet: TdxSpreadSheet;
-
+  SSLHandler   : TIdSSLIOHandlerSocketOpenSSL;
+  emMessage    : TIdMessage;
+  emSMTP       : TIdSMTP;
+  bEnvio       : Boolean;
+  Attachment   : TIdAttachment;
+  I            : Integer;
 begin
-  cxLabelMensagem.Caption := pMensagem;
-  PanelSQLSplashScreen.Visible := not pMensagem.IsEmpty;
-  Update;
-  Application.ProcessMessages;
+  emSMTP     := TIdSMTP.Create;
+  emMessage := TIdMessage.Create;
+  SSLHandler := TIdSSLIOHandlerSocketOpenSSL.Create(nil);
+  Try
+
+   SSLHandler.MaxLineAction          := maException;
+   SSLHandler.SSLOptions.Method      := sslvTLSv1;
+   SSLHandler.SSLOptions.Mode        := sslmUnassigned;
+   SSLHandler.SSLOptions.VerifyMode  := [];
+   SSLHandler.SSLOptions.VerifyDepth := 0;
+
+   emSMTP.IOHandler := SSLHandler;
+   emSMTP.Host      := ACBrMail.Host;
+   emSMTP.Port      := StrToInt(ACBrMail.Port);
+   emSMTP.Username  := ACBrMail.Username;
+  // emSMTP.Password  := ACBrMail.Password;
+ //  emSMTP.UseTLS    := utUseImplicitTLS;
+
+
+   emSMTP.Connect;
+   Try
+
+      if emSMTP.Connected then
+      begin
+         with emMessage do
+         begin
+           Clear;
+           Body.Clear;
+           Recipients.Clear;
+           Subject                := ACBrMail.Subject;
+           From.Address           := ACBrMail.Username;
+           From.Name              := ACBrMail.FromName;
+           Recipients.Add.Address := varEmail;
+           FDQueryEmail.Close;
+           FDQueryEmail.Filtered := False;
+           FDQueryEmail.Filter   := 'TSOP_ATIVO = ''S''';
+           FDQueryEmail.Filtered := True;
+           FDQueryEmail.Open;
+
+           while not FDQueryEmail.Eof do
+           begin
+             BccList.Add.Address := FDQueryEmail.FieldByName('TSOP_EMAIL').AsString;
+             FDQueryEmail.Next;
+           end;
+
+           ContentType            := 'multipart/alternative';
+           ContentDisposition     := 'inline';
+           Encoding               := meMIME;
+         end;
+
+         with TIdText.Create(emMessage.MessageParts) do
+         begin
+            Body.Text       := 'This message contains HTML and images.';
+            ContentTransfer := '7bit';
+            ContentType     := 'text/plain';
+         end;
+
+         with TIdText.Create(emMessage.MessageParts) do
+         begin
+            ContentType     := 'multipart/related';
+            Body.Clear;
+         end;
+
+         with TIdText.Create(emMessage.MessageParts) do
+         begin
+           Body.Clear;
+           Body.Text       := varMensagem;
+           ContentTransfer := '7bit';
+           ContentType     := 'text/html';
+           ParentPart      := 1;
+         end;
+
+        for I := 0 to varAnexos.Count-1 do
+        begin
+
+           Attachment := TIdAttachmentFile.Create(emMessage.MessageParts, varAnexos[I]);
+
+        end;
+
+
+      end;
+
+      bEnvio := False;
+      try
+         emSMTP.Send(emMessage);
+         bEnvio := True;
+      except
+         on e: exception do
+           begin
+             showmessage( 'Erro ao Enviar: '  + e.Message );
+
+           end;
+      end;
+
+    Finally
+     emSMTP.Disconnect;
+
+    End;
+  Finally
+     FreeAndNil(emMessage);
+     FreeAndNil(emSMTP);
+     FreeAndNil(SSLHandler);
+  End;
+
 end;
 
-procedure TFrm_Previsao.cxButtonProcessarClick(Sender: TObject);
+procedure TFrm_Previsao.BitBtn1Click(Sender: TObject);
 var
   I, X, Y, varAno, varMes, varContador, varLinha : Integer;
   dxSpreadSheet: TdxSpreadSheet;
   varOrdemvendas, varCodigoCliente,	varNomeCliente, varCodigoComprador, varEmailComprador,
   varItemOV, varCodigoMaterial, varCodigoMaterialCatalogo, varDescricaoMaterial, varQtdSerEntregue, varUMSerEntregue,
-  varQtdedaOrdem, varUMOrdem  : String;
+  varQtdedaOrdem, varUMOrdem, varCanal, varCC  : String;
 
   varDataPrevistaEntrega : TDateTime;
 
+
 begin
+  if cxButtonEditPath.Text = EmptyStr then
+    raise Exception.Create('Informe o arquivo primeiro.');
+
+  varEmailInvalido := TStringList.Create;
+
   Mensagem( 'Iniciando processo de importação...' );
   try
+    CarregaINI;
 
     dxSpreadSheet := TdxSpreadSheet.Create(nil);
     try
@@ -311,6 +445,9 @@ begin
       Mensagem( 'Lendo linhas da planilha...' );
       varContador := 1;
       varLinha :=  dxSpreadSheet.ActiveSheetAsTable.Rows.LastIndex;
+      varEmailInvalido.Clear;
+      varEmailInvalido.Add('Ordem de Venda | E-mail do Comprador');
+
       for X := dxSpreadSheet.ActiveSheetAsTable.Rows.FirstIndex+1 to dxSpreadSheet.ActiveSheetAsTable.Rows.LastIndex do
       begin
 
@@ -322,7 +459,7 @@ begin
           if dxSpreadSheet.ActiveSheetAsTable.Rows[X].CellCount < 14 then
             Continue;
 
-          Mensagem( 'Linha (" ' + IntToStr(X) + '/' + IntToStr(dxSpreadSheet.ActiveSheetAsTable.Rows.LastIndex) + '") "' + Trim(dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[4].AsString) + '" ...' );
+          Mensagem( 'E-mail do Comprador (" ' + IntToStr(X) + '/' + IntToStr(dxSpreadSheet.ActiveSheetAsTable.Rows.LastIndex) + '") "' + Trim(dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[4].AsString) + '" ...' );
 
           if Trim(dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[0].AsString) = EmptyStr then
             Continue;
@@ -332,12 +469,34 @@ begin
           Continue;
 
         end;
+        varOrdemvendas            := '';
+        varCodigoCliente          := '';
+        varNomeCliente            := '';
+        varCodigoComprador        := '';
+        varEmailComprador         := '';
+        varItemOV                 := '';
+        varCodigoMaterial         := '';
+        varCodigoMaterialCatalogo := '';
+        varDescricaoMaterial      := '';
+        varQtdSerEntregue         := '';
+        varUMSerEntregue          := '';
+        varQtdedaOrdem            := '';
+        varUMOrdem                := '';
+        varDataPrevistaEntrega    := 0;
+        varCanal                  := '';
+        varCC                     := '';
 
         varOrdemvendas            := dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[0].AsString;
         varCodigoCliente          := dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[1].AsString;
         varNomeCliente            := dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[2].AsString;
         varCodigoComprador        := dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[3].AsString;
         varEmailComprador         := dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[4].AsString;
+
+        if not IsValidEmailRegEx(varEmailComprador) then
+        begin
+           varEmailInvalido.Add(varOrdemvendas + ' | ' + varEmailComprador);
+           Continue;
+        end;
 
         varItemOV                 := dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[5].AsString;
         varCodigoMaterial         := dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[6].AsString;
@@ -349,6 +508,10 @@ begin
         varQtdedaOrdem            := dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[11].AsString;
         varUMOrdem                := dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[12].AsString;
         varDataPrevistaEntrega    := dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[13].AsDateTime;
+        varCanal                  := dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[14].AsString;
+
+         if  Assigned(dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[15]) then
+          varCC                     := dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[15].AsString;
 
         CDSSalvaPrevisao.Append;
         CDSSalvaPrevisao.FieldByName('TSOP_PREVISAOFAT_ID').AsInteger         :=  varContador;
@@ -370,6 +533,9 @@ begin
         CDSSalvaPrevisao.FieldByName('TSOP_ORDBILITEUNIQTD').AsString         :=  UpperCase(varUMOrdem);
         CDSSalvaPrevisao.FieldByName('TSOP_ORDBILQTD').AsString               :=  varQtdedaOrdem;
         CDSSalvaPrevisao.FieldByName('TSOP_ORDBILDATPREVENT').AsDateTime      :=  varDataPrevistaEntrega;
+        CDSSalvaPrevisao.FieldByName('TSOP_ORDBILCANNOM').AsString            :=  varCanal;
+        CDSSalvaPrevisao.FieldByName('TSOP_ORDBILCUSTCLASS').AsString         :=  varCC;
+
 
         try
           CDSSalvaPrevisao.Post;
@@ -408,107 +574,571 @@ begin
         CDSSalvaPrevisao.Close;
       end;
 
-      Mensagem( 'Fim..' );
-
     finally
 
       FreeAndNil(dxSpreadSheet);
 
     end;
+
+    Mensagem( 'Enviando E-mail...' );
+
+    EnviarMalaDireta;
+
+    if varEmailInvalido.Count > 1 then
+    begin
+      memEmail.Lines.AddStrings(varEmailInvalido);
+      pnlEmail.Visible := True;
+    end;
+
   finally
+       FreeAndNil(varEmailInvalido);
        Mensagem( EmptyStr );
-        cxButtonEditPath.Clear;
+       cxButtonEditPath.Clear;
+  end;
+
+
+end;
+
+procedure TFrm_Previsao.btnFecharPnlClick(Sender: TObject);
+begin
+   memEmail.Clear;
+   pnlEmail.Visible := False;
+end;
+
+procedure TFrm_Previsao.btnSalvarINIClick(Sender: TObject);
+Var
+  ArqIni: TIniFile;
+
+begin
+
+{   if not ConectarEmailPadrao then
+  begin
+     Application.MessageBox( 'Configuração de Conta de E-mail Padrão Incorreta - Não foi possível conectar na Conta de E-mail', 'Configuração', MB_ICONEXCLAMATION);
+     Exit;
+  end;
+ }
+  Screen.Cursor := crHourGlass;
+  Mensagem('Aguarde...');
+  Try
+
+    DeleteFile(ExtractFilePath(Application.ExeName) + '\SMTP_PREVFAT.ini');
+
+  except
+  on E: Exception do
+      begin
+        Screen.Cursor := crDefault;
+        Application.MessageBox( PwideChar( E.Message ) , 'Configuração', MB_ICONERROR);
+      end;
+  End;
+
+  ArqIni := TIniFile.Create(ExtractFilePath(Application.ExeName) + '\SMTP_PREVFAT.ini');
+
+
+   try
+    
+    ArqIni.WriteString('EMAIL', 'HOST', edtHost.Text);
+    ArqIni.WriteString('EMAIL', 'PORT', edtPort.Text);
+
+    //Pedido
+    if  rgSSL.ItemIndex = 0 then
+     ArqIni.WriteString('PEDIDO', 'SSL', 'Sim')
+    else    ArqIni.WriteString('PEDIDO', 'SSL', 'Não');
+
+    if  rgTLS.ItemIndex = 0 then
+      ArqIni.WriteString('PEDIDO', 'TLS', 'Sim')
+    else    ArqIni.WriteString('PEDIDO', 'TLS', 'Não');
+
+    ArqIni.WriteString('PEDIDO', 'USER', edtUserName.Text);
+    ArqIni.WriteString('PEDIDO', 'PWD', edtPassword.Text);
+    ArqIni.WriteString('PEDIDO', 'FROM', edtFrom.Text);
+
+    // Distribuidor
+    if  rgDistriSSL.ItemIndex = 0 then
+     ArqIni.WriteString('DISTRIB', 'SSL', 'Sim')
+    else    ArqIni.WriteString('DISTRIB', 'SSL', 'Não');
+
+    if  rgDistriTLS.ItemIndex = 0 then
+      ArqIni.WriteString('DISTRIB', 'TLS', 'Sim')
+    else    ArqIni.WriteString('DISTRIB', 'TLS', 'Não');
+
+    ArqIni.WriteString('DISTRIB', 'USER', edtDistriUserName.Text);
+    ArqIni.WriteString('DISTRIB', 'PWD', edtDistriPassword.Text);
+    ArqIni.WriteString('DISTRIB', 'FROM', edtDistriFrom.Text);
+
+    //Informacoes
+    if  rgInfoSSL.ItemIndex = 0 then
+     ArqIni.WriteString('INFO', 'SSL', 'Sim')
+    else    ArqIni.WriteString('INFO', 'SSL', 'Não');
+
+    if  rgInfoTLS.ItemIndex = 0 then
+      ArqIni.WriteString('INFO', 'TLS', 'Sim')
+    else    ArqIni.WriteString('INFO', 'TLS', 'Não');
+
+    ArqIni.WriteString('INFO', 'USER', edtInfoUserName.Text);
+    ArqIni.WriteString('INFO', 'PWD', edtInfoPassword.Text);
+    ArqIni.WriteString('INFO', 'FROM', edtInfoFrom.Text);
+
+    //Manaus
+
+    if  rgManausSSL.ItemIndex = 0 then
+     ArqIni.WriteString('MANAUS', 'SSL', 'Sim')
+    else    ArqIni.WriteString('MANAUS', 'SSL', 'Não');
+
+    if  rgManausTLS.ItemIndex = 0 then
+      ArqIni.WriteString('MANAUS', 'TLS', 'Sim')
+    else    ArqIni.WriteString('MANAUS', 'TLS', 'Não');
+
+    ArqIni.WriteString('MANAUS', 'USER', EdiManausUserName.Text);
+    ArqIni.WriteString('MANAUS', 'PWD', EditManausPassword.Text);
+    ArqIni.WriteString('MANAUS', 'FROM', EdiManausFrom.Text);
+
+
+
+
+    ArqIni.WriteString('EMAIL', 'ASSUNTO', edtAssunto.Text);
+
+    ArqIni.WriteString('PASTA', 'SALVAR_EXCEL', edtPathSalvaExcel.Text);
+    if chkCopia.Checked  then
+        ArqIni.WriteString('PASTA', 'SALVAR_COPIA', 'Sim')
+    else    ArqIni.WriteString('PASTA', 'SALVAR_COPIA', 'Não');
+
+    if System.IOUtils.TFile.Exists( MyDocumentsPath + '\SMTP_PREVFAT.ini' ) then
+      DeleteFile(MyDocumentsPath + '\SMTP_PREVFAT.ini');
+
+    System.IOUtils.TFile.Copy( ExtractFilePath(Application.ExeName) + '\SMTP_PREVFAT.ini' , MyDocumentsPath + '\SMTP_PREVFAT.ini', True );
+
+    Mensagem(EmptyStr);
+
+    Application.MessageBox( 'Alteração do E-mail Padrão Salvas com Sucesso.', 'Configuração', MB_ICONINFORMATION);
+
+  finally
+     Screen.Cursor := crDefault;
+     Mudou := False;
+     ArqIni.Free;
   end;
 
 end;
 
+procedure TFrm_Previsao.cxButtonEditPathClick(Sender: TObject);
+begin
+  if SaveDialog.Execute(Handle) then
+  begin
+    cxButtonEditPath.Text := SaveDialog.FileName;
+  end;
+end;
+
+procedure  TFrm_Previsao.LimparTabela;
+begin
+  FDQueryTmp.Close;
+  FDQueryTmp.SQL.Clear;
+  FDQueryTmp.SQL.Add('Truncate Table TSOP_PREVISAOFAT');
+  FDQueryTmp.ExecSQL;
+end;
+
+procedure TFrm_Previsao.Mensagem(pMensagem: String);
+var
+  I, X, Y, varAno, varMes : Integer;
+  dxSpreadSheet: TdxSpreadSheet;
+
+begin
+  cxLabelMensagem.Caption := pMensagem;
+  PanelSQLSplashScreen.Visible := not pMensagem.IsEmpty;
+  Update;
+  Application.ProcessMessages;
+end;
 
 procedure TFrm_Previsao.EnviarMalaDireta;
 var
-  Planilha: OleVariant;
   I, X, J, ContaCliente : Integer;
   varCor1,varCor2: TColor;
+  varMsg: TStringList;
+  varEmailPara: String;
+  varXML: TStringList;
+
+  varCC: TStringList;
+
+  Data : TDateTime;
+  varPastaDoDia : String;
+  varEmpresa : String;
 
 begin
-  Planilha:= CreateOleObject('Excel.Application');
+  if not System.IOUtils.TDirectory.Exists( edtPathSalvaExcel.Text ) then
+  begin
+    Application.MessageBox( PWideChar( 'Pasta ' + edtPathSalvaExcel.Text + 'Não esta criada. Criar Pasta e Corrigir arquivo .INI'),  'Enviando E-mail', MB_ICONERROR);;
 
-  Planilha.visible:=false;
-  Planilha.workbooks.add(1);
+    exit;
+  end;
 
-  Planilha.cells[1,1]:='Nº Item OV';
-  Planilha.cells[1,2]:='Código material';
-  Planilha.cells[1,3]:='Código material catálogo';
-  Planilha.cells[1,4]:='Descrição material';
-  Planilha.cells[1,5]:='Qtd a ser entregue';
-  Planilha.cells[1,6]:='UM';
-  Planilha.cells[1,7]:='Quantidade da Ordem';
-  Planilha.cells[1,8]:='UM';
-  Planilha.cells[1,9]:='Data prevista Entrega';
+
+  Screen.Cursor := crHourGlass;
+  Data := Date;
+  varPastaDoDia :=  FormatDateTime('yyyymmdd', Data);
+
+
+  if not System.IOUtils.TDirectory.Exists( edtPathSalvaExcel.Text + '\' + varPastaDoDia + '\'  ) then
+    System.IOUtils.TDirectory.CreateDirectory( edtPathSalvaExcel.Text + '\' + varPastaDoDia + '\' );
+
+  varPastaDoDia := edtPathSalvaExcel.Text + '\' + varPastaDoDia;
 
   FDComprador.Close;
   FDComprador.SQL.Clear;
-  FDComprador.SQL.Add('SELECT DISTINCT TSOP_ORDBILEMAILCOMPRADOR FROM TSOP_PREVISAOFAT ORDER BY TSOP_ORDBILEMAILCOMPRADOR ');
+  FDComprador.SQL.Add('SELECT DISTINCT TSOP_ORDBILREPNOM, TSOP_ORDBILEMAILCOMPRADOR FROM TSOP_PREVISAOFAT ORDER BY TSOP_ORDBILEMAILCOMPRADOR ');
   FDComprador.Open;
-  if not FDComprador.IsEmpty then
-  begin
-     while not FDComprador.Eof do
-     begin
 
-        FDOrdem.Close;
-        FDOrdem.SQL.Clear;
-        FDOrdem.SQL.Add(' Select TSOP_ORDBILNRODOCREF, TSOP_ORDBILCLICOD, TSOP_ORDBILCLINOM, TSOP_ORDBILREPNOM, TSOP_ORDBILEMAILCOMPRADOR ');
-        FDOrdem.SQL.Add(' From TSOP_PREVISAOFAT ');
-        FDOrdem.SQL.Add(' Where TSOP_ORDBILEMAILCOMPRADOR = :TSOP_ORDBILEMAILCOMPRADOR ');
-        FDOrdem.Params.ParamByName('TSOP_ORDBILEMAILCOMPRADOR').AsString := FDComprador.FieldByName('TSOP_ORDBILEMAILCOMPRADOR').AsString;
-        FDOrdem.Open;
-        Planilha.caption := FDComprador.FieldByName('TSOP_ORDBILCLINOM').AsString;
-        if not FDOrdem.IsEmpty then
-        begin
-           while not FDOrdem.Eof do
-           begin
-                FDItem.Close;
-                FDItem.SQL.Clear;
-                FDItem.SQL.Add( ' SELECT TSOP_ORDBILITECOD, TSOP_CODIGOMATERIAL, TSOP_YNUMBER, TSOP_ORDBILITENOM, TSOP_ORDBILITEUNIENTREGUE, ' );
-                FDItem.SQL.Add( ' TSOP_ORDBILQTDENTREGUE, TSOP_ORDBILITEUNIQTD, TSOP_ORDBILQTD, TSOP_ORDBILDATPREVENT ');
-                FDItem.SQL.Add( ' FROM TSOP_PREVISAOFAT ');
-                FDItem.SQL.Add( ' WHERE  TSOP_ORDBILEMAILCOMPRADOR = :TSOP_ORDBILEMAILCOMPRADOR  AND TSOP_ORDBILNRODOCREF = :TSOP_ORDBILNRODOCREF ');
-                FDItem.Params.ParamByName('TSOP_ORDBILEMAILCOMPRADOR').AsString := FDComprador.FieldByName('TSOP_ORDBILEMAILCOMPRADOR').AsString;
-                FDItem.Params.ParamByName('TSOP_ORDBILNRODOCREF').AsString      := FDOrdem.FieldByName('TSOP_ORDBILNRODOCREF').AsString;
-                FDItem.Open;
-                 X := 2;
-                if not FDItem.Eof then
-                begin
-                   Planilha.cells[X, 1] :=  FDItem.Fields[0].AsString; //CSR
-                   Planilha.cells[X, 2] :=  FDItem.Fields[1].AsString;  //Vendedor
-                   Planilha.cells[X, 3] :=  FDItem.Fields[2].AsString; //Grupo
-
-                   Planilha.cells[X, 4] :=  FDItem.Fields[3].AsString;  //Codigo
-                   Planilha.cells[X, 5] :=  FDItem.Fields[4].AsString;  //Cliente
-                   Planilha.cells[X, 6] :=  FDItem.Fields[5].AsString;   //Site
-                   Planilha.cells[X, 7] :=  FDItem.Fields[6].AsString; //Canal
-                   Planilha.cells[X, 8] :=  FDItem.Fields[7].AsString;  //Região
-                   Planilha.cells[X, 9] :=  FDItem.Fields[8].AsString; //Estado
+  varMsg    := TStringList.Create;
+  varAnexos := TStringList.Create;
+  varCC     := TStringList.Create;
 
 
-                   FDItem.Next;
-                end;
+  try
+      if not FDComprador.IsEmpty then
+      begin
+         while not FDComprador.Eof do
+         begin
+
+            FDOrdem.Close;
+            FDOrdem.SQL.Clear;
+            FDOrdem.SQL.Add(' Select TSOP_ORDBILNRODOCREF, TSOP_ORDBILCLICOD, TSOP_ORDBILCLINOM, TSOP_ORDBILREPNOM, TSOP_ORDBILEMAILCOMPRADOR, ');
+            FDOrdem.SQL.Add(' TSOP_ORDBILCANNOM, TSOP_ORDBILCUSTCLASS From TSOP_PREVISAOFAT ');
+            FDOrdem.SQL.Add(' Where TSOP_ORDBILEMAILCOMPRADOR = :TSOP_ORDBILEMAILCOMPRADOR ');
+            FDOrdem.Params.ParamByName('TSOP_ORDBILEMAILCOMPRADOR').AsString := FDComprador.FieldByName('TSOP_ORDBILEMAILCOMPRADOR').AsString;
+            FDOrdem.Open;
+            if not FDOrdem.IsEmpty then
+            begin
+               while not FDOrdem.Eof do
+               begin
+                    varEmpresa := '';
+
+                    if FDOrdem.FieldByName('TSOP_ORDBILCANNOM').AsString = '4110' then
+                      varEmpresa := 'Seton'
+                    else varEmpresa := 'Brady';
+
+                    varMsg.Add('<HTML>');
+
+                    varMsg.Add('<HEAD>');
+                    varMsg.Add('<meta http-equiv="content-type" content="text/html"; charset=ISO-8859-1">');
+
+                    //varMsg.Add('<script src="https://kit.fontawesome.com/976b91e952.js" crossorigin="anonymous"></script> ');
+
+                    varMsg.Add('<style>');
+                    varMsg.Add('.p_link{font-family:Verdana}');
+                    varMsg.Add('</style>');
+
+                    varMsg.Add('</HEAD>');
+
+                    varMsg.Add('<BODY style="font-family:Arial;font-size:11px;">');
+                    varMsg.Add('<p><i>Olá, tudo bem com você?</i></p>');
+                    varMsg.Add('<BR>');
+                    varMsg.Add('<p><i>Eu sou o Assistente Virtual, aqui da ' + varEmpresa + '. Estou enviando esse e-mail para informar a');
+                    varMsg.Add('previsão de faturamento dos seus pedidos em aberto</i></p>');
+                    varMsg.Add('<BR>');
+                    varMsg.Add('<BR>');
+                    varMsg.Add('<BR>');
+                    varMsg.Add('<BR>');
+                    varMsg.Add('<p><i>Nosso sistema envia automaticamente o PDF da Nota Fiscal, caso não receba, nos contate.</i></p>');
+                    varMsg.Add('<BR>');
+                    varMsg.Add('<p><i>Se houver alterações no prazo de entrega retornaremos o contato.</i></p>');
+                    varMsg.Add('<BR> ');
+                    varMsg.Add('<p><i>Agradeço o seu tempo e, em caso de dúvidas, por favor entre em contato através do');
+                    varMsg.Add('número de telefone da minha assinatura.</i></p>');
+                    varMsg.Add('<BR> ');
+                    varMsg.Add('<p><i>Poderia avaliar nosso atendimento? Estamos melhorando a cada dia para melhor atendê-lo');
+                    varMsg.Add('e para isso precisamos da sua opinião.</i></p>');
+                    varMsg.Add('<BR>');
+                    varMsg.Add('<p class="p_link"><i>Basta clicar aqui >>> <a href="https://docs.google.com/forms/d/e/1FAIpQLSd7py85-JZvgwIBiJq3ekNLJQfZZV91e5o_eIFTt6q2ZpL9cw/viewform">Pesquisa de Satisfação</a></i></p> ');
+                    varMsg.Add('<BR>');
+                    varMsg.Add('<p>Obrigado</p>');
+                    varMsg.Add('<BR>');
+                    varMsg.Add('<p>Assistente Virtual</p>');
+                    varMsg.Add('<p>Customer Service Time</p>');
+                    varMsg.Add('<p>(11) 4166-1500</p>');
+
+                    varMsg.Add('</BODY>');
+                    varMsg.Add('</HTML>');
+
+
+                    FDItem.Close;
+                    FDItem.SQL.Clear;
+                    FDItem.SQL.Add( ' SELECT TSOP_ORDBILITECOD, TSOP_CODIGOMATERIAL, TSOP_YNUMBER, TSOP_ORDBILITENOM, TSOP_ORDBILITEUNIENTREGUE, ' );
+                    FDItem.SQL.Add( ' TSOP_ORDBILQTDENTREGUE, TSOP_ORDBILITEUNIQTD, TSOP_ORDBILQTD, TSOP_ORDBILDATPREVENT ');
+                    FDItem.SQL.Add( ' FROM TSOP_PREVISAOFAT ');
+                    FDItem.SQL.Add( ' WHERE  TSOP_ORDBILDATALT IS NULL AND TSOP_ORDBILEMAILCOMPRADOR = :TSOP_ORDBILEMAILCOMPRADOR  AND TSOP_ORDBILNRODOCREF = :TSOP_ORDBILNRODOCREF ');
+
+                    FDItem.Params.ParamByName('TSOP_ORDBILEMAILCOMPRADOR').AsString := FDOrdem.FieldByName('TSOP_ORDBILEMAILCOMPRADOR').AsString;
+                    FDItem.Params.ParamByName('TSOP_ORDBILNRODOCREF').AsString      := FDOrdem.FieldByName('TSOP_ORDBILNRODOCREF').AsString;
+
+                    FDItem.Open;
+
+                    FDItem.First;
+
+                    if not FDItem.Eof then
+                    begin
+
+                       dxSpreadSheet := TdxSpreadSheet.Create(nil);
+                       try
+
+                         dxSpreadSheet.LoadFromFile( MyDocumentsPath+'\MalaDireta.xlsx' );
+                         dxSpreadSheet.BeginUpdate;
+
+                         dxSpreadSheet.Sheets[0].Active := True;
+
+                         varCor1 := RGB( 255, 255, 204 );
+                         varCor2 := RGB(255,255,225);
+
+                         X := 1;
+
+                         while not FDItem.eof do
+                         begin
+
+                               with dxSpreadSheet.ActiveSheetAsTable.CreateCell(X,0) do
+                               begin
+                                   Style.Brush.BackgroundColor := varCor1;
+                                   AsVariant := FDItem.FieldByName('TSOP_ORDBILITECOD').AsString; // Codigo do Item
+                               end;
+
+                               with dxSpreadSheet.ActiveSheetAsTable.CreateCell(X,1) do
+                               begin
+                                   Style.Brush.BackgroundColor := varCor1;
+                                   AsVariant := FDItem.FieldByName('TSOP_CODIGOMATERIAL').AsString;   // Codigo do Material
+                               end;
+
+                               with dxSpreadSheet.ActiveSheetAsTable.CreateCell(X,2) do
+                               begin
+                                   Style.Brush.BackgroundColor := varCor1;
+                                   AsVariant := FDItem.FieldByName('TSOP_YNUMBER').AsString;  // Codigo do Catalago
+                               end;
+
+                               with dxSpreadSheet.ActiveSheetAsTable.CreateCell(X,3) do
+                               begin
+                                   Style.Brush.BackgroundColor := varCor1;
+                                   AsVariant := FDItem.FieldByName('TSOP_ORDBILITENOM').AsString;  // Nome do Material
+
+                               end;
+
+
+                               with dxSpreadSheet.ActiveSheetAsTable.CreateCell(X,4) do
+                               begin
+                                   Style.Brush.BackgroundColor := varCor1;
+                                   AsVariant := FDItem.FieldByName('TSOP_ORDBILITEUNIENTREGUE').AsString; // Unidade de Medida Prometida
+
+                               end;
+
+
+                               with dxSpreadSheet.ActiveSheetAsTable.CreateCell(X,5) do
+                               begin
+                                   Style.Brush.BackgroundColor := varCor1;
+                                   AsVariant :=  FDItem.FieldByName('TSOP_ORDBILQTDENTREGUE').AsString;  // Qtde Prometida
+                                   Style.DataFormat.FormatCode := '0.00';
+                               end;
+
+                               with dxSpreadSheet.ActiveSheetAsTable.CreateCell(X,6) do
+                               begin
+                                   Style.Brush.BackgroundColor := varCor1;
+                                   AsVariant := FDItem.FieldByName('TSOP_ORDBILITEUNIQTD').AsString; // Unidade de Medida A entregar
+
+                               end;
+
+                               with dxSpreadSheet.ActiveSheetAsTable.CreateCell(X,7) do
+                               begin
+                                   Style.Brush.BackgroundColor := varCor1;
+                                   AsVariant := FDItem.FieldByName('TSOP_ORDBILQTD').AsString;  // Qtde a Entregar
+                                   Style.DataFormat.FormatCode := '0.00';
+                               end;
+
+                               with dxSpreadSheet.ActiveSheetAsTable.CreateCell(X,8) do
+                               begin
+                                   Style.Brush.BackgroundColor := varCor1;
+                                   AsDateTime := FDItem.FieldByName('TSOP_ORDBILDATPREVENT').AsDateTime; // Data de Previsão da Entrega
+                                   Style.DataFormat.FormatCode := 'dd/mm/yyyy';
+
+                               end;
+
+                               if Odd(X) then
+                                varCor1 := RGB(255,255,225)
+                               else
+                                varCor1 := RGB(216,234,204);
+
+                               Inc(X);
+
+                               FDItem.Next;
+                         end;
+
+                         if not System.IOUtils.TDirectory.Exists( varPastaDoDia + '\' + FDComprador.FieldByName('TSOP_ORDBILREPNOM').AsString + '\'  ) then
+                            System.IOUtils.TDirectory.CreateDirectory( varPastaDoDia + '\' + FDComprador.FieldByName('TSOP_ORDBILREPNOM').AsString + '\' );
+
+                         if FileExists(varPastaDoDia+ '\' + FDComprador.FieldByName('TSOP_ORDBILREPNOM').AsString + '\' + 'MalaDireta_' + FDOrdem.FieldByName('TSOP_ORDBILCLICOD').AsString + '.xlsx') then
+                            DeleteFile( varPastaDoDia + '\' + FDComprador.FieldByName('TSOP_ORDBILREPNOM').AsString + '\' + 'MalaDireta_' + FDOrdem.FieldByName('TSOP_ORDBILCLICOD').AsString + '.xlsx');
+
+                         dxSpreadSheet.BeginUpdate;
+                         dxSpreadSheet.SaveToFile( varPastaDoDia + '\' + FDComprador.FieldByName('TSOP_ORDBILREPNOM').AsString + '\' + 'MalaDireta_' + FDOrdem.FieldByName('TSOP_ORDBILCLICOD').AsString + '.xlsx' );
+
+                         if System.IOUtils.TFile.Exists( varPastaDoDia + '\' + FDComprador.FieldByName('TSOP_ORDBILREPNOM').AsString + '\' + 'MalaDireta_' + FDOrdem.FieldByName('TSOP_ORDBILCLICOD').AsString + '.xlsx'  ) then
+                            varAnexos.Add( varPastaDoDia + '\' + FDComprador.FieldByName('TSOP_ORDBILREPNOM').AsString + '\' + 'MalaDireta_' + FDOrdem.FieldByName('TSOP_ORDBILCLICOD').AsString + '.xlsx' );
+
+                         if varAnexos.Count > 0 then
+                         begin
+
+
+                            ACBrMail := TACBrMail.Create(Nil);
+                            Try
+                                ACBrMail.Clear;
+
+                                ACBrMail.Host     := edtHost.Text;
+                                ACBrMail.Port     := edtPort.Text;
+
+                                if FDOrdem.FieldByName('TSOP_ORDBILCANNOM').AsString = '4160' then   //Manaus
+                                begin
+                                  ACBrMail.SetSSL   := rgManausSSL.ItemIndex = 0;
+                                  ACBrMail.SetTLS   := rgManausTLS.ItemIndex = 0;
+
+                                  ACBrMail.Username := EdiManausUserName.Text;
+                                  ACBrMail.Password := EditManausPassword.Text;
+
+                                  ACBrMail.From     := EdiManausUserName.Text;
+                                  ACBrMail.FromName := EdiManausFrom.Text;
+
+
+                                end
+                                else  if FDOrdem.FieldByName('TSOP_ORDBILCANNOM').AsString = '4110' then  // Informacoes Seton
+                                begin
+                                  ACBrMail.SetSSL   := rgInfoSSL.ItemIndex = 0;
+                                  ACBrMail.SetTLS   := rgInfoTLS.ItemIndex = 0;
+
+                                  ACBrMail.Username := edtInfoUserName.Text;
+                                  ACBrMail.Password := edtInfoPassword.Text;
+
+                                  ACBrMail.From     := edtInfoUserName.Text;
+                                  ACBrMail.FromName := edtInfoFrom.Text;
+
+
+                                end
+                                else if ((FDOrdem.FieldByName('TSOP_ORDBILCANNOM').AsString = '4150') and  (FDOrdem.FieldByName('TSOP_ORDBILCUSTCLASS').AsString = 'DV')) then  // Distribuidor
+                                begin
+                                  ACBrMail.SetSSL   := rgDistriSSL.ItemIndex = 0;
+                                  ACBrMail.SetTLS   := rgDistriTLS.ItemIndex = 0;
+
+                                  ACBrMail.Username := edtDistriUserName.Text;
+                                  ACBrMail.Password := edtDistriPassword.Text;
+
+                                  ACBrMail.From     := edtDistriUserName.Text;
+                                  ACBrMail.FromName := edtDistriFrom.Text;
+
+                                end
+                                else if ((FDOrdem.FieldByName('TSOP_ORDBILCANNOM').AsString = '4150') and  (FDOrdem.FieldByName('TSOP_ORDBILCUSTCLASS').AsString = 'C1')) then  // Pedidos
+                                begin
+                                  ACBrMail.SetSSL   := rgSSL.ItemIndex = 0;
+                                  ACBrMail.SetTLS   := rgTLS.ItemIndex = 0;
+
+                                  ACBrMail.Username := edtUserName.Text;
+                                  ACBrMail.Password := edtPassword.Text;
+
+                                  ACBrMail.From     := edtUserName.Text;
+                                  ACBrMail.FromName := edtFrom.Text;
+
+                                end;
 
 
 
-                Planilha.columns.autofit;
-                Planilha.Visible:=True;
-                Planilha.workbooks[1].SaveAs( cxButtonEditPath.Text , xlWorkbookDefault);
-                Planilha:= Unassigned;
+                                ACBrMail.AddAddress(FDOrdem.FieldByName('TSOP_ORDBILEMAILCOMPRADOR').AsString);
 
 
-               FDOrdem.Next;
-           end;
-        end;
+                                ACBrMail.Subject := edtAssunto.Text;
+                                ACBrMail.IsHTML := True;
+                               // ACBrMail.Body.Assign(varMsg);
 
-        FDComprador.Next;
-     end;
+                                for X := 0 to varAnexos.Count-1 do
+                                begin
 
+                                  ACBrMail.AddAttachment( varAnexos[X] );
+
+                                end;
+
+                                try
+
+                                  EnviarEmail(FDComprador.FieldByName('TSOP_ORDBILEMAILCOMPRADOR').AsString, varMsg.Text);
+
+                                  FDQueryTmp.Close;
+                                  FDQueryTmp.SQL.Clear;
+                                  FDQueryTmp.SQL.Add(' Update TSOP_PREVISAOFAT ');
+                                  FDQueryTmp.SQL.Add(' SET TSOP_ORDBILDATALT = GETDATE() ');
+                                  FDQueryTmp.SQL.Add(' WHERE TSOP_ORDBILEMAILCOMPRADOR = :TSOP_ORDBILEMAILCOMPRADOR  AND TSOP_ORDBILNRODOCREF = :TSOP_ORDBILNRODOCREF ');
+
+                                  FDQueryTmp.Params.ParamByName('TSOP_ORDBILEMAILCOMPRADOR').AsString := FDOrdem.FieldByName('TSOP_ORDBILEMAILCOMPRADOR').AsString;
+                                  FDQueryTmp.Params.ParamByName('TSOP_ORDBILNRODOCREF').AsString      := FDOrdem.FieldByName('TSOP_ORDBILNRODOCREF').AsString;
+                                  Try
+                                      FDQueryTmp.ExecSQL;
+                                  except
+
+                                      on E: Exception do
+                                      begin
+
+                                        Application.MessageBox( PWideChar( 'Problema ao atualizar Tabela de E-mail: ' + E.Message),  'Enviando E-mail', MB_ICONERROR);
+
+                                      end;
+
+                                  end;
+
+                                except
+
+                                  on E: Exception do
+                                  begin
+
+                                    Application.MessageBox( PWideChar( 'Problema ao enviar email: ' + E.Message),  'Enviando E-mail', MB_ICONERROR);
+                                    varEmailInvalido.Add( ACBrMail.Username  + ' | ' + E.Message );
+                                  end;
+
+                                end;
+
+                            Finally
+                               FreeAndNil(ACBrMail);
+                            End;
+
+                         end;
+
+                       finally
+                          FreeAndNil(dxSpreadSheet);
+                       end;
+
+                     end;
+
+                     if not chkCopia.Checked  then
+                        DeleteFile (varPastaDoDia + '\' + FDComprador.FieldByName('TSOP_ORDBILREPNOM').AsString + '\' + 'MalaDireta_' + FDOrdem.FieldByName('TSOP_ORDBILCLICOD').AsString + '.xlsx' );
+
+                     varMsg.Clear;
+                     varAnexos.Clear;
+                     Application.ProcessMessages;
+                     FDOrdem.Next;
+
+               end;
+
+            end;
+
+            FDComprador.Next;
+         end;
+
+      end;
+
+  Finally
+
+    CopyFile( PWideChar(cxButtonEditPath.Text), PWideChar(varPastaDoDia+ '\' + ExtractFileName(cxButtonEditPath.Text)), True );
+
+    FDQueryEmail.Close;
+    FDQueryEmail.Filtered := False;
+    FDQueryEmail.Filter := '';
+    FDQueryEmail.Filtered := True;
+    FDQueryEmail.Open;
+    FDComprador.Close;
+    FDOrdem.Close;
+    FDItem.Close;
+    FDQueryEmail.Close;
+
+
+    FreeAndNil(varMsg);
+    FreeAndNil(varAnexos);
+    FreeAndNil(varCC);
+    Screen.Cursor := crDefault;
   end;
+
 end;
 
 
@@ -519,6 +1149,75 @@ procedure TFrm_Previsao.edtHostKeyUp(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
     Mudou := True;
+end;
+
+procedure TFrm_Previsao.edtPasswordExit(Sender: TObject);
+begin
+
+  if edtHost.Text = '' then
+     raise Exception.Create('Campo Host deve estar preenchido.');
+
+  if edtPort.Text = '' then
+     raise Exception.Create('Campo Port deve estar preenchido.');
+
+  if edtFrom.Text = '' then
+     raise Exception.Create('Campo From (Pedidos) deve estar preenchido.');
+
+
+  if edtUserName.Text = '' then
+     raise Exception.Create('Campo UserName deve estar preenchido.');
+
+ // if edtPassword.Text = '' then
+ //    raise Exception.Create('Campo Password deve estar preenchido.');
+
+  ACBrMail := TACBrMail.Create(Nil);
+  Try
+    ACBrMail.Clear;
+
+    ACBrMail.Host     := edtHost.Text;
+    ACBrMail.Port     := edtPort.Text;
+    ACBrMail.From     := edtFrom.Text;
+    ACBrMail.Username := edtUserName.Text;
+    //ACBrMail.Password := edtPassword.Text;
+    ConectarEmailPadrao;
+
+  Finally
+    FreeAndNil(ACBrMail);
+
+  End;
+
+
+end;
+
+procedure TFrm_Previsao.edtPathSalvaExcelClick(Sender: TObject);
+
+var
+  FDir : String;
+begin
+  inherited;
+  if Win32MajorVersion >= 6 then
+    with TFileOpenDialog.Create(nil) do
+    try
+      Title := 'Selecionar Diretório';
+      Options := [fdoPickFolders, fdoPathMustExist, fdoForceFileSystem]; // YMMV
+      OkButtonLabel := 'Selecionar';
+      DefaultFolder := FDir;
+      FileName := FDir;
+      if Execute then
+      begin
+        edtPathSalvaExcel.Text := FileName;
+
+      end;
+    finally
+      Free;
+    end
+  else
+    if SelectDirectory('Selecionar Diretório', ExtractFileDrive(FDir), FDir,
+             [sdNewUI, sdNewFolder]) then
+      edtPathSalvaExcel.Text := FDir;
+
+  Mudou := True;
+
 end;
 
 procedure TFrm_Previsao.FDQueryEmailBeforePost(DataSet: TDataSet);
@@ -537,8 +1236,19 @@ end;
 
 procedure TFrm_Previsao.FormShow(Sender: TObject);
 begin
- if not System.IOUtils.TFile.Exists( MyDocumentsPath + '\SMTP_PREVFAT.ini' ) then
-   System.IOUtils.TFile.Copy( ExtractFilePath(Application.ExeName) + '\SMTP_PREVFAT.ini' , MyDocumentsPath + '\SMTP_PREVFAT.ini', True );
+ Page.ActivePage := TabEmail;
+
+
+ if System.IOUtils.TFile.Exists( MyDocumentsPath + '\SMTP_PREVFAT.ini' ) then
+   DeleteFile(MyDocumentsPath + '\SMTP_PREVFAT.ini');
+
+ if System.IOUtils.TFile.Exists( MyDocumentsPath + '\MalaDireta.xlsx' ) then
+   DeleteFile(MyDocumentsPath + '\MalaDireta.xlsx');
+
+
+ System.IOUtils.TFile.Copy( ExtractFilePath(Application.ExeName) + '\SMTP_PREVFAT.ini' , MyDocumentsPath + '\SMTP_PREVFAT.ini', True );
+
+ System.IOUtils.TFile.Copy( ExtractFilePath(Application.ExeName) + '\MalaDireta.xlsx' , MyDocumentsPath + '\MalaDireta.xlsx', True );
 
  CarregaINI;
 end;
@@ -565,54 +1275,120 @@ end;
 Procedure TFrm_Previsao.CarregaINI;
 Var
   ArqIni: TIniFile;
-  varSSL, varTLS : String;
+  varSSLP, varTLSP, varSSLD, varTLSD, varSSLI, varTLSI, varCopiaArq : String;
 begin
-         try
+   try
 
-        if FileExists(MyDocumentsPath + '\SMTP_PREVFAT.ini') then
-        begin
+      if FileExists(MyDocumentsPath + '\SMTP_PREVFAT.ini') then
+      begin
 
-           ArqIni := TIniFile.Create(MyDocumentsPath + '\SMTP_PREVFAT.ini');
+         ArqIni := TIniFile.Create(MyDocumentsPath + '\SMTP_PREVFAT.ini');
 
-        end
-        else
-        begin
+      end
+      else
+      begin
 
-          ArqIni := TIniFile.Create(ExtractFileDir(ParamStr(0)) + '\SMTP_PREVFAT.ini');
+        ArqIni := TIniFile.Create(ExtractFileDir(ParamStr(0)) + '\SMTP_PREVFAT.ini');
 
-        end;
-         edtHost.Text := ArqIni.ReadString('EMAIL', 'HOST', edtHost.Text);
-         edtPort.Text := ArqIni.ReadString('EMAIL', 'PORT', edtPort.Text);
-
-
-         varSSL := ArqIni.ReadString('EMAIL', 'SSL', varSSL);
-         varTLS := ArqIni.ReadString('EMAIL', 'TLS', varTLS);
-
-
-          if varSSL = 'Sim' Then
-            rgSSL.ItemIndex := 0
-           else rgSSL.ItemIndex := 1;
-
-
-           if varTLS = 'Sim' Then
-            rgTLS.ItemIndex := 0
-           else rgTLS.ItemIndex := 1;
-
-         edtUsername.Text := ArqIni.ReadString('EMAIL', 'USER', edtUsername.Text);
-         edtPassword.Text := ArqIni.ReadString('EMAIL', 'PWD', edtPassword.Text);
-         edtFrom.Text     := ArqIni.ReadString('EMAIL', 'FROM', edtFrom.Text);
-         edtAssunto.Text  := ArqIni.ReadString('EMAIL', 'ASSUNTO', edtAssunto.Text);
-
-         edtPathSalvaExcel.Text :=  ArqIni.ReadString('PASTA', 'SALVAR_EXCEL', edtPathSalvaExcel.Text);
-
-         Mudou := False;
-
-
-      finally
-         ArqIni.Free;
       end;
+
+      StatusBar.Panels[0].Text := ExtractFilePath(ArqIni.FileName) + ExtractFileName(ArqIni.FileName);
+      edtHost.Text := ArqIni.ReadString('EMAIL', 'HOST', edtHost.Text);
+      edtPort.Text := ArqIni.ReadString('EMAIL', 'PORT', edtPort.Text);
+
+      //Pedido
+      varSSLP := ArqIni.ReadString('PEDIDO', 'SSL', varSSLP);
+      varTLSP := ArqIni.ReadString('PEDIDO', 'TLS', varTLSP);
+
+
+      if varSSLP = 'Sim' Then
+         rgSSL.ItemIndex := 0
+      else rgSSL.ItemIndex := 1;
+
+
+      if varTLSP = 'Sim' Then
+         rgTLS.ItemIndex := 0
+      else rgTLS.ItemIndex := 1;
+
+      edtUsername.Text := ArqIni.ReadString('PEDIDO', 'USER', edtUsername.Text);
+      edtPassword.Text := ArqIni.ReadString('PEDIDO', 'PWD', edtPassword.Text);
+      edtFrom.Text     := ArqIni.ReadString('PEDIDO', 'FROM', edtFrom.Text);
+
+      //Distribuidor
+      varSSLD := ArqIni.ReadString('DISTRIB', 'SSL', varSSLD);
+      varTLSD := ArqIni.ReadString('DISTRIB', 'TLS', varTLSD);
+
+
+      if varSSLD = 'Sim' Then
+         rgDistriSSL.ItemIndex := 0
+      else rgDistriSSL.ItemIndex := 1;
+
+
+      if varTLSD = 'Sim' Then
+         rgDistriTLS.ItemIndex := 0
+      else rgDistriTLS.ItemIndex := 1;
+
+      edtDistriUserName.Text := ArqIni.ReadString('DISTRIB', 'USER', edtDistriUserName.Text);
+      edtDistriPassword.Text := ArqIni.ReadString('DISTRIB', 'PWD', edtDistriPassword.Text);
+      edtDistriFrom.Text     := ArqIni.ReadString('DISTRIB', 'FROM', edtDistriFrom.Text);
+
+
+          //Informacoes
+      varSSLI := ArqIni.ReadString('INFO', 'SSL', varSSLI);
+      varTLSI := ArqIni.ReadString('INFO', 'TLS', varTLSI);
+
+      if varSSLI = 'Sim' Then
+         rgInfoSSL.ItemIndex := 0
+      else rgInfoSSL.ItemIndex := 1;
+
+
+      if varTLSI = 'Sim' Then
+         rgInfoTLS.ItemIndex := 0
+      else rgInfoTLS.ItemIndex := 1;
+
+      edtInfoUserName.Text := ArqIni.ReadString('INFO', 'USER', edtInfoUserName.Text);
+      edtInfoPassword.Text := ArqIni.ReadString('INFO', 'PWD', edtInfoPassword.Text);
+      edtInfoFrom.Text     := ArqIni.ReadString('INFO', 'FROM', edtInfoFrom.Text);
+
+      //Manaus
+
+      varSSLI := ArqIni.ReadString('MANAUS', 'SSL', varSSLI);
+      varTLSI := ArqIni.ReadString('MANAUS', 'TLS', varTLSI);
+
+      if varSSLI = 'Sim' Then
+         rgManausSSL.ItemIndex := 0
+      else rgManausSSL.ItemIndex := 1;
+
+
+      if varTLSI = 'Sim' Then
+         rgManausTLS.ItemIndex := 0
+      else rgManausTLS.ItemIndex := 1;
+
+      EdiManausUserName.Text := ArqIni.ReadString('MANAUS', 'USER', EdiManausUserName.Text);
+      EditManausPassword.Text := ArqIni.ReadString('MANAUS', 'PWD', EditManausPassword.Text);
+      EdiManausFrom.Text     := ArqIni.ReadString('MANAUS', 'FROM', EdiManausFrom.Text);
+
+
+      edtAssunto.Text  := ArqIni.ReadString('EMAIL', 'ASSUNTO', edtAssunto.Text);
+
+      edtPathSalvaExcel.Text :=  ArqIni.ReadString('PASTA', 'SALVAR_EXCEL', edtPathSalvaExcel.Text);
+      varCopiaArq            := ArqIni.ReadString('PASTA', 'SALVAR_COPIA', varCopiaArq);
+
+      chkCopia.Checked := varCopiaArq = 'Sim';
+
+      Mudou := False;
+
+
+    finally
+      ArqIni.Free;
+    end;
 end;
 
+
+procedure TFrm_Previsao.chkCopiaClick(Sender: TObject);
+begin
+  Mudou := True;
+end;
 
 procedure TFrm_Previsao.PageChange(Sender: TObject);
 
