@@ -13,6 +13,7 @@ object frmPrincipal: TfrmPrincipal
   Font.Style = []
   OldCreateOrder = False
   Position = poMainFormCenter
+  OnClose = FormClose
   OnShow = FormShow
   DesignSize = (
     614
@@ -26,8 +27,9 @@ object frmPrincipal: TfrmPrincipal
     Height = 428
     Align = alClient
     TabOrder = 0
-    Properties.ActivePage = TabCadastro
+    Properties.ActivePage = TabEtiqueta
     Properties.CustomButtons.Buttons = <>
+    OnChange = PageChange
     ClientRectBottom = 424
     ClientRectLeft = 4
     ClientRectRight = 610
@@ -35,18 +37,16 @@ object frmPrincipal: TfrmPrincipal
     object TabEtiqueta: TcxTabSheet
       Caption = 'Etiquetas Detran'
       ImageIndex = 0
-      ExplicitLeft = 3
-      ExplicitTop = 25
       object cxLabel9: TcxLabel
         Left = 106
-        Top = 163
+        Top = 157
         Caption = 'Selecione o Arquivo (xls)'
         ParentColor = False
         Style.Color = clWhite
       end
       object cxButtonEditPath: TcxButtonEdit
         Left = 106
-        Top = 184
+        Top = 178
         Properties.Buttons = <
           item
             Default = True
@@ -59,7 +59,7 @@ object frmPrincipal: TfrmPrincipal
       end
       object btnCriar: TBitBtn
         Left = 106
-        Top = 214
+        Top = 208
         Width = 129
         Height = 39
         Caption = 'Criar Arquivo '
@@ -199,7 +199,7 @@ object frmPrincipal: TfrmPrincipal
       end
       object rgTipo: TRadioGroup
         Left = 106
-        Top = 114
+        Top = 108
         Width = 401
         Height = 43
         Caption = 'Tipo de Ve'#237'culo'
@@ -337,6 +337,7 @@ object frmPrincipal: TfrmPrincipal
           Top = 21
           Properties.MaxLength = 3
           TabOrder = 0
+          OnKeyUp = edtCarroLinhaKeyUp
           Width = 50
         end
         object edtCarroInter: TcxMaskEdit
@@ -344,6 +345,7 @@ object frmPrincipal: TfrmPrincipal
           Top = 21
           Properties.MaxLength = 2
           TabOrder = 1
+          OnKeyUp = edtCarroLinhaKeyUp
           Width = 50
         end
         object edtCarroBase: TcxMaskEdit
@@ -351,6 +353,7 @@ object frmPrincipal: TfrmPrincipal
           Top = 21
           Properties.MaxLength = 2
           TabOrder = 2
+          OnKeyUp = edtCarroLinhaKeyUp
           Width = 50
         end
       end
@@ -387,6 +390,7 @@ object frmPrincipal: TfrmPrincipal
           Top = 24
           Properties.MaxLength = 2
           TabOrder = 0
+          OnKeyUp = edtCarroLinhaKeyUp
           Width = 50
         end
         object edtMotoLinha: TcxMaskEdit
@@ -394,6 +398,7 @@ object frmPrincipal: TfrmPrincipal
           Top = 21
           Properties.MaxLength = 3
           TabOrder = 1
+          OnKeyUp = edtCarroLinhaKeyUp
           Width = 50
         end
         object edtMotoBase: TcxMaskEdit
@@ -401,6 +406,7 @@ object frmPrincipal: TfrmPrincipal
           Top = 24
           Properties.MaxLength = 2
           TabOrder = 2
+          OnKeyUp = edtCarroLinhaKeyUp
           Width = 50
         end
       end
@@ -437,6 +443,7 @@ object frmPrincipal: TfrmPrincipal
           Top = 23
           Properties.MaxLength = 3
           TabOrder = 0
+          OnKeyUp = edtCarroLinhaKeyUp
           Width = 50
         end
         object edtCaminhaoInter: TcxMaskEdit
@@ -444,6 +451,7 @@ object frmPrincipal: TfrmPrincipal
           Top = 23
           Properties.MaxLength = 2
           TabOrder = 1
+          OnKeyUp = edtCarroLinhaKeyUp
           Width = 50
         end
         object edtCaminhaoBase: TcxMaskEdit
@@ -451,6 +459,7 @@ object frmPrincipal: TfrmPrincipal
           Top = 23
           Properties.MaxLength = 2
           TabOrder = 2
+          OnKeyUp = edtCarroLinhaKeyUp
           Width = 50
         end
       end
@@ -487,6 +496,7 @@ object frmPrincipal: TfrmPrincipal
           Top = 20
           Properties.MaxLength = 3
           TabOrder = 0
+          OnKeyUp = edtCarroLinhaKeyUp
           Width = 50
         end
         object edtOnibusInter: TcxMaskEdit
@@ -494,6 +504,7 @@ object frmPrincipal: TfrmPrincipal
           Top = 20
           Properties.MaxLength = 2
           TabOrder = 1
+          OnKeyUp = edtCarroLinhaKeyUp
           Width = 50
         end
         object edtOnibusBase: TcxMaskEdit
@@ -501,6 +512,7 @@ object frmPrincipal: TfrmPrincipal
           Top = 22
           Properties.MaxLength = 2
           TabOrder = 2
+          OnKeyUp = edtCarroLinhaKeyUp
           Width = 50
         end
       end
@@ -517,10 +529,10 @@ object frmPrincipal: TfrmPrincipal
     end
   end
   object PanelSQLSplashScreen: TPanel
-    Left = 500
-    Top = 0
-    Width = 74
-    Height = 72
+    Left = 285
+    Top = 228
+    Width = 320
+    Height = 175
     Anchors = []
     BevelInner = bvRaised
     BevelOuter = bvNone
@@ -530,8 +542,8 @@ object frmPrincipal: TfrmPrincipal
     object ImageSQLSplashScreen: TImage
       Left = 2
       Top = 2
-      Width = 70
-      Height = 68
+      Width = 316
+      Height = 171
       Align = alClient
       Picture.Data = {
         0B546478504E47496D61676589504E470D0A1A0A0000000D49484452000002BC
@@ -3401,7 +3413,6 @@ object frmPrincipal: TfrmPrincipal
       ExplicitLeft = 42
       ExplicitTop = 39
       ExplicitWidth = 346
-      ExplicitHeight = 171
     end
     object cxLabelMensagem: TcxLabel
       Left = 2
@@ -3423,8 +3434,8 @@ object frmPrincipal: TfrmPrincipal
       Properties.LabelStyle = cxlsRaised
       Properties.WordWrap = True
       Transparent = True
-      Width = 70
-      AnchorY = 36
+      Width = 316
+      AnchorY = 88
     end
   end
   object SaveDialog: TSaveDialog

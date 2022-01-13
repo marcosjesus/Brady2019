@@ -176,7 +176,7 @@ end;
 
 procedure TfrmPrincipal.btnCriarClick(Sender: TObject);
 var
- varContador, y, z, x, i ,  m, NumEti : integer;
+ varContador, y, z, x, i ,  m: integer;
  varEtiqueta, varEtiquetaOut : String;
  bPrimeiro :Boolean;
 begin
@@ -213,30 +213,29 @@ begin
 
          try
 
-          if not Assigned(dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[0]) then
-            Exit;
+            if not Assigned(dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[0]) then
+              Exit;
 
-          if dxSpreadSheet.ActiveSheetAsTable.Rows[X].CellCount < 7 then
-            Continue;
+            if dxSpreadSheet.ActiveSheetAsTable.Rows[X].CellCount < 5 then
+              Continue;
 
-          Mensagem( 'Linha (" ' + IntToStr(X) + '/' + IntToStr(dxSpreadSheet.ActiveSheetAsTable.Rows.LastIndex) + '") "' + Trim(dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[0].AsString) + '" ...' );
+            Mensagem( 'Linha (" ' + IntToStr(X) + '/' + IntToStr(dxSpreadSheet.ActiveSheetAsTable.Rows.LastIndex) + '") "' + Trim(dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[0].AsString) + '" ...' );
 
-          if Trim(dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[0].AsString) = EmptyStr then
-            Continue;
+            if Trim(dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[0].AsString) = EmptyStr then
+              Continue;
 
          except
 
-          Continue;
+            Continue;
 
          end;
 
          varEtiqueta := dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[0].AsString;
-         NumEti := 0;
 
          if (Veiculo.Tipo = 'Moto') then
          begin
              varContador :=  0;
-             bPrimeiro := True;
+             bPrimeiro   := True;
              for I := Veiculo.Linhas + Veiculo.Base downto 1  do  // 128
              begin
 
@@ -288,7 +287,7 @@ begin
          if Veiculo.Tipo = 'Carro' then
          begin
              varContador :=  0;
-             bPrimeiro := True;
+             bPrimeiro   := True;
              for I := Veiculo.Linhas + Veiculo.Base downto 1  do  // 128
              begin
 
@@ -340,7 +339,7 @@ begin
          if Veiculo.Tipo = 'Caminhao' then
          begin
              varContador :=  0;
-             bPrimeiro := True;
+             bPrimeiro   := True;
              for I := Veiculo.Linhas + Veiculo.Base downto 1  do  // 128
              begin
 
@@ -386,7 +385,7 @@ begin
 
              end;
 
-             bPrimeiro := True;
+             bPrimeiro   := True;
              varContador :=  0;
              for I := 64 downto 1  do  // 128
              begin
@@ -439,7 +438,7 @@ begin
          begin
 
              varContador :=  0;
-             bPrimeiro := True;
+             bPrimeiro   := True;
              for I := Veiculo.Linhas + Veiculo.Base downto 1  do  // 128
              begin
 
@@ -485,7 +484,7 @@ begin
 
              end;
 
-             bPrimeiro := True;
+             bPrimeiro   := True;
              varContador :=  0;
              for I := 60 downto 1  do  // 128
              begin

@@ -176,7 +176,7 @@ end;
 
 procedure TfrmPrincipal.btnCriarClick(Sender: TObject);
 var
- varContador,  x, y, z,  i ,  m, NumEti : integer;
+ varContador, y, z, x, i ,  m: integer;
  varEtiqueta, varEtiquetaOut : String;
  bPrimeiro :Boolean;
 begin
@@ -216,7 +216,7 @@ begin
           if not Assigned(dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[0]) then
             Exit;
 
-          if dxSpreadSheet.ActiveSheetAsTable.Rows[X].CellCount < 7 then
+          if dxSpreadSheet.ActiveSheetAsTable.Rows[X].CellCount < 5 then
             Continue;
 
           Mensagem( 'Linha (" ' + IntToStr(X) + '/' + IntToStr(dxSpreadSheet.ActiveSheetAsTable.Rows.LastIndex) + '") "' + Trim(dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[0].AsString) + '" ...' );
@@ -231,12 +231,11 @@ begin
          end;
 
          varEtiqueta := dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[0].AsString;
-         NumEti := 0;
 
          if (Veiculo.Tipo = 'Moto') then
          begin
              varContador :=  0;
-             bPrimeiro := True;
+             bPrimeiro   := True;
              for I := Veiculo.Linhas + Veiculo.Base downto 1  do  // 128
              begin
 
@@ -288,7 +287,7 @@ begin
          if Veiculo.Tipo = 'Carro' then
          begin
              varContador :=  0;
-             bPrimeiro := True;
+             bPrimeiro   := True;
              for I := Veiculo.Linhas + Veiculo.Base downto 1  do  // 128
              begin
 
@@ -528,17 +527,9 @@ begin
                     if varContador <= 0 then
                        Break;
 
-
              end;
 
-
-
-
          end;
-
-
-
-
 
          if not System.IOUtils.TDirectory.Exists( edtOutPut.Text+ '\'  ) then
             System.IOUtils.TDirectory.CreateDirectory( edtOutPut.Text + '\' );

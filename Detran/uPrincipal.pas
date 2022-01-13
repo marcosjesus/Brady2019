@@ -213,20 +213,20 @@ begin
 
          try
 
-          if not Assigned(dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[0]) then
-            Exit;
+            if not Assigned(dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[0]) then
+              Exit;
 
-          if dxSpreadSheet.ActiveSheetAsTable.Rows[X].CellCount < 7 then
-            Continue;
+            if dxSpreadSheet.ActiveSheetAsTable.Rows[X].CellCount < 5 then
+              Continue;
 
-          Mensagem( 'Linha (" ' + IntToStr(X) + '/' + IntToStr(dxSpreadSheet.ActiveSheetAsTable.Rows.LastIndex) + '") "' + Trim(dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[0].AsString) + '" ...' );
+            Mensagem( 'Linha (" ' + IntToStr(X) + '/' + IntToStr(dxSpreadSheet.ActiveSheetAsTable.Rows.LastIndex) + '") "' + Trim(dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[0].AsString) + '" ...' );
 
-          if Trim(dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[0].AsString) = EmptyStr then
-            Continue;
+            if Trim(dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[0].AsString) = EmptyStr then
+              Continue;
 
          except
 
-          Continue;
+            Continue;
 
          end;
 
@@ -235,7 +235,7 @@ begin
          if (Veiculo.Tipo = 'Moto') then
          begin
              varContador :=  0;
-             bPrimeiro := True;
+             bPrimeiro   := True;
              for I := Veiculo.Linhas + Veiculo.Base downto 1  do  // 128
              begin
 
@@ -246,27 +246,27 @@ begin
                 for z := varContador-3 to varContador  do  // 128
                 begin
 
-                         if ((bPrimeiro) and ((z = 35) or (z = 36))) then
-                         begin
-                            varEtiquetaOut := varEtiqueta;
-                            if z = 36 then
-                              bPrimeiro      := False;
-                         end
-                         else
-                            varEtiquetaOut := varEtiqueta + Format('%3.3d',[z]);
+                     if ((bPrimeiro) and ((z = 35) or (z = 36))) then
+                     begin
+                        varEtiquetaOut := varEtiqueta;
+                        if z = 36 then
+                          bPrimeiro      := False;
+                     end
+                     else
+                        varEtiquetaOut := varEtiqueta + Format('%3.3d',[z]);
 
-                         with dxSpreadSheetOut.ActiveSheetAsTable.CreateCell(Y,0) do
-                         begin
+                     with dxSpreadSheetOut.ActiveSheetAsTable.CreateCell(Y,0) do
+                     begin
 
-                             AsVariant := varEtiquetaOut;
-                         end;
+                         AsVariant := varEtiquetaOut;
+                     end;
 
-                         with dxSpreadSheetOut.ActiveSheetAsTable.CreateCell(Y,1) do
-                         begin
+                     with dxSpreadSheetOut.ActiveSheetAsTable.CreateCell(Y,1) do
+                     begin
 
-                             AsVariant := edtURL.Text  + varEtiquetaOut;
-                         end;
-                         Inc(Y);
+                         AsVariant := edtURL.Text  + varEtiquetaOut;
+                     end;
+                     Inc(Y);
 
 
                 end;
@@ -287,7 +287,7 @@ begin
          if Veiculo.Tipo = 'Carro' then
          begin
              varContador :=  0;
-             bPrimeiro := True;
+             bPrimeiro   := True;
              for I := Veiculo.Linhas + Veiculo.Base downto 1  do  // 128
              begin
 
@@ -298,27 +298,27 @@ begin
                 for z := varContador-3 to varContador  do  // 128
                 begin
 
-                         if ((bPrimeiro) and ((z = 50) or (z = 51)  or (z = 52) )) then
-                         begin
-                            varEtiquetaOut := varEtiqueta;
-                            if z = 52 then
-                              bPrimeiro      := False;
-                         end
-                         else
-                            varEtiquetaOut := varEtiqueta + Format('%3.3d',[z]);
+                     if ((bPrimeiro) and ((z = 50) or (z = 51)  or (z = 52) )) then
+                     begin
+                        varEtiquetaOut := varEtiqueta;
+                        if z = 52 then
+                          bPrimeiro      := False;
+                     end
+                     else
+                        varEtiquetaOut := varEtiqueta + Format('%3.3d',[z]);
 
-                         with dxSpreadSheetOut.ActiveSheetAsTable.CreateCell(Y,0) do
-                         begin
+                     with dxSpreadSheetOut.ActiveSheetAsTable.CreateCell(Y,0) do
+                     begin
 
-                             AsVariant := varEtiquetaOut;
-                         end;
+                         AsVariant := varEtiquetaOut;
+                     end;
 
-                         with dxSpreadSheetOut.ActiveSheetAsTable.CreateCell(Y,1) do
-                         begin
+                     with dxSpreadSheetOut.ActiveSheetAsTable.CreateCell(Y,1) do
+                     begin
 
-                             AsVariant := edtURL.Text  + varEtiquetaOut;
-                         end;
-                         Inc(Y);
+                         AsVariant := edtURL.Text  + varEtiquetaOut;
+                     end;
+                     Inc(Y);
 
 
                 end;
@@ -339,94 +339,94 @@ begin
          if Veiculo.Tipo = 'Caminhao' then
          begin
              varContador :=  0;
-             bPrimeiro := True;
+             bPrimeiro   := True;
              for I := Veiculo.Linhas + Veiculo.Base downto 1  do  // 128
              begin
 
-                    if varContador = 0 then
-                       varContador :=  Veiculo.Linhas + Veiculo.Base;
+                if varContador = 0 then
+                   varContador :=  Veiculo.Linhas + Veiculo.Base;
 
 
-                    for z := varContador-3 to varContador  do  // 128
-                    begin
+                for z := varContador-3 to varContador  do  // 128
+                begin
 
-                         if ((bPrimeiro) and ((z = 125) or (z = 126))) then
-                         begin
-                            varEtiquetaOut := varEtiqueta;
-                            if z = 126 then
-                              bPrimeiro      := False;
-                         end
-                         else
-                            varEtiquetaOut := varEtiqueta + Format('%3.3d',[z]);
+                     if ((bPrimeiro) and ((z = 125) or (z = 126))) then
+                     begin
+                        varEtiquetaOut := varEtiqueta;
+                        if z = 126 then
+                          bPrimeiro      := False;
+                     end
+                     else
+                        varEtiquetaOut := varEtiqueta + Format('%3.3d',[z]);
 
-                         with dxSpreadSheetOut.ActiveSheetAsTable.CreateCell(Y,0) do
-                         begin
+                     with dxSpreadSheetOut.ActiveSheetAsTable.CreateCell(Y,0) do
+                     begin
 
-                             AsVariant := varEtiquetaOut;
-                         end;
+                         AsVariant := varEtiquetaOut;
+                     end;
 
-                         with dxSpreadSheetOut.ActiveSheetAsTable.CreateCell(Y,1) do
-                         begin
+                     with dxSpreadSheetOut.ActiveSheetAsTable.CreateCell(Y,1) do
+                     begin
 
-                             AsVariant := edtURL.Text  + varEtiquetaOut;
-                         end;
-
-
-                         Inc(Y);
+                         AsVariant := edtURL.Text  + varEtiquetaOut;
+                     end;
 
 
-                    end;
+                     Inc(Y);
 
-                    varContador := varContador - 4;
 
-                    if varContador <= 63 then
-                       Break;
+                end;
+
+                varContador := varContador - 4;
+
+                if varContador <= 63 then
+                   Break;
 
 
              end;
 
-             bPrimeiro := True;
+             bPrimeiro   := True;
              varContador :=  0;
              for I := 64 downto 1  do  // 128
              begin
 
-                    if varContador = 0 then
-                       varContador :=  64;
+                if varContador = 0 then
+                   varContador :=  64;
 
 
-                    for z := varContador-3 to varContador  do  // 128
-                    begin
+                for z := varContador-3 to varContador  do  // 128
+                begin
 
-                         if ((bPrimeiro) and ((z = 63) or (z = 64))) then
-                         begin
-                            varEtiquetaOut := varEtiqueta;
-                            if z = 64 then
-                              bPrimeiro      := False;
-                         end
-                         else
-                            varEtiquetaOut := varEtiqueta + Format('%3.3d',[z]);
+                     if ((bPrimeiro) and ((z = 63) or (z = 64))) then
+                     begin
+                        varEtiquetaOut := varEtiqueta;
+                        if z = 64 then
+                          bPrimeiro      := False;
+                     end
+                     else
+                        varEtiquetaOut := varEtiqueta + Format('%3.3d',[z]);
 
-                         with dxSpreadSheetOut.ActiveSheetAsTable.CreateCell(Y,0) do
-                         begin
+                     with dxSpreadSheetOut.ActiveSheetAsTable.CreateCell(Y,0) do
+                     begin
 
-                             AsVariant := varEtiquetaOut;
-                         end;
+                         AsVariant := varEtiquetaOut;
+                     end;
 
-                         with dxSpreadSheetOut.ActiveSheetAsTable.CreateCell(Y,1) do
-                         begin
+                     with dxSpreadSheetOut.ActiveSheetAsTable.CreateCell(Y,1) do
+                     begin
 
-                             AsVariant := edtURL.Text  + varEtiquetaOut;
-                         end;
+                         AsVariant := edtURL.Text  + varEtiquetaOut;
+                     end;
 
 
-                         Inc(Y);
+                     Inc(Y);
 
-                    end;
+                end;
 
-                    varContador := varContador - 4;
+                varContador := varContador - 4;
 
-                    if varContador <= 0 then
-                       Break;
+                if varContador <= 0 then
+                   Break;
 
 
              end;
@@ -438,94 +438,94 @@ begin
          begin
 
              varContador :=  0;
-             bPrimeiro := True;
+             bPrimeiro   := True;
              for I := Veiculo.Linhas + Veiculo.Base downto 1  do  // 128
              begin
 
-                    if varContador = 0 then
-                       varContador :=  Veiculo.Linhas + Veiculo.Base;
+                if varContador = 0 then
+                   varContador :=  Veiculo.Linhas + Veiculo.Base;
 
 
-                    for z := varContador-3 to varContador  do  // 128
-                    begin
+                for z := varContador-3 to varContador  do  // 128
+                begin
 
-                         if ((bPrimeiro) and ((z = 113) or (z = 114) or (z = 115) or (z = 116) )) then
-                         begin
-                            varEtiquetaOut := varEtiqueta;
-                            if z = 116 then
-                              bPrimeiro      := False;
-                         end
-                         else
-                            varEtiquetaOut := varEtiqueta + Format('%3.3d',[z]);
+                     if ((bPrimeiro) and ((z = 113) or (z = 114) or (z = 115) or (z = 116) )) then
+                     begin
+                        varEtiquetaOut := varEtiqueta;
+                        if z = 116 then
+                          bPrimeiro      := False;
+                     end
+                     else
+                        varEtiquetaOut := varEtiqueta + Format('%3.3d',[z]);
 
-                         with dxSpreadSheetOut.ActiveSheetAsTable.CreateCell(Y,0) do
-                         begin
+                     with dxSpreadSheetOut.ActiveSheetAsTable.CreateCell(Y,0) do
+                     begin
 
-                             AsVariant := varEtiquetaOut;
-                         end;
+                         AsVariant := varEtiquetaOut;
+                     end;
 
-                         with dxSpreadSheetOut.ActiveSheetAsTable.CreateCell(Y,1) do
-                         begin
+                     with dxSpreadSheetOut.ActiveSheetAsTable.CreateCell(Y,1) do
+                     begin
 
-                             AsVariant := edtURL.Text  + varEtiquetaOut;
-                         end;
-
-
-                         Inc(Y);
+                         AsVariant := edtURL.Text  + varEtiquetaOut;
+                     end;
 
 
-                    end;
+                     Inc(Y);
 
-                    varContador := varContador - 4;
 
-                    if varContador <= 59 then
-                       Break;
+                end;
+
+                varContador := varContador - 4;
+
+                if varContador <= 59 then
+                   Break;
 
 
              end;
 
-             bPrimeiro := True;
+             bPrimeiro   := True;
              varContador :=  0;
              for I := 60 downto 1  do  // 128
              begin
 
-                    if varContador = 0 then
-                       varContador :=  60;
+                if varContador = 0 then
+                   varContador :=  60;
 
 
-                    for z := varContador-3 to varContador  do  // 128
-                    begin
+                for z := varContador-3 to varContador  do  // 128
+                begin
 
-                         if ((bPrimeiro) and ((z = 57) or (z = 58)or (z = 59)or (z = 60))) then
-                         begin
-                            varEtiquetaOut := varEtiqueta;
-                            if z = 60 then
-                              bPrimeiro      := False;
-                         end
-                         else
-                            varEtiquetaOut := varEtiqueta + Format('%3.3d',[z]);
+                     if ((bPrimeiro) and ((z = 57) or (z = 58)or (z = 59)or (z = 60))) then
+                     begin
+                        varEtiquetaOut := varEtiqueta;
+                        if z = 60 then
+                          bPrimeiro      := False;
+                     end
+                     else
+                        varEtiquetaOut := varEtiqueta + Format('%3.3d',[z]);
 
-                         with dxSpreadSheetOut.ActiveSheetAsTable.CreateCell(Y,0) do
-                         begin
+                     with dxSpreadSheetOut.ActiveSheetAsTable.CreateCell(Y,0) do
+                     begin
 
-                             AsVariant := varEtiquetaOut;
-                         end;
+                         AsVariant := varEtiquetaOut;
+                     end;
 
-                         with dxSpreadSheetOut.ActiveSheetAsTable.CreateCell(Y,1) do
-                         begin
+                     with dxSpreadSheetOut.ActiveSheetAsTable.CreateCell(Y,1) do
+                     begin
 
-                             AsVariant := edtURL.Text  + varEtiquetaOut;
-                         end;
+                         AsVariant := edtURL.Text  + varEtiquetaOut;
+                     end;
 
 
-                         Inc(Y);
+                     Inc(Y);
 
-                    end;
+                end;
 
-                    varContador := varContador - 4;
+                varContador := varContador - 4;
 
-                    if varContador <= 0 then
-                       Break;
+                if varContador <= 0 then
+                   Break;
 
              end;
 

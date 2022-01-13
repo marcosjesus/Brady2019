@@ -176,7 +176,7 @@ end;
 
 procedure TfrmPrincipal.btnCriarClick(Sender: TObject);
 var
- varContador, varContador2,  x, y, z,  i , k, p, m, NumEti : integer;
+ varContador, y, z, x, i ,  m: integer;
  varEtiqueta, varEtiquetaOut : String;
  bPrimeiro :Boolean;
 begin
@@ -231,7 +231,6 @@ begin
          end;
 
          varEtiqueta := dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[0].AsString;
-         NumEti := 0;
 
          if (Veiculo.Tipo = 'Moto') then
          begin
@@ -528,17 +527,9 @@ begin
                     if varContador <= 0 then
                        Break;
 
-
              end;
 
-
-
-
          end;
-
-
-
-
 
          if not System.IOUtils.TDirectory.Exists( edtOutPut.Text+ '\'  ) then
             System.IOUtils.TDirectory.CreateDirectory( edtOutPut.Text + '\' );
