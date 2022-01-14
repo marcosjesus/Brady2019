@@ -29,7 +29,6 @@ object Frm_Previsao: TFrm_Previsao
     Properties.ActivePage = TabEmail
     Properties.CustomButtons.Buttons = <>
     OnChange = PageChange
-    ExplicitHeight = 407
     ClientRectBottom = 454
     ClientRectLeft = 4
     ClientRectRight = 738
@@ -43,7 +42,6 @@ object Frm_Previsao: TFrm_Previsao
       Font.Style = []
       ImageIndex = 0
       ParentFont = False
-      ExplicitHeight = 379
       object cxLabel9: TcxLabel
         Left = 122
         Top = 99
@@ -218,7 +216,6 @@ object Frm_Previsao: TFrm_Previsao
         ParentFont = False
         TabOrder = 3
         Visible = False
-        ExplicitHeight = 379
         object Panel7: TPanel
           Left = 1
           Top = 1
@@ -298,14 +295,16 @@ object Frm_Previsao: TFrm_Previsao
           Font.Style = []
           ParentFont = False
           TabOrder = 1
-          ExplicitHeight = 336
         end
       end
     end
     object TabConfig: TcxTabSheet
       Caption = 'Configura'#231#227'o'
       ImageIndex = 1
-      ExplicitHeight = 379
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Panel1: TPanel
         Left = 3
         Top = 3
@@ -464,7 +463,6 @@ object Frm_Previsao: TFrm_Previsao
           item
             Width = 200
           end>
-        ExplicitTop = 360
       end
       object cxGroupBox1: TcxGroupBox
         Left = 3
@@ -762,7 +760,10 @@ object Frm_Previsao: TFrm_Previsao
     object TabCopia: TcxTabSheet
       Caption = 'E-mail CC'
       ImageIndex = 2
-      ExplicitHeight = 379
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object cxGridEmail: TcxGrid
         Left = 0
         Top = 0
@@ -771,7 +772,6 @@ object Frm_Previsao: TFrm_Previsao
         Align = alClient
         TabOrder = 0
         RootLevelOptions.DetailTabsPosition = dtpTop
-        ExplicitHeight = 379
         object cxTableViewEmail: TcxGridDBTableView
           Navigator.Buttons.ConfirmDelete = True
           Navigator.Buttons.CustomButtons = <>
@@ -3740,7 +3740,6 @@ object Frm_Previsao: TFrm_Previsao
       Properties.LabelStyle = cxlsRaised
       Properties.WordWrap = True
       Transparent = True
-      ExplicitWidth = 669
       Width = 653
       AnchorY = 77
     end

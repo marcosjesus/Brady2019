@@ -1246,6 +1246,21 @@ begin
    DeleteFile(MyDocumentsPath + '\MalaDireta.xlsx');
 
 
+
+  if not System.IOUtils.TFile.Exists(  ExtractFilePath(Application.ExeName)  + '\SMTP_PREVFAT.ini' ) then
+  begin
+    Application.MessageBox( pWideChar( 'Arquivo SMTP_PREVFAT.ini não encontrado na pasta ' + ExtractFilePath(Application.ExeName) +  #13#10 + 'Abortar Programa. ' ) , 'BradyEtiqueta', MB_ICONINFORMATION);
+    Close;
+  end;
+
+
+  if not System.IOUtils.TFile.Exists(  ExtractFilePath(Application.ExeName)  + '\MalaDireta.xlsx' ) then
+  begin
+    Application.MessageBox( pWideChar( 'Arquivo MalaDireta.xlsx não encontrado na pasta ' + ExtractFilePath(Application.ExeName) +  #13#10 + 'Abortar Programa. ' ) , 'BradyEtiqueta', MB_ICONINFORMATION);
+    Close;
+  end;
+
+
  System.IOUtils.TFile.Copy( ExtractFilePath(Application.ExeName) + '\SMTP_PREVFAT.ini' , MyDocumentsPath + '\SMTP_PREVFAT.ini', True );
 
  System.IOUtils.TFile.Copy( ExtractFilePath(Application.ExeName) + '\MalaDireta.xlsx' , MyDocumentsPath + '\MalaDireta.xlsx', True );

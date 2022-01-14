@@ -754,6 +754,20 @@ begin
     DeleteFile(MyDocumentsPath + '\Detran_Output.xlsx');
 
 
+  if not System.IOUtils.TFile.Exists(  ExtractFilePath(Application.ExeName)  + '\ETIQUETA_DETRAN.ini' ) then
+  begin
+    Application.MessageBox( pWideChar( 'Arquivo ETIQUETA_DETRAN.ini não encontrado na pasta ' + ExtractFilePath(Application.ExeName) +  #13#10 + 'Abortar Programa. ' ) , 'BradyEtiqueta', MB_ICONINFORMATION);
+    Close;
+  end;
+
+
+  if not System.IOUtils.TFile.Exists(  ExtractFilePath(Application.ExeName)  + '\Detran_Output.xlsx' ) then
+  begin
+    Application.MessageBox( pWideChar( 'Arquivo Detran_Output.xlsx não encontrado na pasta ' + ExtractFilePath(Application.ExeName) +  #13#10 + 'Abortar Programa. ' ) , 'BradyEtiqueta', MB_ICONINFORMATION);
+    Close;
+  end;
+
+
   System.IOUtils.TFile.Copy( ExtractFilePath(Application.ExeName) + '\ETIQUETA_DETRAN.ini' , MyDocumentsPath + '\ETIQUETA_DETRAN.ini', True );
 
   System.IOUtils.TFile.Copy( ExtractFilePath(Application.ExeName) + '\Detran_Output.xlsx' , MyDocumentsPath + '\Detran_Output.xlsx', True );
