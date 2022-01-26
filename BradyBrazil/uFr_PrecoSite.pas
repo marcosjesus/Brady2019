@@ -4,6 +4,7 @@ interface
 
 uses
   uUtils,
+  dxHashUtils,
   dxSpreadSheet,
   dxSpreadSheetTypes,
   dxSpreadSheetCore,
@@ -93,6 +94,9 @@ type
     Prata_PEI_Ouro: TcxCurrencyEdit;
     Label13: TLabel;
     PrecoSugerido: TcxCurrencyEdit;
+    lblPesquisa: TLabel;
+    edtPesquisa: TEdit;
+    FDExcluirProduto: TFDQuery;
     procedure AddColumnGrid1;
     procedure cxButtonEditPathClick(Sender: TObject);
     procedure Mensagem(pMensagem: String);
@@ -103,6 +107,10 @@ type
     procedure cxGrid1DBBandedTableView1DblClick(Sender: TObject);
     procedure cxButton1Click(Sender: TObject);
     procedure PageChange(Sender: TObject);
+    procedure cxGrid1DBBandedTableView1MouseDown(Sender: TObject;
+      Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+    procedure edtPesquisaChange(Sender: TObject);
+    procedure cxButton2Click(Sender: TObject);
   private
     { Private declarations }
     varDoubleClick : Boolean;
@@ -147,6 +155,10 @@ begin
      FDQueryConsultaPreco.Close;
      FDQueryConsultaPreco.Open;
      AddColumnGrid1;
+
+     lblPesquisa.Caption := 'Pesquisando por:  Cod. SAP';
+     FDQueryConsultaPreco.IndexFieldNames := 'TMKT_PROCODSAP';
+
 
     finally
 
@@ -1112,6 +1124,69 @@ begin
 
 end;
 
+procedure TFr_PrecoSite.cxButton2Click(Sender: TObject);
+begin
+    if messagedlg(pchar('Você deseja realmente excluir o Produto '+ edtYNumber.Text  +' ?') ,mtConfirmation,[mbyes,mbno],0) = mrYes then
+    begin
+       if not FDConnection.Connected then
+       begin
+         FDConnection.Params.LoadFromFile( MyDocumentsPath + '\DB-MySQL.ini' );
+         FDConnection.Open;
+       end;
+
+       FDExcluirProduto.Close;
+       FDExcluirProduto.SQL.Clear;
+       FDExcluirProduto.SQL.Add('Delete From  TMKT_PRECO ');
+       FDExcluirProduto.SQL.Add(' Where TMKT_PROCOD = :TMKT_PROCOD');
+       FDExcluirProduto.Params.ParamByName('TMKT_PROCOD').AsInteger  := varProCod;
+       Try
+           FDExcluirProduto.ExecSQL;
+       Except
+            on E: Exception do
+              begin
+
+                 Application.MessageBox( pChar('Erro ao Excluir o Preço do Produto - ' +  E.Message) , 'S&OP', MB_ICONERROR );
+
+              end;
+       End;
+
+       FDExcluirProduto.Close;
+       FDExcluirProduto.SQL.Clear;
+       FDExcluirProduto.SQL.Add('Delete From  TMKT_ESTOQUE ');
+       FDExcluirProduto.SQL.Add(' Where TMKT_PROCOD = :TMKT_PROCOD');
+       FDExcluirProduto.Params.ParamByName('TMKT_PROCOD').AsInteger  := varProCod;
+        Try
+           FDExcluirProduto.ExecSQL;
+       Except
+            on E: Exception do
+              begin
+
+                 Application.MessageBox( pChar('Erro ao Excluir o Estoque do Produto - ' +  E.Message) , 'S&OP', MB_ICONERROR );
+
+              end;
+       End;
+
+       FDExcluirProduto.Close;
+       FDExcluirProduto.SQL.Clear;
+       FDExcluirProduto.SQL.Add('Delete From  TMKT_PRODUTO ');
+       FDExcluirProduto.SQL.Add(' Where TMKT_PROCOD = :TMKT_PROCOD');
+       FDExcluirProduto.Params.ParamByName('TMKT_PROCOD').AsInteger  := varProCod;
+       Try
+           FDExcluirProduto.ExecSQL;
+       Except
+            on E: Exception do
+              begin
+
+                 Application.MessageBox( pChar('Erro ao Excluir o Produto - ' +  E.Message) , 'S&OP', MB_ICONERROR );
+
+              end;
+       End;
+
+       Application.MessageBox( 'Produto Excluído com Sucesso.' , 'S&OP', MB_ICONINFORMATION );
+
+    end;
+end;
+
 procedure TFr_PrecoSite.cxButtonEditPathClick(Sender: TObject);
 begin
  SaveDialog.InitialDir := GetCurrentDir;
@@ -1158,6 +1233,35 @@ begin
     PrecoSugerido.SetFocus;
   end;
 
+end;
+
+procedure TFr_PrecoSite.cxGrid1DBBandedTableView1MouseDown(Sender: TObject;
+  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+var
+  ht: TcxCustomGridHitTest;
+  AGridSite: TcxGridSite;
+  AGridView: TcxGridDBTableView;
+begin
+  if Button = mbLeft then
+  begin
+    AGridSite := TcxGridSite(Sender);
+    AGridView := TcxGridDBTableView(AGridSite.GridView);
+    ht := AGridView.GetHitTest(X,Y);
+    if ht.HitTestCode = htColumnHeader then
+    begin
+     lblPesquisa.Caption := 'Pesquisando por: ' + TcxGridColumnHeaderHitTest(ht).Column.Caption;
+     FDQueryConsultaPreco.IndexFieldNames := TcxGridColumnHeaderHitTest(ht).Column.DataBinding.FilterFieldName;
+    end;
+
+
+  end;
+
+end;
+
+procedure TFr_PrecoSite.edtPesquisaChange(Sender: TObject);
+begin
+  if edtPesquisa.Text <> '' then
+    FDQueryConsultaPreco.FindNearest([edtPesquisa.Text]);
 end;
 
 procedure TFr_PrecoSite.FormClose(Sender: TObject; var Action: TCloseAction);

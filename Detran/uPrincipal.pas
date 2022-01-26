@@ -3,13 +3,14 @@ unit uPrincipal;
 interface
 
 uses
-
+  System.UITypes,
   System.DateUtils,
   System.StrUtils,
   ShellAPI,
   dxSpreadSheet,
   dxSpreadSheetTypes,
   dxSpreadSheetCore,
+  dxHashUtils,
   cxCurrencyEdit,
   uUtils,
   System.IOUtils,
@@ -35,7 +36,7 @@ uses
   dxSkinscxPCPainter, dxBarBuiltInMenu, cxGraphics, cxControls, cxLookAndFeels,
   cxLookAndFeelPainters, cxPC, cxContainer, cxEdit, Vcl.StdCtrls, Vcl.Buttons,
   cxTextEdit, cxMaskEdit, cxButtonEdit, cxLabel, dxGDIPlusClasses, Vcl.ExtCtrls,
-  cxGroupBox, Vcl.ComCtrls;
+  cxGroupBox, Vcl.ComCtrls, Vcl.ImgList;
 
 type
   TfrmPrincipal = class(TForm)
@@ -85,6 +86,8 @@ type
     edtCaminhaoBase: TcxMaskEdit;
     Label13: TLabel;
     edtOnibusBase: TcxMaskEdit;
+    ImagemVeiculo: TImageList;
+    Image: TImage;
     procedure FormShow(Sender: TObject);
     procedure btnSalvarINIClick(Sender: TObject);
     procedure edtOutPutClick(Sender: TObject);
@@ -95,6 +98,9 @@ type
       Shift: TShiftState);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure PageChange(Sender: TObject);
+    procedure edtOutPutKeyUp(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
 
  Type TVeiculo = class
    Tipo : String;
@@ -106,8 +112,8 @@ type
 
   private
     { Private declarations }
+    dxSpreadSheet: TdxSpreadSheet;
     Veiculo : TVeiculo;
-    dxSpreadSheet, dxSpreadSheetOut : TdxSpreadSheet;
     Mudou : Boolean;
     procedure Mensagem(pMensagem: String);
     procedure CarregaINI;
@@ -124,10 +130,6 @@ implementation
 
 
 procedure TfrmPrincipal.Mensagem(pMensagem: String);
-var
-  I, X, Y, varAno, varMes : Integer;
-  dxSpreadSheet: TdxSpreadSheet;
-
 begin
   cxLabelMensagem.Caption := pMensagem;
   PanelSQLSplashScreen.Visible := not pMensagem.IsEmpty;
@@ -139,17 +141,31 @@ end;
 
 procedure TfrmPrincipal.PageChange(Sender: TObject);
 begin
+  if Page.ActivePage <> TabCadastro then
+  begin
+    if Mudou then
+    begin
+      Application.MessageBox( 'Alteração na Aba Parametros Não Foram Salvas...', 'Parametros', MB_ICONEXCLAMATION);
+      Exit;
+    end;
+  end;
+
   rgTipoClick(Nil);
+
 end;
 
 procedure TfrmPrincipal.rgTipoClick(Sender: TObject);
 begin
+ Try
   if rgTipo.ItemIndex = 0 then
   begin
     Veiculo.Tipo      := 'Carro';
     Veiculo.Linhas    := StrToInt(edtCarroLinha.Text);
     Veiculo.Intervalo := StrToInt(edtCarroInter.Text);
     Veiculo.Base      := StrToInt(edtCarroBase.Text);
+    if FileExists( ExtractFilePath(Application.ExeName) + '\carro.png' ) then
+       Image.Picture.LoadFromFile( ExtractFilePath(Application.ExeName) + '\carro.png');
+
   end
   else if rgTipo.ItemIndex = 1 Then
   begin
@@ -157,6 +173,8 @@ begin
     Veiculo.Linhas    := StrToInt(edtMotoLinha.Text);
     Veiculo.Intervalo := StrToInt(edtMotoInter.Text);
     Veiculo.Base      := StrToInt(edtMotoBase.Text);
+    if FileExists( ExtractFilePath(Application.ExeName) + '\moto.png' ) then
+      Image.Picture.LoadFromFile( ExtractFilePath(Application.ExeName) + '\moto.png');
   end
   else if rgTipo.ItemIndex = 2 then
   begin
@@ -164,6 +182,8 @@ begin
     Veiculo.Linhas    := StrToInt(edtCaminhaoLinha.Text);
     Veiculo.Intervalo := StrToInt(edtCaminhaoInter.Text);
     Veiculo.Base      := StrToInt(edtCaminhaoBase.Text);
+    if FileExists( ExtractFilePath(Application.ExeName) + '\caminhao.png' ) then
+      Image.Picture.LoadFromFile( ExtractFilePath(Application.ExeName) + '\caminhao.png');
   end
   else
   begin
@@ -171,33 +191,31 @@ begin
     Veiculo.Linhas    := StrToInt(edtOnibusLinha.Text);
     Veiculo.Intervalo := StrToInt(edtOnibusInter.Text);
     Veiculo.Base      := StrToInt(edtOnibusBase.Text);
+    if FileExists( ExtractFilePath(Application.ExeName) + '\onibus.png' ) then
+      Image.Picture.LoadFromFile( ExtractFilePath(Application.ExeName) + '\onibus.png');
   end;
+ Except
+  on E: Exception do
+      begin
+        Application.MessageBox( PwideChar( E.Message  + #13#10 + 'Problema com Arquivo Etiqueta_Detran.INI. Informe ao Depto de IT'), 'Etiquetas Detran', MB_ICONERROR);
+      end;
+ End;
 end;
 
 procedure TfrmPrincipal.btnCriarClick(Sender: TObject);
 var
- varContador, y, z, x, i ,  m: integer;
+ varContador, z, x, i, varNumArq: integer;
  varEtiqueta, varEtiquetaOut : String;
+ varPrimeiraEtq, varUltimaEtq : String;
  bPrimeiro :Boolean;
+ varSalvarArquivo : TStringList;
 begin
   if cxButtonEditPath.Text = EmptyStr then
     raise Exception.Create('Informe o arquivo primeiro.');
 
-
-  DeleteFile ( edtOutPut.Text  + '\' + Veiculo.Tipo + '.xlsx' );
-
   Mensagem( 'Gerando as Linhas para Etiqueta...' );
   try
-
-  dxSpreadSheetOut := TdxSpreadSheet.Create(nil);
-  try
-
-    dxSpreadSheetOut.LoadFromFile( MyDocumentsPath+'\Detran_Output.xlsx' );
-    dxSpreadSheetOut.BeginUpdate;
-
-    dxSpreadSheetOut.Sheets[0].Active := True;
-
-    dxSpreadSheet := TdxSpreadSheet.Create(nil);
+     dxSpreadSheet := TdxSpreadSheet.Create(nil);
     try
 
       Mensagem( 'Carregando planilha...' );
@@ -205,344 +223,423 @@ begin
       dxSpreadSheet.BeginUpdate;
 
       Mensagem( 'Lendo linhas da planilha...' );
-      varContador := 1;
+      //varContador := 1;
 
-      Y := 1;   // Linha do Excel
-      for X := dxSpreadSheet.ActiveSheetAsTable.Rows.FirstIndex+1 to dxSpreadSheet.ActiveSheetAsTable.Rows.LastIndex do
-      begin
+      varPrimeiraEtq := '';
+      varUltimaEtq   := '';
 
-         try
+      ///Y := 1;   // Linha do Excel
 
-            if not Assigned(dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[0]) then
-              Exit;
+      if not System.IOUtils.TDirectory.Exists( edtOutPut.Text + '\'  ) then
+        System.IOUtils.TDirectory.CreateDirectory( edtOutPut.Text + '\' );
 
-            if dxSpreadSheet.ActiveSheetAsTable.Rows[X].CellCount < 5 then
-              Continue;
+      varNumArq := 1;
 
-            Mensagem( 'Linha (" ' + IntToStr(X) + '/' + IntToStr(dxSpreadSheet.ActiveSheetAsTable.Rows.LastIndex) + '") "' + Trim(dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[0].AsString) + '" ...' );
+   //   dxSpreadSheetOut := TdxSpreadSheet.Create(nil);
+   //   dxSpreadSheetOut.LoadFromFile( MyDocumentsPath+'\Detran_Output.xlsx' );
+      varSalvarArquivo := TStringList.Create;
 
-            if Trim(dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[0].AsString) = EmptyStr then
-              Continue;
+      try
+            for X := dxSpreadSheet.ActiveSheetAsTable.Rows.FirstIndex+1 to dxSpreadSheet.ActiveSheetAsTable.Rows.LastIndex do
+            begin
 
-         except
+               try
 
-            Continue;
+                  if not Assigned(dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[0]) then
+                    Exit;
 
-         end;
+                  if dxSpreadSheet.ActiveSheetAsTable.Rows[X].CellCount < 5 then
+                    Continue;
 
-         varEtiqueta := dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[0].AsString;
+                  if Frac(X / 1000) = 0 then
+                     Mensagem( 'Linha (" ' + IntToStr(X) + '/' + IntToStr(dxSpreadSheet.ActiveSheetAsTable.Rows.LastIndex) + '") "' + Trim(dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[0].AsString) + '" ...' );
 
-         if (Veiculo.Tipo = 'Moto') then
-         begin
-             varContador :=  0;
-             bPrimeiro   := True;
-             for I := Veiculo.Linhas + Veiculo.Base downto 1  do  // 128
-             begin
+                  if Trim(dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[0].AsString) = EmptyStr then
+                    Continue;
 
-                if varContador = 0 then
-                    varContador :=  Veiculo.Linhas + Veiculo.Base;
+               except
 
+                  Continue;
 
-                for z := varContador-3 to varContador  do  // 128
-                begin
+               end;
 
-                     if ((bPrimeiro) and ((z = 35) or (z = 36))) then
-                     begin
-                        varEtiquetaOut := varEtiqueta;
-                        if z = 36 then
-                          bPrimeiro      := False;
-                     end
-                     else
-                        varEtiquetaOut := varEtiqueta + Format('%3.3d',[z]);
+               varEtiqueta := dxSpreadSheet.ActiveSheetAsTable.Rows[X].Cells[0].AsString;
+               if varPrimeiraEtq = '' then
+               begin
+                 varSalvarArquivo.Clear;
+                 varSalvarArquivo.Add('Codigo de barra;QR code');
 
-                     with dxSpreadSheetOut.ActiveSheetAsTable.CreateCell(Y,0) do
-                     begin
 
-                         AsVariant := varEtiquetaOut;
-                     end;
+                 varPrimeiraEtq := varEtiqueta;
+                 varUltimaEtq   := '';
+                // dxSpreadSheetOut.Sheets[0].Active := True;
+                // dxSpreadSheetOut.BeginUpdate;
+               end;
 
-                     with dxSpreadSheetOut.ActiveSheetAsTable.CreateCell(Y,1) do
-                     begin
+               if (Veiculo.Tipo = 'Moto') then
+               begin
+                   varContador :=  0;
+                   bPrimeiro   := True;
+                   for I := Veiculo.Linhas + Veiculo.Base downto 1  do  // 128
+                   begin
 
-                         AsVariant := edtURL.Text  + varEtiquetaOut;
-                     end;
-                     Inc(Y);
+                      if varContador = 0 then
+                          varContador :=  Veiculo.Linhas + Veiculo.Base;
 
 
-                end;
+                      for z := varContador-3 to varContador  do  // 128
+                      begin
 
-                varContador := varContador - 4;
+                           if ((bPrimeiro) and ((z = 35) or (z = 36))) then
+                           begin
+                              varEtiquetaOut := varEtiqueta;
+                              if z = 36 then
+                                bPrimeiro      := False;
+                           end
+                           else
+                              varEtiquetaOut := varEtiqueta + Format('%3.3d',[z]);
+                           {
+                           with dxSpreadSheetOut.ActiveSheetAsTable.CreateCell(Y,0) do
+                           begin
 
-                if varContador <= 0 then
-                   Break;
-                
+                               AsVariant := varEtiquetaOut;
+                           end;
 
-                if (varContador = 0)  then  // 128
-                   Break;
+                           with dxSpreadSheetOut.ActiveSheetAsTable.CreateCell(Y,1) do
+                           begin
 
-             end;
+                               AsVariant := edtURL.Text  + varEtiquetaOut;
+                           end;
+                           }
+                           varSalvarArquivo.Add(varEtiquetaOut + ';' + edtURL.Text  + varEtiquetaOut);
+                           //Inc(Y);
 
-         end
-         else
-         if Veiculo.Tipo = 'Carro' then
-         begin
-             varContador :=  0;
-             bPrimeiro   := True;
-             for I := Veiculo.Linhas + Veiculo.Base downto 1  do  // 128
-             begin
 
-                if varContador = 0 then
-                    varContador :=  Veiculo.Linhas + Veiculo.Base;
+                      end;
 
+                      varContador := varContador - 4;
 
-                for z := varContador-3 to varContador  do  // 128
-                begin
+                      if varContador <= 0 then
+                         Break;
 
-                     if ((bPrimeiro) and ((z = 50) or (z = 51)  or (z = 52) )) then
-                     begin
-                        varEtiquetaOut := varEtiqueta;
-                        if z = 52 then
-                          bPrimeiro      := False;
-                     end
-                     else
-                        varEtiquetaOut := varEtiqueta + Format('%3.3d',[z]);
 
-                     with dxSpreadSheetOut.ActiveSheetAsTable.CreateCell(Y,0) do
-                     begin
+                      if (varContador = 0)  then  // 128
+                         Break;
 
-                         AsVariant := varEtiquetaOut;
-                     end;
+                   end;
 
-                     with dxSpreadSheetOut.ActiveSheetAsTable.CreateCell(Y,1) do
-                     begin
+               end
+               else
+               if Veiculo.Tipo = 'Carro' then
+               begin
+                   varContador :=  0;
+                   bPrimeiro   := True;
+                   for I := Veiculo.Linhas + Veiculo.Base downto 1  do  // 128
+                   begin
 
-                         AsVariant := edtURL.Text  + varEtiquetaOut;
-                     end;
-                     Inc(Y);
+                      if varContador = 0 then
+                          varContador :=  Veiculo.Linhas + Veiculo.Base;
 
 
-                end;
+                      for z := varContador-3 to varContador  do  // 128
+                      begin
 
-                varContador := varContador - 4;
+                           if ((bPrimeiro) and ((z = 50) or (z = 51)  or (z = 52) )) then
+                           begin
+                              varEtiquetaOut := varEtiqueta;
+                              if z = 52 then
+                                bPrimeiro      := False;
+                           end
+                           else
+                              varEtiquetaOut := varEtiqueta + Format('%3.3d',[z]);
 
-                if varContador <= 0 then
-                   Break;
+                           {
+                           with dxSpreadSheetOut.ActiveSheetAsTable.CreateCell(Y,0) do
+                           begin
 
+                               AsVariant := varEtiquetaOut;
+                           end;
 
-                if (varContador = 0)  then  // 128
-                   Break;
+                           with dxSpreadSheetOut.ActiveSheetAsTable.CreateCell(Y,1) do
+                           begin
 
-             end;
+                               AsVariant := edtURL.Text  + varEtiquetaOut;
+                           end;
+                           }
 
-         end
-         else
-         if Veiculo.Tipo = 'Caminhao' then
-         begin
-             varContador :=  0;
-             bPrimeiro   := True;
-             for I := Veiculo.Linhas + Veiculo.Base downto 1  do  // 128
-             begin
+                           varSalvarArquivo.Add(varEtiquetaOut + ';' + edtURL.Text  + varEtiquetaOut);
 
-                if varContador = 0 then
-                   varContador :=  Veiculo.Linhas + Veiculo.Base;
+                           //Inc(Y);
 
 
-                for z := varContador-3 to varContador  do  // 128
-                begin
+                      end;
 
-                     if ((bPrimeiro) and ((z = 125) or (z = 126))) then
-                     begin
-                        varEtiquetaOut := varEtiqueta;
-                        if z = 126 then
-                          bPrimeiro      := False;
-                     end
-                     else
-                        varEtiquetaOut := varEtiqueta + Format('%3.3d',[z]);
+                      varContador := varContador - 4;
 
-                     with dxSpreadSheetOut.ActiveSheetAsTable.CreateCell(Y,0) do
-                     begin
+                      if varContador <= 0 then
+                         Break;
 
-                         AsVariant := varEtiquetaOut;
-                     end;
 
-                     with dxSpreadSheetOut.ActiveSheetAsTable.CreateCell(Y,1) do
-                     begin
+                      if (varContador = 0)  then  // 128
+                         Break;
 
-                         AsVariant := edtURL.Text  + varEtiquetaOut;
-                     end;
+                   end;
 
+               end
+               else
+               if Veiculo.Tipo = 'Caminhao' then
+               begin
+                   varContador :=  0;
+                   bPrimeiro   := True;
+                   for I := Veiculo.Linhas + Veiculo.Base downto 1  do  // 128
+                   begin
 
-                     Inc(Y);
+                      if varContador = 0 then
+                         varContador :=  Veiculo.Linhas + Veiculo.Base;
 
 
-                end;
+                      for z := varContador-3 to varContador  do  // 128
+                      begin
 
-                varContador := varContador - 4;
+                           if ((bPrimeiro) and ((z = 125) or (z = 126))) then
+                           begin
+                              varEtiquetaOut := varEtiqueta;
+                              if z = 126 then
+                                bPrimeiro      := False;
+                           end
+                           else
+                              varEtiquetaOut := varEtiqueta + Format('%3.3d',[z]);
+                          {
+                           with dxSpreadSheetOut.ActiveSheetAsTable.CreateCell(Y,0) do
+                           begin
 
-                if varContador <= 63 then
-                   Break;
+                               AsVariant := varEtiquetaOut;
+                           end;
 
+                           with dxSpreadSheetOut.ActiveSheetAsTable.CreateCell(Y,1) do
+                           begin
 
-             end;
+                               AsVariant := edtURL.Text  + varEtiquetaOut;
+                           end;
 
-             bPrimeiro   := True;
-             varContador :=  0;
-             for I := 64 downto 1  do  // 128
-             begin
+                           }
+                           varSalvarArquivo.Add(varEtiquetaOut + ';' + edtURL.Text  + varEtiquetaOut);
 
-                if varContador = 0 then
-                   varContador :=  64;
+                           //Inc(Y);
 
 
-                for z := varContador-3 to varContador  do  // 128
-                begin
+                      end;
 
-                     if ((bPrimeiro) and ((z = 63) or (z = 64))) then
-                     begin
-                        varEtiquetaOut := varEtiqueta;
-                        if z = 64 then
-                          bPrimeiro      := False;
-                     end
-                     else
-                        varEtiquetaOut := varEtiqueta + Format('%3.3d',[z]);
+                      varContador := varContador - 4;
 
-                     with dxSpreadSheetOut.ActiveSheetAsTable.CreateCell(Y,0) do
-                     begin
+                      if varContador <= 63 then
+                         Break;
 
-                         AsVariant := varEtiquetaOut;
-                     end;
 
-                     with dxSpreadSheetOut.ActiveSheetAsTable.CreateCell(Y,1) do
-                     begin
+                   end;
 
-                         AsVariant := edtURL.Text  + varEtiquetaOut;
-                     end;
+                   bPrimeiro   := True;
+                   varContador :=  0;
+                   for I := 64 downto 1  do  // 128
+                   begin
 
+                      if varContador = 0 then
+                         varContador :=  64;
 
-                     Inc(Y);
 
-                end;
+                      for z := varContador-3 to varContador  do  // 128
+                      begin
 
-                varContador := varContador - 4;
+                           if ((bPrimeiro) and ((z = 63) or (z = 64))) then
+                           begin
+                              varEtiquetaOut := varEtiqueta;
+                              if z = 64 then
+                                bPrimeiro      := False;
+                           end
+                           else
+                              varEtiquetaOut := varEtiqueta + Format('%3.3d',[z]);
+                           {
+                           with dxSpreadSheetOut.ActiveSheetAsTable.CreateCell(Y,0) do
+                           begin
 
-                if varContador <= 0 then
-                   Break;
+                               AsVariant := varEtiquetaOut;
+                           end;
 
+                           with dxSpreadSheetOut.ActiveSheetAsTable.CreateCell(Y,1) do
+                           begin
 
-             end;
+                               AsVariant := edtURL.Text  + varEtiquetaOut;
+                           end;
+                           }
 
+                           varSalvarArquivo.Add(varEtiquetaOut + ';' + edtURL.Text  + varEtiquetaOut);
 
-         end
-         else
-         if Veiculo.Tipo = 'Onibus' then
-         begin
+                           //Inc(Y);
 
-             varContador :=  0;
-             bPrimeiro   := True;
-             for I := Veiculo.Linhas + Veiculo.Base downto 1  do  // 128
-             begin
+                      end;
 
-                if varContador = 0 then
-                   varContador :=  Veiculo.Linhas + Veiculo.Base;
+                      varContador := varContador - 4;
 
+                      if varContador <= 0 then
+                         Break;
 
-                for z := varContador-3 to varContador  do  // 128
-                begin
 
-                     if ((bPrimeiro) and ((z = 113) or (z = 114) or (z = 115) or (z = 116) )) then
-                     begin
-                        varEtiquetaOut := varEtiqueta;
-                        if z = 116 then
-                          bPrimeiro      := False;
-                     end
-                     else
-                        varEtiquetaOut := varEtiqueta + Format('%3.3d',[z]);
+                   end;
 
-                     with dxSpreadSheetOut.ActiveSheetAsTable.CreateCell(Y,0) do
-                     begin
 
-                         AsVariant := varEtiquetaOut;
-                     end;
+               end
+               else
+               if Veiculo.Tipo = 'Onibus' then
+               begin
 
-                     with dxSpreadSheetOut.ActiveSheetAsTable.CreateCell(Y,1) do
-                     begin
+                   varContador :=  0;
+                   bPrimeiro   := True;
+                   for I := Veiculo.Linhas + Veiculo.Base downto 1  do  // 128
+                   begin
 
-                         AsVariant := edtURL.Text  + varEtiquetaOut;
-                     end;
+                      if varContador = 0 then
+                         varContador :=  Veiculo.Linhas + Veiculo.Base;
 
 
-                     Inc(Y);
+                      for z := varContador-3 to varContador  do  // 128
+                      begin
 
+                           if ((bPrimeiro) and ((z = 113) or (z = 114) or (z = 115) or (z = 116) )) then
+                           begin
+                              varEtiquetaOut := varEtiqueta;
+                              if z = 116 then
+                                bPrimeiro      := False;
+                           end
+                           else
+                              varEtiquetaOut := varEtiqueta + Format('%3.3d',[z]);
+                           {
+                           with dxSpreadSheetOut.ActiveSheetAsTable.CreateCell(Y,0) do
+                           begin
 
-                end;
+                               AsVariant := varEtiquetaOut;
+                           end;
 
-                varContador := varContador - 4;
+                           with dxSpreadSheetOut.ActiveSheetAsTable.CreateCell(Y,1) do
+                           begin
 
-                if varContador <= 59 then
-                   Break;
+                               AsVariant := edtURL.Text  + varEtiquetaOut;
+                           end;
+                           }
 
+                           varSalvarArquivo.Add(varEtiquetaOut + ';' + edtURL.Text  + varEtiquetaOut);
 
-             end;
+                           //Inc(Y);
 
-             bPrimeiro   := True;
-             varContador :=  0;
-             for I := 60 downto 1  do  // 128
-             begin
 
-                if varContador = 0 then
-                   varContador :=  60;
+                      end;
 
+                      varContador := varContador - 4;
 
-                for z := varContador-3 to varContador  do  // 128
-                begin
+                      if varContador <= 59 then
+                         Break;
 
-                     if ((bPrimeiro) and ((z = 57) or (z = 58)or (z = 59)or (z = 60))) then
-                     begin
-                        varEtiquetaOut := varEtiqueta;
-                        if z = 60 then
-                          bPrimeiro      := False;
-                     end
-                     else
-                        varEtiquetaOut := varEtiqueta + Format('%3.3d',[z]);
 
-                     with dxSpreadSheetOut.ActiveSheetAsTable.CreateCell(Y,0) do
-                     begin
+                   end;
 
-                         AsVariant := varEtiquetaOut;
-                     end;
+                   bPrimeiro   := True;
+                   varContador :=  0;
+                   for I := 60 downto 1  do  // 128
+                   begin
 
-                     with dxSpreadSheetOut.ActiveSheetAsTable.CreateCell(Y,1) do
-                     begin
+                      if varContador = 0 then
+                         varContador :=  60;
 
-                         AsVariant := edtURL.Text  + varEtiquetaOut;
-                     end;
 
+                      for z := varContador-3 to varContador  do  // 128
+                      begin
 
-                     Inc(Y);
+                           if ((bPrimeiro) and ((z = 57) or (z = 58)or (z = 59)or (z = 60))) then
+                           begin
+                              varEtiquetaOut := varEtiqueta;
+                              if z = 60 then
+                                bPrimeiro      := False;
+                           end
+                           else
+                              varEtiquetaOut := varEtiqueta + Format('%3.3d',[z]);
+                           {
+                           with dxSpreadSheetOut.ActiveSheetAsTable.CreateCell(Y,0) do
+                           begin
 
-                end;
+                               AsVariant := varEtiquetaOut;
+                           end;
 
-                varContador := varContador - 4;
+                           with dxSpreadSheetOut.ActiveSheetAsTable.CreateCell(Y,1) do
+                           begin
 
-                if varContador <= 0 then
-                   Break;
+                               AsVariant := edtURL.Text  + varEtiquetaOut;
+                           end;
+                           }
+                           varSalvarArquivo.Add(varEtiquetaOut + ';' + edtURL.Text  + varEtiquetaOut);
 
-             end;
+                           //Inc(Y);
 
-         end;
+                      end;
 
-         if not System.IOUtils.TDirectory.Exists( edtOutPut.Text+ '\'  ) then
-            System.IOUtils.TDirectory.CreateDirectory( edtOutPut.Text + '\' );
+                      varContador := varContador - 4;
 
-         if FileExists( edtOutPut.Text  + '\' + Veiculo.Tipo + '.xlsx' ) then
-            DeleteFile( edtOutPut.Text  + '\' + Veiculo.Tipo + '.xlsx' );
+                      if varContador <= 0 then
+                         Break;
 
+                   end;
 
-         varContador := varContador + 1;
+               end;
 
-         Application.ProcessMessages;
+               if Frac(X / 10000) = 0 then
+               begin
+                  varUltimaEtq   :=  varEtiqueta;
 
+
+
+                  if FileExists( edtOutPut.Text  + '\' + IntTostr(varNumArq) + '_' +  Veiculo.Tipo + '_' +  varPrimeiraEtq + '_' + varUltimaEtq + '.csv' ) then
+                    DeleteFile( edtOutPut.Text  + '\' + Veiculo.Tipo + '_' +  varPrimeiraEtq + '_' + varUltimaEtq + '.csv'  );
+
+
+                 { dxSpreadSheetOut.BeginUpdate;
+                  dxSpreadSheetOut.SaveToFile(  edtOutPut.Text  + '\' + Veiculo.Tipo + '_' +  varPrimeiraEtq + '_' + varUltimaEtq + '.xlsx'  );
+                  dxSpreadSheetOut.ClearAll;
+                  dxSpreadSheetOut.LoadFromFile( MyDocumentsPath+'\Detran_Output.xlsx' );
+
+                  }
+                  varSalvarArquivo.SaveToFile(  edtOutPut.Text  + '\' + IntTostr(varNumArq) + '_' +  Veiculo.Tipo + '_' +  varPrimeiraEtq + '_' + varUltimaEtq + '.csv'  );
+                  varSalvarArquivo.Clear;
+                  varSalvarArquivo.Add('Codigo de barra;QR code');
+                  Inc(varNumArq);
+                  //Y:= 1;
+                  varPrimeiraEtq := '';
+               end;
+
+
+
+               //varContador := varContador + 1;
+
+               Application.ProcessMessages;
+
+            end;
+
+            varUltimaEtq   :=  varEtiqueta;
+
+            if FileExists( edtOutPut.Text  + '\' + IntTostr(varNumArq) + '_' + Veiculo.Tipo + '_' +  varPrimeiraEtq + '_' + varUltimaEtq + '.csv' ) then
+              DeleteFile( edtOutPut.Text  + '\' + IntTostr(varNumArq) + '_' + Veiculo.Tipo + '_' +  varPrimeiraEtq + '_' + varUltimaEtq + '.csv'  );
+
+            if varSalvarArquivo.Count > 1 then
+              varSalvarArquivo.SaveToFile(  edtOutPut.Text  + '\' + IntTostr(varNumArq) + '_' + Veiculo.Tipo + '_' +  varPrimeiraEtq + '_' + varUltimaEtq + '.csv'  );
+
+              varSalvarArquivo.Clear;
+          {  dxSpreadSheetOut.BeginUpdate;
+            dxSpreadSheetOut.SaveToFile(  edtOutPut.Text  + '\' + Veiculo.Tipo + '_' +  varPrimeiraEtq + '_' + varUltimaEtq + '.xlsx'  );
+            dxSpreadSheetOut.ClearAll;
+           }
+      finally
+      //   FreeAndNil(dxSpreadSheetOut);
+         FreeAndNil(varSalvarArquivo);
       end;
+
+
 
     finally
 
@@ -550,15 +647,10 @@ begin
 
     end;
 
-    dxSpreadSheetOut.BeginUpdate;
-    dxSpreadSheetOut.SaveToFile(  edtOutPut.Text  + '\' + Veiculo.Tipo + '.xlsx' );
-
-    Application.MessageBox( pWideChar( 'Arquivo ' +  edtOutPut.Text  + '\' + Veiculo.Tipo + '.xlsx'  +  ' foi criado. ' ) , 'BradyEtiqueta', MB_ICONINFORMATION);
+    Application.MessageBox( pWideChar( 'Arquivos gerados com sucesso.' ) , 'Etiquetas Detran', MB_ICONINFORMATION);
 
 
-    finally
-      FreeAndNil(dxSpreadSheetOut);
-    end;
+
 
   finally
     Mensagem( EmptyStr );
@@ -588,7 +680,7 @@ begin
   on E: Exception do
       begin
         Screen.Cursor := crDefault;
-        Application.MessageBox( PwideChar( E.Message ) , 'Cadastro', MB_ICONERROR);
+        Application.MessageBox( PwideChar( E.Message ) , 'Parametros', MB_ICONERROR);
       end;
   End;
 
@@ -596,6 +688,7 @@ begin
 
 
    try
+
     //ArqIni.WriteString('[CARRO]','','');
     ArqIni.WriteString('CARRO', 'LINHAS', edtCarroLinha.Text);
     ArqIni.WriteString('CARRO', 'INTERVALO', edtCarroInter.Text);
@@ -631,7 +724,7 @@ begin
 
     Mensagem(EmptyStr);
 
-    Application.MessageBox( 'Alteração salvas com Sucesso.', 'Cadastro', MB_ICONINFORMATION);
+    Application.MessageBox( 'Alteração salvas com Sucesso.', 'Parametros', MB_ICONINFORMATION);
 
   finally
      Screen.Cursor := crDefault;
@@ -680,13 +773,19 @@ begin
 
 end;
 
+procedure TfrmPrincipal.edtOutPutKeyUp(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  Mudou := True;
+end;
+
 Procedure TfrmPrincipal.CarregaINI;
 Var
   ArqIni: TIniFile;
 begin
    try
 
-      if FileExists(MyDocumentsPath + '\ETIQUETA_DETRAN.ini') then
+      if not FileExists(MyDocumentsPath + '\ETIQUETA_DETRAN.ini') then
       begin
 
          ArqIni := TIniFile.Create(MyDocumentsPath + '\ETIQUETA_DETRAN.ini');
@@ -695,11 +794,13 @@ begin
       else
       begin
 
-        ArqIni := TIniFile.Create(ExtractFileDir(ParamStr(0)) + '\ETIQUETA_DETRAN.ini');
+         ArqIni := TIniFile.Create(MyDocumentsPath + '\ETIQUETA_DETRAN.ini');
 
       end;
 
       StatusBar.Panels[0].Text := ExtractFilePath(ArqIni.FileName) + ExtractFileName(ArqIni.FileName);
+      StatusBar.Panels[1].Text := uUtils.FileVersion;
+
       edtCarroLinha.Text := ArqIni.ReadString('CARRO', 'LINHAS', edtCarroLinha.Text);
       edtCarroInter.Text := ArqIni.ReadString('CARRO', 'INTERVALO', edtCarroInter.Text);
       edtCarroBase.Text := ArqIni.ReadString('CARRO', 'BASE', edtCarroBase.Text);
@@ -743,34 +844,48 @@ begin
   FreeAndNil(Veiculo);
 end;
 
+procedure TfrmPrincipal.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+var
+  buttonSelected: integer;
+begin
+  if Mudou then
+  begin
+    buttonSelected := MessageDlg('Alterações na aba Parametros não foram Salvas. ' + #13#10 + 'Deseja realmente fechar o programa?' , mtCustom, [mbYes, mbNo], 0);
+    if buttonSelected = mrYES then
+    begin
+      CanClose:=true;
+    end
+    else
+    begin
+      CanClose:=false;
+    end;
+  end;
+
+end;
+
 procedure TfrmPrincipal.FormShow(Sender: TObject);
 begin
   Page.ActivePage := TabEtiqueta;
 
-  if System.IOUtils.TFile.Exists( MyDocumentsPath + '\ETIQUETA_DETRAN.ini' ) then
-    DeleteFile(MyDocumentsPath + '\ETIQUETA_DETRAN.ini');
-
-  if System.IOUtils.TFile.Exists( MyDocumentsPath + '\Detran_Output.xlsx' ) then
-    DeleteFile(MyDocumentsPath + '\Detran_Output.xlsx');
-
 
   if not System.IOUtils.TFile.Exists(  ExtractFilePath(Application.ExeName)  + '\ETIQUETA_DETRAN.ini' ) then
   begin
-    Application.MessageBox( pWideChar( 'Arquivo ETIQUETA_DETRAN.ini não encontrado na pasta ' + ExtractFilePath(Application.ExeName) +  #13#10 + 'Abortar Programa. ' ) , 'BradyEtiqueta', MB_ICONINFORMATION);
+    Application.MessageBox( pWideChar( 'Arquivo ETIQUETA_DETRAN.ini não encontrado na pasta ' + ExtractFilePath(Application.ExeName) +  #13#10 + 'Abortar Programa. ' ) , 'Etiquetas Detran', MB_ICONINFORMATION);
     Close;
   end;
 
-
+    {
   if not System.IOUtils.TFile.Exists(  ExtractFilePath(Application.ExeName)  + '\Detran_Output.xlsx' ) then
   begin
-    Application.MessageBox( pWideChar( 'Arquivo Detran_Output.xlsx não encontrado na pasta ' + ExtractFilePath(Application.ExeName) +  #13#10 + 'Abortar Programa. ' ) , 'BradyEtiqueta', MB_ICONINFORMATION);
+    Application.MessageBox( pWideChar( 'Arquivo Detran_Output.xlsx não encontrado na pasta ' + ExtractFilePath(Application.ExeName) +  #13#10 + 'Abortar Programa. ' ) , 'Etiquetas Detran', MB_ICONINFORMATION);
     Close;
   end;
+     }
 
+  if not System.IOUtils.TFile.Exists( MyDocumentsPath + '\ETIQUETA_DETRAN.ini' ) then
+    System.IOUtils.TFile.Copy( ExtractFilePath(Application.ExeName) + '\ETIQUETA_DETRAN.ini' , MyDocumentsPath + '\ETIQUETA_DETRAN.ini', True );
 
-  System.IOUtils.TFile.Copy( ExtractFilePath(Application.ExeName) + '\ETIQUETA_DETRAN.ini' , MyDocumentsPath + '\ETIQUETA_DETRAN.ini', True );
-
-  System.IOUtils.TFile.Copy( ExtractFilePath(Application.ExeName) + '\Detran_Output.xlsx' , MyDocumentsPath + '\Detran_Output.xlsx', True );
+  //System.IOUtils.TFile.Copy( ExtractFilePath(Application.ExeName) + '\Detran_Output.xlsx' , MyDocumentsPath + '\Detran_Output.xlsx', True );
 
   CarregaINI;
   Mudou := False;

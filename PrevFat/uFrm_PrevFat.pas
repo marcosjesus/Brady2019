@@ -168,6 +168,7 @@ type
     procedure chkCopiaClick(Sender: TObject);
     procedure btnFecharPnlClick(Sender: TObject);
     procedure edtPasswordExit(Sender: TObject);
+    procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
   private
     varAnexos: TStringList;
     varEmailInvalido : TStringList;
@@ -288,7 +289,6 @@ begin
      FreeAndNil(SSLHandler);
   End;
 end;
-
 
 function TFrm_Previsao.EnviarEmail(varEmail, varMensagem : String) : Boolean;
 var
@@ -1141,10 +1141,6 @@ begin
 
 end;
 
-
-
-
-
 procedure TFrm_Previsao.edtHostKeyUp(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
@@ -1234,36 +1230,47 @@ begin
   FDQueryEmailTSOP_ATIVO.AsString := UpperCase(FDQueryEmailTSOP_ATIVO.AsString);
 end;
 
+procedure TFrm_Previsao.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+var
+  buttonSelected: integer;
+begin
+  if Mudou then
+  begin
+    buttonSelected := MessageDlg('Alterações na aba Configuração não foram Salvas. ' + #13#10 + 'Deseja realmente fechar o programa?' , mtCustom, [mbYes, mbNo], 0);
+    if buttonSelected = mrYES then
+    begin
+      CanClose:=true;
+    end
+    else
+    begin
+      CanClose:=false;
+    end;
+  end;
+
+end;
+
 procedure TFrm_Previsao.FormShow(Sender: TObject);
 begin
  Page.ActivePage := TabEmail;
 
-
- if System.IOUtils.TFile.Exists( MyDocumentsPath + '\SMTP_PREVFAT.ini' ) then
-   DeleteFile(MyDocumentsPath + '\SMTP_PREVFAT.ini');
-
- if System.IOUtils.TFile.Exists( MyDocumentsPath + '\MalaDireta.xlsx' ) then
-   DeleteFile(MyDocumentsPath + '\MalaDireta.xlsx');
-
-
-
-  if not System.IOUtils.TFile.Exists(  ExtractFilePath(Application.ExeName)  + '\SMTP_PREVFAT.ini' ) then
-  begin
+ if not System.IOUtils.TFile.Exists(  ExtractFilePath(Application.ExeName)  + '\SMTP_PREVFAT.ini' ) then
+ begin
     Application.MessageBox( pWideChar( 'Arquivo SMTP_PREVFAT.ini não encontrado na pasta ' + ExtractFilePath(Application.ExeName) +  #13#10 + 'Abortar Programa. ' ) , 'BradyEtiqueta', MB_ICONINFORMATION);
     Close;
-  end;
+ end;
 
 
-  if not System.IOUtils.TFile.Exists(  ExtractFilePath(Application.ExeName)  + '\MalaDireta.xlsx' ) then
-  begin
+ if not System.IOUtils.TFile.Exists(  ExtractFilePath(Application.ExeName)  + '\MalaDireta.xlsx' ) then
+ begin
     Application.MessageBox( pWideChar( 'Arquivo MalaDireta.xlsx não encontrado na pasta ' + ExtractFilePath(Application.ExeName) +  #13#10 + 'Abortar Programa. ' ) , 'BradyEtiqueta', MB_ICONINFORMATION);
     Close;
-  end;
+ end;
 
+ if not System.IOUtils.TFile.Exists( MyDocumentsPath + '\SMTP_PREVFAT.ini' ) then
+    System.IOUtils.TFile.Copy( ExtractFilePath(Application.ExeName) + '\SMTP_PREVFAT.ini' , MyDocumentsPath + '\SMTP_PREVFAT.ini', True );
 
- System.IOUtils.TFile.Copy( ExtractFilePath(Application.ExeName) + '\SMTP_PREVFAT.ini' , MyDocumentsPath + '\SMTP_PREVFAT.ini', True );
-
- System.IOUtils.TFile.Copy( ExtractFilePath(Application.ExeName) + '\MalaDireta.xlsx' , MyDocumentsPath + '\MalaDireta.xlsx', True );
+ if not System.IOUtils.TFile.Exists( MyDocumentsPath + '\MalaDireta.xlsx' ) then
+    System.IOUtils.TFile.Copy( ExtractFilePath(Application.ExeName) + '\MalaDireta.xlsx' , MyDocumentsPath + '\MalaDireta.xlsx', True );
 
  CarregaINI;
 end;
@@ -1286,7 +1293,6 @@ begin
   Result := IsMatch(EmailAddress, EMAIL_REGEX);
 end;
 
-
 Procedure TFrm_Previsao.CarregaINI;
 Var
   ArqIni: TIniFile;
@@ -1308,6 +1314,9 @@ begin
       end;
 
       StatusBar.Panels[0].Text := ExtractFilePath(ArqIni.FileName) + ExtractFileName(ArqIni.FileName);
+
+      StatusBar.Panels[1].Text := uUtils.FileVersion;
+
       edtHost.Text := ArqIni.ReadString('EMAIL', 'HOST', edtHost.Text);
       edtPort.Text := ArqIni.ReadString('EMAIL', 'PORT', edtPort.Text);
 
@@ -1379,9 +1388,9 @@ begin
          rgManausTLS.ItemIndex := 0
       else rgManausTLS.ItemIndex := 1;
 
-      EdiManausUserName.Text := ArqIni.ReadString('MANAUS', 'USER', EdiManausUserName.Text);
+      EdiManausUserName.Text  := ArqIni.ReadString('MANAUS', 'USER', EdiManausUserName.Text);
       EditManausPassword.Text := ArqIni.ReadString('MANAUS', 'PWD', EditManausPassword.Text);
-      EdiManausFrom.Text     := ArqIni.ReadString('MANAUS', 'FROM', EdiManausFrom.Text);
+      EdiManausFrom.Text      := ArqIni.ReadString('MANAUS', 'FROM', EdiManausFrom.Text);
 
 
       edtAssunto.Text  := ArqIni.ReadString('EMAIL', 'ASSUNTO', edtAssunto.Text);
@@ -1398,7 +1407,6 @@ begin
       ArqIni.Free;
     end;
 end;
-
 
 procedure TFrm_Previsao.chkCopiaClick(Sender: TObject);
 begin

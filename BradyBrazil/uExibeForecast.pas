@@ -6,6 +6,7 @@ uses
   System.DateUtils,
   System.StrUtils,
   ShellAPI,
+  dxHashUtils,
   dxSpreadSheet,
   dxSpreadSheetTypes,
   dxSpreadSheetCore,

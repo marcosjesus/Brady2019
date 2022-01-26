@@ -417,6 +417,10 @@ object frmExibeForecast: TfrmExibeForecast
       object TabForecast: TcxTabSheet
         Caption = 'Forecast'
         ImageIndex = 0
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object cxGrid1: TcxGrid
           Left = 0
           Top = 0
@@ -450,6 +454,10 @@ object frmExibeForecast: TfrmExibeForecast
       object TabLancamento: TcxTabSheet
         Caption = 'Lan'#231'amento'
         ImageIndex = 1
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object Panel14: TPanel
           Left = 58
           Top = 467

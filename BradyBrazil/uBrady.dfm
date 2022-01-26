@@ -44,7 +44,6 @@ object Fr_Brady: TFr_Brady
       Index = 0
     end
     object dxRibbonTabSIOP: TdxRibbonTab
-      Active = True
       Caption = 'S&OP'
       Groups = <
         item
@@ -140,6 +139,7 @@ object Fr_Brady: TFr_Brady
       Index = 8
     end
     object dxRibbonTabSeton: TdxRibbonTab
+      Active = True
       Caption = 'Seton'
       Groups = <
         item

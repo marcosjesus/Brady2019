@@ -33,8 +33,6 @@ object Fr_PrecoSite: TFr_PrecoSite
     Properties.ActivePage = TabGrid
     Properties.CustomButtons.Buttons = <>
     OnChange = PageChange
-    ExplicitLeft = 168
-    ExplicitTop = 56
     ClientRectBottom = 437
     ClientRectLeft = 4
     ClientRectRight = 927
@@ -53,13 +51,20 @@ object Fr_PrecoSite: TFr_PrecoSite
         413)
       object cxGrid1: TcxGrid
         Left = 0
-        Top = 81
+        Top = 113
         Width = 923
-        Height = 332
+        Height = 300
         Align = alClient
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
         TabOrder = 0
         object cxGrid1DBBandedTableView1: TcxGridDBBandedTableView
           OnDblClick = cxGrid1DBBandedTableView1DblClick
+          OnMouseDown = cxGrid1DBBandedTableView1MouseDown
           Navigator.Buttons.CustomButtons = <>
           DataController.Summary.DefaultGroupSummaryItems = <>
           DataController.Summary.FooterSummaryItems = <>
@@ -79,11 +84,28 @@ object Fr_PrecoSite: TFr_PrecoSite
         Left = 0
         Top = 0
         Width = 923
-        Height = 81
+        Height = 113
         Align = alTop
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
         TabOrder = 1
-        ExplicitLeft = 168
-        ExplicitTop = 81
+        object lblPesquisa: TLabel
+          Left = 9
+          Top = 57
+          Width = 42
+          Height = 13
+          Caption = 'Pesquisa'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
+        end
         object cxLabel4: TcxLabel
           Left = 543
           Top = 9
@@ -153,6 +175,20 @@ object Fr_PrecoSite: TFr_PrecoSite
           Font.Style = []
           ParentFont = False
           OnClick = btnExportarClick
+        end
+        object edtPesquisa: TEdit
+          Left = 9
+          Top = 76
+          Width = 321
+          Height = 21
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
+          TabOrder = 6
+          OnChange = edtPesquisaChange
         end
       end
       object PanelSQLSplashScreen: TPanel
@@ -3074,8 +3110,6 @@ object Fr_PrecoSite: TFr_PrecoSite
       Font.Style = []
       ImageIndex = 1
       ParentFont = False
-      ExplicitLeft = 5
-      ExplicitTop = 25
       object Label1: TLabel
         Left = 64
         Top = 7
@@ -3635,6 +3669,7 @@ object Fr_PrecoSite: TFr_PrecoSite
         Font.Name = 'Tahoma'
         Font.Style = []
         ParentFont = False
+        OnClick = cxButton2Click
       end
       object Ouro_PEI_Bronze: TcxCurrencyEdit
         Left = 432
@@ -3786,5 +3821,10 @@ object Fr_PrecoSite: TFr_PrecoSite
     Connection = FDConnectionSQL
     Left = 532
     Top = 56
+  end
+  object FDExcluirProduto: TFDQuery
+    Connection = FDConnection
+    Left = 700
+    Top = 200
   end
 end
